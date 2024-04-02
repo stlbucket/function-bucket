@@ -41,7 +41,7 @@ const preset: GraphileConfig.Preset = {
       schemas: (process.env.GRAPHQL_SCHEMAS || 'public').split(','),
 
       // Enable LISTEN/NOTIFY:
-      pubsub: false,
+      pubsub: true,
     }),
   ],
   gather: {
