@@ -1,0 +1,122 @@
+query TodoById(
+  $id: UUID!
+) {
+  todo(id: $id) {
+    id
+    name
+    description
+    type
+    status
+    createdAt
+    updatedAt
+    parentTodoId
+    rootTodoId
+    isTemplate
+    topicId
+    location {
+      id
+      name
+      address1
+      address2
+      city
+      state
+      postalCode
+      country
+      lat
+      lon
+    }
+    owner: resident {
+      residentId
+      displayName
+    }
+    children: todosByParentTodoIdList {
+      id
+      name
+      description
+      type
+      status
+      createdAt
+      updatedAt
+      parentTodoId
+	    rootTodoId
+      isTemplate
+      topicId
+      location {
+        id
+        name
+        address1
+        address2
+        city
+        state
+        postalCode
+        country
+        lat
+        lon
+      }
+      owner: resident {
+          residentId
+          displayName
+      }
+      children: todosByParentTodoIdList {
+        id
+        name
+        description
+        type
+        status
+        createdAt
+        updatedAt
+        parentTodoId
+        rootTodoId
+        isTemplate
+        topicId
+        location {
+          id
+          name
+          address1
+          address2
+          city
+          state
+          postalCode
+          country
+          lat
+          lon
+        }
+        owner: resident {
+          residentId
+          displayName
+        }
+        children: todosByParentTodoIdList {
+          id
+          name
+          description
+          type
+          status
+          createdAt
+          updatedAt
+          parentTodoId
+          rootTodoId
+          isTemplate
+          location {
+            id
+            name
+            address1
+            address2
+            city
+            state
+            postalCode
+            country
+            lat
+            lon
+          }
+          owner: resident {
+            residentId
+            displayName
+          }
+          hiddenChildren: todosByParentTodoId {
+            totalCount
+          }
+        }
+      }
+    }
+  }
+}

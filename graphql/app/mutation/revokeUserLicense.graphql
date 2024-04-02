@@ -1,0 +1,9 @@
+mutation RevokeUserLicense(
+  $licenseId: UUID!
+) {
+  revokeUserLicense(input: {
+    _licenseId: $licenseId
+  }) {
+    boolean
+  }
+}

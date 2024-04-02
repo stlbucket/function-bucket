@@ -1,0 +1,5 @@
+query ThrowError(
+  $message: String
+) {
+  throwError(_message: $message)
+}

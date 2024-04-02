@@ -1,0 +1,10 @@
+mutation ExitSupportMode {
+  exitSupportMode(input: {}) {
+    resident {
+      id
+      email
+      tenantName
+      status
+    }
+  }
+}

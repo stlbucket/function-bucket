@@ -1,0 +1,17 @@
+mutation DeclineResident(
+  $residentId: UUID!
+) {
+  declineResidency(input: {
+    _residentId: $residentId
+  }) {
+    resident {
+      id
+      tenantId
+      profileId
+      tenantName
+      createdAt
+      email
+      status
+    }
+  }
+}

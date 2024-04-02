@@ -1,0 +1,14 @@
+mutation LeaveAddressBook {
+  leaveAddressBook(input:{}) {
+     profile {
+      id
+      email
+      displayName
+      firstName
+      lastName
+      phone
+      fullName
+      isPublic
+    }
+  }
+}

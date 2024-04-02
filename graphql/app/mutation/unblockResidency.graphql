@@ -1,0 +1,15 @@
+mutation UnblockResident(
+  $residentId: UUID!
+) {
+  unblockResident(input: {
+    _residentId: $residentId
+  }) {
+    resident {
+      id
+      email
+      tenantName
+      status
+      displayName
+    }
+  }
+}

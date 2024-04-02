@@ -1,0 +1,14 @@
+mutation SubscribeTenantToLicensePack (
+  $tenantId: UUID!
+  $licensePackKey: String!
+) {
+  subscribeTenantToLicensePack(input:{
+    _tenantId: $tenantId
+    _licensePackKey: $licensePackKey
+  }) {
+    tenantSubscription {
+      id
+      licensePackKey
+    }
+  }
+}

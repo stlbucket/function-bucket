@@ -1,0 +1,58 @@
+mutation UpdateTodoStatus(
+  $todoId: UUID!
+  $status: TodoStatus!
+) {
+  updateTodoStatus(input:{
+    _todoId: $todoId
+    _status: $status
+  }) {
+    todo {
+      id
+      status
+      parentTodo {
+        id
+        status
+        parentTodo {
+          id
+          status
+          parentTodo {
+            id
+            status
+            parentTodo {
+              id
+              status
+              parentTodo {
+                id
+                status
+                parentTodo {
+                  id
+                  status
+                  parentTodo {
+                    id
+                    status
+                    parentTodo {
+                      id
+                      status
+                      parentTodo {
+                        id
+                        status
+                        parentTodo {
+                          id
+                          status
+                          parentTodo {
+                            id
+                            status
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

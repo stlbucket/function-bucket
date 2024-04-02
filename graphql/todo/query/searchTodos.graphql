@@ -1,0 +1,38 @@
+query SearchTodos(
+  $searchTerm: String
+  $todoType: TodoType
+  $rootsOnly: Boolean
+  $isTemplate: Boolean
+) {
+   searchTodos (
+    _options: {
+      searchTerm: $searchTerm
+      todoType: $todoType
+      rootsOnly: $rootsOnly
+      isTemplate: $isTemplate
+  	}
+  ){
+    nodes {
+      id
+      name
+      description
+      status
+      type
+      createdAt
+      updatedAt
+      resident {
+        residentId
+        displayName
+      }
+      parentTodo {
+        id
+        name
+        description
+      }
+      tenant {
+        tenantId
+        name
+      }
+    }
+  }
+}

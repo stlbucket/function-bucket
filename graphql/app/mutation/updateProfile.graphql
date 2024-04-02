@@ -1,0 +1,22 @@
+mutation UpdateProfile(
+  $displayName: String!
+  $firstName: String!
+  $lastName: String!
+  $phone: String
+) {
+  updateProfile(input: {
+    _displayName: $displayName
+    _firstName: $firstName
+    _lastName: $lastName
+    _phone: $phone
+  }) {
+    profile {
+      id
+      email
+      displayName
+      firstName
+      lastName
+      phone
+    }
+  }
+}

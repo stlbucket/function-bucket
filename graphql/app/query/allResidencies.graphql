@@ -1,0 +1,27 @@
+query AllResidents {
+  residents: residentsList {
+    id
+    profileId
+    tenantId
+    tenantName
+    status
+    displayName
+    email
+    type
+    tenantId
+    licenses: licensesList {
+      id
+      licenseTypeKey
+      licenseType {
+        key
+        assignmentScope
+      }
+    }
+  }
+}
+
+# query AllResidents {
+#   residents: residentsList {
+#     ...ResidentFrag
+#   }
+# }

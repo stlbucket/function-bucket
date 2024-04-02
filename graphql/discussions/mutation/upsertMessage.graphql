@@ -1,0 +1,14 @@
+mutation UpsertMessage(
+  $messageInfo: MessageInfoInput!
+) {
+  upsertMessage(input: {
+    _messageInfo: $messageInfo
+  }) {
+    message {
+      id
+      createdAt
+      content
+      tags
+    }
+  }
+}

@@ -1,0 +1,14 @@
+mutation UpsertSubscription(
+  $subscriptionInfo: SubscriptionInfoInput!
+) {
+  upsertSubscription(input: {
+    _subscriptionInfo: $subscriptionInfo
+  }) {
+    subscription {
+      id
+      createdAt
+      status
+      lastRead
+    }
+  }
+}

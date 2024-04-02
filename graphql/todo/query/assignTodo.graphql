@@ -1,0 +1,21 @@
+mutation AssignTodo(
+  $todoId: UUID!
+  $residentId: UUID!
+) {
+  assignTodo(input: {
+  	_todoId: $todoId
+    _residentId: $residentId
+  }) {
+    todo {
+      id
+      name
+      description
+      residentId
+      status
+      owner: resident {
+        residentId
+        displayName
+      }
+    }
+  }
+}

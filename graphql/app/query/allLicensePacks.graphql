@@ -1,0 +1,32 @@
+query AllLicensePacks {
+  licensePacks {
+    nodes {
+      key
+      displayName
+      description
+      licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
+        licensePackKey
+        licenseTypeKey
+        numberOfLicenses
+        expirationIntervalType
+        expirationIntervalMultiplier
+        issuedCount
+        licenseType {
+          key
+          displayName
+          assignmentScope
+          permissions: licenseTypePermissionsByLicenseTypeKeyList {
+            licenseTypeKey
+            permissionKey
+          }
+          licenses: licensesByLicenseTypeKey {
+            totalCount
+          }
+        }
+      }
+    	tenantSubscriptions: tenantSubscriptionsByLicensePackKey {
+        totalCount
+      }
+    }
+  }
+}

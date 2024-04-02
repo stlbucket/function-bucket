@@ -1,0 +1,18 @@
+query AllApplications {
+  applications {
+    nodes {
+      key
+      name
+      licenseTypes: licenseTypesByApplicationKeyList {
+        key
+        permissions: licenseTypePermissionsByLicenseTypeKeyList {
+          licenseTypeKey
+          permissionKey
+        }
+        licenses: licensesByLicenseTypeKey {
+          totalCount
+        }
+      }
+    }
+  }
+}

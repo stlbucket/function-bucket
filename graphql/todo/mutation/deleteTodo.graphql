@@ -1,0 +1,9 @@
+mutation DeleteTodo(
+  $todoId: UUID!
+) {
+  deleteTodo(input: {
+    _todoId: $todoId
+  }) {
+    boolean
+  }
+}

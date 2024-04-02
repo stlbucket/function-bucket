@@ -1,0 +1,13 @@
+mutation ReactivateTenantSubscription(
+  $tenantSubscriptionId: UUID!
+) {
+  reactivateTenantSubscription(input: {
+    _tenantSubscriptionId: $tenantSubscriptionId
+  }) {
+    tenantSubscription {
+      id
+      licensePackKey
+      status
+    }
+  }
+}

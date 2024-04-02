@@ -1,0 +1,17 @@
+query SearchResidents(
+  $searchTerm: String
+) {
+  searchResidents(_options: {
+    searchTerm: $searchTerm
+  }) {
+   nodes {
+      id
+    	email
+      displayName
+      tenantName
+      tenantId
+      status
+      type
+    }    
+  }
+}

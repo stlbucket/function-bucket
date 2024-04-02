@@ -1,0 +1,15 @@
+mutation BlockResident(
+  $residentId: UUID!
+) {
+  blockResident(input: {
+    _residentId: $residentId
+  }) {
+    resident {
+      id
+      email
+      tenantName
+      status
+      displayName
+    }
+  }
+}

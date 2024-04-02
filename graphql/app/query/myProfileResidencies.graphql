@@ -1,0 +1,19 @@
+query MyProfileResidencies {
+  myProfileResidenciesList {
+    id
+    profileId
+    tenantId
+    tenantName
+    status
+    displayName
+    type
+    licenses: licensesList {
+      id
+      licenseTypeKey
+      licenseType {
+        key
+        assignmentScope
+      }
+    }
+  }
+}

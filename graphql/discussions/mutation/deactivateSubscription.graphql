@@ -1,0 +1,14 @@
+mutation DeactivateSubscription(
+  $subscriptionId: UUID!
+) {
+  deactivateSubscription(input: {
+    _subscriptionId: $subscriptionId
+  }) {
+    subscription {
+      id
+      createdAt
+      status
+      lastRead
+    }
+  }
+}

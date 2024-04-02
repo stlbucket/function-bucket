@@ -1,0 +1,5 @@
+query SiteUserById(
+  $id: UUID!
+) {
+  siteUserById(_id: $id)
+}

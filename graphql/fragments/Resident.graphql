@@ -1,0 +1,7 @@
+fragment ResidentFrag on Resident {
+  id
+  tenantName
+  email
+  displayName
+  status
+}

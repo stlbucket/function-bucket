@@ -1,0 +1,10 @@
+query DemoResidents {
+  demoProfileResidencies {
+    nodes {
+      id
+      email
+      tenantName
+      status      
+    }
+  }
+}

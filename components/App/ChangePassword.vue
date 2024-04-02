@@ -1,0 +1,59 @@
+<template>
+  <UButton @click="showModal = true">Change Password</UButton>
+  <UModal v-model="showModal">
+    <UCard>
+      <template #header>
+        Change Password
+      </template>
+      <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+        <UFormGroup label="Password" name="password">
+          <UInput v-model="state.password" type="password" />
+        </UFormGroup>
+        <UFormGroup label="Confirm Password" name="password">
+          <UInput v-model="state.confirmPassword" type="password" />
+        </UFormGroup>
+
+        <UButton type="submit">
+          Submit
+        </UButton>
+      </UForm>
+    </UCard>
+  </UModal>
+</template>
+
+<script lang="ts" setup>
+import { z } from 'zod'
+import type { FormSubmitEvent } from '#ui/types'
+
+const supabase = useSupabaseClient()
+const showModal = ref(false)
+
+const schema = z.object({
+  password: z.string().min(8, 'Must be at least 8 characters'),
+  confirmPassword: z.string().min(8, 'Must be at least 8 characters')
+})
+
+type Schema = z.output<typeof schema>
+
+const state = reactive({
+  password: undefined,
+  confirmPassword: undefined
+})
+
+async function onSubmit (event: FormSubmitEvent<Schema>) {
+  if (state.password !== state.confirmPassword) {
+    alert('Passwords do not match!')
+    state.password = undefined
+    state.confirmPassword = undefined
+    showModal.value = false
+  }
+  const {error} = await supabase.auth.updateUser({ password: state.password })
+  showModal.value = false
+  if (error) {
+    alert(error)
+  } else {
+    alert('Password Changed')
+    navigateTo('./logout')
+  }
+}
+</script>

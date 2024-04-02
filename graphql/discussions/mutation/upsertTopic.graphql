@@ -1,0 +1,13 @@
+mutation UpsertTopic(
+  $topicInfo: TopicInfoInput!
+) {
+  upsertTopic(input: {
+    _topicInfo: $topicInfo
+  }) {
+    topic {
+      id
+      name
+      identifier
+    }
+  }
+}

@@ -1,0 +1,14 @@
+mutation JoinAddressBook {
+  joinAddressBook(input:{}) {
+     profile {
+      id
+      email
+      displayName
+      firstName
+      lastName
+      phone
+      fullName
+      isPublic
+    }
+  }
+}

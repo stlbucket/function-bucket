@@ -1,0 +1,46 @@
+query TenantSubscriptions(
+  $tenantId: UUID!
+)  {
+  tenantSubscriptions(condition: {
+    tenantId: $tenantId
+  }) {
+    nodes {
+      id
+      licensePackKey
+      status
+      tenant {
+        id
+        name
+        type
+      }
+      licenses {
+        totalCount
+      }
+      licensePack {
+        key
+        displayName
+        description
+        licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
+          licensePackKey
+          licenseTypeKey
+          numberOfLicenses
+          expirationIntervalType
+          expirationIntervalMultiplier
+          issuedCount
+          licenseType {
+            key
+            displayName
+            assignmentScope
+            permissions: licenseTypePermissionsByLicenseTypeKeyList {
+              licenseTypeKey
+              permissionKey
+            }
+            licenses: licensesByLicenseTypeKey {
+              totalCount
+            }
+          }
+        }        
+      }
+    }
+  }
+}

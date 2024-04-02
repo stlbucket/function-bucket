@@ -1,0 +1,9 @@
+mutation DeleteLocation(
+  $locationId: UUID!
+) {
+  deleteLocation(input: {
+    _locationId: $locationId
+  }) {
+    boolean
+  }
+}

@@ -1,0 +1,20 @@
+query WordBlockGamesList {
+  wbGamesList {
+    id
+    status
+    word
+    wordLength
+    currentRoundNumber
+    numberOfRounds
+    firstBlockingRound
+    lastBlockingRound
+    offensePlayerResident {
+      residentId
+      displayName
+    }
+    defensePlayerResident {
+      residentId
+      displayName
+    }
+  }
+}

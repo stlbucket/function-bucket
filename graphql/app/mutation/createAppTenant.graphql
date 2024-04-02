@@ -1,0 +1,14 @@
+mutation CreateTenant(
+  $name: String!
+  $email: String!
+) {
+  createTenant(input: {
+    _name: $name
+    _email: $email    
+  }) {
+    tenant {
+      id
+      name
+    }
+  }
+}

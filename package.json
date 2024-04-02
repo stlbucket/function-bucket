@@ -1,0 +1,49 @@
+{
+  "name": "incyte-calcs",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "start": "node .output/server/index.mjs",
+    "build": "nuxt build && node postbuild.mjs",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "supabase": "npx supabase"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/pwa": "^3.3.5",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2",
+    "@types/node": "^18",
+    "graphile-export": "^0.0.2-beta.11",
+    "kysely": "^0.27.2",
+    "kysely-codegen": "^0.11.0",
+    "nuxt": "^3.11.1",
+    "nuxt3-leaflet": "^1.0.12",
+    "sass": "^1.71.1",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "dependencies": {
+    "@graphile/simplify-inflection": "^8.0.0-beta.4",
+    "@nuxt/ui": "^2.15.0",
+    "@nuxtjs/supabase": "^1.1.6",
+    "@pinia/nuxt": "^0.5.1",
+    "change-case": "^5.4.1",
+    "graphile": "^5.0.0-alpha.13",
+    "graphile-utils": "^5.0.0-beta.20",
+    "nuxt-graphql-client": "^0.2.33",
+    "pg": "^8.11.3",
+    "pinia": "^2.1.7",
+    "postgraphile": "^5.0.0-beta.21",
+    "supabase": "^1.148.6",
+    "zod": "^3.22.4"
+  },
+  "overrides": {
+    "@supabase/supabase-js": "2.39.7"
+  }
+}

@@ -1,0 +1,10 @@
+mutation MakeTodoFromTemplate ($todoId: UUID) {
+  makeTodoFromTemplate(input: {
+    _todoId: $todoId
+  }) {
+    todo {
+      id
+      name
+    }
+  }
+}

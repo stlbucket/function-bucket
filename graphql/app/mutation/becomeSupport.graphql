@@ -1,0 +1,15 @@
+mutation BecomeSupport(
+  $tenantId: UUID!
+) {
+  becomeSupport(input: {
+    _tenantId: $tenantId
+  }) {
+    resident {
+      id
+      email
+      displayName
+      tenantName
+      status
+    }
+  }
+}

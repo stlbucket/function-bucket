@@ -1,0 +1,13 @@
+mutation DeactivateTenant(
+  $tenantId: UUID!
+) {
+  deactivateTenant(input: {
+    _tenantId: $tenantId
+  }) {
+    tenant {
+      id
+      name
+      status
+    }
+  }
+}

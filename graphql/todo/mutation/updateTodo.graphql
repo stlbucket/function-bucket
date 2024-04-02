@@ -1,0 +1,22 @@
+mutation UpdateTodo(
+  $todoId: UUID!
+  $name: String!
+  $description: String
+) {
+  updateTodo(input: {
+    _todoId: $todoId
+    _name: $name
+    _description: $description
+  }) {
+    todo {
+      id
+      name
+      description
+      type
+      status
+      createdAt
+      updatedAt
+      parentTodoId
+    }
+  }
+}

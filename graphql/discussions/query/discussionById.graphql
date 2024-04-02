@@ -1,0 +1,29 @@
+query DiscussionById(
+  $topicId: UUID!
+) {
+  topic(id: $topicId) {
+    id
+    name
+    identifier
+    status
+    subscribers: subscribersList {
+      id
+      status
+      lastRead
+      msgResident {
+        residentId
+        displayName
+      }
+    }
+    messages: messagesList {
+      id
+      createdAt
+      status
+      content
+      postedBy: postedByMsgResident {
+        residentId
+        displayName
+      }
+    }
+  }
+}

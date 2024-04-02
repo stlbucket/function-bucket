@@ -1,0 +1,52 @@
+query TodoByIdForRefresh(
+  $id: UUID!
+) {
+  todo(id: $id) {
+    id
+    status
+    parentTodo {
+      id
+      status
+      parentTodo {
+        id
+        status
+        parentTodo {
+          id
+          status
+          parentTodo {
+            id
+            status
+            parentTodo {
+              id
+              status
+              parentTodo {
+                id
+                status
+                parentTodo {
+                  id
+                  status
+                  parentTodo {
+                    id
+                    status
+                    parentTodo {
+                      id
+                      status
+                      parentTodo {
+                        id
+                        status
+                        parentTodo {
+                          id
+                          status
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
