@@ -46,15 +46,15 @@
   ])
 
   const loadData = async () => {
-    const result = await GqlTenantSubscriptions({
-      tenantId: currentProfileClaims.value.tenantId
-    })
-    tenantSubscriptions.value = result.tenantSubscriptions.nodes.map((ats:any) => {
-      return {
-        ...ats,
-        tenantName: ats.tenant.name
-      }
-    })
+    // const result = await GqlTenantSubscriptions({
+    //   tenantId: currentProfileClaims.value.tenantId
+    // })
+    // tenantSubscriptions.value = result.tenantSubscriptions.nodes.map((ats:any) => {
+    //   return {
+    //     ...ats,
+    //     tenantName: ats.tenant.name
+    //   }
+    // })
   }
   loadData()
 

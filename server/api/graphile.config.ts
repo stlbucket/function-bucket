@@ -96,7 +96,7 @@ const preset: GraphileConfig.Preset = {
     graphiqlPath: "/api/graphiql",
     graphiqlOnGraphQLGET: true,
     graphqlOverGET: false,
-    websockets: true,
+    // websockets: true,
 
     maskError(error) {
       // console.error("------------------------------ maskError was called with the following error:");

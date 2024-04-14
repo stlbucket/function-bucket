@@ -19,11 +19,10 @@
 </template>
 
 <script lang="ts" setup>
-  // const supabase = useSupabaseClient()
   const profile = ref()
   const loadData = async () => {
-    const result = await GqlGetMyself()
-    profile.value = result.getMyself
+    const {data, error} = await useGetMyselfQuery()
+    profile.value = data.value?.getMyself
   }
   loadData()
 
@@ -62,13 +61,13 @@
   })
 
   const onUpdate = async (profile: AppProfile) => {
-    const result = await GqlUpdateProfile({
-      displayName: profile.displayName,
-      firstName: profile.firstName,
-      lastName: profile.lastName,
-      phone: profile.phone
-    })
-    await loadData()
+    // const result = await GqlUpdateProfile({
+    //   displayName: profile.displayName,
+    //   firstName: profile.firstName,
+    //   lastName: profile.lastName,
+    //   phone: profile.phone
+    // })
+    // await loadData()
   }
   // const onChangePassword = async () => {
   //   const forSure = confirm('Are you sure you want to change your password?')

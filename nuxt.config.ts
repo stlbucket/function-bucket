@@ -42,13 +42,13 @@ export default defineNuxtConfig({
       'lib'
       ,'store'
       ,'types'
+      ,'graphql'
     ],
     global: true
   },
   modules: [
     '@nuxt/ui',
     '@nuxtjs/supabase',
-    'nuxt-graphql-client',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/tailwindcss',
@@ -63,18 +63,6 @@ export default defineNuxtConfig({
   css: [
     '@/assets/css/main.scss'
   ],
-  'graphql-client': {
-    codegen: false,
-    // tokenStorage: {
-    //   mode: 'cookie',
-    //   cookieOptions: {
-    //     path: '/',
-    //     secure: false, // defaults to `useRuntimeConfig().NODE_ENV === 'production'`
-    //     httpOnly: false, // Only accessible via HTTP(S)
-    //     maxAge: 60 * 60 * 24 * 5 // 5 days
-    //   }
-    // }
-  },
   devServer: {
     port: 3000
   },
@@ -106,31 +94,11 @@ export default defineNuxtConfig({
         "global": true
       },
       {
-        "path": "~/components/Dev",
-        "global": true
-      },
-      {
         "path": "~/components/Nav",
         "global": true
       },
       {
         "path": "~/components/App",
-        "global": true
-      },
-      {
-        "path": "~/components/Todo",
-        "global": true
-      },
-      {
-        "path": "~/components/Map",
-        "global": true
-      },
-      {
-        "path": "~/components/Loc",
-        "global": true
-      },
-      {
-        "path": "~/components/WordBlock",
         "global": true
       },
       "~/components"

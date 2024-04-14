@@ -1,0 +1,22 @@
+schema: 
+  - http://localhost:3000/api/graphql:
+      headers:
+        Content-Type: application/json
+documents: ./graphql/**/*.graphql
+generates: 
+  graphql/schema.json:
+    plugins:
+      - introspection
+  graphql/schema.min.json:
+    plugins:
+      - urql-introspection
+  graphql/api.ts:
+    config: 
+      gqlImport: '@urql/vue#gql'
+      arrayInputCoercion: false
+      nonOptionalTypename: true
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-vue-urql
+      - typescript-urql-graphcache

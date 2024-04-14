@@ -7,6 +7,23 @@ interface AppState {
   currentProfileClaims: any | undefined
 }
 
+// export const useAppStateStore = defineStore('appState', () => {
+//   const navCollapsed = ref(false)
+//   const currentProfileClaims = ref()
+
+//   const toggleNavCollapsed = () => { navCollapsed.value === !navCollapsed.value}
+//   const getCurrentProfileClaims = async () => {
+//     return {displayName: 'tacos'}
+//   }
+
+//   return {
+//     navCollapsed,
+//     currentProfileClaims,
+//     toggleNavCollapsed,
+//     getCurrentProfileClaims
+//   }
+// })
+
 export const useAppStateStore = defineStore('appState', {
   persist: true,
   state: (): AppState => ({
@@ -31,8 +48,9 @@ export const useAppStateStore = defineStore('appState', {
     },
     async getCurrentProfileClaims (refresh?: boolean) {
       if (refresh || !this.currentProfileClaims) {
-        const result = await GqlCurrentProfileClaims()
-        this.currentProfileClaims = result.currentProfileClaims
+        this.currentProfileClaims = {displayName: 'tacos'}
+        // const {data, error} = await useCurrentProfileClaimsQuery()
+        // this.currentProfileClaims = data.value?.currentProfileClaims
       }
       return this.currentProfileClaims
     }

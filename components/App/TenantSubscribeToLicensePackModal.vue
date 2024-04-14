@@ -59,8 +59,8 @@ import type { ILicensePack, ITenant } from '~/db-types/index';
   })
 
   const loadData = async () => {
-    const result = await GqlActiveLicensePacks()
-    activeLicensePacks.value = result.licensePacksList
+    // const result = await GqlActiveLicensePacks()
+    // activeLicensePacks.value = result.licensePacksList
   }
   await loadData()
 

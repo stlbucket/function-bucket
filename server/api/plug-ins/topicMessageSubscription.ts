@@ -3,7 +3,7 @@ import { context, lambda, listen } from "postgraphile/grafast";
 import { jsonParse } from "postgraphile/@dataplan/json";
 
 const TopicMessageSubscriptionPlugin = makeExtendSchemaPlugin((build) => {
-  const { messages } = build.input.pgRegistry.pgResources;
+  const { message } = build.input.pgRegistry.pgResources;
   return {
     typeDefs: gql`
       extend type Subscription {
@@ -35,7 +35,7 @@ const TopicMessageSubscriptionPlugin = makeExtendSchemaPlugin((build) => {
         },
         message($event) {
           const $id = $event.get("id");
-          return messages.get({ id: $id });
+          return message.get({ id: $id });
         },
       },
     },

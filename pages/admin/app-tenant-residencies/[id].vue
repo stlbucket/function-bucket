@@ -54,45 +54,45 @@
   const subscriptions: Ref<any[]> = ref([])
 
   const loadData = async () => {
-    const result = await GqlResidentById({
-      residentId: route.params.id,
-    })
-    residency.value = result.resident
+    // const result = await GqlResidentById({
+    //   residentId: route.params.id,
+    // })
+    // residency.value = result.resident
 
-    const subscriptionsResult = await GqlTenantSubscriptions({
-      tenantId: residency.value.tenantId
-    })
-    subscriptions.value = subscriptionsResult.tenantSubscriptions.nodes
+    // const subscriptionsResult = await GqlTenantSubscriptions({
+    //   tenantId: residency.value.tenantId
+    // })
+    // subscriptions.value = subscriptionsResult.tenantSubscriptions.nodes
   }
   loadData()
 
   const onRevokeLicense = async (license:any) => {
-    const result = await GqlRevokeUserLicense({
-      licenseId: license.id
-    })
-    await loadData()
+    // const result = await GqlRevokeUserLicense({
+    //   licenseId: license.id
+    // })
+    // await loadData()
   }
 
   const onGrantLicense = async (licenseTypeKey: string) => {
-    const result = await GqlGrantUserLicense({
-      licenseTypeKey: licenseTypeKey,
-      residentId: residency.value.id
-    })
-    await loadData()
-    componentKey.value += 1
+    // const result = await GqlGrantUserLicense({
+    //   licenseTypeKey: licenseTypeKey,
+    //   residentId: residency.value.id
+    // })
+    // await loadData()
+    // componentKey.value += 1
   }
 
   const onBlockResidency = async () => {
-    const result = await GqlBlockResident({
-      residentId: residency.value.id
-    })
-    await loadData()
+    // const result = await GqlBlockResident({
+    //   residentId: residency.value.id
+    // })
+    // await loadData()
   }
 
   const onUnblockResidency = async () => {
-    const result = await GqlUnblockResident({
-      residentId: residency.value.id
-    })
-    await loadData()
+    // const result = await GqlUnblockResident({
+    //   residentId: residency.value.id
+    // })
+    // await loadData()
   }
 </script>

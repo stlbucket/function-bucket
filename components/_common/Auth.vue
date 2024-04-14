@@ -25,24 +25,20 @@
   // const route = useRoute();
   
   const appStateStore = useAppStateStore()
-  const { currentProfileClaims } = storeToRefs(useAppStateStore())
-  const supUser = useSupabaseUser()
+  const currentProfileClaims = ref()
   const supabase = useSupabaseClient()
-  const email = ref('')
 
-  const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOtp({
-      email: email.value,
-      options: {
-        emailRedirectTo: `${window.origin}/authenticated`,
-      }
-    })
-    if (error) {
-      alert(error.message)
-    } else {
-      alert('Check your email inbox for the magic link!')
+  const loadUser = async () => {
+    try{
+      const {data, error} = await useCurrentProfileClaimsQuery()
+      console.log(JSON.stringify(data.value))
+      currentProfileClaims.value = data.value?.currentProfileClaims
+    } catch (e) {
+      console.log('ERROR', e)
     }
   }
+  loadUser()
+
   const handleLogout = async () => {
     navigateTo('/logout')
   }
@@ -50,7 +46,7 @@
     return (currentProfileClaims.value?.residentId !== currentProfileClaims.value?.actualResidentId) && currentProfileClaims.value.displayName === 'Site Support'
   })
   const exitSupportMode = async () => {
-    const { data, error } = await GqlExitSupportMode()
+    const { data, error } = await useExitSupportModeMutation()
     if (error) alert(error.toString())
     await supabase.auth.refreshSession()
     await appStateStore.getCurrentProfileClaims(true)

@@ -102,8 +102,8 @@
   }
 
   const loadResidencies = async () => {
-    const mprResult = await GqlMyProfileResidencies()
-    residencies.value = (mprResult.myProfileResidenciesList || []).filter((r: any) => r.status.toLowerCase() === 'invited')
+    // const mprResult = await GqlMyProfileResidencies()
+    // residencies.value = (mprResult.myProfileResidenciesList || []).filter((r: any) => r.status.toLowerCase() === 'invited')
   }
 
   const loadUser = async () => {
@@ -120,25 +120,25 @@
   loadUser()
 
   const assumeResidency = async (row: Resident) => {
-    const { data, error } = await GqlAssumeResident({
-      residentId: row.id
-    })
-    if (error) alert(error.toString())
+    // const { data, error } = await GqlAssumeResident({
+    //   residentId: row.id
+    // })
+    // if (error) alert(error.toString())
 
-    await supabase.auth.refreshSession()
-    await appStateStore.getCurrentProfileClaims(true)
-    navigateTo('./change-password')
+    // await supabase.auth.refreshSession()
+    // await appStateStore.getCurrentProfileClaims(true)
+    // navigateTo('./change-password')
   }
 
   const declineResidency = async (row: Resident) => {
-    const { data, error } = await GqlDeclineResident({
-      residentId: row.id
-    })
-    if (error) alert(error.toString())
+    // const { data, error } = await GqlDeclineResident({
+    //   residentId: row.id
+    // })
+    // if (error) alert(error.toString())
 
-    await supabase.auth.refreshSession()
-    await appStateStore.getCurrentProfileClaims(true)
-    navigateTo('./logout')
+    // await supabase.auth.refreshSession()
+    // await appStateStore.getCurrentProfileClaims(true)
+    // navigateTo('./logout')
   }
 
 </script>

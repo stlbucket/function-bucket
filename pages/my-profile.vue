@@ -29,17 +29,12 @@
 
 <script lang="ts" setup>
   const appStateStore = useAppStateStore()
-  // const supabase = useSupabaseClient()
-  // const supUser = ref()
-  // const supSession = ref()
   const claims = ref()
 
   const loadUser = async () => {
     try{
-      // const { data, error } = await supabase.auth.getSession()
-      // supUser.value = data.session?.user
-      // supSession.value = data.session //? { ...data.session, access_token: 'REMOVED'} : null
-      claims.value = await appStateStore.getCurrentProfileClaims()
+      const {data, error} = await useCurrentProfileClaimsQuery()
+      claims.value = data.value?.currentProfileClaims
     } catch (e) {
       console.log('ERROR', e)
     }

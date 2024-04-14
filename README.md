@@ -22,7 +22,6 @@ The combination of Nuxt, Postgraphile, and Supabase is a core aspect of this cod
 - [Nuxt](https://nuxtjs.com)
 - [Postgraphile](https://postgraphile.org/)
 - [Nuxt UI](https://ui.nuxtlabs.com/getting-started)
-- [Nuxt Graphql Client](https://nuxt-graphql-client.web.app/)
 ## A few relevant threads
 - [could_supabase_rls_used_for_complex_authorization](https://www.reddit.com/r/Supabase/comments/15nem7t/could_supabase_rls_used_for_complex_authorization/)
 - [is_supabase_rls_enough_for_an_mvp](https://www.reddit.com/r/Supabase/comments/151xp3w/is_supabase_rls_enough_for_an_mvp/)

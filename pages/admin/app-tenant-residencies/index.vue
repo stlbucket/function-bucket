@@ -38,8 +38,8 @@
 
     // console.log(data.value)
 
-    const result = await GqlAllResidents()
-    residents.value = result.residents || []
+    // const result = await GqlAllResidents()
+    // residents.value = result.residents || []
   }
   loadData()
 

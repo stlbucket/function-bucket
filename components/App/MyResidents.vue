@@ -1,4 +1,4 @@
-<template>
+/<template>
   <div class="flex flex-col grow">
     <UCard :ui="{
       header: {
@@ -60,16 +60,20 @@
 </template>
 
 <script lang="ts" setup>
+  import { useMutation, useQuery } from '@urql/vue';
+  const assumeResidentMutation = useAssumeResidentMutation()
+  const declineResidencyMutation = useDeclineResidentMutation()
+
   type CurrentResidencyStatus = 'INVITED' | 'ACTIVE' | 'INACTIVE' | 'UNINVITED'
   const appStateStore = useAppStateStore()
   const supabase = useSupabaseClient()
-  const residents: Ref<Resident[]> = ref([])
+  const residents: Ref = ref([])
   const currentResidencyStatus: Ref<CurrentResidencyStatus> = ref('UNINVITED')
   const showModal = ref(false)
 
   const loadData = async () => {
-    const result = await GqlMyProfileResidencies()
-    residents.value = result.myProfileResidenciesList || []
+    const {data, error} = await useMyProfileResidenciesQuery()
+    residents.value = data.value?.myProfileResidenciesList || []
     const supportingResidency = residents.value.find(r => String(r.status).toLowerCase() === 'supporting')
     const activeResidency = residents.value.find(r => String(r.status).toLowerCase() === 'active')
     const inactiveResidency = residents.value.find(r => String(r.status).toLowerCase() === 'inactive')
@@ -90,24 +94,24 @@
   loadData()
 
   const assumeResidency = async (row: Resident) => {
-    const { data, error } = await GqlAssumeResident({
+    const { data, error } = await assumeResidentMutation.executeMutation({
       residentId: row.id
     })
     if (error) alert(error.toString())
 
-    await supabase.auth.refreshSession()
-    await appStateStore.getCurrentProfileClaims(true)
+    // await supabase.auth.refreshSession()
+    // await appStateStore.getCurrentProfileClaims(true)
     reloadNuxtApp({path: '/my-profile', force: true})
   }
 
   const declineResidency = async (row: Resident) => {
-    const { data, error } = await GqlDeclineResident({
+    const { data, error } = await declineResidencyMutation.executeMutation({
       residentId: row.id
     })
     if (error) alert(error.toString())
 
-    await supabase.auth.refreshSession()
-    await appStateStore.getCurrentProfileClaims(true)
+    // await supabase.auth.refreshSession()
+    // await appStateStore.getCurrentProfileClaims(true)
     reloadNuxtApp({path: '/my-profile', force: true})
   }
 
