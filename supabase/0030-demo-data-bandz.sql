@@ -8,8 +8,8 @@ commit;
 
 begin;
   select app_fn.create_tenant(
-    _name => 'Shady Bottom Studio'::citext
-    ,_identifier => 'shady-bottom-studio'::citext
+    _name => 'Shady Bottom'::citext
+    ,_identifier => 'shady-bottom'::citext
     ,_email => 'bucket@function-bucket.net'::citext
     ,_type => 'customer'::app.tenant_type
   );
@@ -17,14 +17,14 @@ commit;
 
 begin;
   select app_fn.subscribe_tenant_to_license_pack(
-    (select id from app.tenant where identifier = 'shady-bottom-studio')
+    (select id from app.tenant where identifier = 'shady-bottom')
     ,'bandz'
   );
 commit;
 
 begin;
-  select app_fn.invite_user(id, 'brassmoose@gmail.com', 'admin') from app.tenant where identifier = 'shady-bottom-studio';
-  -- select app_fn.invite_user(id, 'EMAIL', 'user') from app.tenant where identifier = 'shady-bottom-studio';
+  select app_fn.invite_user(id, 'brassmoose@gmail.com', 'admin') from app.tenant where identifier = 'shady-bottom';
+  -- select app_fn.invite_user(id, 'EMAIL', 'user') from app.tenant where identifier = 'shady-bottom';
 
   INSERT INTO
     auth.users (
