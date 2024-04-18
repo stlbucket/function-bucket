@@ -22,8 +22,6 @@
 </template>
 
 <script lang="ts" setup>
-  // const route = useRoute();
-  
   const appStateStore = useAppStateStore()
   const currentProfileClaims = ref()
   const supabase = useSupabaseClient()
@@ -31,7 +29,6 @@
   const loadUser = async () => {
     try{
       const {data, error} = await useCurrentProfileClaimsQuery()
-      console.log(JSON.stringify(data.value))
       currentProfileClaims.value = data.value?.currentProfileClaims
     } catch (e) {
       console.log('ERROR', e)

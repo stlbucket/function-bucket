@@ -1,5 +1,5 @@
 <template>
-  <UButton @click="showModal = true">Change Password</UButton>
+  <UButton @click="showModal = true" :disabled="disablepw">Change Passwords</UButton>
   <UModal v-model="showModal">
     <UCard>
       <template #header>
@@ -56,4 +56,6 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
     navigateTo('./logout')
   }
 }
+
+const disablepw = computed(() => Math.random() > .5)
 </script>

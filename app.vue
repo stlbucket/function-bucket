@@ -13,8 +13,10 @@
 
 <script lang="ts" setup>
   const appStateStore = useAppStateStore()
+  const currentProfileClaimsQuery = useCurrentProfileClaimsQuery()
   const load = async () => {
-    await appStateStore.getCurrentProfileClaims()
+    const { data } = await currentProfileClaimsQuery.executeQuery()
+    appStateStore.storeAppUserClaims(data.value?.currentProfileClaims)
   }
   load()
 </script>

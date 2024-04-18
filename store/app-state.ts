@@ -36,6 +36,9 @@ export const useAppStateStore = defineStore('appState', {
     
   },
   actions: {
+    storeAppUserClaims (claims: any) {
+      this.currentProfileClaims = claims
+    },
     toggleNavCollapsed () {
       this.navCollapsed = !this.navCollapsed
     },
@@ -48,7 +51,7 @@ export const useAppStateStore = defineStore('appState', {
     },
     async getCurrentProfileClaims (refresh?: boolean) {
       if (refresh || !this.currentProfileClaims) {
-        this.currentProfileClaims = {displayName: 'tacos'}
+        // this.currentProfileClaims = {displayName: 'tacos'}
         // const {data, error} = await useCurrentProfileClaimsQuery()
         // this.currentProfileClaims = data.value?.currentProfileClaims
       }

@@ -19,9 +19,14 @@
 </template>
 
 <script lang="ts" setup>
+  const updateProfileMutation = useUpdateProfileMutation()
+  const getMyselfQuery = useGetMyselfQuery()
+
   const profile = ref()
   const loadData = async () => {
-    const {data, error} = await useGetMyselfQuery()
+    const {data, error} = await getMyselfQuery.executeQuery({
+      requestPolicy: 'network-only'
+    })
     profile.value = data.value?.getMyself
   }
   loadData()
@@ -60,14 +65,17 @@
     ]
   })
 
-  const onUpdate = async (profile: AppProfile) => {
-    // const result = await GqlUpdateProfile({
-    //   displayName: profile.displayName,
-    //   firstName: profile.firstName,
-    //   lastName: profile.lastName,
-    //   phone: profile.phone
-    // })
-    // await loadData()
+  const onUpdate = async (profile: any) => {
+    const {error} = await updateProfileMutation.executeMutation({
+      displayName: profile.displayName,
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      phone: profile.phone
+    })
+    if (error) {
+      console.error(error)
+    }
+    await loadData()
   }
   // const onChangePassword = async () => {
   //   const forSure = confirm('Are you sure you want to change your password?')

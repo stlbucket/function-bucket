@@ -36,13 +36,14 @@
         </div>
       </div>
     </UCard>
-    <!-- <pre>{{ JSON.stringify(currentProfileClaims,null,2) }}</pre> -->
+    <pre>{{ JSON.stringify(showNav,null,2) }}</pre>
   </USlideover>
 </template>
 
 <script lang="ts" setup>
 const appStateStore = useAppStateStore()
 const { currentProfileClaims } = storeToRefs(appStateStore)
+const claims = ref()
 
 const showNav = ref({
   all: false,
@@ -54,11 +55,12 @@ const showNav = ref({
 })
 
 const load = async () => {
-  const claims = currentProfileClaims.value
-  showNav.value.tools = claimsHasPermission(claims, 'p:address-book') || claimsHasPermission(claims, 'p:discussions') || claimsHasPermission(claims, 'p:todo')
-  showNav.value.siteAdmin = claimsHasPermission(claims, 'p:app-admin-super')
-  showNav.value.tenantAdmin = claimsHasPermission(claims, 'p:app-admin')
-  showNav.value.todo = claimsHasPermission(claims, 'p:todo')
+  const {data, error} = await useCurrentProfileClaimsQuery()
+  claims.value = data.value?.currentProfileClaims
+  showNav.value.tools = claimsHasPermission(claims.value, 'p:address-book') || claimsHasPermission(claims.value, 'p:discussions') || claimsHasPermission(claims.value, 'p:todo')
+  showNav.value.siteAdmin = claimsHasPermission(claims.value, 'p:app-admin-super')
+  showNav.value.tenantAdmin = claimsHasPermission(claims.value, 'p:app-admin')
+  showNav.value.todo = claimsHasPermission(claims.value, 'p:todo')
 }
 load()
 

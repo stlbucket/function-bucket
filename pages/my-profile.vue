@@ -1,30 +1,32 @@
 <template>
-  <div class="flex flex-col gap-2">
-    <div class="flex flex-col md:flex-row">
-      <div class="flex flex-col min-w-[50%]">
-        <Myself />
+  <ClientOnly>
+    <div class="flex flex-col gap-2">
+      <div class="flex flex-col md:flex-row">
+        <div class="flex flex-col min-w-[50%]">
+          <Myself />
+        </div>
+        <div class="flex min-w-[50%]">
+          <MyResidents/>
+        </div>
       </div>
-      <div class="flex min-w-[50%]">
-        <MyResidents/>
-      </div>
+      <UCard>
+        <template #header>
+          CURRENT PROFILE CLAIMS
+        </template>
+        <div class="flex">
+          <pre class="text-xs flex max-w-lg flex-wrap">{{ JSON.stringify(claims,null,2) }}</pre>
+        </div>
+      </UCard>
+      <!-- <UCard>
+        <template #header>
+          SUPABASE SESSION
+        </template>
+        <div class="flex">
+          <pre class="text-xs flex max-w-lg flex-wrap">{{ JSON.stringify(supSession,null,2) }}</pre>
+        </div>
+      </UCard> -->
     </div>
-    <UCard>
-      <template #header>
-        CURRENT PROFILE CLAIMS
-      </template>
-      <div class="flex">
-        <pre class="text-xs flex max-w-lg flex-wrap">{{ JSON.stringify(claims,null,2) }}</pre>
-      </div>
-    </UCard>
-    <!-- <UCard>
-      <template #header>
-        SUPABASE SESSION
-      </template>
-      <div class="flex">
-        <pre class="text-xs flex max-w-lg flex-wrap">{{ JSON.stringify(supSession,null,2) }}</pre>
-      </div>
-    </UCard> -->
-  </div>
+  </ClientOnly>
 </template>
 
 <script lang="ts" setup>

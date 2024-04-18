@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
   const props = defineProps<{
-    profile: AppProfile
+    profile: any
   }>()
 
   const showModal = ref(false)

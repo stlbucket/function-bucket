@@ -25,14 +25,17 @@
           />
           <div v-else class="flex grow justify-center">NO INACTIVE SUBSCRIPTIONS</div>
         </div>
-      </UCard>  
+      </UCard>
     </template>
   </UTabs>
+  <pre>{{  currentProfileClaims }}</pre>
 </template>
 
 <script lang="ts" setup>
-  const { currentProfileClaims } = storeToRefs(useAppStateStore())
-  const tenantSubscriptions = ref([])
+  const store = useAppStateStore()
+  const currentProfileClaims = ref(store.currentProfileClaims)
+  const tenantSubscriptions: Ref<any[]> = ref([])
+  const tenantSubscriptionsQuery = useTenantSubscriptionsQuery()
 
   const tabItems = ref([
     {
@@ -46,15 +49,21 @@
   ])
 
   const loadData = async () => {
-    // const result = await GqlTenantSubscriptions({
-    //   tenantId: currentProfileClaims.value.tenantId
-    // })
-    // tenantSubscriptions.value = result.tenantSubscriptions.nodes.map((ats:any) => {
-    //   return {
-    //     ...ats,
-    //     tenantName: ats.tenant.name
-    //   }
-    // })
+    console.log(currentProfileClaims.value.tenantId)
+    const { data } = await tenantSubscriptionsQuery.executeQuery({
+      variables: {
+        tenantId: currentProfileClaims.value.tenantId
+      },
+      requestPolicy: 'network-only'
+    })
+    if (data.value?.tenantSubscriptions) {
+      tenantSubscriptions.value = data.value.tenantSubscriptions.nodes.map((ats:any) => {
+        return {
+          ...ats,
+          tenantName: ats.tenant.name
+        }
+      })
+    }
   }
   loadData()
 
@@ -64,5 +73,10 @@
 
   const inactiveSubscriptions = computed(()=> {
     return tenantSubscriptions.value.filter((s:TenantSubscription) => String(s.status) === 'INACTIVE')
+  })
+
+  watch(currentProfileClaims.value, ()=>{
+    alert('yo')
+    loadData()
   })
   </script>

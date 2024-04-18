@@ -1,4 +1,4 @@
-/<template>
+<template>
   <div class="flex flex-col grow">
     <UCard :ui="{
       header: {
@@ -65,8 +65,6 @@
   const declineResidencyMutation = useDeclineResidentMutation()
 
   type CurrentResidencyStatus = 'INVITED' | 'ACTIVE' | 'INACTIVE' | 'UNINVITED'
-  const appStateStore = useAppStateStore()
-  const supabase = useSupabaseClient()
   const residents: Ref = ref([])
   const currentResidencyStatus: Ref<CurrentResidencyStatus> = ref('UNINVITED')
   const showModal = ref(false)
@@ -99,8 +97,6 @@
     })
     if (error) alert(error.toString())
 
-    // await supabase.auth.refreshSession()
-    // await appStateStore.getCurrentProfileClaims(true)
     reloadNuxtApp({path: '/my-profile', force: true})
   }
 
@@ -110,13 +106,11 @@
     })
     if (error) alert(error.toString())
 
-    // await supabase.auth.refreshSession()
-    // await appStateStore.getCurrentProfileClaims(true)
     reloadNuxtApp({path: '/my-profile', force: true})
   }
 
   const activeResidency = computed(()=> residents.value.find(r => String(r.status).toLowerCase() === 'active'))
   const assumableResidencies = computed(()=> residents.value.filter(r => ['inactive', 'invited'].indexOf(String(r.status).toLowerCase()) > -1))
-  // const changeResidencyDisabled = computed(()=> assumableResidencies.value.length === 0)
-  const changeResidencyDisabled = computed(()=> assumableResidencies.value.length === 0 && false)
+  const changeResidencyDisabled = computed(()=> assumableResidencies.value?.length === 0)
+  // const changeResidencyDisabled = computed(() => true)
 </script>

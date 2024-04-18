@@ -25,21 +25,12 @@
 </template>
 
 <script lang="ts" setup>
-  const residents = ref([])
+  const residents: Ref<any[]> = ref([])
+  const allResidentsQuery = useAllResidentsQuery()
 
   const loadData = async () => {
-    // const { data, error, pending, refresh } = await useAsyncGql({
-    //   operation: 'AllResidents'
-    // })
-
-    // if (error.value) {
-    //   console.error(error)
-    // }
-
-    // console.log(data.value)
-
-    // const result = await GqlAllResidents()
-    // residents.value = result.residents || []
+    const { data } = await allResidentsQuery.executeQuery()
+    residents.value = data.value?.residents || []
   }
   loadData()
 
