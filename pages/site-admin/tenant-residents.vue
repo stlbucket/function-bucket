@@ -47,7 +47,6 @@
       searchTerm: searchTerm.value
     }
   })
-  console.log(data.value?.searchResidents)
   const residents = ref((data.value?.searchResidents?.nodes || []) as unknown as Resident[])
   watch(()=>searchTerm.value, () => {
     const { data } = executeQuery()

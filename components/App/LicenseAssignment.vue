@@ -19,7 +19,7 @@
           </div>
         </template>
         <div class="flex flex-col gap-3 grow">
-          <URadio v-for="l of scopedChoices" :key="l.name" v-model="selectedScoped" v-bind="l" :disabled="userIsUser || selectedScoped === l.value" @click="onScopedLicenseChange(l.value)"/>
+          <URadio v-for="l of scopedChoices" :key="l.name" v-model="selectedScoped" v-bind="l" :disabled="userIsUser" @click="onScopedLicenseChange(l.value)"/>
         </div>
       </UCard>
       <UCard :ui="{
@@ -121,7 +121,10 @@
   }
 
   const onScopedLicenseChange = async (licenseTypeKey: string) => {
-    emit('grantLicense', licenseTypeKey)
+    const existingLicense = props.resident.licenses?.find((l:License) => l.licenseTypeKey === licenseTypeKey)
+    if (!existingLicense) {
+      emit('grantLicense', licenseTypeKey)
+    }
   }
 
   const userIsUser = computed(() => {

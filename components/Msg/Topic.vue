@@ -45,13 +45,18 @@
     title?: string
   }>()
   const { currentProfileClaims } = storeToRefs(useAppStateStore())
-  const { data } = await useDiscussionByIdQuery({
+  const { data, executeQuery } = await useDiscussionByIdQuery({
     variables: {
       topicId: props.topicId
     }
   })
   const topic = ref(data.value?.topic)
   const content = ref('')
+
+  const loadData = async () => {
+    const { data } = await executeQuery()
+    topic.value = data.value?.topic
+  }
 
   // const subscribeToTopic = async () => {
   //   const result = GqlTopicMessage({
@@ -94,12 +99,13 @@
   const sendMessageMutation = useUpsertMessageMutation()
   const handleSendMessage = async () => {
     if (!topic.value?.id) return;
-    await sendMessageMutation.executeMutation({
+    const { data } = await sendMessageMutation.executeMutation({
       messageInfo: {
         topicId: topic.value.id,
         content: content.value
       }
     })
     content.value = ''
+    await loadData()
   }
   </script>

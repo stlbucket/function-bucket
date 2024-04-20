@@ -64,9 +64,8 @@
 
   const { currentProfileClaims } = storeToRefs(appStateStore)
 
-  const residencies: Ref<Resident[]> = ref([])
-  const myProfileResidenciesQuery = await useMyProfileResidenciesQuery()
-  residencies.value = (myProfileResidenciesQuery.data.value?.myProfileResidenciesList ||[]) as unknown as Resident[]
+  const { data } = await useMyProfileResidenciesQuery()
+  const residencies = ref((data.value?.myProfileResidenciesList || []) as unknown as Resident[])
 
   const parseTokens = async () => {
     const fragment = `${window.location}`.split('#').at(1) || ''
@@ -103,11 +102,6 @@
       supUser.value = user
   }
 
-  // const loadResidencies = async () => {
-  //   // const mprResult = await GqlMyProfileResidencies()
-  //   // residencies.value = (mprResult.myProfileResidenciesList || []).filter((r: any) => r.status.toLowerCase() === 'invited')
-  // }
-
   const loadUser = async () => {
     try{
       await parseTokens()
@@ -121,26 +115,28 @@
   }
   loadUser()
 
+  const assumeResidentMutation = await useAssumeResidentMutation()
   const assumeResidency = async (row: Resident) => {
-    // const { data, error } = await GqlAssumeResident({
-    //   residentId: row.id
-    // })
-    // if (error) alert(error.toString())
+    const { data, error } = await assumeResidentMutation.executeMutation({
+      residentId: row.id
+    })
+    if (error) alert(error.toString())
 
-    // await supabase.auth.refreshSession()
-    // await appStateStore.getCurrentProfileClaims(true)
-    // navigateTo('./change-password')
+    await supabase.auth.refreshSession()
+    await appStateStore.getCurrentProfileClaims(true)
+    navigateTo('./change-password')
   }
 
+  const declineResidentMutation = await useDeclineResidentMutation()
   const declineResidency = async (row: Resident) => {
-    // const { data, error } = await GqlDeclineResident({
-    //   residentId: row.id
-    // })
-    // if (error) alert(error.toString())
+    const { data, error } = await declineResidentMutation.executeMutation({
+      residentId: row.id
+    })
+    if (error) alert(error.toString())
 
-    // await supabase.auth.refreshSession()
-    // await appStateStore.getCurrentProfileClaims(true)
-    // navigateTo('./logout')
+    await supabase.auth.refreshSession()
+    await appStateStore.getCurrentProfileClaims(true)
+    navigateTo('./logout')
   }
 
 </script>

@@ -1,83 +1,85 @@
 <template>
   <ClientOnly>
-    <UCard v-if="siteUser">
-      <template #header>
-      </template>
-      <div class="flex justify-start flex-wrap md:flex-no-wrap md:justify-between">
-        <div class="flex flex-col">
-          <UCard>
-            <template #header>
-              Active Residency
-            </template>
-            <UTable
-              :rows="activeResidency"
-              :columns="[
-                {key:'tenant_name', label: 'Tenant'},
-                {key:'display_name', label: 'Display Name'},
-                {key:'status', label: 'Status'}
-              ]"
-            >
-            </UTable>
-          </UCard>
-          <UCard>
-            <template #header>
-              Home Residency
-            </template>
-            <UTable
-              :rows="homeResidency"
-              :columns="[
-                {key:'tenant_name', label: 'Tenant'},
-                {key:'display_name', label: 'Display Name'},
-                {key:'status', label: 'Status'}
-              ]"
-            >
-            </UTable>
-          </UCard>
-          <UCard>
-            <template #header>
-              Inactive Residencies
-            </template>
-            <UTable
-              :rows="inactiveResidencies"
-              :columns="[
-                {key:'tenant_name', label: 'Tenant'},
-                {key:'display_name', label: 'Display Name'},
-                {key:'status', label: 'Status'}
-              ]"
-            >
-            </UTable>
-          </UCard>
-          <UCard>
-            <template #header>
-              Support Residencies
-            </template>
-            <UTable
-              :rows="supportResidencies"
-              :columns="[
-                {key:'tenant_name', label: 'Tenant'},
-                {key:'display_name', label: 'Display Name'},
-                {key:'status', label: 'Status'}
-              ]"
-            >
-            </UTable>
-          </UCard>
+    <div class="flex justify-between">
+      <UCard v-if="siteUser">
+        <template #header>
+        </template>
+        <div class="flex justify-start flex-wrap md:flex-no-wrap md:justify-between">
+          <div class="flex flex-col">
+            <UCard>
+              <template #header>
+                Active Residency
+              </template>
+              <UTable
+                :rows="activeResidency"
+                :columns="[
+                  {key:'tenant_name', label: 'Tenant'},
+                  {key:'display_name', label: 'Display Name'},
+                  {key:'status', label: 'Status'}
+                ]"
+              >
+              </UTable>
+            </UCard>
+            <UCard>
+              <template #header>
+                Home Residency
+              </template>
+              <UTable
+                :rows="homeResidency"
+                :columns="[
+                  {key:'tenant_name', label: 'Tenant'},
+                  {key:'display_name', label: 'Display Name'},
+                  {key:'status', label: 'Status'}
+                ]"
+              >
+              </UTable>
+            </UCard>
+            <UCard>
+              <template #header>
+                Inactive Residencies
+              </template>
+              <UTable
+                :rows="inactiveResidencies"
+                :columns="[
+                  {key:'tenant_name', label: 'Tenant'},
+                  {key:'display_name', label: 'Display Name'},
+                  {key:'status', label: 'Status'}
+                ]"
+              >
+              </UTable>
+            </UCard>
+            <UCard>
+              <template #header>
+                Support Residencies
+              </template>
+              <UTable
+                :rows="supportResidencies"
+                :columns="[
+                  {key:'tenant_name', label: 'Tenant'},
+                  {key:'display_name', label: 'Display Name'},
+                  {key:'status', label: 'Status'}
+                ]"
+              >
+              </UTable>
+            </UCard>
+          </div>
+          <!-- <div class="flex flex-col items-stretch">
+            <UCard>
+              <template #header>
+                RAW USER META DATA (user claims)
+              </template>
+              <pre class="flex">{{ JSON.stringify(siteUser.raw_user_meta_data,null,2) }}</pre>
+            </UCard>
+          </div> -->
         </div>
-        <!-- <div class="flex flex-col items-stretch">
-          <UCard>
-            <template #header>
-              RAW USER META DATA (user claims)
-            </template>
-            <pre class="flex">{{ JSON.stringify(siteUser.raw_user_meta_data,null,2) }}</pre>
-          </UCard>
-        </div> -->
-      </div>
-    </UCard>
-    <UCard>
-      <template #header>
-        ALL USER DATA (from auth provider)
-      </template>
-      <pre>{{ siteUser }}</pre>
-    </UCard>
+      </UCard>
+      <UCard>
+        <template #header>
+          ALL USER DATA (from auth provider)
+        </template>
+        <pre>{{ siteUser }}</pre>
+      </UCard>
+    </div>
   </ClientOnly>
 </template>
 

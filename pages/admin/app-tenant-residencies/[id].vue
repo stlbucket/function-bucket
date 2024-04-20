@@ -50,8 +50,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useMutation } from '@urql/vue';
-
   const componentKey = ref(1)
   const route = useRoute()
   const subscriptions: Ref<any[]> = ref([])
