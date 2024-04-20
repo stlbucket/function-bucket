@@ -35,15 +35,14 @@
       <div class="flex flex-col gap-1 grow" :key="componentKey">
         <div class="text-2xl">User Licenses by Application</div>
         <div class="text-sm">Users have one scoped license per application and any number of unscoped licenses</div>
-        <div class="flex flex-col gap-2">
-          <div class="flex justify-center text-4xl text-red-600">LicenseAssignment needs to be refactored</div>
-          <!-- <LicenseAssignment 
+        <div class="flex flex-col gap-2" v-if="residency">
+          <LicenseAssignment
             v-for="s in subscriptions"
             :license-pack="s.licensePack" 
             :resident="residency"
             @revoke-license="onRevokeLicense"
             @grant-license="onGrantLicense"
-          /> -->
+          />
         </div>
       </div>
     </UCard>
@@ -51,55 +50,71 @@
 </template>
 
 <script lang="ts" setup>
+import { useMutation } from '@urql/vue';
+
   const componentKey = ref(1)
   const route = useRoute()
-  const residency = ref()
   const subscriptions: Ref<any[]> = ref([])
 
-  const { data: residentsData } = await useResidentByIdQuery({
+  const { data: residentsData, executeQuery: executeResident } = await useResidentByIdQuery({
     variables: {
       residentId: route.params.id,
     }
   })
-  residency.value = residentsData.value?.resident
+  // @ts-ignore
+  const residency: Ref<Resident> = ref(residentsData.value?.resident)
 
-    // const { data: subscriptionsData } = await useTenantSubscriptionsQuery({
-    //   variables: {
-    //     tenantId: residency.value.tenantId
-    //   }
-    // })
-    // subscriptions.value = (subscriptionsData.value?.tenantSubscriptions || []) as any[]
-  // const loadData = async () => {
-  // }
-  // loadData()
+  const { data: subscriptionsData, executeQuery: executeSubscriptions } = await useTenantSubscriptionsQuery({
+    variables: {
+      tenantId: residency.value?.tenantId
+    }
+  })
+  subscriptions.value = (subscriptionsData.value?.tenantSubscriptions || []) as any[]
 
+  const reloadData = async() => {
+    const { data: residentsData } = await executeResident()
+    // @ts-ignore
+    residency.value = residentsData.value.resident
+
+    const { data: subscriptionsData } = await useTenantSubscriptionsQuery({
+      variables: {
+        tenantId: residency.value?.tenantId
+      }
+    })
+    subscriptions.value = (subscriptionsData.value?.tenantSubscriptions || []) as any[]
+
+  }
+
+  const revokeUserLicenseMutation = await useRevokeUserLicenseMutation()
   const onRevokeLicense = async (license:any) => {
-    // const result = await GqlRevokeUserLicense({
-    //   licenseId: license.id
-    // })
-    // await loadData()
+    await revokeUserLicenseMutation.executeMutation({
+      licenseId: license.id
+    })
+    await reloadData()
   }
 
+  const grantUserLicenseMutation = await useGrantUserLicenseMutation()
   const onGrantLicense = async (licenseTypeKey: string) => {
-    // const result = await GqlGrantUserLicense({
-    //   licenseTypeKey: licenseTypeKey,
-    //   residentId: residency.value.id
-    // })
-    // await loadData()
-    // componentKey.value += 1
+    await grantUserLicenseMutation.executeMutation({
+      licenseTypeKey: licenseTypeKey,
+      residentId: residency.value.id
+    })
+    await reloadData()
   }
 
+  const blockResidencyMutation = await useBlockResidentMutation()
   const onBlockResidency = async () => {
-    // const result = await GqlBlockResident({
-    //   residentId: residency.value.id
-    // })
-    // await loadData()
+    await blockResidencyMutation.executeMutation({
+      residentId: residency.value.id
+    })
+    await reloadData()
   }
 
+  const unblockResidencyMutation = await useUnblockResidentMutation()
   const onUnblockResidency = async () => {
-    // const result = await GqlUnblockResident({
-    //   residentId: residency.value.id
-    // })
-    // await loadData()
+    await unblockResidencyMutation.executeMutation({
+      residentId: residency.value.id
+    })
+    await reloadData()
   }
 </script>

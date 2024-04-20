@@ -5687,7 +5687,7 @@ export type AllTenantsQuery = { __typename: 'Query', tenants?: { __typename: 'Te
 export type AllApplicationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllApplicationsQuery = { __typename: 'Query', applications?: { __typename: 'ApplicationsConnection', nodes: Array<{ __typename: 'Application', key: string, name: string, licenseTypes: Array<{ __typename: 'LicenseType', key: string, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } }> } | null> } | null };
+export type AllApplicationsQuery = { __typename: 'Query', applications?: Array<{ __typename: 'Application', key: string, name: string, licenseTypes: Array<{ __typename: 'LicenseType', key: string, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } }> }> | null };
 
 export type DemoResidentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6313,19 +6313,17 @@ export function useAllTenantsQuery(options: Omit<Urql.UseQueryArgs<never, AllTen
 };
 export const AllApplicationsDocument = gql`
     query AllApplications {
-  applications {
-    nodes {
+  applications: applicationsList {
+    key
+    name
+    licenseTypes: licenseTypesByApplicationKeyList {
       key
-      name
-      licenseTypes: licenseTypesByApplicationKeyList {
-        key
-        permissions: licenseTypePermissionsByLicenseTypeKeyList {
-          licenseTypeKey
-          permissionKey
-        }
-        licenses: licensesByLicenseTypeKey {
-          totalCount
-        }
+      permissions: licenseTypePermissionsByLicenseTypeKeyList {
+        licenseTypeKey
+        permissionKey
+      }
+      licenses: licensesByLicenseTypeKey {
+        totalCount
       }
     }
   }

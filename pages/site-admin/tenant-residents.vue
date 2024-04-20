@@ -62,12 +62,5 @@
     await supabase.auth.refreshSession()
     await appStateStore.getCurrentProfileClaims(true)
     reloadNuxtApp({path: `/admin/app-tenant-residencies/${resident.id}`})
-
-    // const result = await GqlBecomeSupport({
-    //   tenantId: resident.tenantId
-    // })
-    // // console.log(result)
-    // await client.auth.refreshSession()
-    // reloadNuxtApp({path: `/admin/app-tenant-residencies/${resident.id}`})
   }
 </script>

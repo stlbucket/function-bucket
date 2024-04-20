@@ -98,21 +98,4 @@
   const homeResidency = computed(() => siteUser.value.residencies.filter((r: Resident) => String(r.type) === 'home'))
   const inactiveResidencies = computed(() => siteUser.value.residencies.filter((r: Resident) => String(r.status) !== 'active' && String(r.type) !== 'support'))
   const supportResidencies = computed(() => siteUser.value.residencies.filter((r: Resident) => String(r.type) === 'support'))
-
-  // const homeResidency = ref([])
-  // const inactiveResidencies = ref([])
-  // const supportResidencies = ref([])
-  
-  // const loadData = async () => {
-  //   const result = await GqlSiteUserById({
-  //     id: route.params.id,
-  //   })
-  //   siteUser.value = result.siteUserById.authUser
-  //   activeResidency.value = result.siteUserById.residencies.filter((r: Resident) => String(r.status) === 'active')
-  //   homeResidency.value = result.siteUserById.residencies.filter((r: Resident) => String(r.type) === 'home')
-  //   inactiveResidencies.value = result.siteUserById.residencies.filter((r: Resident) => String(r.status) !== 'active' && String(r.type) !== 'support')
-  //   supportResidencies.value = result.siteUserById.residencies.filter((r: Resident) => String(r.type) === 'support')
-  // }
-  // loadData()  
-
 </script>

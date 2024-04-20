@@ -1,27 +1,29 @@
 <template>
-  <div class="flex flex-col gap-2">
-    <div class="flex gap-2">
-      <UButton 
-        v-for="lp in licensePacks" 
-        :color="lp.key === selectedLicensePack?.key ? 'blue' : 'green'"
-        @click="onSelectLicensePack(lp)"
-      >{{ lp.key }}</UButton>
+  <ClientOnly>
+    <div class="flex flex-col gap-2">
+      <div class="flex gap-2">
+        <UButton 
+          v-for="lp in licensePacks" 
+          :color="lp.key === selectedLicensePack?.key ? 'blue' : 'green'"
+          @click="onSelectLicensePack(lp)"
+        >{{ lp.key }}</UButton>
+      </div>
+      <div class="flex md:hidden">
+        <UCard v-if="selectedLicensePack">
+          <div class="flex flex-col gap-3">
+              <LicensePackSmall :licensePack="selectedLicensePack" />
+            </div>
+        </UCard>
+      </div>
+      <div class="hidden md:flex">
+        <UCard v-if="selectedLicensePack">
+          <div class="flex flex-col gap-3">
+              <LicensePack :licensePack="selectedLicensePack" />
+            </div>
+        </UCard>
+      </div>
     </div>
-    <div class="flex md:hidden">
-      <UCard v-if="selectedLicensePack">
-        <div class="flex flex-col gap-3">
-            <LicensePackSmall :licensePack="selectedLicensePack" />
-          </div>
-      </UCard>
-    </div>
-    <div class="hidden md:flex">
-      <UCard v-if="selectedLicensePack">
-        <div class="flex flex-col gap-3">
-            <LicensePack :licensePack="selectedLicensePack" />
-          </div>
-      </UCard>
-    </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script lang="ts" setup>
