@@ -1,50 +1,53 @@
 <template>
-  <UCard v-if="residency"
-    :ui="{
-      body: {
-        base: 'flex flex-col gap-10'
-      }
-    }"
-  >
-    <template #header>
-      <div class="flex flex-col justify-between md:flex-row">
-        <div class="flex">
-          <div class="text-2xl">Tenant Resident</div>
+  <ClientOnly>
+    <UCard v-if="residency"
+      :ui="{
+        body: {
+          base: 'flex flex-col gap-10'
+        }
+      }"
+    >
+      <template #header>
+        <div class="flex flex-col justify-between md:flex-row">
+          <div class="flex">
+            <div class="text-2xl">Tenant Resident</div>
+          </div>
+          <div class="flex gap-2">
+            <UButton v-if="residency.status !== 'BLOCKED_INDIVIDUAL' && residency.status !== 'BLOCKED_TENANT'" @click="onBlockResidency" color="red">Block</UButton>
+            <UButton v-if="residency.status === 'BLOCKED_INDIVIDUAL'" @click="onUnblockResidency" color="yellow">Unblock</UButton>
+          </div>
         </div>
-        <div class="flex gap-2">
-          <UButton v-if="residency.status !== 'BLOCKED_INDIVIDUAL' && residency.status !== 'BLOCKED_TENANT'" @click="onBlockResidency" color="red">Block</UButton>
-          <UButton v-if="residency.status === 'BLOCKED_INDIVIDUAL'" @click="onUnblockResidency" color="yellow">Unblock</UButton>
+      </template>
+      <div class="flex flex-col justify-around md:flex-row">
+        <div class="flex flex-col gap-1 p-3">
+          <div class="flex text-xs">Email</div>
+          <div class="flex">{{ residency.email }}</div>
+        </div>
+        <div class="flex flex-col gap-1 p-3">
+          <div class="flex text-xs">Display Name</div>
+          <div class="flex">{{ residency.displayName }}</div>
+        </div>
+        <div class="flex flex-col gap-1 p-3">
+          <div class="flex text-xs">Status</div>
+          <div class="flex">{{ residency.status }}</div>
         </div>
       </div>
-    </template>
-    <div class="flex flex-col justify-around md:flex-row">
-      <div class="flex flex-col gap-1 p-3">
-        <div class="flex text-xs">Email</div>
-        <div class="flex">{{ residency.email }}</div>
+      <div class="flex flex-col gap-1 grow" :key="componentKey">
+        <div class="text-2xl">User Licenses by Application</div>
+        <div class="text-sm">Users have one scoped license per application and any number of unscoped licenses</div>
+        <div class="flex flex-col gap-2">
+          <div class="flex justify-center text-4xl text-red-600">LicenseAssignment needs to be refactored</div>
+          <!-- <LicenseAssignment 
+            v-for="s in subscriptions"
+            :license-pack="s.licensePack" 
+            :resident="residency"
+            @revoke-license="onRevokeLicense"
+            @grant-license="onGrantLicense"
+          /> -->
+        </div>
       </div>
-      <div class="flex flex-col gap-1 p-3">
-        <div class="flex text-xs">Display Name</div>
-        <div class="flex">{{ residency.displayName }}</div>
-      </div>
-      <div class="flex flex-col gap-1 p-3">
-        <div class="flex text-xs">Status</div>
-        <div class="flex">{{ residency.status }}</div>
-      </div>
-    </div>
-    <div class="flex flex-col gap-1 grow" :key="componentKey">
-      <div class="text-2xl">User Licenses by Application</div>
-      <div class="text-sm">Users have one scoped license per application and any number of unscoped licenses</div>
-      <div class="flex flex-col gap-2">
-        <LicenseAssignment 
-          v-for="s in subscriptions"
-          :license-pack="s.licensePack" 
-          :resident="residency"
-          @revoke-license="onRevokeLicense"
-          @grant-license="onGrantLicense"
-        />
-      </div>
-    </div>
-  </UCard>
+    </UCard>
+  </ClientOnly>
 </template>
 
 <script lang="ts" setup>
@@ -53,18 +56,22 @@
   const residency = ref()
   const subscriptions: Ref<any[]> = ref([])
 
-  const loadData = async () => {
-    // const result = await GqlResidentById({
-    //   residentId: route.params.id,
-    // })
-    // residency.value = result.resident
+  const { data: residentsData } = await useResidentByIdQuery({
+    variables: {
+      residentId: route.params.id,
+    }
+  })
+  residency.value = residentsData.value?.resident
 
-    // const subscriptionsResult = await GqlTenantSubscriptions({
-    //   tenantId: residency.value.tenantId
+    // const { data: subscriptionsData } = await useTenantSubscriptionsQuery({
+    //   variables: {
+    //     tenantId: residency.value.tenantId
+    //   }
     // })
-    // subscriptions.value = subscriptionsResult.tenantSubscriptions.nodes
-  }
-  loadData()
+    // subscriptions.value = (subscriptionsData.value?.tenantSubscriptions || []) as any[]
+  // const loadData = async () => {
+  // }
+  // loadData()
 
   const onRevokeLicense = async (license:any) => {
     // const result = await GqlRevokeUserLicense({

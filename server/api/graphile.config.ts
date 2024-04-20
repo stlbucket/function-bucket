@@ -8,8 +8,6 @@ import { makeV4Preset } from "postgraphile/presets/v4";
 import { isSafeError } from "postgraphile/grafast";
 import { GraphQLError } from "postgraphile/graphql";
 import TopicMessageSubscriptionPlugin from "./plug-ins/topicMessageSubscription.js";
-import ForumMessageSubscriptionPlugin from "./plug-ins/forumMessageSubscription.js";
-// import { ForumMessageSubscriptionPlugin } from "./plug-ins/forumMessageSubscription.js";
 
 const preset: GraphileConfig.Preset = {
   extends: [
@@ -24,8 +22,7 @@ const preset: GraphileConfig.Preset = {
   ],
 
   plugins: [
-    TopicMessageSubscriptionPlugin,
-    ForumMessageSubscriptionPlugin
+    TopicMessageSubscriptionPlugin
   ],
 
   inflection: {

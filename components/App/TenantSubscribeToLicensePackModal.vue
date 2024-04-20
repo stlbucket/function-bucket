@@ -27,14 +27,15 @@
 </template>
 
 <script lang="ts" setup>
-import type { ILicensePack, ITenant } from '~/db-types/index';
-
+  
   const props = defineProps<{
-    tenant: ITenant
+    tenant: Tenant
   }>()
 
-  const activeLicensePacks = ref([])
+  const activeLicensePacks: Ref<any[]> = ref([])
   const selectedLicensePack = ref()
+  const activeLicensePacksQuery = await useActiveLicensePacksQuery()
+  activeLicensePacks.value = (activeLicensePacksQuery.data.value?.licensePacksList || []) as any[]
 
   const showModal = ref(false)
 
@@ -57,13 +58,7 @@ import type { ILicensePack, ITenant } from '~/db-types/index';
   const saveDisabled = computed(() => {
     return !selectedLicensePack.value
   })
-
-  const loadData = async () => {
-    // const result = await GqlActiveLicensePacks()
-    // activeLicensePacks.value = result.licensePacksList
-  }
-  await loadData()
-
+  
   const addableLicensePacks = computed(() => {
     return activeLicensePacks.value
     .filter((lp: ILicensePack) => lp.key !== 'anchor')

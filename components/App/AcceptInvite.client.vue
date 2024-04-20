@@ -64,7 +64,9 @@
 
   const { currentProfileClaims } = storeToRefs(appStateStore)
 
-  const residencies = ref([])
+  const residencies: Ref<Resident[]> = ref([])
+  const myProfileResidenciesQuery = await useMyProfileResidenciesQuery()
+  residencies.value = (myProfileResidenciesQuery.data.value?.myProfileResidenciesList ||[]) as unknown as Resident[]
 
   const parseTokens = async () => {
     const fragment = `${window.location}`.split('#').at(1) || ''
@@ -101,16 +103,16 @@
       supUser.value = user
   }
 
-  const loadResidencies = async () => {
-    // const mprResult = await GqlMyProfileResidencies()
-    // residencies.value = (mprResult.myProfileResidenciesList || []).filter((r: any) => r.status.toLowerCase() === 'invited')
-  }
+  // const loadResidencies = async () => {
+  //   // const mprResult = await GqlMyProfileResidencies()
+  //   // residencies.value = (mprResult.myProfileResidenciesList || []).filter((r: any) => r.status.toLowerCase() === 'invited')
+  // }
 
   const loadUser = async () => {
     try{
       await parseTokens()
       await loadSession()
-      await loadResidencies()
+      // await loadResidencies()
       showModal.value = true
 
     } catch (e) {

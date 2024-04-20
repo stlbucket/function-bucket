@@ -1,0 +1,67 @@
+<template>
+  <ClientOnly>
+    <UCard>
+      <template #header>
+        <div class="flex justify-between">
+          <div class="text-2xl">TENANT SUPPORT</div>
+          <TenantModal @new="onNewTenant"/>
+        </div>
+      </template>
+      <div>
+        <div class="flex flex-col">
+          <div class="text-xs">SEARCH TERM</div>
+          <UInput v-model="searchTerm" data-1p-ignore />
+        </div>
+      </div>
+      <div class="hidden md:flex">
+        <TenantList :tenants="tenants" @support="onSupport"/>
+      </div>
+      <div class="flex md:hidden">
+        <TenantListSmall :tenants="tenants" @support="onSupport"/>
+      </div>
+    </UCard>
+  </ClientOnly>
+</template>
+
+<script lang="ts" setup>
+  const supabase = useSupabaseClient()
+  const appStateStore = useAppStateStore()
+  const tenants: Ref<Tenant[]> = ref([])
+  const searchTerm = ref()
+
+  const {
+    data,
+    fetching,
+    error,
+    executeQuery
+  } = await useSearchTenantsQuery({
+    variables: {
+      searchTerm: searchTerm.value
+    }
+  })
+  tenants.value = (data.value?.searchTenants?.nodes || []) as unknown as Tenant[]
+
+  const becomeSupportMutation = await useBecomeSupportMutation()
+  const onSupport = async (tenant: Tenant) => {
+    await becomeSupportMutation.executeMutation({
+      tenantId: tenant.id
+    })
+    await supabase.auth.refreshSession()
+    await appStateStore.getCurrentProfileClaims(true)
+    reloadNuxtApp({path: '/admin/app-tenant-residencies'})
+  }
+
+  const onNewTenant = async (createTenantInput: NewTenantInfo) => {
+    // const url = `/api/create-tenant`
+    // const { data, pending, error, refresh } = await useFetch(url, {
+    //   method: 'POST',
+    //   body: createTenantInput
+    // })
+
+    // if (error.value) {
+    //   alert(error.value.data.message)
+    // } else {
+    //   await loadData()
+    // }
+  }
+</script>

@@ -63,15 +63,16 @@
   import { useMutation, useQuery } from '@urql/vue';
   const assumeResidentMutation = useAssumeResidentMutation()
   const declineResidencyMutation = useDeclineResidentMutation()
+  const myProfileResidenciesQuery = await useMyProfileResidenciesQuery()
 
   type CurrentResidencyStatus = 'INVITED' | 'ACTIVE' | 'INACTIVE' | 'UNINVITED'
-  const residents: Ref = ref([])
+  const residents: Ref<Resident[]> = ref([])
   const currentResidencyStatus: Ref<CurrentResidencyStatus> = ref('UNINVITED')
   const showModal = ref(false)
 
+  residents.value = (myProfileResidenciesQuery.data.value?.myProfileResidenciesList || []) as unknown as Resident[]
+
   const loadData = async () => {
-    const {data, error} = await useMyProfileResidenciesQuery()
-    residents.value = data.value?.myProfileResidenciesList || []
     const supportingResidency = residents.value.find(r => String(r.status).toLowerCase() === 'supporting')
     const activeResidency = residents.value.find(r => String(r.status).toLowerCase() === 'active')
     const inactiveResidency = residents.value.find(r => String(r.status).toLowerCase() === 'inactive')

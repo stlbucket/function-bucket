@@ -819,12 +819,6 @@ export enum ExpirationIntervalType {
   Year = 'YEAR'
 }
 
-export type ForumMessageSubscriptionPayload = {
-  __typename: 'ForumMessageSubscriptionPayload';
-  event?: Maybe<Scalars['String']['output']>;
-  message?: Maybe<Message>;
-};
-
 /** All input for the `grantUserLicense` mutation. */
 export type GrantUserLicenseInput = {
   _licenseTypeKey?: InputMaybe<Scalars['String']['input']>;
@@ -4391,14 +4385,7 @@ export enum SubscribersOrderBy {
 /** The root subscription type: contains realtime events you can subscribe to with the `subscription` operation. */
 export type Subscription = {
   __typename: 'Subscription';
-  forumMessage?: Maybe<ForumMessageSubscriptionPayload>;
   topicMessage?: Maybe<TopicMessageSubscriptionPayload>;
-};
-
-
-/** The root subscription type: contains realtime events you can subscribe to with the `subscription` operation. */
-export type SubscriptionForumMessageArgs = {
-  forumId: Scalars['Int']['input'];
 };
 
 
@@ -7294,7 +7281,6 @@ export type GraphCacheKeysConfig = {
   DeleteTodoPayload?: (data: WithTypename<DeleteTodoPayload>) => null | string,
   DeleteTopicPayload?: (data: WithTypename<DeleteTopicPayload>) => null | string,
   ExitSupportModePayload?: (data: WithTypename<ExitSupportModePayload>) => null | string,
-  ForumMessageSubscriptionPayload?: (data: WithTypename<ForumMessageSubscriptionPayload>) => null | string,
   GrantUserLicensePayload?: (data: WithTypename<GrantUserLicensePayload>) => null | string,
   JoinAddressBookPayload?: (data: WithTypename<JoinAddressBookPayload>) => null | string,
   LeaveAddressBookPayload?: (data: WithTypename<LeaveAddressBookPayload>) => null | string,
@@ -7700,10 +7686,6 @@ export type GraphCacheResolvers = {
     resident?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, Record<string, never>, WithTypename<Resident> | string>,
     residentEdge?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, ExitSupportModePayloadResidentEdgeArgs, WithTypename<ResidentsEdge> | string>,
     tenant?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, Record<string, never>, WithTypename<Tenant> | string>
-  },
-  ForumMessageSubscriptionPayload?: {
-    event?: GraphCacheResolver<WithTypename<ForumMessageSubscriptionPayload>, Record<string, never>, Scalars['String'] | string>,
-    message?: GraphCacheResolver<WithTypename<ForumMessageSubscriptionPayload>, Record<string, never>, WithTypename<Message> | string>
   },
   GrantUserLicensePayload?: {
     clientMutationId?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, Record<string, never>, Scalars['String'] | string>,
@@ -8486,7 +8468,6 @@ export type GraphCacheUpdaters = {
     upsertTopic?: GraphCacheUpdateResolver<{ upsertTopic: Maybe<WithTypename<UpsertTopicPayload>> }, MutationUpsertTopicArgs>
   },
   Subscription?: {
-    forumMessage?: GraphCacheUpdateResolver<{ forumMessage: Maybe<WithTypename<ForumMessageSubscriptionPayload>> }, SubscriptionForumMessageArgs>,
     topicMessage?: GraphCacheUpdateResolver<{ topicMessage: Maybe<WithTypename<TopicMessageSubscriptionPayload>> }, SubscriptionTopicMessageArgs>
   },
 };

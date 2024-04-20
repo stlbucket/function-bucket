@@ -42,8 +42,10 @@
   const showExitSupportMode = computed(() => {
     return (currentProfileClaims.value?.residentId !== currentProfileClaims.value?.actualResidentId) && currentProfileClaims.value.displayName === 'Site Support'
   })
+  
+  const exitSupportModeMutation = await useExitSupportModeMutation()
   const exitSupportMode = async () => {
-    const { data, error } = await useExitSupportModeMutation()
+    const { data, error } = await exitSupportModeMutation.executeMutation({})
     if (error) alert(error.toString())
     await supabase.auth.refreshSession()
     await appStateStore.getCurrentProfileClaims(true)
