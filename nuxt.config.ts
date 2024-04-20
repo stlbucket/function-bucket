@@ -101,6 +101,18 @@ export default defineNuxtConfig({
         "path": "~/components/App",
         "global": true
       },
+      {
+        "path": "~/components/Map",
+        "global": true
+      },
+      {
+        "path": "~/components/Loc",
+        "global": true
+      },
+      {
+        "path": "~/components/Msg",
+        "global": true
+      },
       "~/components"
     ]
   },
