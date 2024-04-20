@@ -113,6 +113,10 @@ export default defineNuxtConfig({
         "path": "~/components/Msg",
         "global": true
       },
+      {
+        "path": "~/components/Todo",
+        "global": true
+      },
       "~/components"
     ]
   },

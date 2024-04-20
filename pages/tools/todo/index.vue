@@ -8,7 +8,7 @@
         </div>
         <div class="flex flex-col">
           <div class="text-xs">SEARCH TERM</div>
-          <UInput v-model="searchTerm" data-1p-ignore />
+          <UInput v-model="variables.searchTerm" data-1p-ignore />
         </div>
         <div class="flex gap-2">
           <UButton v-if="showTemplates" @click="showTemplates = false">Hide Templates</UButton>
@@ -26,27 +26,32 @@
 </template>
 
 <script lang="ts" setup>
-  const todos = ref([])
-  const searchTerm = ref()
   const showTemplates = ref(false)
-  const loadData = async () => {
-    const result = await GqlSearchTodos({
-      searchTerm: searchTerm.value,
-      isTemplate: showTemplates.value,
-      rootsOnly: true
+  const variables = reactive({
+    searchTerm: '',
+    isTemplate: showTemplates.value,
+    rootsOnly: true
+  })
+  const { data, executeQuery } = await useSearchTodosQuery({
+    variables: variables
+  })
+  const todos = ref((data.value?.searchTodos?.nodes || []) as unknown as Todo[])
+
+  const reload = async () => {
+    const { data } = await executeQuery({
+      requestPolicy: 'network-only'
     })
-    todos.value = result.searchTodos.nodes
+    todos.value = (data.value?.searchTodos?.nodes || []) as unknown as Todo []
   }
-  loadData()
 
-  watch(()=>searchTerm.value, loadData)
-  watch(()=>showTemplates.value, loadData)
+  watch(()=>variables.searchTerm, reload)
 
+  const createTodoMutation = await useCreateTodoMutation()
   const handleCreate = async (todo: Todo) => {
-    const result = await GqlCreateTodo({
+    await createTodoMutation.executeMutation({
       name: todo.name,
       description: todo.description
     })
-    await loadData()
+    await reload()
   }
 </script>

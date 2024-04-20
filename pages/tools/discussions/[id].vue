@@ -1,5 +1,5 @@
 <template>
-  <MsgTopic v-if="topicId" :topicId="topicId" />
+  <Topic v-if="topicId" :topicId="topicId" />
 </template>
 
 <script lang="ts" setup>
