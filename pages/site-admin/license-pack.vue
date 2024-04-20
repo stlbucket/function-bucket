@@ -25,15 +25,9 @@
 </template>
 
 <script lang="ts" setup>
-  const licensePacks: Ref<LicensePack[]> = ref([])
-  const selectedLicensePack: Ref<LicensePack | undefined> = ref()
-
-  const loadData = async () => {
-    const result = await GqlAllLicensePacks()
-    licensePacks.value = result.licensePacks.nodes
-    selectedLicensePack.value = licensePacks.value[0]
-  }
-  loadData()
+  const { data, executeQuery } = await useAllLicensePacksQuery()
+  const licensePacks: Ref<LicensePack[]> = ref((data.value?.licensePacks || []) as unknown as LicensePack[])
+  const selectedLicensePack = ref(licensePacks.value[0])
 
   const onSelectLicensePack = async (licensePack: LicensePack) => {
     selectedLicensePack.value = licensePack

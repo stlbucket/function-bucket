@@ -5697,7 +5697,7 @@ export type DemoResidentsQuery = { __typename: 'Query', demoProfileResidencies?:
 export type AllLicensePacksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllLicensePacksQuery = { __typename: 'Query', licensePacks?: { __typename: 'LicensePacksConnection', nodes: Array<{ __typename: 'LicensePack', key: string, displayName: string, description: string, licensePackLicenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string, numberOfLicenses: number, expirationIntervalType: ExpirationIntervalType, expirationIntervalMultiplier: number, issuedCount?: number | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null }>, tenantSubscriptions: { __typename: 'TenantSubscriptionsConnection', totalCount: number } } | null> } | null };
+export type AllLicensePacksQuery = { __typename: 'Query', licensePacks?: Array<{ __typename: 'LicensePack', key: string, displayName: string, description: string, licensePackLicenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string, numberOfLicenses: number, expirationIntervalType: ExpirationIntervalType, expirationIntervalMultiplier: number, issuedCount?: number | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null }>, tenantSubscriptions: { __typename: 'TenantSubscriptionsConnection', totalCount: number } }> | null };
 
 export type AllResidentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5726,7 +5726,7 @@ export type TenantSubscriptionsQueryVariables = Exact<{
 }>;
 
 
-export type TenantSubscriptionsQuery = { __typename: 'Query', tenantSubscriptions?: { __typename: 'TenantSubscriptionsConnection', nodes: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus, tenant?: { __typename: 'Tenant', id: any, name: string, type: TenantType } | null, licenses: { __typename: 'LicensesConnection', totalCount: number }, licensePack?: { __typename: 'LicensePack', key: string, displayName: string, description: string, licensePackLicenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string, numberOfLicenses: number, expirationIntervalType: ExpirationIntervalType, expirationIntervalMultiplier: number, issuedCount?: number | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null }> } | null } | null> } | null };
+export type TenantSubscriptionsQuery = { __typename: 'Query', tenantSubscriptions?: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus, tenant?: { __typename: 'Tenant', id: any, name: string, type: TenantType } | null, licenses: { __typename: 'LicensesConnection', totalCount: number }, licensePack?: { __typename: 'LicensePack', key: string, displayName: string, description: string, licensePackLicenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string, numberOfLicenses: number, expirationIntervalType: ExpirationIntervalType, expirationIntervalMultiplier: number, issuedCount?: number | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null }> } | null }> | null };
 
 export type CurrentProfileClaimsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6353,34 +6353,32 @@ export function useDemoResidentsQuery(options: Omit<Urql.UseQueryArgs<never, Dem
 };
 export const AllLicensePacksDocument = gql`
     query AllLicensePacks {
-  licensePacks {
-    nodes {
-      key
-      displayName
-      description
-      licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
-        licensePackKey
-        licenseTypeKey
-        numberOfLicenses
-        expirationIntervalType
-        expirationIntervalMultiplier
-        issuedCount
-        licenseType {
-          key
-          displayName
-          assignmentScope
-          permissions: licenseTypePermissionsByLicenseTypeKeyList {
-            licenseTypeKey
-            permissionKey
-          }
-          licenses: licensesByLicenseTypeKey {
-            totalCount
-          }
+  licensePacks: licensePacksList {
+    key
+    displayName
+    description
+    licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
+      licensePackKey
+      licenseTypeKey
+      numberOfLicenses
+      expirationIntervalType
+      expirationIntervalMultiplier
+      issuedCount
+      licenseType {
+        key
+        displayName
+        assignmentScope
+        permissions: licenseTypePermissionsByLicenseTypeKeyList {
+          licenseTypeKey
+          permissionKey
+        }
+        licenses: licensesByLicenseTypeKey {
+          totalCount
         }
       }
-      tenantSubscriptions: tenantSubscriptionsByLicensePackKey {
-        totalCount
-      }
+    }
+    tenantSubscriptions: tenantSubscriptionsByLicensePackKey {
+      totalCount
     }
   }
 }
@@ -6481,41 +6479,39 @@ export function useTenantResidentsQuery(options: Omit<Urql.UseQueryArgs<never, T
 };
 export const TenantSubscriptionsDocument = gql`
     query TenantSubscriptions($tenantId: UUID!) {
-  tenantSubscriptions(condition: {tenantId: $tenantId}) {
-    nodes {
+  tenantSubscriptions: tenantSubscriptionsList(condition: {tenantId: $tenantId}) {
+    id
+    licensePackKey
+    status
+    tenant {
       id
-      licensePackKey
-      status
-      tenant {
-        id
-        name
-        type
-      }
-      licenses {
-        totalCount
-      }
-      licensePack {
-        key
-        displayName
-        description
-        licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
-          licensePackKey
-          licenseTypeKey
-          numberOfLicenses
-          expirationIntervalType
-          expirationIntervalMultiplier
-          issuedCount
-          licenseType {
-            key
-            displayName
-            assignmentScope
-            permissions: licenseTypePermissionsByLicenseTypeKeyList {
-              licenseTypeKey
-              permissionKey
-            }
-            licenses: licensesByLicenseTypeKey {
-              totalCount
-            }
+      name
+      type
+    }
+    licenses {
+      totalCount
+    }
+    licensePack {
+      key
+      displayName
+      description
+      licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
+        licensePackKey
+        licenseTypeKey
+        numberOfLicenses
+        expirationIntervalType
+        expirationIntervalMultiplier
+        issuedCount
+        licenseType {
+          key
+          displayName
+          assignmentScope
+          permissions: licenseTypePermissionsByLicenseTypeKeyList {
+            licenseTypeKey
+            permissionKey
+          }
+          licenses: licensesByLicenseTypeKey {
+            totalCount
           }
         }
       }
