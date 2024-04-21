@@ -1,4 +1,4 @@
-# SupaNuxtPhile
+# SupaNuxtFast - AKA - FunctionBucket
 
 ## Documentation
 The documentation is built with [vitepress](https://vitepress.dev/).  To run it:
