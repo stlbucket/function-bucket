@@ -118,6 +118,10 @@ export default defineNuxtConfig({
         "path": "~/components/Todo",
         "global": true
       },
+      {
+        "path": "~/components/Dev",
+        "global": true
+      },
       "~/components"
     ]
   },

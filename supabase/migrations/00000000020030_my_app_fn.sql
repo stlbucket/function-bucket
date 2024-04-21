@@ -1,9 +1,9 @@
 
 -----------------------------------------------
--- script realz_fn and realz_api schema functions
+-- script my_app_fn and my_app_api schema functions
 -----------------------------------------------
------------------------------------ install_realz_application
-CREATE OR REPLACE FUNCTION realz_fn.install_realz_application()
+----------------------------------- install_my_app_application
+CREATE OR REPLACE FUNCTION my_app_fn.install_my_app_application()
   RETURNS app.application
   LANGUAGE plpgsql
   VOLATILE
@@ -13,9 +13,9 @@ CREATE OR REPLACE FUNCTION realz_fn.install_realz_application()
     _application app.application;
   BEGIN
     _application := app_fn.install_basic_application(
-      _key => 'realz'
-      ,_name => 'Realz'
-      ,_description => 'Custom tools for real estate sales.'
+      _key => 'my_app'
+      ,_name => 'my_app'
+      ,_description => 'A custom app for me.'
       ,_auto_subscribe => false
     );
     return _application;

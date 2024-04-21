@@ -23,18 +23,10 @@
 
 <script lang="ts" setup>
   const appStateStore = useAppStateStore()
-  const currentProfileClaims = ref()
   const supabase = useSupabaseClient()
-
-  const loadUser = async () => {
-    try{
-      const {data, error} = await useCurrentProfileClaimsQuery()
-      currentProfileClaims.value = data.value?.currentProfileClaims
-    } catch (e) {
-      console.log('ERROR', e)
-    }
-  }
-  loadUser()
+  
+  const {data, error} = await useCurrentProfileClaimsQuery()
+  const currentProfileClaims = ref(data.value?.currentProfileClaims)
 
   const handleLogout = async () => {
     navigateTo('/logout')

@@ -2979,6 +2979,14 @@ export type Query = Node & {
   tenants?: Maybe<TenantsConnection>;
   /** Reads a set of `Tenant`. */
   tenantsList?: Maybe<Array<Tenant>>;
+  /** Get a single `Thing`. */
+  thing?: Maybe<Thing>;
+  /** Reads a single `Thing` using its globally unique `ID`. */
+  thingByNodeId?: Maybe<Thing>;
+  /** Reads and enables pagination through a set of `Thing`. */
+  things?: Maybe<ThingsConnection>;
+  /** Reads a set of `Thing`. */
+  thingsList?: Maybe<Array<Thing>>;
   throwError?: Maybe<Scalars['Boolean']['output']>;
   /** Get a single `Todo`. */
   todo?: Maybe<Todo>;
@@ -3872,6 +3880,39 @@ export type QueryTenantsListArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryThingArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryThingByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryThingsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ThingCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ThingsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryThingsListArgs = {
+  condition?: InputMaybe<ThingCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ThingsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryThrowErrorArgs = {
   _message?: InputMaybe<Scalars['String']['input']>;
 };
@@ -4419,6 +4460,10 @@ export type Tenant = Node & {
   tenantSubscriptions: TenantSubscriptionsConnection;
   /** Reads and enables pagination through a set of `TenantSubscription`. */
   tenantSubscriptionsList: Array<TenantSubscription>;
+  /** Reads and enables pagination through a set of `Thing`. */
+  things: ThingsConnection;
+  /** Reads and enables pagination through a set of `Thing`. */
+  thingsList: Array<Thing>;
   /** Reads a single `TodoTenant` that is related to this `Tenant`. */
   todoTenant?: Maybe<TodoTenant>;
   type: TenantType;
@@ -4480,6 +4525,25 @@ export type TenantTenantSubscriptionsListArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TenantSubscriptionsOrderBy>>;
+};
+
+
+export type TenantThingsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ThingCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ThingsOrderBy>>;
+};
+
+
+export type TenantThingsListArgs = {
+  condition?: InputMaybe<ThingCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ThingsOrderBy>>;
 };
 
 /** A condition to be used against `Tenant` object types. All fields are tested for equality and combined with a logical ‘and.’ */
@@ -4659,6 +4723,72 @@ export enum TenantsOrderBy {
   TypeDesc = 'TYPE_DESC',
   UpdatedAtAsc = 'UPDATED_AT_ASC',
   UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
+export type Thing = Node & {
+  __typename: 'Thing';
+  id: Scalars['UUID']['output'];
+  name: Scalars['String']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  status?: Maybe<ThingStatus>;
+  /** Reads a single `Tenant` that is related to this `Thing`. */
+  tenant?: Maybe<Tenant>;
+  tenantId: Scalars['UUID']['output'];
+};
+
+/** A condition to be used against `Thing` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type ThingCondition = {
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `status` field. */
+  status?: InputMaybe<ThingStatus>;
+  /** Checks for equality with the object’s `tenantId` field. */
+  tenantId?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+export enum ThingStatus {
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE'
+}
+
+/** A connection to a list of `Thing` values. */
+export type ThingsConnection = {
+  __typename: 'ThingsConnection';
+  /** A list of edges which contains the `Thing` and cursor to aid in pagination. */
+  edges: Array<Maybe<ThingsEdge>>;
+  /** A list of `Thing` objects. */
+  nodes: Array<Maybe<Thing>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Thing` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Thing` edge in the connection. */
+export type ThingsEdge = {
+  __typename: 'ThingsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Thing` at the end of the edge. */
+  node?: Maybe<Thing>;
+};
+
+/** Methods to use when ordering `Thing`. */
+export enum ThingsOrderBy {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  StatusAsc = 'STATUS_ASC',
+  StatusDesc = 'STATUS_DESC',
+  TenantIdAsc = 'TENANT_ID_ASC',
+  TenantIdDesc = 'TENANT_ID_DESC'
 }
 
 export type Todo = Node & {
@@ -7368,6 +7498,9 @@ export type GraphCacheKeysConfig = {
   TenantSubscriptionsEdge?: (data: WithTypename<TenantSubscriptionsEdge>) => null | string,
   TenantsConnection?: (data: WithTypename<TenantsConnection>) => null | string,
   TenantsEdge?: (data: WithTypename<TenantsEdge>) => null | string,
+  Thing?: (data: WithTypename<Thing>) => null | string,
+  ThingsConnection?: (data: WithTypename<ThingsConnection>) => null | string,
+  ThingsEdge?: (data: WithTypename<ThingsEdge>) => null | string,
   Todo?: (data: WithTypename<Todo>) => null | string,
   TodoResident?: (data: WithTypename<TodoResident>) => null | string,
   TodoResidentsConnection?: (data: WithTypename<TodoResidentsConnection>) => null | string,
@@ -7455,7 +7588,7 @@ export type GraphCacheResolvers = {
     msgTenantsList?: GraphCacheResolver<WithTypename<Query>, QueryMsgTenantsListArgs, Array<WithTypename<MsgTenant> | string>>,
     myProfileResidencies?: GraphCacheResolver<WithTypename<Query>, QueryMyProfileResidenciesArgs, WithTypename<ResidentsConnection> | string>,
     myProfileResidenciesList?: GraphCacheResolver<WithTypename<Query>, QueryMyProfileResidenciesListArgs, Array<WithTypename<Resident> | string>>,
-    node?: GraphCacheResolver<WithTypename<Query>, QueryNodeArgs, WithTypename<AppSetting> | WithTypename<Application> | WithTypename<License> | WithTypename<LicensePack> | WithTypename<LicensePackLicenseType> | WithTypename<LicenseType> | WithTypename<LocResident> | WithTypename<LocTenant> | WithTypename<Location> | WithTypename<Message> | WithTypename<MsgResident> | WithTypename<MsgTenant> | WithTypename<Permission> | WithTypename<Profile> | WithTypename<Query> | WithTypename<Resident> | WithTypename<Subscriber> | WithTypename<Tenant> | WithTypename<TenantSubscription> | WithTypename<Todo> | WithTypename<TodoResident> | WithTypename<TodoTenant> | WithTypename<Topic> | string>,
+    node?: GraphCacheResolver<WithTypename<Query>, QueryNodeArgs, WithTypename<AppSetting> | WithTypename<Application> | WithTypename<License> | WithTypename<LicensePack> | WithTypename<LicensePackLicenseType> | WithTypename<LicenseType> | WithTypename<LocResident> | WithTypename<LocTenant> | WithTypename<Location> | WithTypename<Message> | WithTypename<MsgResident> | WithTypename<MsgTenant> | WithTypename<Permission> | WithTypename<Profile> | WithTypename<Query> | WithTypename<Resident> | WithTypename<Subscriber> | WithTypename<Tenant> | WithTypename<TenantSubscription> | WithTypename<Thing> | WithTypename<Todo> | WithTypename<TodoResident> | WithTypename<TodoTenant> | WithTypename<Topic> | string>,
     nodeId?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, Scalars['ID'] | string>,
     permission?: GraphCacheResolver<WithTypename<Query>, QueryPermissionArgs, WithTypename<Permission> | string>,
     permissionByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryPermissionByNodeIdArgs, WithTypename<Permission> | string>,
@@ -7502,6 +7635,10 @@ export type GraphCacheResolvers = {
     tenantSubscriptionsList?: GraphCacheResolver<WithTypename<Query>, QueryTenantSubscriptionsListArgs, Array<WithTypename<TenantSubscription> | string>>,
     tenants?: GraphCacheResolver<WithTypename<Query>, QueryTenantsArgs, WithTypename<TenantsConnection> | string>,
     tenantsList?: GraphCacheResolver<WithTypename<Query>, QueryTenantsListArgs, Array<WithTypename<Tenant> | string>>,
+    thing?: GraphCacheResolver<WithTypename<Query>, QueryThingArgs, WithTypename<Thing> | string>,
+    thingByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryThingByNodeIdArgs, WithTypename<Thing> | string>,
+    things?: GraphCacheResolver<WithTypename<Query>, QueryThingsArgs, WithTypename<ThingsConnection> | string>,
+    thingsList?: GraphCacheResolver<WithTypename<Query>, QueryThingsListArgs, Array<WithTypename<Thing> | string>>,
     throwError?: GraphCacheResolver<WithTypename<Query>, QueryThrowErrorArgs, Scalars['Boolean'] | string>,
     todo?: GraphCacheResolver<WithTypename<Query>, QueryTodoArgs, WithTypename<Todo> | string>,
     todoByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryTodoByNodeIdArgs, WithTypename<Todo> | string>,
@@ -8182,6 +8319,8 @@ export type GraphCacheResolvers = {
     status?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, TenantStatus | string>,
     tenantSubscriptions?: GraphCacheResolver<WithTypename<Tenant>, TenantTenantSubscriptionsArgs, WithTypename<TenantSubscriptionsConnection> | string>,
     tenantSubscriptionsList?: GraphCacheResolver<WithTypename<Tenant>, TenantTenantSubscriptionsListArgs, Array<WithTypename<TenantSubscription> | string>>,
+    things?: GraphCacheResolver<WithTypename<Tenant>, TenantThingsArgs, WithTypename<ThingsConnection> | string>,
+    thingsList?: GraphCacheResolver<WithTypename<Tenant>, TenantThingsListArgs, Array<WithTypename<Thing> | string>>,
     todoTenant?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, WithTypename<TodoTenant> | string>,
     type?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, TenantType | string>,
     updatedAt?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, Scalars['Datetime'] | string>
@@ -8218,6 +8357,24 @@ export type GraphCacheResolvers = {
   TenantsEdge?: {
     cursor?: GraphCacheResolver<WithTypename<TenantsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
     node?: GraphCacheResolver<WithTypename<TenantsEdge>, Record<string, never>, WithTypename<Tenant> | string>
+  },
+  Thing?: {
+    id?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, Scalars['UUID'] | string>,
+    name?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, Scalars['String'] | string>,
+    nodeId?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, Scalars['ID'] | string>,
+    status?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, ThingStatus | string>,
+    tenant?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, WithTypename<Tenant> | string>,
+    tenantId?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, Scalars['UUID'] | string>
+  },
+  ThingsConnection?: {
+    edges?: GraphCacheResolver<WithTypename<ThingsConnection>, Record<string, never>, Array<WithTypename<ThingsEdge> | string>>,
+    nodes?: GraphCacheResolver<WithTypename<ThingsConnection>, Record<string, never>, Array<WithTypename<Thing> | string>>,
+    pageInfo?: GraphCacheResolver<WithTypename<ThingsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
+    totalCount?: GraphCacheResolver<WithTypename<ThingsConnection>, Record<string, never>, Scalars['Int'] | string>
+  },
+  ThingsEdge?: {
+    cursor?: GraphCacheResolver<WithTypename<ThingsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
+    node?: GraphCacheResolver<WithTypename<ThingsEdge>, Record<string, never>, WithTypename<Thing> | string>
   },
   Todo?: {
     createdAt?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Datetime'] | string>,

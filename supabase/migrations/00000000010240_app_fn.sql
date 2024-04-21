@@ -1045,6 +1045,5 @@ CREATE OR REPLACE FUNCTION app_api.throw_error(_message citext default 'GENERICE
   DECLARE
   BEGIN
     raise exception 'ERROR:  %', _message;
-    -- raise exception 'ERROR:  %', _message;
   end;
   $$;  

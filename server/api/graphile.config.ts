@@ -56,10 +56,10 @@ const preset: GraphileConfig.Preset = {
     context: async (requestContext, args) => {
       const GRAPHILE_DEBUG_LOG = useRuntimeConfig().GRAPHILE_DEBUG_LOG
 
-      if (GRAPHILE_DEBUG_LOG) {
-        console.log('GRAPHILE CONFIG REQUEST CONTEXT', requestContext)
-        console.log('========================================================================')
-      }
+      // if (GRAPHILE_DEBUG_LOG) {
+      //   console.log('GRAPHILE CONFIG REQUEST CONTEXT', requestContext)
+      //   console.log('========================================================================')
+      // }
 
       let user;
       let claims;
@@ -109,9 +109,9 @@ const preset: GraphileConfig.Preset = {
 
     maskError(error) {
       // console.error("------------------------------ maskError was called with the following error:");
-      // console.error(error);
+      // console.error('ACTUAL', error);
       console.error("------------------------------ ERROR ---------------");
-      console.error(error.originalError);
+      console.error('ORIGINAL', error.originalError);
       console.error("------------------------------ END ERROR -----------");
 
       // You probably don't want this level of debugging in production as the

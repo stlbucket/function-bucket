@@ -54,11 +54,6 @@
   const content = ref('')
   const topicMessages = ref(topic.value?.messages)
 
-  const loadData = async () => {
-    const { data } = await executeQuery()
-    topic.value = data.value?.topic
-  }
-
   const handleSubscription = (messages = [], response: TopicMessageSubscription) => {
     if (response.topicMessage?.message) {
       const existing = (topicMessages.value || [])
@@ -70,9 +65,7 @@
     return [...messages, response.topicMessage?.message];
   };
 
-  const {
-    data: subscriptionData, error
-  } = useTopicMessageSubscription(
+  useTopicMessageSubscription(
     {
       variables: {
         topicId: topic.value?.id
@@ -80,23 +73,7 @@
     },
     // @ts-ignore
     handleSubscription
-  )
-
-  // const subscribeToTopic = async () => {
-  //   const result = GqlTopicMessage({
-  //     topicId: props.topicId
-  //   })
-  //   console.log('result', result)
-    
-  //   result.subscribe({
-  //     next({ data }) {
-  //       if (data) {
-  //         console.log("We got something!", data);
-  //       }
-  //     },
-  //   });
-  // }
-  // subscribeToTopic()
+  );
 
   const preppedMessages = computed(() => {
     return topicMessages.value?.map((m: any) => {

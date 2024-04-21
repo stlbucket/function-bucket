@@ -1,34 +1,31 @@
 \x on
 \pset pager off
------------------------------  ANCHOR TENANT
+-----------------------------  TENANT
+
+begin;
+    select my_app_fn.install_my_app_application();
+commit;
+
 begin;
   select app_fn.create_tenant(
-    _name => 'JSM Rentals'::citext
-    ,_identifier => 'jsm-rentals'::citext
+    _name => 'My App Tenant'::citext
+    ,_identifier => 'my-app'::citext
     ,_email => 'bucket@function-bucket.net'::citext
     ,_type => 'customer'::app.tenant_type
   );
 commit;
 
 begin;
-    select gearz_fn.install_gearz_application();
-commit;
-
-begin;
-  -- select app_fn.subscribe_tenant_to_license_pack(
-  --   (select id from app.tenant where identifier = 'anchor')
-  --   ,'gearz'
-  -- );
-
   select app_fn.subscribe_tenant_to_license_pack(
-    (select id from app.tenant where identifier = 'jsm-rentals')
-    ,'gearz'
+    (select id from app.tenant where identifier = 'my-app')
+    ,'my_app'
   );
 commit;
 
 begin;
-  select app_fn.invite_user(id, 'jhschmitty@gmail.com', 'user') from app.tenant where identifier = 'jsm-rentals';
-  -- select app_fn.invite_user(id, 'EMAIL', 'user') from app.tenant where identifier = 'jsm-rentals';
+  select app_fn.invite_user(id, 'my-app-tenant-admin@example.com', 'admin') from app.tenant where identifier = 'my-app';
+  select app_fn.invite_user(id, 'my-app-tenant-user@example.com', 'user') from app.tenant where identifier = 'my-app';
+  -- select app_fn.invite_user(id, 'EMAIL', 'user') from app.tenant where identifier = 'my-app';
 
   INSERT INTO
     auth.users (
@@ -37,7 +34,11 @@ begin;
     )
     values
       (
-        'jhschmitty@gmail.com',  -- this is the line that matters
+        'my-app-tenant-admin@example.com',  -- this is the line that matters
+        '00000000-0000-0000-0000-000000000000', uuid_generate_v4 (), 'authenticated', 'authenticated', crypt ('poiuytre', gen_salt ('bf')), current_timestamp, current_timestamp, current_timestamp, '{"provider":"email","providers":["email"]}', '{}', current_timestamp, current_timestamp, '', '', '', ''
+      )
+      ,(
+        'my-app-tenant-user@example.com',  -- this is the line that matters
         '00000000-0000-0000-0000-000000000000', uuid_generate_v4 (), 'authenticated', 'authenticated', crypt ('poiuytre', gen_salt ('bf')), current_timestamp, current_timestamp, current_timestamp, '{"provider":"email","providers":["email"]}', '{}', current_timestamp, current_timestamp, '', '', '', ''
       )
       -- ,(
@@ -53,7 +54,8 @@ begin;
       from auth.users
       where email in (
         -- add all emails here
-        'jhschmitty@gmail.com'
+        'my-app-tenant-admin@example.com'
+        ,'my-app-tenant-user@example.com'
         -- ,'EMAIL'
       )
     );

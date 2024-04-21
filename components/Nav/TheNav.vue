@@ -34,6 +34,10 @@
           <div v-if="showNav.all">Site Admin</div>
           <SiteAdminNav />    
         </div>
+        <div v-if="showNav.siteAdmin">
+          <div v-if="showNav.all">Dev</div>
+          <DevNav />  
+        </div>
       </div>
     </UCard>
     <pre>{{ JSON.stringify(showNav,null,2) }}</pre>
@@ -51,7 +55,7 @@ const showNav = ref({
   addressBook: false,
   tools: false,
   tenantAdmin: false,
-  siteAdmin: false,
+  siteAdmin: false
 })
 
 const load = async () => {
