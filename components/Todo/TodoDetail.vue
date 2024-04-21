@@ -3,7 +3,7 @@
     <template #header>
       <div class="flex justify-between">
         <div class="flex gap-5">
-          <div class="text-2xl">WE HEART TODO:</div>
+          <div class="text-2xl">TODO:</div>
           <div class="text-2xl">{{ todoTree.name }}</div>
         </div>
         <div class="flex gap-5">

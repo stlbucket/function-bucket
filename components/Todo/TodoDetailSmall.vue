@@ -3,7 +3,7 @@
     <template #header>
       <div class="flex justify-between">
         <div class="flex flex-col">
-          <div class="">WE HEART TODO</div>
+          <div class="">TODO</div>
           <div class="">{{ todoTree.name }}</div>
         </div>
         <div class="flex gap-5">
