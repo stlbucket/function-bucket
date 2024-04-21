@@ -5151,6 +5151,7 @@ export type TopicMessageSubscriptionPayload = {
   __typename: 'TopicMessageSubscriptionPayload';
   event?: Maybe<Scalars['String']['output']>;
   message?: Maybe<Message>;
+  messageId?: Maybe<Scalars['UUID']['output']>;
 };
 
 export enum TopicStatus {
@@ -5810,6 +5811,13 @@ export type DiscussionByIdQueryVariables = Exact<{
 
 
 export type DiscussionByIdQuery = { __typename: 'Query', topic?: { __typename: 'Topic', id: any, name: string, identifier?: string | null, status: TopicStatus, subscribers: Array<{ __typename: 'Subscriber', id: any, status: SubscriberStatus, lastRead: any, msgResident?: { __typename: 'MsgResident', residentId: any, displayName: string } | null }>, messages: Array<{ __typename: 'Message', id: any, createdAt: any, status: MessageStatus, content: string, postedBy?: { __typename: 'MsgResident', residentId: any, displayName: string } | null }> } | null };
+
+export type TopicMessageSubscriptionVariables = Exact<{
+  topicId: Scalars['UUID']['input'];
+}>;
+
+
+export type TopicMessageSubscription = { __typename: 'Subscription', topicMessage?: { __typename: 'TopicMessageSubscriptionPayload', event?: string | null, messageId?: any | null, message?: { __typename: 'Message', id: any, createdAt: any, status: MessageStatus, content: string, postedBy?: { __typename: 'MsgResident', residentId: any, displayName: string } | null } | null } | null };
 
 export type ResidentFragFragment = { __typename: 'Resident', id: any, tenantName: string, email: string, displayName?: string | null, status: ResidentStatus };
 
@@ -6786,6 +6794,29 @@ export const DiscussionByIdDocument = gql`
 
 export function useDiscussionByIdQuery(options: Omit<Urql.UseQueryArgs<never, DiscussionByIdQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DiscussionByIdQuery>({ query: DiscussionByIdDocument, ...options });
+};
+export const TopicMessageDocument = gql`
+    subscription TopicMessage($topicId: UUID!) {
+  topicMessage(topicId: $topicId) {
+    message {
+      id
+      createdAt
+      status
+      content
+      postedBy: postedByMsgResident {
+        residentId
+        displayName
+      }
+      __typename
+    }
+    event
+    messageId
+  }
+}
+    `;
+
+export function useTopicMessageSubscription<R = TopicMessageSubscription>(options: Omit<Urql.UseSubscriptionArgs<never, TopicMessageSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandlerArg<TopicMessageSubscription, R>) {
+  return Urql.useSubscription<TopicMessageSubscription, R, TopicMessageSubscriptionVariables>({ query: TopicMessageDocument, ...options }, handler);
 };
 export const CreateLocationDocument = gql`
     mutation CreateLocation($locationInfo: LocationInfoInput!) {
@@ -8287,7 +8318,8 @@ export type GraphCacheResolvers = {
   },
   TopicMessageSubscriptionPayload?: {
     event?: GraphCacheResolver<WithTypename<TopicMessageSubscriptionPayload>, Record<string, never>, Scalars['String'] | string>,
-    message?: GraphCacheResolver<WithTypename<TopicMessageSubscriptionPayload>, Record<string, never>, WithTypename<Message> | string>
+    message?: GraphCacheResolver<WithTypename<TopicMessageSubscriptionPayload>, Record<string, never>, WithTypename<Message> | string>,
+    messageId?: GraphCacheResolver<WithTypename<TopicMessageSubscriptionPayload>, Record<string, never>, Scalars['UUID'] | string>
   },
   TopicsConnection?: {
     edges?: GraphCacheResolver<WithTypename<TopicsConnection>, Record<string, never>, Array<WithTypename<TopicsEdge> | string>>,

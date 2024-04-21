@@ -52,11 +52,35 @@
   })
   const topic = ref(data.value?.topic)
   const content = ref('')
+  const topicMessages = ref(topic.value?.messages)
 
   const loadData = async () => {
     const { data } = await executeQuery()
     topic.value = data.value?.topic
   }
+
+  const handleSubscription = (messages = [], response: TopicMessageSubscription) => {
+    if (response.topicMessage?.message) {
+      const existing = (topicMessages.value || [])
+      const allMessages = [...existing, response.topicMessage?.message]
+      console.log('ALL MESSAGES', JSON.stringify(allMessages,null,2))
+      // @ts-ignore
+      topicMessages.value = allMessages
+    }
+    return [...messages, response.topicMessage?.message];
+  };
+
+  const {
+    data: subscriptionData, error
+  } = useTopicMessageSubscription(
+    {
+      variables: {
+        topicId: topic.value?.id
+      }
+    },
+    // @ts-ignore
+    handleSubscription
+  )
 
   // const subscribeToTopic = async () => {
   //   const result = GqlTopicMessage({
@@ -75,7 +99,7 @@
   // subscribeToTopic()
 
   const preppedMessages = computed(() => {
-    return topic.value?.messages.map((m: any) => {
+    return topicMessages.value?.map((m: any) => {
       const side = currentProfileClaims.value.displayName === m.postedBy.displayName ? 'right' : 'left'
       return {
         ...m,
@@ -106,6 +130,6 @@
       }
     })
     content.value = ''
-    await loadData()
+    // await loadData()
   }
   </script>

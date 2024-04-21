@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // import defaultTheme from 'tailwindcss/defaultTheme'
 export default defineNuxtConfig({
+  ssr: false,
   nitro: {
     experimental: {
       websocket: true

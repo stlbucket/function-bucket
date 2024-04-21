@@ -8,6 +8,9 @@ import { makeV4Preset } from "postgraphile/presets/v4";
 import { isSafeError } from "postgraphile/grafast";
 import { GraphQLError } from "postgraphile/graphql";
 import TopicMessageSubscriptionPlugin from "./plug-ins/topicMessageSubscription.js";
+import { getWsMessageClaims } from "../_common/get-ws-message-claims.js";
+import { getH3EventClaims } from "../_common/get-h3-event-claims.js";
+// import { ForumMessageSubscriptionPlugin } from "./plug-ins/forumMessageSubscription.js";
 
 const preset: GraphileConfig.Preset = {
   extends: [
@@ -22,7 +25,7 @@ const preset: GraphileConfig.Preset = {
   ],
 
   plugins: [
-    TopicMessageSubscriptionPlugin
+    TopicMessageSubscriptionPlugin,
   ],
 
   inflection: {
@@ -51,15 +54,24 @@ const preset: GraphileConfig.Preset = {
     explain: true,  
     /* options for Grafast, including setting GraphQL context*/
     context: async (requestContext, args) => {
-      // this is where user session data set in 
-      // server/middleware/auth is used to pass into the query context
-      const session = requestContext.h3v1?.event.context.session
-      if (session === 'INVALID SESSION') {
-        throw new Error(session)
-      }
-      const user = session?.user
-      const claims = requestContext.h3v1?.event.context.claims
       const GRAPHILE_DEBUG_LOG = useRuntimeConfig().GRAPHILE_DEBUG_LOG
+
+      if (GRAPHILE_DEBUG_LOG) {
+        console.log('GRAPHILE CONFIG REQUEST CONTEXT', requestContext)
+        console.log('========================================================================')
+      }
+
+      let user;
+      let claims;
+      if (requestContext.ws) {
+        const wsAuth = await getWsMessageClaims(requestContext)
+        user = wsAuth.user
+        claims = wsAuth.claims
+      } else if (requestContext.h3v1) {
+        const h3Auth = await getH3EventClaims(requestContext.h3v1.event)
+        user = h3Auth.user
+        claims = h3Auth.claims
+      }
 
       if (GRAPHILE_DEBUG_LOG) {
         console.log('GRAPHILE REQUEST......................', {
@@ -93,7 +105,7 @@ const preset: GraphileConfig.Preset = {
     graphiqlPath: "/api/graphiql",
     graphiqlOnGraphQLGET: true,
     graphqlOverGET: false,
-    // websockets: true,
+    websockets: true,
 
     maskError(error) {
       // console.error("------------------------------ maskError was called with the following error:");

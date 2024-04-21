@@ -1,0 +1,17 @@
+subscription TopicMessage($topicId: UUID!) {
+  topicMessage(topicId: $topicId) {
+    message {
+      id
+      createdAt
+      status
+      content
+      postedBy: postedByMsgResident {
+        residentId
+        displayName
+      }
+		  __typename
+    }
+    event
+  	messageId
+  }
+}
