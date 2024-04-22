@@ -25,7 +25,7 @@
     "@graphql-codegen/urql-introspection": "2.2.1",
     "@graphql-eslint/eslint-plugin": "3.20.1",
     "@nuxt/devtools": "latest",
-    "@nuxtjs/pwa": "^3.3.5",
+    "@nuxtjs/pwa": "^3.1.2",
     "@pinia-plugin-persistedstate/nuxt": "^1.2",
     "@types/node": "^18",
     "graphile-export": "^0.0.2-beta.11",
@@ -37,9 +37,8 @@
     "vue-router": "^4.3.0"
   },
   "dependencies": {
-    "@nuxt/ui": "^2.15.0",
-    "nuxt": "^3.11.2",
     "@graphile/simplify-inflection": "^8.0.0-beta.4",
+    "@nuxt/ui": "^2.15.0",
     "@nuxtjs/supabase": "^1.1.6",
     "@pinia/nuxt": "^0.5.1",
     "@urql/core": "3.1.1",
@@ -51,14 +50,15 @@
     "graphile": "^5.0.0-alpha.13",
     "graphile-utils": "^5.0.0-beta.20",
     "graphql": "^16.8.1",
+    "nuxt": "^3.11.2",
     "pg": "^8.11.3",
     "pinia": "^2.1.7",
     "postgraphile": "^5.0.0-beta.21",
-    "supabase": "^1.148.6",
+    "supabase": "^1.162.4",
     "zod": "^3.22.4"
   },
   "overrides": {
-    "@supabase/supabase-js": "2.39.7"
+    "@supabase/supabase-js": "2.42.5"
   },
   "resolutions": {
     "vue": "^3.4.21"
