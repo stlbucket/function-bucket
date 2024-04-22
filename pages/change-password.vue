@@ -51,6 +51,6 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
       </UButton>
     </UForm>
   </UCard>
-  <pre>{{ JSON.stringify(user,null,2) }}</pre>
+  <!-- <pre>{{ JSON.stringify(user,null,2) }}</pre> -->
 </template>
 

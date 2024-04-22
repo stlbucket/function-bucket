@@ -40,7 +40,6 @@
         </div>
       </div>
     </UCard>
-    <pre>{{ JSON.stringify(showNav,null,2) }}</pre>
   </USlideover>
 </template>
 
