@@ -5,6 +5,7 @@
 .nitro
 .cache
 dist
+.dist
 
 # Node dependencies
 node_modules
@@ -27,3 +28,5 @@ logs
 sw.*
 
 _cruft
+
+docs/.vitepress/cache
