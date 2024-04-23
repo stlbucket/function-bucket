@@ -5,21 +5,7 @@ mutation CreateLocation(
     _locationInfo: $locationInfo
   }) {
     location {
-      id
-      resident {
-        displayName
-        residentId
-      }
-      tenantId
-      name
-      address1
-      address2
-      city
-      state
-      postalCode
-      country
-      lat
-      lon
+      ...Location
     }
   }
 }

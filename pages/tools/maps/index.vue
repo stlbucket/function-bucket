@@ -33,7 +33,7 @@
 import type { ILocation } from '~/_cruft/db-types';
 
   const { data, executeQuery } = await useAllLocationsQuery()
-  const locations = ref((data.value?.locations?.nodes || []) as unknown as any)
+  const locations = ref((data.value?.locations || []) as unknown as any)
   const markedLocations: Ref<ILocation[]> = ref([])
   const appStateStore = useAppStateStore()
 

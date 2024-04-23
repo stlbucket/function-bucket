@@ -5961,12 +5961,14 @@ export type TopicMessageSubscriptionVariables = Exact<{
 
 export type TopicMessageSubscription = { __typename: 'Subscription', topicMessage?: { __typename: 'TopicMessageSubscriptionPayload', event?: string | null, messageId?: any | null, message?: { __typename: 'Message', id: any, createdAt: any, status: MessageStatus, content: string, postedBy?: { __typename: 'MsgResident', residentId: any, displayName: string } | null } | null } | null };
 
+export type LocationFragment = { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, country?: string | null, postalCode?: string | null, lat?: string | null, lon?: string | null };
+
 export type CreateLocationMutationVariables = Exact<{
   locationInfo: LocationInfoInput;
 }>;
 
 
-export type CreateLocationMutation = { __typename: 'Mutation', createLocation?: { __typename: 'CreateLocationPayload', location?: { __typename: 'Location', id: any, tenantId: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, postalCode?: string | null, country?: string | null, lat?: string | null, lon?: string | null, resident?: { __typename: 'LocResident', displayName: string, residentId: any } | null } | null } | null };
+export type CreateLocationMutation = { __typename: 'Mutation', createLocation?: { __typename: 'CreateLocationPayload', location?: { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, country?: string | null, postalCode?: string | null, lat?: string | null, lon?: string | null } | null } | null };
 
 export type DeleteLocationMutationVariables = Exact<{
   locationId: Scalars['UUID']['input'];
@@ -5985,7 +5987,7 @@ export type UpdateLocationMutation = { __typename: 'Mutation', updateLocation?: 
 export type AllLocationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllLocationsQuery = { __typename: 'Query', locations?: { __typename: 'LocationsConnection', nodes: Array<{ __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, country?: string | null, postalCode?: string | null, lat?: string | null, lon?: string | null } | null> } | null };
+export type AllLocationsQuery = { __typename: 'Query', locations?: Array<{ __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, country?: string | null, postalCode?: string | null, lat?: string | null, lon?: string | null }> | null };
 
 export type CreateTodoMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -6171,6 +6173,20 @@ export const TenantSubscriptionFragmentDoc = gql`
   id
   licensePackKey
   status
+}
+    `;
+export const LocationFragmentDoc = gql`
+    fragment Location on Location {
+  id
+  name
+  address1
+  address2
+  city
+  state
+  country
+  postalCode
+  lat
+  lon
 }
     `;
 export const JoinAddressBookDocument = gql`
@@ -6864,25 +6880,11 @@ export const CreateLocationDocument = gql`
     mutation CreateLocation($locationInfo: LocationInfoInput!) {
   createLocation(input: {_locationInfo: $locationInfo}) {
     location {
-      id
-      resident {
-        displayName
-        residentId
-      }
-      tenantId
-      name
-      address1
-      address2
-      city
-      state
-      postalCode
-      country
-      lat
-      lon
+      ...Location
     }
   }
 }
-    `;
+    ${LocationFragmentDoc}`;
 
 export function useCreateLocationMutation() {
   return Urql.useMutation<CreateLocationMutation, CreateLocationMutationVariables>(CreateLocationDocument);
@@ -6902,42 +6904,22 @@ export const UpdateLocationDocument = gql`
     mutation UpdateLocation($locationInfo: LocationInfoInput!) {
   updateLocation(input: {_locationInfo: $locationInfo}) {
     location {
-      id
-      name
-      address1
-      address2
-      city
-      state
-      country
-      postalCode
-      lat
-      lon
+      ...Location
     }
   }
 }
-    `;
+    ${LocationFragmentDoc}`;
 
 export function useUpdateLocationMutation() {
   return Urql.useMutation<UpdateLocationMutation, UpdateLocationMutationVariables>(UpdateLocationDocument);
 };
 export const AllLocationsDocument = gql`
     query AllLocations {
-  locations {
-    nodes {
-      id
-      name
-      address1
-      address2
-      city
-      state
-      country
-      postalCode
-      lat
-      lon
-    }
+  locations: locationsList {
+    ...Location
   }
 }
-    `;
+    ${LocationFragmentDoc}`;
 
 export function useAllLocationsQuery(options: Omit<Urql.UseQueryArgs<never, AllLocationsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<AllLocationsQuery>({ query: AllLocationsDocument, ...options });
