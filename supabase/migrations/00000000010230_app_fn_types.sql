@@ -36,11 +36,28 @@ create type app_fn.license_pack_info as (
   ,auto_subscribe boolean
 );
 ----------------------------------------------------------------------------------------------
+create type app_fn.tool_info as (
+  key citext
+  ,name citext
+  ,permission_keys citext[]
+  ,default_icon_key citext
+  ,route citext
+);
+----------------------------------------------------------------------------------------------
+create type app_fn.module_info as (
+  key citext
+  ,name citext
+  ,permission_keys citext[]
+  ,default_icon_key citext
+  ,tools app_fn.tool_info[]
+);
+----------------------------------------------------------------------------------------------
 create type app_fn.application_info as (
   key citext
   ,name citext
   ,license_type_infos app_fn.license_type_info[]
   ,license_pack_infos app_fn.license_pack_info[]
+  ,modules app_fn.module_info[]
 );
 ----------------------------------------------------------------------------------------------
 create type app_fn.ab_listing as (

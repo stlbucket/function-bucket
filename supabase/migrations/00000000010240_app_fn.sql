@@ -7,6 +7,8 @@ CREATE OR REPLACE FUNCTION app_fn.install_application(_application_info app_fn.a
   AS $function$
   DECLARE
     _application app.application;
+    _module_info app_fn.module_info;
+    _tool_info app_fn.tool_info;
     _license_pack app.license_pack;
     _license_type_info app_fn.license_type_info;
     _license_pack_license_type_info app_fn.license_pack_license_type_info;
@@ -26,6 +28,42 @@ CREATE OR REPLACE FUNCTION app_fn.install_application(_application_info app_fn.a
       returning *
       into _application
       ;
+
+    foreach _module_info in array(coalesce(_application_info.modules,'{}'::app_fn.module_info[]))
+    loop
+      insert into app.module(
+        key
+        ,application_key
+        ,name
+        ,permission_keys
+        ,default_icon_key
+      ) values (
+        _module_info.key
+        ,_application.key
+        ,_module_info.name
+        ,coalesce(_module_info.permission_keys, '{}'::citext[])
+        ,_module_info.default_icon_key
+      );
+
+      foreach _tool_info in array(coalesce(_module_info.tools,'{}'::app_fn.tool_info[]))
+      loop
+        insert into app.tool(
+          key
+          ,module_key
+          ,name
+          ,permission_keys
+          ,default_icon_key
+          ,route
+        ) values (
+          _tool_info.key
+          ,_module_info.key
+          ,_tool_info.name
+          ,_tool_info.permission_keys
+          ,_tool_info.default_icon_key
+          ,_tool_info.route
+        );
+      end loop;
+    end loop;
 
     foreach _license_type_info in array(_application_info.license_type_infos)
     loop
@@ -106,6 +144,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_basic_application(
     ,_name citext
     ,_description citext
     ,_auto_subscribe boolean
+    ,_modules app_fn.module_info[]
   )
   RETURNS app.application
   LANGUAGE plpgsql
@@ -156,6 +195,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_basic_application(
               ,_auto_subscribe
             )::app_fn.license_pack_info
           ]::app_fn.license_pack_info[]
+          ,_modules::app_fn.module_info[]
         )::app_fn.application_info)
       )
     ;
@@ -258,6 +298,38 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
             ,true
           )::app_fn.license_pack_info
         ]::app_fn.license_pack_info[]
+        ,array[
+          row(
+            'base-tools'::citext
+            ,'Tools'::citext
+            ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
+            ,null::citext
+            ,array[
+              row(
+                'address-book'::citext
+                ,'Address Book'::citext
+                ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
+                ,null::citext
+                ,'/tools/address-book'
+              )::app_fn.tool_info
+            ]::app_fn.tool_info[]
+          )::app_fn.module_info
+          ,row(
+            'base-admin'::citext
+            ,'Admin'::citext
+            ,'{"p:app-admin","p:app-super_admin"}'::citext[]
+            ,null::citext
+            ,array[
+              row(
+                'base-admin-subscriptions'::citext
+                ,'Subscriptions'::citext
+                ,'{"p:app-admin","p:app-super-admin"}'::citext[]
+                ,null::citext
+                ,'/admin/subscriptions'
+              )::app_fn.tool_info
+            ]::app_fn.tool_info[]
+          )::app_fn.module_info
+        ]::app_fn.module_info[]
       )::app_fn.application_info
     );
 

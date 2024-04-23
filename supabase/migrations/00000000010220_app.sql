@@ -74,6 +74,21 @@ CREATE TABLE app.application (
   key citext PRIMARY KEY
   ,name citext not null
 );
+CREATE TABLE app.module (
+  key citext primary key
+  ,application_key citext not null references app.application(key)
+  ,name citext not null
+  ,permission_keys citext[] not null default '{}'::citext[]
+  ,default_icon_key citext
+);
+CREATE TABLE app.tool (
+  key citext primary key
+  ,module_key citext not null references app.module(key)
+  ,name citext not null
+  ,permission_keys citext[] not null default '{}'::citext[]
+  ,default_icon_key citext
+  ,route citext not null
+);
 --------------------------------------------------------------------------------------------
 CREATE TABLE app.app_settings (
   key citext PRIMARY KEY
