@@ -5928,6 +5928,12 @@ export type ThrowErrorQueryVariables = Exact<{
 
 export type ThrowErrorQuery = { __typename: 'Query', throwError?: boolean | null };
 
+export type MessageFragment = { __typename: 'Message', id: any, createdAt: any, status: MessageStatus, content: string, postedBy?: { __typename: 'MsgResident', residentId: any, displayName: string } | null };
+
+export type SubscriberFragment = { __typename: 'Subscriber', id: any, status: SubscriberStatus, lastRead: any, msgResident?: { __typename: 'MsgResident', residentId: any, displayName: string } | null };
+
+export type TopicFragment = { __typename: 'Topic', id: any, name: string, identifier?: string | null, status: TopicStatus };
+
 export type UpsertMessageMutationVariables = Exact<{
   messageInfo: MessageInfoInput;
 }>;
@@ -5945,7 +5951,7 @@ export type UpsertTopicMutation = { __typename: 'Mutation', upsertTopic?: { __ty
 export type AllDiscussionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllDiscussionsQuery = { __typename: 'Query', topics?: { __typename: 'TopicsConnection', nodes: Array<{ __typename: 'Topic', id: any, name: string, status: TopicStatus, subscribers: Array<{ __typename: 'Subscriber', id: any, status: SubscriberStatus, msgResident?: { __typename: 'MsgResident', residentId: any, displayName: string } | null }>, messages: { __typename: 'MessagesConnection', totalCount: number } } | null> } | null };
+export type AllDiscussionsQuery = { __typename: 'Query', topics?: { __typename: 'TopicsConnection', nodes: Array<{ __typename: 'Topic', id: any, name: string, identifier?: string | null, status: TopicStatus, subscribers: Array<{ __typename: 'Subscriber', id: any, status: SubscriberStatus, lastRead: any, msgResident?: { __typename: 'MsgResident', residentId: any, displayName: string } | null }>, messages: { __typename: 'MessagesConnection', totalCount: number } } | null> } | null };
 
 export type DiscussionByIdQueryVariables = Exact<{
   topicId: Scalars['UUID']['input'];
@@ -5988,6 +5994,8 @@ export type AllLocationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllLocationsQuery = { __typename: 'Query', locations?: Array<{ __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, country?: string | null, postalCode?: string | null, lat?: string | null, lon?: string | null }> | null };
+
+export type TodoFragment = { __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any };
 
 export type CreateTodoMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -6042,7 +6050,7 @@ export type AssignTodoMutationVariables = Exact<{
 }>;
 
 
-export type AssignTodoMutation = { __typename: 'Mutation', assignTodo?: { __typename: 'AssignTodoPayload', todo?: { __typename: 'Todo', id: any, name: string, description?: string | null, residentId?: any | null, status: TodoStatus, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null } | null } | null };
+export type AssignTodoMutation = { __typename: 'Mutation', assignTodo?: { __typename: 'AssignTodoPayload', todo?: { __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null } | null } | null };
 
 export type SearchTodosQueryVariables = Exact<{
   searchTerm?: InputMaybe<Scalars['String']['input']>;
@@ -6052,14 +6060,14 @@ export type SearchTodosQueryVariables = Exact<{
 }>;
 
 
-export type SearchTodosQuery = { __typename: 'Query', searchTodos?: { __typename: 'TodosConnection', nodes: Array<{ __typename: 'Todo', id: any, name: string, description?: string | null, status: TodoStatus, type: TodoType, createdAt: any, updatedAt: any, resident?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, parentTodo?: { __typename: 'Todo', id: any, name: string, description?: string | null } | null, tenant?: { __typename: 'TodoTenant', tenantId: any, name: string } | null } | null> } | null };
+export type SearchTodosQuery = { __typename: 'Query', searchTodos?: { __typename: 'TodosConnection', nodes: Array<{ __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any, resident?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, parentTodo?: { __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any } | null, tenant?: { __typename: 'TodoTenant', tenantId: any, name: string } | null } | null> } | null };
 
 export type TodoByIdQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type TodoByIdQuery = { __typename: 'Query', todo?: { __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any, location?: { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, postalCode?: string | null, country?: string | null, lat?: string | null, lon?: string | null } | null, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, children: Array<{ __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any, location?: { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, postalCode?: string | null, country?: string | null, lat?: string | null, lon?: string | null } | null, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, children: Array<{ __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any, location?: { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, postalCode?: string | null, country?: string | null, lat?: string | null, lon?: string | null } | null, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, children: Array<{ __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, location?: { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, postalCode?: string | null, country?: string | null, lat?: string | null, lon?: string | null } | null, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, hiddenChildren: { __typename: 'TodosConnection', totalCount: number } }> }> }> } | null };
+export type TodoByIdQuery = { __typename: 'Query', todo?: { __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any, location?: { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, country?: string | null, postalCode?: string | null, lat?: string | null, lon?: string | null } | null, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, children: Array<{ __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any, location?: { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, country?: string | null, postalCode?: string | null, lat?: string | null, lon?: string | null } | null, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, children: Array<{ __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any, location?: { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, country?: string | null, postalCode?: string | null, lat?: string | null, lon?: string | null } | null, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, children: Array<{ __typename: 'Todo', id: any, name: string, description?: string | null, type: TodoType, status: TodoStatus, createdAt: any, updatedAt: any, parentTodoId?: any | null, rootTodoId: any, isTemplate: boolean, topicId: any, location?: { __typename: 'Location', id: any, name?: string | null, address1?: string | null, address2?: string | null, city?: string | null, state?: string | null, country?: string | null, postalCode?: string | null, lat?: string | null, lon?: string | null } | null, owner?: { __typename: 'TodoResident', residentId: any, displayName: string } | null, hiddenChildren: { __typename: 'TodosConnection', totalCount: number } }> }> }> } | null };
 
 export type TodoByIdForRefreshQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -6175,6 +6183,37 @@ export const TenantSubscriptionFragmentDoc = gql`
   status
 }
     `;
+export const MessageFragmentDoc = gql`
+    fragment Message on Message {
+  id
+  createdAt
+  status
+  content
+  postedBy: postedByMsgResident {
+    residentId
+    displayName
+  }
+}
+    `;
+export const SubscriberFragmentDoc = gql`
+    fragment Subscriber on Subscriber {
+  id
+  status
+  lastRead
+  msgResident {
+    residentId
+    displayName
+  }
+}
+    `;
+export const TopicFragmentDoc = gql`
+    fragment Topic on Topic {
+  id
+  name
+  identifier
+  status
+}
+    `;
 export const LocationFragmentDoc = gql`
     fragment Location on Location {
   id
@@ -6187,6 +6226,21 @@ export const LocationFragmentDoc = gql`
   postalCode
   lat
   lon
+}
+    `;
+export const TodoFragmentDoc = gql`
+    fragment Todo on Todo {
+  id
+  name
+  description
+  type
+  status
+  createdAt
+  updatedAt
+  parentTodoId
+  rootTodoId
+  isTemplate
+  topicId
 }
     `;
 export const JoinAddressBookDocument = gql`
@@ -6798,16 +6852,9 @@ export const AllDiscussionsDocument = gql`
     query AllDiscussions {
   topics {
     nodes {
-      id
-      name
-      status
+      ...Topic
       subscribers: subscribersList {
-        id
-        status
-        msgResident {
-          residentId
-          displayName
-        }
+        ...Subscriber
       }
       messages {
         totalCount
@@ -6815,7 +6862,8 @@ export const AllDiscussionsDocument = gql`
     }
   }
 }
-    `;
+    ${TopicFragmentDoc}
+${SubscriberFragmentDoc}`;
 
 export function useAllDiscussionsQuery(options: Omit<Urql.UseQueryArgs<never, AllDiscussionsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<AllDiscussionsQuery>({ query: AllDiscussionsDocument, ...options });
@@ -6823,32 +6871,18 @@ export function useAllDiscussionsQuery(options: Omit<Urql.UseQueryArgs<never, Al
 export const DiscussionByIdDocument = gql`
     query DiscussionById($topicId: UUID!) {
   topic(id: $topicId) {
-    id
-    name
-    identifier
-    status
+    ...Topic
     subscribers: subscribersList {
-      id
-      status
-      lastRead
-      msgResident {
-        residentId
-        displayName
-      }
+      ...Subscriber
     }
     messages: messagesList {
-      id
-      createdAt
-      status
-      content
-      postedBy: postedByMsgResident {
-        residentId
-        displayName
-      }
+      ...Message
     }
   }
 }
-    `;
+    ${TopicFragmentDoc}
+${SubscriberFragmentDoc}
+${MessageFragmentDoc}`;
 
 export function useDiscussionByIdQuery(options: Omit<Urql.UseQueryArgs<never, DiscussionByIdQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DiscussionByIdQuery>({ query: DiscussionByIdDocument, ...options });
@@ -6857,21 +6891,14 @@ export const TopicMessageDocument = gql`
     subscription TopicMessage($topicId: UUID!) {
   topicMessage(topicId: $topicId) {
     message {
-      id
-      createdAt
-      status
-      content
-      postedBy: postedByMsgResident {
-        residentId
-        displayName
-      }
+      ...Message
       __typename
     }
     event
     messageId
   }
 }
-    `;
+    ${MessageFragmentDoc}`;
 
 export function useTopicMessageSubscription<R = TopicMessageSubscription>(options: Omit<Urql.UseSubscriptionArgs<never, TopicMessageSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandlerArg<TopicMessageSubscription, R>) {
   return Urql.useSubscription<TopicMessageSubscription, R, TopicMessageSubscriptionVariables>({ query: TopicMessageDocument, ...options }, handler);
@@ -7068,11 +7095,7 @@ export const AssignTodoDocument = gql`
     mutation AssignTodo($todoId: UUID!, $residentId: UUID!) {
   assignTodo(input: {_todoId: $todoId, _residentId: $residentId}) {
     todo {
-      id
-      name
-      description
-      residentId
-      status
+      ...Todo
       owner: resident {
         residentId
         displayName
@@ -7080,7 +7103,7 @@ export const AssignTodoDocument = gql`
     }
   }
 }
-    `;
+    ${TodoFragmentDoc}`;
 
 export function useAssignTodoMutation() {
   return Urql.useMutation<AssignTodoMutation, AssignTodoMutationVariables>(AssignTodoDocument);
@@ -7091,21 +7114,13 @@ export const SearchTodosDocument = gql`
     _options: {searchTerm: $searchTerm, todoType: $todoType, rootsOnly: $rootsOnly, isTemplate: $isTemplate}
   ) {
     nodes {
-      id
-      name
-      description
-      status
-      type
-      createdAt
-      updatedAt
+      ...Todo
       resident {
         residentId
         displayName
       }
       parentTodo {
-        id
-        name
-        description
+        ...Todo
       }
       tenant {
         tenantId
@@ -7114,7 +7129,7 @@ export const SearchTodosDocument = gql`
     }
   }
 }
-    `;
+    ${TodoFragmentDoc}`;
 
 export function useSearchTodosQuery(options: Omit<Urql.UseQueryArgs<never, SearchTodosQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SearchTodosQuery>({ query: SearchTodosDocument, ...options });
@@ -7122,111 +7137,36 @@ export function useSearchTodosQuery(options: Omit<Urql.UseQueryArgs<never, Searc
 export const TodoByIdDocument = gql`
     query TodoById($id: UUID!) {
   todo(id: $id) {
-    id
-    name
-    description
-    type
-    status
-    createdAt
-    updatedAt
-    parentTodoId
-    rootTodoId
-    isTemplate
-    topicId
+    ...Todo
     location {
-      id
-      name
-      address1
-      address2
-      city
-      state
-      postalCode
-      country
-      lat
-      lon
+      ...Location
     }
     owner: resident {
       residentId
       displayName
     }
     children: todosByParentTodoIdList {
-      id
-      name
-      description
-      type
-      status
-      createdAt
-      updatedAt
-      parentTodoId
-      rootTodoId
-      isTemplate
-      topicId
+      ...Todo
       location {
-        id
-        name
-        address1
-        address2
-        city
-        state
-        postalCode
-        country
-        lat
-        lon
+        ...Location
       }
       owner: resident {
         residentId
         displayName
       }
       children: todosByParentTodoIdList {
-        id
-        name
-        description
-        type
-        status
-        createdAt
-        updatedAt
-        parentTodoId
-        rootTodoId
-        isTemplate
-        topicId
+        ...Todo
         location {
-          id
-          name
-          address1
-          address2
-          city
-          state
-          postalCode
-          country
-          lat
-          lon
+          ...Location
         }
         owner: resident {
           residentId
           displayName
         }
         children: todosByParentTodoIdList {
-          id
-          name
-          description
-          type
-          status
-          createdAt
-          updatedAt
-          parentTodoId
-          rootTodoId
-          isTemplate
+          ...Todo
           location {
-            id
-            name
-            address1
-            address2
-            city
-            state
-            postalCode
-            country
-            lat
-            lon
+            ...Location
           }
           owner: resident {
             residentId
@@ -7240,7 +7180,8 @@ export const TodoByIdDocument = gql`
     }
   }
 }
-    `;
+    ${TodoFragmentDoc}
+${LocationFragmentDoc}`;
 
 export function useTodoByIdQuery(options: Omit<Urql.UseQueryArgs<never, TodoByIdQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TodoByIdQuery>({ query: TodoByIdDocument, ...options });

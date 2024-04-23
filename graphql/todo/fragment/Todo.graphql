@@ -1,0 +1,13 @@
+fragment Todo on Todo {
+  id
+  name
+  description
+  type
+  status
+  createdAt
+  updatedAt
+  parentTodoId
+  rootTodoId
+  isTemplate
+  topicId
+}

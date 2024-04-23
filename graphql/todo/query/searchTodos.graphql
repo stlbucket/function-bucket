@@ -13,21 +13,13 @@ query SearchTodos(
   	}
   ){
     nodes {
-      id
-      name
-      description
-      status
-      type
-      createdAt
-      updatedAt
+      ...Todo
       resident {
         residentId
         displayName
       }
       parentTodo {
-        id
-        name
-        description
+        ...Todo
       }
       tenant {
         tenantId

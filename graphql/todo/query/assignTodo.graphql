@@ -7,11 +7,7 @@ mutation AssignTodo(
     _residentId: $residentId
   }) {
     todo {
-      id
-      name
-      description
-      residentId
-      status
+      ...Todo
       owner: resident {
         residentId
         displayName
