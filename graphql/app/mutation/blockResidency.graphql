@@ -5,11 +5,7 @@ mutation BlockResident(
     _residentId: $residentId
   }) {
     resident {
-      id
-      email
-      tenantName
-      status
-      displayName
+      ...Resident
     }
   }
 }

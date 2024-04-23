@@ -5,9 +5,7 @@ mutation DeactivateTenantSubscription(
     _tenantSubscriptionId: $tenantSubscriptionId
   }) {
     tenantSubscription {
-      id
-      licensePackKey
-      status
+      ...TenantSubscription
     }
   }
 }

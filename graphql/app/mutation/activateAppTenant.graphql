@@ -5,9 +5,7 @@ mutation ActivateTenant(
     _tenantId: $tenantId
   }) {
     tenant {
-      id
-      name
-      status
+      ...Tenant
     }
   }
 }

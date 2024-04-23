@@ -5,13 +5,7 @@ mutation AssumeResident(
     _residentId: $residentId
   }) {
     resident {
-      id
-      tenantId
-      profileId
-      tenantName
-      createdAt
-      email
-      status
+      ...Resident
     }
   }
 }

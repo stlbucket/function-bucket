@@ -5,13 +5,7 @@ mutation DeclineResident(
     _residentId: $residentId
   }) {
     resident {
-      id
-      tenantId
-      profileId
-      tenantName
-      createdAt
-      email
-      status
+      ...Resident
     }
   }
 }

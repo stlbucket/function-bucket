@@ -5,9 +5,7 @@ mutation DeactivateTenant(
     _tenantId: $tenantId
   }) {
     tenant {
-      id
-      name
-      status
+      ...Tenant
     }
   }
 }

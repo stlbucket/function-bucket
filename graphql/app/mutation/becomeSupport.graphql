@@ -5,11 +5,7 @@ mutation BecomeSupport(
     _tenantId: $tenantId
   }) {
     resident {
-      id
-      email
-      displayName
-      tenantName
-      status
+      ...Resident
     }
   }
 }

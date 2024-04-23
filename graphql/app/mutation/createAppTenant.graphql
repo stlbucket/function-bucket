@@ -7,8 +7,7 @@ mutation CreateTenant(
     _email: $email    
   }) {
     tenant {
-      id
-      name
+      ...Tenant
     }
   }
 }

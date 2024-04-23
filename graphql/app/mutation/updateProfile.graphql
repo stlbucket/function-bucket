@@ -11,12 +11,7 @@ mutation UpdateProfile(
     _phone: $phone
   }) {
     profile {
-      id
-      email
-      displayName
-      firstName
-      lastName
-      phone
+      ...Profile
     }
   }
 }

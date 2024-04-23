@@ -5718,28 +5718,28 @@ export type ActivateTenantMutationVariables = Exact<{
 }>;
 
 
-export type ActivateTenantMutation = { __typename: 'Mutation', activateTenant?: { __typename: 'ActivateTenantPayload', tenant?: { __typename: 'Tenant', id: any, name: string, status: TenantStatus } | null } | null };
+export type ActivateTenantMutation = { __typename: 'Mutation', activateTenant?: { __typename: 'ActivateTenantPayload', tenant?: { __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null } | null };
 
 export type AssumeResidentMutationVariables = Exact<{
   residentId: Scalars['UUID']['input'];
 }>;
 
 
-export type AssumeResidentMutation = { __typename: 'Mutation', assumeResidency?: { __typename: 'AssumeResidencyPayload', resident?: { __typename: 'Resident', id: any, tenantId: any, profileId?: any | null, tenantName: string, createdAt: any, email: string, status: ResidentStatus } | null } | null };
+export type AssumeResidentMutation = { __typename: 'Mutation', assumeResidency?: { __typename: 'AssumeResidencyPayload', resident?: { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType } | null } | null };
 
 export type BecomeSupportMutationVariables = Exact<{
   tenantId: Scalars['UUID']['input'];
 }>;
 
 
-export type BecomeSupportMutation = { __typename: 'Mutation', becomeSupport?: { __typename: 'BecomeSupportPayload', resident?: { __typename: 'Resident', id: any, email: string, displayName?: string | null, tenantName: string, status: ResidentStatus } | null } | null };
+export type BecomeSupportMutation = { __typename: 'Mutation', becomeSupport?: { __typename: 'BecomeSupportPayload', resident?: { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType } | null } | null };
 
 export type BlockResidentMutationVariables = Exact<{
   residentId: Scalars['UUID']['input'];
 }>;
 
 
-export type BlockResidentMutation = { __typename: 'Mutation', blockResident?: { __typename: 'BlockResidentPayload', resident?: { __typename: 'Resident', id: any, email: string, tenantName: string, status: ResidentStatus, displayName?: string | null } | null } | null };
+export type BlockResidentMutation = { __typename: 'Mutation', blockResident?: { __typename: 'BlockResidentPayload', resident?: { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType } | null } | null };
 
 export type CreateTenantMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -5747,14 +5747,14 @@ export type CreateTenantMutationVariables = Exact<{
 }>;
 
 
-export type CreateTenantMutation = { __typename: 'Mutation', createTenant?: { __typename: 'CreateTenantPayload', tenant?: { __typename: 'Tenant', id: any, name: string } | null } | null };
+export type CreateTenantMutation = { __typename: 'Mutation', createTenant?: { __typename: 'CreateTenantPayload', tenant?: { __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null } | null };
 
 export type DeactivateTenantMutationVariables = Exact<{
   tenantId: Scalars['UUID']['input'];
 }>;
 
 
-export type DeactivateTenantMutation = { __typename: 'Mutation', deactivateTenant?: { __typename: 'DeactivateTenantPayload', tenant?: { __typename: 'Tenant', id: any, name: string, status: TenantStatus } | null } | null };
+export type DeactivateTenantMutation = { __typename: 'Mutation', deactivateTenant?: { __typename: 'DeactivateTenantPayload', tenant?: { __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null } | null };
 
 export type DeactivateTenantSubscriptionMutationVariables = Exact<{
   tenantSubscriptionId: Scalars['UUID']['input'];
@@ -5768,12 +5768,12 @@ export type DeclineResidentMutationVariables = Exact<{
 }>;
 
 
-export type DeclineResidentMutation = { __typename: 'Mutation', declineResidency?: { __typename: 'DeclineResidencyPayload', resident?: { __typename: 'Resident', id: any, tenantId: any, profileId?: any | null, tenantName: string, createdAt: any, email: string, status: ResidentStatus } | null } | null };
+export type DeclineResidentMutation = { __typename: 'Mutation', declineResidency?: { __typename: 'DeclineResidencyPayload', resident?: { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType } | null } | null };
 
 export type ExitSupportModeMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ExitSupportModeMutation = { __typename: 'Mutation', exitSupportMode?: { __typename: 'ExitSupportModePayload', resident?: { __typename: 'Resident', id: any, email: string, tenantName: string, status: ResidentStatus } | null } | null };
+export type ExitSupportModeMutation = { __typename: 'Mutation', exitSupportMode?: { __typename: 'ExitSupportModePayload', resident?: { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType } | null } | null };
 
 export type GrantUserLicenseMutationVariables = Exact<{
   residentId: Scalars['UUID']['input'];
@@ -5781,7 +5781,7 @@ export type GrantUserLicenseMutationVariables = Exact<{
 }>;
 
 
-export type GrantUserLicenseMutation = { __typename: 'Mutation', grantUserLicense?: { __typename: 'GrantUserLicensePayload', license?: { __typename: 'License', id: any, licenseTypeKey: string } | null } | null };
+export type GrantUserLicenseMutation = { __typename: 'Mutation', grantUserLicense?: { __typename: 'GrantUserLicensePayload', license?: { __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null } | null } | null };
 
 export type ReactivateTenantSubscriptionMutationVariables = Exact<{
   tenantSubscriptionId: Scalars['UUID']['input'];
@@ -5803,14 +5803,14 @@ export type SubscribeTenantToLicensePackMutationVariables = Exact<{
 }>;
 
 
-export type SubscribeTenantToLicensePackMutation = { __typename: 'Mutation', subscribeTenantToLicensePack?: { __typename: 'SubscribeTenantToLicensePackPayload', tenantSubscription?: { __typename: 'TenantSubscription', id: any, licensePackKey: string } | null } | null };
+export type SubscribeTenantToLicensePackMutation = { __typename: 'Mutation', subscribeTenantToLicensePack?: { __typename: 'SubscribeTenantToLicensePackPayload', tenantSubscription?: { __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus } | null } | null };
 
 export type UnblockResidentMutationVariables = Exact<{
   residentId: Scalars['UUID']['input'];
 }>;
 
 
-export type UnblockResidentMutation = { __typename: 'Mutation', unblockResident?: { __typename: 'UnblockResidentPayload', resident?: { __typename: 'Resident', id: any, email: string, tenantName: string, status: ResidentStatus, displayName?: string | null } | null } | null };
+export type UnblockResidentMutation = { __typename: 'Mutation', unblockResident?: { __typename: 'UnblockResidentPayload', resident?: { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType } | null } | null };
 
 export type UpdateProfileMutationVariables = Exact<{
   displayName: Scalars['String']['input'];
@@ -5820,7 +5820,7 @@ export type UpdateProfileMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProfileMutation = { __typename: 'Mutation', updateProfile?: { __typename: 'UpdateProfilePayload', profile?: { __typename: 'Profile', id: any, email: string, displayName?: string | null, firstName?: string | null, lastName?: string | null, phone?: string | null } | null } | null };
+export type UpdateProfileMutation = { __typename: 'Mutation', updateProfile?: { __typename: 'UpdateProfilePayload', profile?: { __typename: 'Profile', id: any, email: string, identifier?: string | null, firstName?: string | null, lastName?: string | null, fullName?: string | null, phone?: string | null, isPublic: boolean, displayName?: string | null, avatarKey?: string | null, status: ProfileStatus, createdAt: any, updatedAt: any } | null } | null };
 
 export type ActiveLicensePacksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6235,13 +6235,11 @@ export const ActivateTenantDocument = gql`
     mutation ActivateTenant($tenantId: UUID!) {
   activateTenant(input: {_tenantId: $tenantId}) {
     tenant {
-      id
-      name
-      status
+      ...Tenant
     }
   }
 }
-    `;
+    ${TenantFragmentDoc}`;
 
 export function useActivateTenantMutation() {
   return Urql.useMutation<ActivateTenantMutation, ActivateTenantMutationVariables>(ActivateTenantDocument);
@@ -6250,17 +6248,11 @@ export const AssumeResidentDocument = gql`
     mutation AssumeResident($residentId: UUID!) {
   assumeResidency(input: {_residentId: $residentId}) {
     resident {
-      id
-      tenantId
-      profileId
-      tenantName
-      createdAt
-      email
-      status
+      ...Resident
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}`;
 
 export function useAssumeResidentMutation() {
   return Urql.useMutation<AssumeResidentMutation, AssumeResidentMutationVariables>(AssumeResidentDocument);
@@ -6269,15 +6261,11 @@ export const BecomeSupportDocument = gql`
     mutation BecomeSupport($tenantId: UUID!) {
   becomeSupport(input: {_tenantId: $tenantId}) {
     resident {
-      id
-      email
-      displayName
-      tenantName
-      status
+      ...Resident
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}`;
 
 export function useBecomeSupportMutation() {
   return Urql.useMutation<BecomeSupportMutation, BecomeSupportMutationVariables>(BecomeSupportDocument);
@@ -6286,15 +6274,11 @@ export const BlockResidentDocument = gql`
     mutation BlockResident($residentId: UUID!) {
   blockResident(input: {_residentId: $residentId}) {
     resident {
-      id
-      email
-      tenantName
-      status
-      displayName
+      ...Resident
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}`;
 
 export function useBlockResidentMutation() {
   return Urql.useMutation<BlockResidentMutation, BlockResidentMutationVariables>(BlockResidentDocument);
@@ -6303,12 +6287,11 @@ export const CreateTenantDocument = gql`
     mutation CreateTenant($name: String!, $email: String!) {
   createTenant(input: {_name: $name, _email: $email}) {
     tenant {
-      id
-      name
+      ...Tenant
     }
   }
 }
-    `;
+    ${TenantFragmentDoc}`;
 
 export function useCreateTenantMutation() {
   return Urql.useMutation<CreateTenantMutation, CreateTenantMutationVariables>(CreateTenantDocument);
@@ -6317,13 +6300,11 @@ export const DeactivateTenantDocument = gql`
     mutation DeactivateTenant($tenantId: UUID!) {
   deactivateTenant(input: {_tenantId: $tenantId}) {
     tenant {
-      id
-      name
-      status
+      ...Tenant
     }
   }
 }
-    `;
+    ${TenantFragmentDoc}`;
 
 export function useDeactivateTenantMutation() {
   return Urql.useMutation<DeactivateTenantMutation, DeactivateTenantMutationVariables>(DeactivateTenantDocument);
@@ -6334,13 +6315,11 @@ export const DeactivateTenantSubscriptionDocument = gql`
     input: {_tenantSubscriptionId: $tenantSubscriptionId}
   ) {
     tenantSubscription {
-      id
-      licensePackKey
-      status
+      ...TenantSubscription
     }
   }
 }
-    `;
+    ${TenantSubscriptionFragmentDoc}`;
 
 export function useDeactivateTenantSubscriptionMutation() {
   return Urql.useMutation<DeactivateTenantSubscriptionMutation, DeactivateTenantSubscriptionMutationVariables>(DeactivateTenantSubscriptionDocument);
@@ -6349,17 +6328,11 @@ export const DeclineResidentDocument = gql`
     mutation DeclineResident($residentId: UUID!) {
   declineResidency(input: {_residentId: $residentId}) {
     resident {
-      id
-      tenantId
-      profileId
-      tenantName
-      createdAt
-      email
-      status
+      ...Resident
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}`;
 
 export function useDeclineResidentMutation() {
   return Urql.useMutation<DeclineResidentMutation, DeclineResidentMutationVariables>(DeclineResidentDocument);
@@ -6368,14 +6341,11 @@ export const ExitSupportModeDocument = gql`
     mutation ExitSupportMode {
   exitSupportMode(input: {}) {
     resident {
-      id
-      email
-      tenantName
-      status
+      ...Resident
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}`;
 
 export function useExitSupportModeMutation() {
   return Urql.useMutation<ExitSupportModeMutation, ExitSupportModeMutationVariables>(ExitSupportModeDocument);
@@ -6386,12 +6356,11 @@ export const GrantUserLicenseDocument = gql`
     input: {_residentId: $residentId, _licenseTypeKey: $licenseTypeKey}
   ) {
     license {
-      id
-      licenseTypeKey
+      ...License
     }
   }
 }
-    `;
+    ${LicenseFragmentDoc}`;
 
 export function useGrantUserLicenseMutation() {
   return Urql.useMutation<GrantUserLicenseMutation, GrantUserLicenseMutationVariables>(GrantUserLicenseDocument);
@@ -6402,13 +6371,11 @@ export const ReactivateTenantSubscriptionDocument = gql`
     input: {_tenantSubscriptionId: $tenantSubscriptionId}
   ) {
     tenantSubscription {
-      id
-      licensePackKey
-      status
+      ...TenantSubscription
     }
   }
 }
-    `;
+    ${TenantSubscriptionFragmentDoc}`;
 
 export function useReactivateTenantSubscriptionMutation() {
   return Urql.useMutation<ReactivateTenantSubscriptionMutation, ReactivateTenantSubscriptionMutationVariables>(ReactivateTenantSubscriptionDocument);
@@ -6430,12 +6397,11 @@ export const SubscribeTenantToLicensePackDocument = gql`
     input: {_tenantId: $tenantId, _licensePackKey: $licensePackKey}
   ) {
     tenantSubscription {
-      id
-      licensePackKey
+      ...TenantSubscription
     }
   }
 }
-    `;
+    ${TenantSubscriptionFragmentDoc}`;
 
 export function useSubscribeTenantToLicensePackMutation() {
   return Urql.useMutation<SubscribeTenantToLicensePackMutation, SubscribeTenantToLicensePackMutationVariables>(SubscribeTenantToLicensePackDocument);
@@ -6444,15 +6410,11 @@ export const UnblockResidentDocument = gql`
     mutation UnblockResident($residentId: UUID!) {
   unblockResident(input: {_residentId: $residentId}) {
     resident {
-      id
-      email
-      tenantName
-      status
-      displayName
+      ...Resident
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}`;
 
 export function useUnblockResidentMutation() {
   return Urql.useMutation<UnblockResidentMutation, UnblockResidentMutationVariables>(UnblockResidentDocument);
@@ -6463,16 +6425,11 @@ export const UpdateProfileDocument = gql`
     input: {_displayName: $displayName, _firstName: $firstName, _lastName: $lastName, _phone: $phone}
   ) {
     profile {
-      id
-      email
-      displayName
-      firstName
-      lastName
-      phone
+      ...Profile
     }
   }
 }
-    `;
+    ${ProfileFragmentDoc}`;
 
 export function useUpdateProfileMutation() {
   return Urql.useMutation<UpdateProfileMutation, UpdateProfileMutationVariables>(UpdateProfileDocument);
