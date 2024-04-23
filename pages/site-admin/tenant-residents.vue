@@ -11,7 +11,7 @@
       <div class="flex flex-col grow">
         <div class="flex flex-col">
           <div class="text-xs">SEARCH TERM</div>
-          <UInput v-model="searchTerm" data-1p-ignore />
+          <UInput v-model="variables.searchTerm" data-1p-ignore />
         </div>
         <div class="hidden md:flex grow">
           <ResidentsList 
@@ -41,15 +41,15 @@
 <script lang="ts" setup>
   const supabase = useSupabaseClient()
   const appStateStore = useAppStateStore()
-  const searchTerm = ref()
-  const { data, error, executeQuery } = await useSearchResidentsQuery({
-    variables: {
-      searchTerm: searchTerm.value
-    }
+  const variables = reactive({
+    searchTerm: ''
+  })
+  const { data, executeQuery } = await useSearchResidentsQuery({
+    variables: variables
   })
   const residents = ref((data.value?.searchResidents?.nodes || []) as unknown as Resident[])
-  watch(()=>searchTerm.value, () => {
-    const { data } = executeQuery()
+  watch(()=>variables.searchTerm, async () => {
+    const { data } = await executeQuery({ requestPolicy: 'network-only'})
     residents.value = (data.value?.searchResidents?.nodes || []) as unknown as Resident[]
   })
 
