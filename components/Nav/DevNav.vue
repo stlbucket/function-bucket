@@ -16,7 +16,7 @@
         icon: 'i-heroicons-clipboard-document-list',
         to: '/dev-tools',
         title: 'Dev Tools',
-        // permissionKey: ['p:app-super-admin']
+        // permissionKey: ['p:app-admin-super']
       },
     ]
       .map((l: any) => {

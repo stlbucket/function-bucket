@@ -163,6 +163,10 @@ export type Application = Node & {
   licenseTypesByApplicationKey: LicenseTypesConnection;
   /** Reads and enables pagination through a set of `LicenseType`. */
   licenseTypesByApplicationKeyList: Array<LicenseType>;
+  /** Reads and enables pagination through a set of `Module`. */
+  modulesByApplicationKey: ModulesConnection;
+  /** Reads and enables pagination through a set of `Module`. */
+  modulesByApplicationKeyList: Array<Module>;
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
@@ -204,6 +208,25 @@ export type ApplicationLicenseTypesByApplicationKeyListArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<LicenseTypesOrderBy>>;
+};
+
+
+export type ApplicationModulesByApplicationKeyArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ModuleCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ModulesOrderBy>>;
+};
+
+
+export type ApplicationModulesByApplicationKeyListArgs = {
+  condition?: InputMaybe<ModuleCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ModulesOrderBy>>;
 };
 
 /**
@@ -1935,6 +1958,103 @@ export enum MessagesOrderBy {
   TopicIdDesc = 'TOPIC_ID_DESC'
 }
 
+export type Module = Node & {
+  __typename: 'Module';
+  /** Reads a single `Application` that is related to this `Module`. */
+  application?: Maybe<Application>;
+  applicationKey: Scalars['String']['output'];
+  defaultIconKey?: Maybe<Scalars['String']['output']>;
+  key: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  permissionKeys: Array<Maybe<Scalars['String']['output']>>;
+  /** Reads and enables pagination through a set of `Tool`. */
+  toolsByModuleKey: ToolsConnection;
+  /** Reads and enables pagination through a set of `Tool`. */
+  toolsByModuleKeyList: Array<Tool>;
+};
+
+
+export type ModuleToolsByModuleKeyArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ToolCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ToolsOrderBy>>;
+};
+
+
+export type ModuleToolsByModuleKeyListArgs = {
+  condition?: InputMaybe<ToolCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ToolsOrderBy>>;
+};
+
+/** A condition to be used against `Module` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type ModuleCondition = {
+  /** Checks for equality with the object’s `applicationKey` field. */
+  applicationKey?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `defaultIconKey` field. */
+  defaultIconKey?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `key` field. */
+  key?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `permissionKeys` field. */
+  permissionKeys?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ModuleInfo = {
+  __typename: 'ModuleInfo';
+  defaultIconKey?: Maybe<Scalars['String']['output']>;
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  ordinal?: Maybe<Scalars['Int']['output']>;
+  permissionKeys?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  tools?: Maybe<Array<Maybe<ToolInfo>>>;
+};
+
+/** A connection to a list of `Module` values. */
+export type ModulesConnection = {
+  __typename: 'ModulesConnection';
+  /** A list of edges which contains the `Module` and cursor to aid in pagination. */
+  edges: Array<Maybe<ModulesEdge>>;
+  /** A list of `Module` objects. */
+  nodes: Array<Maybe<Module>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Module` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Module` edge in the connection. */
+export type ModulesEdge = {
+  __typename: 'ModulesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Module` at the end of the edge. */
+  node?: Maybe<Module>;
+};
+
+/** Methods to use when ordering `Module`. */
+export enum ModulesOrderBy {
+  ApplicationKeyAsc = 'APPLICATION_KEY_ASC',
+  ApplicationKeyDesc = 'APPLICATION_KEY_DESC',
+  DefaultIconKeyAsc = 'DEFAULT_ICON_KEY_ASC',
+  DefaultIconKeyDesc = 'DEFAULT_ICON_KEY_DESC',
+  KeyAsc = 'KEY_ASC',
+  KeyDesc = 'KEY_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+}
+
 export type MsgResident = Node & {
   __typename: 'MsgResident';
   displayName: Scalars['String']['output'];
@@ -2670,6 +2790,7 @@ export type ProfileClaim = {
   actualResidentId?: Maybe<Scalars['UUID']['output']>;
   displayName?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  modules?: Maybe<Array<Maybe<ModuleInfo>>>;
   permissions?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   profileId?: Maybe<Scalars['UUID']['output']>;
   profileStatus?: Maybe<ProfileStatus>;
@@ -2870,6 +2991,14 @@ export type Query = Node & {
   messages?: Maybe<MessagesConnection>;
   /** Reads a set of `Message`. */
   messagesList?: Maybe<Array<Message>>;
+  /** Get a single `Module`. */
+  module?: Maybe<Module>;
+  /** Reads a single `Module` using its globally unique `ID`. */
+  moduleByNodeId?: Maybe<Module>;
+  /** Reads and enables pagination through a set of `Module`. */
+  modules?: Maybe<ModulesConnection>;
+  /** Reads a set of `Module`. */
+  modulesList?: Maybe<Array<Module>>;
   /** Get a single `MsgResident`. */
   msgResident?: Maybe<MsgResident>;
   /** Reads a single `MsgResident` using its globally unique `ID`. */
@@ -3012,6 +3141,14 @@ export type Query = Node & {
   todos?: Maybe<TodosConnection>;
   /** Reads a set of `Todo`. */
   todosList?: Maybe<Array<Todo>>;
+  /** Get a single `Tool`. */
+  tool?: Maybe<Tool>;
+  /** Reads a single `Tool` using its globally unique `ID`. */
+  toolByNodeId?: Maybe<Tool>;
+  /** Reads and enables pagination through a set of `Tool`. */
+  tools?: Maybe<ToolsConnection>;
+  /** Reads a set of `Tool`. */
+  toolsList?: Maybe<Array<Tool>>;
   /** Get a single `Topic`. */
   topic?: Maybe<Topic>;
   /** Reads a single `Topic` using its globally unique `ID`. */
@@ -3428,6 +3565,39 @@ export type QueryMessagesListArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryModuleArgs = {
+  key: Scalars['String']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryModuleByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryModulesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ModuleCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ModulesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryModulesListArgs = {
+  condition?: InputMaybe<ModuleCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ModulesOrderBy>>;
 };
 
 
@@ -4014,6 +4184,39 @@ export type QueryTodosListArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TodosOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryToolArgs = {
+  key: Scalars['String']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryToolByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryToolsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ToolCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ToolsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryToolsListArgs = {
+  condition?: InputMaybe<ToolCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ToolsOrderBy>>;
 };
 
 
@@ -5167,6 +5370,85 @@ export enum TodosOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+export type Tool = Node & {
+  __typename: 'Tool';
+  defaultIconKey?: Maybe<Scalars['String']['output']>;
+  key: Scalars['String']['output'];
+  /** Reads a single `Module` that is related to this `Tool`. */
+  module?: Maybe<Module>;
+  moduleKey: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  permissionKeys: Array<Maybe<Scalars['String']['output']>>;
+  route: Scalars['String']['output'];
+};
+
+/** A condition to be used against `Tool` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type ToolCondition = {
+  /** Checks for equality with the object’s `defaultIconKey` field. */
+  defaultIconKey?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `key` field. */
+  key?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `moduleKey` field. */
+  moduleKey?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `permissionKeys` field. */
+  permissionKeys?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Checks for equality with the object’s `route` field. */
+  route?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ToolInfo = {
+  __typename: 'ToolInfo';
+  defaultIconKey?: Maybe<Scalars['String']['output']>;
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  ordinal?: Maybe<Scalars['Int']['output']>;
+  permissionKeys?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  route?: Maybe<Scalars['String']['output']>;
+};
+
+/** A connection to a list of `Tool` values. */
+export type ToolsConnection = {
+  __typename: 'ToolsConnection';
+  /** A list of edges which contains the `Tool` and cursor to aid in pagination. */
+  edges: Array<Maybe<ToolsEdge>>;
+  /** A list of `Tool` objects. */
+  nodes: Array<Maybe<Tool>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Tool` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Tool` edge in the connection. */
+export type ToolsEdge = {
+  __typename: 'ToolsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Tool` at the end of the edge. */
+  node?: Maybe<Tool>;
+};
+
+/** Methods to use when ordering `Tool`. */
+export enum ToolsOrderBy {
+  DefaultIconKeyAsc = 'DEFAULT_ICON_KEY_ASC',
+  DefaultIconKeyDesc = 'DEFAULT_ICON_KEY_DESC',
+  KeyAsc = 'KEY_ASC',
+  KeyDesc = 'KEY_DESC',
+  ModuleKeyAsc = 'MODULE_KEY_ASC',
+  ModuleKeyDesc = 'MODULE_KEY_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  RouteAsc = 'ROUTE_ASC',
+  RouteDesc = 'ROUTE_DESC'
+}
+
 export type Topic = Node & {
   __typename: 'Topic';
   createdAt: Scalars['Datetime']['output'];
@@ -5705,7 +5987,7 @@ export type LicenseTypePermissionFragment = { __typename: 'LicenseTypePermission
 
 export type ProfileFragment = { __typename: 'Profile', id: any, email: string, identifier?: string | null, firstName?: string | null, lastName?: string | null, fullName?: string | null, phone?: string | null, isPublic: boolean, displayName?: string | null, avatarKey?: string | null, status: ProfileStatus, createdAt: any, updatedAt: any };
 
-export type ProfileClaimFragment = { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null };
+export type ProfileClaimFragment = { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null, modules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, defaultIconKey?: string | null, ordinal?: number | null, tools?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, defaultIconKey?: string | null, route?: string | null, ordinal?: number | null } | null> | null } | null> | null };
 
 export type ResidentFragment = { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType };
 
@@ -5874,7 +6156,7 @@ export type TenantSubscriptionsQuery = { __typename: 'Query', tenantSubscription
 export type CurrentProfileClaimsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentProfileClaimsQuery = { __typename: 'Query', currentProfileClaims?: { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null } | null };
+export type CurrentProfileClaimsQuery = { __typename: 'Query', currentProfileClaims?: { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null, modules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, defaultIconKey?: string | null, ordinal?: number | null, tools?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, defaultIconKey?: string | null, route?: string | null, ordinal?: number | null } | null> | null } | null> | null } | null };
 
 export type GetMyselfQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6148,6 +6430,19 @@ export const ProfileClaimFragmentDoc = gql`
   email
   displayName
   tenantName
+  modules {
+    key
+    name
+    defaultIconKey
+    ordinal
+    tools {
+      key
+      name
+      defaultIconKey
+      route
+      ordinal
+    }
+  }
 }
     `;
 export const ResidentFragmentDoc = gql`
@@ -7301,6 +7596,10 @@ export type GraphCacheKeysConfig = {
   Message?: (data: WithTypename<Message>) => null | string,
   MessagesConnection?: (data: WithTypename<MessagesConnection>) => null | string,
   MessagesEdge?: (data: WithTypename<MessagesEdge>) => null | string,
+  Module?: (data: WithTypename<Module>) => null | string,
+  ModuleInfo?: (data: WithTypename<ModuleInfo>) => null | string,
+  ModulesConnection?: (data: WithTypename<ModulesConnection>) => null | string,
+  ModulesEdge?: (data: WithTypename<ModulesEdge>) => null | string,
   MsgResident?: (data: WithTypename<MsgResident>) => null | string,
   MsgResidentsConnection?: (data: WithTypename<MsgResidentsConnection>) => null | string,
   MsgResidentsEdge?: (data: WithTypename<MsgResidentsEdge>) => null | string,
@@ -7343,6 +7642,10 @@ export type GraphCacheKeysConfig = {
   TodoTenantsEdge?: (data: WithTypename<TodoTenantsEdge>) => null | string,
   TodosConnection?: (data: WithTypename<TodosConnection>) => null | string,
   TodosEdge?: (data: WithTypename<TodosEdge>) => null | string,
+  Tool?: (data: WithTypename<Tool>) => null | string,
+  ToolInfo?: (data: WithTypename<ToolInfo>) => null | string,
+  ToolsConnection?: (data: WithTypename<ToolsConnection>) => null | string,
+  ToolsEdge?: (data: WithTypename<ToolsEdge>) => null | string,
   Topic?: (data: WithTypename<Topic>) => null | string,
   TopicMessageSubscriptionPayload?: (data: WithTypename<TopicMessageSubscriptionPayload>) => null | string,
   TopicsConnection?: (data: WithTypename<TopicsConnection>) => null | string,
@@ -7411,6 +7714,10 @@ export type GraphCacheResolvers = {
     messageByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryMessageByNodeIdArgs, WithTypename<Message> | string>,
     messages?: GraphCacheResolver<WithTypename<Query>, QueryMessagesArgs, WithTypename<MessagesConnection> | string>,
     messagesList?: GraphCacheResolver<WithTypename<Query>, QueryMessagesListArgs, Array<WithTypename<Message> | string>>,
+    module?: GraphCacheResolver<WithTypename<Query>, QueryModuleArgs, WithTypename<Module> | string>,
+    moduleByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryModuleByNodeIdArgs, WithTypename<Module> | string>,
+    modules?: GraphCacheResolver<WithTypename<Query>, QueryModulesArgs, WithTypename<ModulesConnection> | string>,
+    modulesList?: GraphCacheResolver<WithTypename<Query>, QueryModulesListArgs, Array<WithTypename<Module> | string>>,
     msgResident?: GraphCacheResolver<WithTypename<Query>, QueryMsgResidentArgs, WithTypename<MsgResident> | string>,
     msgResidentByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryMsgResidentByNodeIdArgs, WithTypename<MsgResident> | string>,
     msgResidents?: GraphCacheResolver<WithTypename<Query>, QueryMsgResidentsArgs, WithTypename<MsgResidentsConnection> | string>,
@@ -7421,7 +7728,7 @@ export type GraphCacheResolvers = {
     msgTenantsList?: GraphCacheResolver<WithTypename<Query>, QueryMsgTenantsListArgs, Array<WithTypename<MsgTenant> | string>>,
     myProfileResidencies?: GraphCacheResolver<WithTypename<Query>, QueryMyProfileResidenciesArgs, WithTypename<ResidentsConnection> | string>,
     myProfileResidenciesList?: GraphCacheResolver<WithTypename<Query>, QueryMyProfileResidenciesListArgs, Array<WithTypename<Resident> | string>>,
-    node?: GraphCacheResolver<WithTypename<Query>, QueryNodeArgs, WithTypename<AppSetting> | WithTypename<Application> | WithTypename<License> | WithTypename<LicensePack> | WithTypename<LicensePackLicenseType> | WithTypename<LicenseType> | WithTypename<LocResident> | WithTypename<LocTenant> | WithTypename<Location> | WithTypename<Message> | WithTypename<MsgResident> | WithTypename<MsgTenant> | WithTypename<Permission> | WithTypename<Profile> | WithTypename<Query> | WithTypename<Resident> | WithTypename<Subscriber> | WithTypename<Tenant> | WithTypename<TenantSubscription> | WithTypename<Thing> | WithTypename<Todo> | WithTypename<TodoResident> | WithTypename<TodoTenant> | WithTypename<Topic> | string>,
+    node?: GraphCacheResolver<WithTypename<Query>, QueryNodeArgs, WithTypename<AppSetting> | WithTypename<Application> | WithTypename<License> | WithTypename<LicensePack> | WithTypename<LicensePackLicenseType> | WithTypename<LicenseType> | WithTypename<LocResident> | WithTypename<LocTenant> | WithTypename<Location> | WithTypename<Message> | WithTypename<Module> | WithTypename<MsgResident> | WithTypename<MsgTenant> | WithTypename<Permission> | WithTypename<Profile> | WithTypename<Query> | WithTypename<Resident> | WithTypename<Subscriber> | WithTypename<Tenant> | WithTypename<TenantSubscription> | WithTypename<Thing> | WithTypename<Todo> | WithTypename<TodoResident> | WithTypename<TodoTenant> | WithTypename<Tool> | WithTypename<Topic> | string>,
     nodeId?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, Scalars['ID'] | string>,
     permission?: GraphCacheResolver<WithTypename<Query>, QueryPermissionArgs, WithTypename<Permission> | string>,
     permissionByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryPermissionByNodeIdArgs, WithTypename<Permission> | string>,
@@ -7485,6 +7792,10 @@ export type GraphCacheResolvers = {
     todoTenantsList?: GraphCacheResolver<WithTypename<Query>, QueryTodoTenantsListArgs, Array<WithTypename<TodoTenant> | string>>,
     todos?: GraphCacheResolver<WithTypename<Query>, QueryTodosArgs, WithTypename<TodosConnection> | string>,
     todosList?: GraphCacheResolver<WithTypename<Query>, QueryTodosListArgs, Array<WithTypename<Todo> | string>>,
+    tool?: GraphCacheResolver<WithTypename<Query>, QueryToolArgs, WithTypename<Tool> | string>,
+    toolByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryToolByNodeIdArgs, WithTypename<Tool> | string>,
+    tools?: GraphCacheResolver<WithTypename<Query>, QueryToolsArgs, WithTypename<ToolsConnection> | string>,
+    toolsList?: GraphCacheResolver<WithTypename<Query>, QueryToolsListArgs, Array<WithTypename<Tool> | string>>,
     topic?: GraphCacheResolver<WithTypename<Query>, QueryTopicArgs, WithTypename<Topic> | string>,
     topicByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryTopicByNodeIdArgs, WithTypename<Topic> | string>,
     topics?: GraphCacheResolver<WithTypename<Query>, QueryTopicsArgs, WithTypename<TopicsConnection> | string>,
@@ -7539,6 +7850,8 @@ export type GraphCacheResolvers = {
     licenseCount?: GraphCacheResolver<WithTypename<Application>, Record<string, never>, Scalars['Int'] | string>,
     licenseTypesByApplicationKey?: GraphCacheResolver<WithTypename<Application>, ApplicationLicenseTypesByApplicationKeyArgs, WithTypename<LicenseTypesConnection> | string>,
     licenseTypesByApplicationKeyList?: GraphCacheResolver<WithTypename<Application>, ApplicationLicenseTypesByApplicationKeyListArgs, Array<WithTypename<LicenseType> | string>>,
+    modulesByApplicationKey?: GraphCacheResolver<WithTypename<Application>, ApplicationModulesByApplicationKeyArgs, WithTypename<ModulesConnection> | string>,
+    modulesByApplicationKeyList?: GraphCacheResolver<WithTypename<Application>, ApplicationModulesByApplicationKeyListArgs, Array<WithTypename<Module> | string>>,
     name?: GraphCacheResolver<WithTypename<Application>, Record<string, never>, Scalars['String'] | string>,
     nodeId?: GraphCacheResolver<WithTypename<Application>, Record<string, never>, Scalars['ID'] | string>
   },
@@ -7937,6 +8250,35 @@ export type GraphCacheResolvers = {
     cursor?: GraphCacheResolver<WithTypename<MessagesEdge>, Record<string, never>, Scalars['Cursor'] | string>,
     node?: GraphCacheResolver<WithTypename<MessagesEdge>, Record<string, never>, WithTypename<Message> | string>
   },
+  Module?: {
+    application?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, WithTypename<Application> | string>,
+    applicationKey?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
+    defaultIconKey?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
+    key?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
+    name?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
+    nodeId?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['ID'] | string>,
+    permissionKeys?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Array<Scalars['String'] | string>>,
+    toolsByModuleKey?: GraphCacheResolver<WithTypename<Module>, ModuleToolsByModuleKeyArgs, WithTypename<ToolsConnection> | string>,
+    toolsByModuleKeyList?: GraphCacheResolver<WithTypename<Module>, ModuleToolsByModuleKeyListArgs, Array<WithTypename<Tool> | string>>
+  },
+  ModuleInfo?: {
+    defaultIconKey?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Scalars['String'] | string>,
+    key?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Scalars['String'] | string>,
+    name?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Scalars['String'] | string>,
+    ordinal?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Scalars['Int'] | string>,
+    permissionKeys?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Array<Scalars['String'] | string>>,
+    tools?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Array<WithTypename<ToolInfo> | string>>
+  },
+  ModulesConnection?: {
+    edges?: GraphCacheResolver<WithTypename<ModulesConnection>, Record<string, never>, Array<WithTypename<ModulesEdge> | string>>,
+    nodes?: GraphCacheResolver<WithTypename<ModulesConnection>, Record<string, never>, Array<WithTypename<Module> | string>>,
+    pageInfo?: GraphCacheResolver<WithTypename<ModulesConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
+    totalCount?: GraphCacheResolver<WithTypename<ModulesConnection>, Record<string, never>, Scalars['Int'] | string>
+  },
+  ModulesEdge?: {
+    cursor?: GraphCacheResolver<WithTypename<ModulesEdge>, Record<string, never>, Scalars['Cursor'] | string>,
+    node?: GraphCacheResolver<WithTypename<ModulesEdge>, Record<string, never>, WithTypename<Module> | string>
+  },
   MsgResident?: {
     displayName?: GraphCacheResolver<WithTypename<MsgResident>, Record<string, never>, Scalars['String'] | string>,
     messagesByPostedByMsgResidentId?: GraphCacheResolver<WithTypename<MsgResident>, MsgResidentMessagesByPostedByMsgResidentIdArgs, WithTypename<MessagesConnection> | string>,
@@ -8043,6 +8385,7 @@ export type GraphCacheResolvers = {
     actualResidentId?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['UUID'] | string>,
     displayName?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['String'] | string>,
     email?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['String'] | string>,
+    modules?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Array<WithTypename<ModuleInfo> | string>>,
     permissions?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Array<Scalars['String'] | string>>,
     profileId?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['UUID'] | string>,
     profileStatus?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, ProfileStatus | string>,
@@ -8288,6 +8631,34 @@ export type GraphCacheResolvers = {
   TodosEdge?: {
     cursor?: GraphCacheResolver<WithTypename<TodosEdge>, Record<string, never>, Scalars['Cursor'] | string>,
     node?: GraphCacheResolver<WithTypename<TodosEdge>, Record<string, never>, WithTypename<Todo> | string>
+  },
+  Tool?: {
+    defaultIconKey?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
+    key?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
+    module?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, WithTypename<Module> | string>,
+    moduleKey?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
+    name?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
+    nodeId?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['ID'] | string>,
+    permissionKeys?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Array<Scalars['String'] | string>>,
+    route?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>
+  },
+  ToolInfo?: {
+    defaultIconKey?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['String'] | string>,
+    key?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['String'] | string>,
+    name?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['String'] | string>,
+    ordinal?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['Int'] | string>,
+    permissionKeys?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Array<Scalars['String'] | string>>,
+    route?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['String'] | string>
+  },
+  ToolsConnection?: {
+    edges?: GraphCacheResolver<WithTypename<ToolsConnection>, Record<string, never>, Array<WithTypename<ToolsEdge> | string>>,
+    nodes?: GraphCacheResolver<WithTypename<ToolsConnection>, Record<string, never>, Array<WithTypename<Tool> | string>>,
+    pageInfo?: GraphCacheResolver<WithTypename<ToolsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
+    totalCount?: GraphCacheResolver<WithTypename<ToolsConnection>, Record<string, never>, Scalars['Int'] | string>
+  },
+  ToolsEdge?: {
+    cursor?: GraphCacheResolver<WithTypename<ToolsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
+    node?: GraphCacheResolver<WithTypename<ToolsEdge>, Record<string, never>, WithTypename<Tool> | string>
   },
   Topic?: {
     createdAt?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, Scalars['Datetime'] | string>,

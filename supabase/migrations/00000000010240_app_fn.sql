@@ -37,12 +37,14 @@ CREATE OR REPLACE FUNCTION app_fn.install_application(_application_info app_fn.a
         ,name
         ,permission_keys
         ,default_icon_key
+        ,ordinal
       ) values (
         _module_info.key
         ,_application.key
         ,_module_info.name
         ,coalesce(_module_info.permission_keys, '{}'::citext[])
         ,_module_info.default_icon_key
+        ,_module_info.ordinal
       );
 
       foreach _tool_info in array(coalesce(_module_info.tools,'{}'::app_fn.tool_info[]))
@@ -54,6 +56,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_application(_application_info app_fn.a
           ,permission_keys
           ,default_icon_key
           ,route
+          ,ordinal
         ) values (
           _tool_info.key
           ,_module_info.key
@@ -61,6 +64,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_application(_application_info app_fn.a
           ,_tool_info.permission_keys
           ,_tool_info.default_icon_key
           ,_tool_info.route
+          ,_tool_info.ordinal
         );
       end loop;
     end loop;
@@ -304,6 +308,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
             ,'Todo'::citext
             ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
             ,null::citext
+            ,400
             ,array[
               row(
                 'todo'::citext
@@ -311,6 +316,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
                 ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
                 ,null::citext
                 ,'/tools/todo'
+                ,100
               )::app_fn.tool_info
             ]::app_fn.tool_info[]
           )::app_fn.module_info
@@ -319,6 +325,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
             ,'Tools'::citext
             ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
             ,null::citext
+            ,300
             ,array[
               row(
                 'address-book'::citext
@@ -326,6 +333,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
                 ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
                 ,null::citext
                 ,'/tools/address-book'
+                ,200
               )::app_fn.tool_info
               ,row(
                 'maps'::citext
@@ -333,64 +341,73 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
                 ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
                 ,null::citext
                 ,'/tools/maps'
+                ,100
               )::app_fn.tool_info
             ]::app_fn.tool_info[]
           )::app_fn.module_info
           ,row(
             'base-admin'::citext
             ,'Admin'::citext
-            ,'{"p:app-admin","p:app-super_admin"}'::citext[]
+            ,'{"p:app-admin","p:app-admin-super"}'::citext[]
             ,null::citext
+            ,200
             ,array[
               row(
                 'base-admin-app-users'::citext
                 ,'App Users'::citext
-                ,'{"p:app-admin","p:app-super-admin"}'::citext[]
+                ,'{"p:app-admin","p:app-admin-super"}'::citext[]
                 ,null::citext
                 ,'/admin/app-tenant-residencies'
+                ,200
               )::app_fn.tool_info
               ,row(
                 'base-admin-subscriptions'::citext
                 ,'Subscriptions'::citext
-                ,'{"p:app-admin","p:app-super-admin"}'::citext[]
+                ,'{"p:app-admin","p:app-admin-super"}'::citext[]
                 ,null::citext
                 ,'/admin/app-tenant-subscriptions'
+                ,100
               )::app_fn.tool_info
             ]::app_fn.tool_info[]
           )::app_fn.module_info
           ,row(
             'base-site-admin'::citext
             ,'Site Admin'::citext
-            ,'{"p:app-super_admin"}'::citext[]
+            ,'{"p:app-admin-super"}'::citext[]
             ,null::citext
+            ,100
             ,array[
               row(
                 'base-site-admin-tenant'::citext
                 ,'Tenant Support'::citext
-                ,'{"p:app-super-admin"}'::citext[]
+                ,'{"p:app-admin-super"}'::citext[]
                 ,null::citext
                 ,'/site-admin/tenant'
+                ,400
               )::app_fn.tool_info
               ,row(
                 'base-site-admin-tenant-residents'::citext
                 ,'Resident Support'::citext
-                ,'{"p:app-super-admin"}'::citext[]
+                ,'{"p:app-admin-super"}'::citext[]
                 ,null::citext
                 ,'/site-admin/tenant-residents'
+                ,300
               )::app_fn.tool_info
               ,row(
                 'base-site-admin-license-pack'::citext
                 ,'License Packs'::citext
-                ,'{"p:app-super-admin"}'::citext[]
+                ,'{"p:app-admin-super"}'::citext[]
                 ,null::citext
                 ,'/site-admin/license-pack'
+                ,200
               )::app_fn.tool_info
               ,row(
                 'base-site-admin-applications'::citext
                 ,'License Packs'::citext
-                ,'{"p:app-super-admin"}'::citext[]
+                ,'{"p:app-admin-super"}'::citext[]
                 ,null::citext
                 ,'/site-admin/applications'
+                ,100
               )::app_fn.tool_info
             ]::app_fn.tool_info[]
           )::app_fn.module_info
@@ -489,7 +506,62 @@ CREATE OR REPLACE FUNCTION app_fn.current_profile_claims(_profile_id uuid)
         and l.status = 'active'
       );
       _profile_claims.actual_resident_id = _home_resident.id;
-
+      -- raise exception 'WTF %', (with module_keys as (
+      --     select distinct m.key
+      --     from app.module m
+      --     join app.application a on a.key = m.application_key
+      --     join app.license_type lt on lt.application_key = a.key
+      --     join app.license l on l.license_type_key = lt.key
+      --     where l.resident_id = _resident.id
+      --     and _profile_claims.permissions && m.permission_keys
+      --   )
+      --   select array_agg(mk) from module_keys mk)
+      --   ;
+      _profile_claims.modules = (
+        with module_keys as (
+          select distinct m.key, m.ordinal
+          from app.module m
+          join app.application a on a.key = m.application_key
+          join app.license_type lt on lt.application_key = a.key
+          join app.license l on l.license_type_key = lt.key
+          where l.resident_id = _resident.id
+          and _profile_claims.permissions && m.permission_keys
+          order by m.ordinal desc
+        )
+        select array_agg(row(
+          m.key
+          ,m.name
+          ,m.permission_keys
+          ,m.default_icon_key
+          ,m.ordinal
+          ,(
+            with tool_keys as (
+              select t.key, t.ordinal
+              from app.tool t
+              where module_key = m.key
+              and _profile_claims.permissions && t.permission_keys
+              order by t.ordinal desc
+            )
+            select array_agg(row(
+              t.key
+              ,t.name
+              ,t.permission_keys
+              ,t.default_icon_key
+              ,t.route
+              ,t.ordinal
+            )::app_fn.tool_info)
+            from tool_keys tk join app.tool t on tk.key = t.key
+            -- from app.tool t
+            -- where module_key = m.key
+            -- and _profile_claims.permissions && t.permission_keys
+            -- group by t.ordinal
+            -- order by t.ordinal desc
+          )::app_fn.tool_info[]
+        ))
+        from module_keys mk join app.module m on mk.key = m.key
+        -- group by m.ordinal
+        -- order by m.ordinal desc
+      );
     else
       _profile_claims.profile_id = _profile_id;
     end if;

@@ -80,6 +80,7 @@ CREATE TABLE app.module (
   ,name citext not null
   ,permission_keys citext[] not null default '{}'::citext[]
   ,default_icon_key citext
+  ,ordinal integer not null
 );
 CREATE TABLE app.tool (
   key citext primary key
@@ -88,6 +89,7 @@ CREATE TABLE app.tool (
   ,permission_keys citext[] not null default '{}'::citext[]
   ,default_icon_key citext
   ,route citext not null
+  ,ordinal integer not null
 );
 --------------------------------------------------------------------------------------------
 CREATE TABLE app.app_settings (

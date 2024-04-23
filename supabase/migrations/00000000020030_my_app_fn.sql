@@ -23,6 +23,7 @@ CREATE OR REPLACE FUNCTION my_app_fn.install_my_app_application()
           ,'My Module'::citext
           ,'{"p:my-app","p:my-app-admin"}'::citext[]
           ,null::citext
+          ,600
           ,array[
             row(
               'my-tool'::citext
@@ -30,6 +31,7 @@ CREATE OR REPLACE FUNCTION my_app_fn.install_my_app_application()
               ,'{"p:my-app","p:my-app-admin"}'::citext[]
               ,null::citext
               ,'/my-app/my-tool'
+              ,100
             )::app_fn.tool_info
           ]::app_fn.tool_info[]
         )::app_fn.module_info
@@ -38,6 +40,7 @@ CREATE OR REPLACE FUNCTION my_app_fn.install_my_app_application()
           ,'My Module Admin'::citext
           ,'{"p:my-app-admin"}'::citext[]
           ,null::citext
+          ,500
           ,array[
             row(
               'my-tool-admin'::citext
@@ -45,6 +48,7 @@ CREATE OR REPLACE FUNCTION my_app_fn.install_my_app_application()
               ,'{"p:my-app-admin"}'::citext[]
               ,null::citext
               ,'/my-app-admin/my-tool-admin'
+              ,100
             )::app_fn.tool_info
           ]::app_fn.tool_info[]
         )::app_fn.module_info

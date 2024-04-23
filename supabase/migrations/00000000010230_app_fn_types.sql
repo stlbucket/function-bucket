@@ -2,6 +2,24 @@ create schema if not exists app_fn;
 create schema if not exists app_api;
 
 ----------------------------------------------------------------------------------------------
+create type app_fn.tool_info as (
+  key citext
+  ,name citext
+  ,permission_keys citext[]
+  ,default_icon_key citext
+  ,route citext
+  ,ordinal integer
+);
+----------------------------------------------------------------------------------------------
+create type app_fn.module_info as (
+  key citext
+  ,name citext
+  ,permission_keys citext[]
+  ,default_icon_key citext
+  ,ordinal integer
+  ,tools app_fn.tool_info[]
+);
+----------------------------------------------------------------------------------------------
 create type app_fn.profile_claims as (
   profile_id uuid
   ,tenant_id uuid
@@ -12,6 +30,7 @@ create type app_fn.profile_claims as (
   ,email citext
   ,display_name citext
   ,tenant_name citext
+  ,modules app_fn.module_info[]
 );
 ----------------------------------------------------------------------------------------------
 create type app_fn.license_type_info as (
@@ -34,22 +53,6 @@ create type app_fn.license_pack_info as (
   ,description citext
   ,license_pack_license_type_infos app_fn.license_pack_license_type_info[]
   ,auto_subscribe boolean
-);
-----------------------------------------------------------------------------------------------
-create type app_fn.tool_info as (
-  key citext
-  ,name citext
-  ,permission_keys citext[]
-  ,default_icon_key citext
-  ,route citext
-);
-----------------------------------------------------------------------------------------------
-create type app_fn.module_info as (
-  key citext
-  ,name citext
-  ,permission_keys citext[]
-  ,default_icon_key citext
-  ,tools app_fn.tool_info[]
 );
 ----------------------------------------------------------------------------------------------
 create type app_fn.application_info as (
