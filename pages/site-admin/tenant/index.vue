@@ -10,7 +10,7 @@
       <div>
         <div class="flex flex-col">
           <div class="text-xs">SEARCH TERM</div>
-          <UInput v-model="searchTerm" data-1p-ignore />
+          <UInput v-model="variables.searchTerm" data-1p-ignore />
         </div>
       </div>
       <div class="hidden md:flex">
@@ -27,19 +27,19 @@
   const supabase = useSupabaseClient()
   const appStateStore = useAppStateStore()
   const tenants: Ref<Tenant[]> = ref([])
-  const searchTerm = ref()
+  const variables = reactive({
+    searchTerm: ''
+  })
 
-  const {
-    data,
-    fetching,
-    error,
-    executeQuery
-  } = await useSearchTenantsQuery({
-    variables: {
-      searchTerm: searchTerm.value
-    }
+  const { data, executeQuery } = await useSearchTenantsQuery({
+    variables: variables
   })
   tenants.value = (data.value?.searchTenants?.nodes || []) as unknown as Tenant[]
+
+  watch(()=>variables.searchTerm, async () => {
+    const { data } = await executeQuery({ requestPolicy: 'network-only'})
+    tenants.value = (data.value?.searchTenants?.nodes || []) as unknown as Tenant[]
+  })
 
   const becomeSupportMutation = await useBecomeSupportMutation()
   const onSupport = async (tenant: Tenant) => {
