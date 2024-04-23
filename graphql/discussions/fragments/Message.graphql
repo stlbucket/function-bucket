@@ -1,0 +1,10 @@
+fragment Message on Message {
+  id
+  createdAt
+  status
+  content
+  postedBy: postedByMsgResident {
+    residentId
+    displayName
+  }
+}

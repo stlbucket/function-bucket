@@ -1,0 +1,9 @@
+fragment Subscriber on Subscriber {
+  id
+  status
+  lastRead
+  msgResident {
+    residentId
+    displayName
+  }
+}

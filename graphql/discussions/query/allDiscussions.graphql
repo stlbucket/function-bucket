@@ -1,16 +1,9 @@
 query AllDiscussions {
   topics {
     nodes {
-      id
-      name
-      status
+      ...Topic
       subscribers: subscribersList {
-        id
-        status
-        msgResident {
-          residentId
-          displayName
-        }
+        ...Subscriber
       }
       messages {
         totalCount

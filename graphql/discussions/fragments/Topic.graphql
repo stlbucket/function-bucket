@@ -1,0 +1,6 @@
+fragment Topic on Topic {
+  id
+  name
+  identifier
+  status
+}
