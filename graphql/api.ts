@@ -5689,7 +5689,7 @@ export type LeaveAddressBookMutation = { __typename: 'Mutation', leaveAddressBoo
 export type GetAbListingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAbListingsQuery = { __typename: 'Query', getAbListings?: { __typename: 'AbListingsConnection', nodes: Array<{ __typename: 'AbListing', profileId?: any | null, fullName?: string | null, email?: string | null, phone?: string | null, displayName?: string | null, canInvite?: boolean | null } | null> } | null };
+export type GetAbListingsQuery = { __typename: 'Query', getAbListings?: Array<{ __typename: 'AbListing', profileId?: any | null, fullName?: string | null, email?: string | null, phone?: string | null, displayName?: string | null, canInvite?: boolean | null } | null> | null };
 
 export type ApplicationFragment = { __typename: 'Application', key: string, name: string };
 
@@ -6285,15 +6285,13 @@ export function useLeaveAddressBookMutation() {
 };
 export const GetAbListingsDocument = gql`
     query GetAbListings {
-  getAbListings {
-    nodes {
-      profileId
-      fullName
-      email
-      phone
-      displayName
-      canInvite
-    }
+  getAbListings: getAbListingsList {
+    profileId
+    fullName
+    email
+    phone
+    displayName
+    canInvite
   }
 }
     `;

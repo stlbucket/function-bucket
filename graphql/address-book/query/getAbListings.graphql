@@ -1,12 +1,10 @@
 query GetAbListings {
-  getAbListings {
-    nodes {
-      profileId
-      fullName
-      email
-      phone
-      displayName
-      canInvite
-    }
+  getAbListings: getAbListingsList {
+    profileId
+    fullName
+    email
+    phone
+    displayName
+    canInvite
   }
 }

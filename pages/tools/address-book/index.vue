@@ -38,19 +38,19 @@
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
   const { data, executeQuery } = await useGetAbListingsQuery()
-  const abUsers = ref((data.value?.getAbListings?.nodes) || [])
+  const abUsers = ref((data.value?.getAbListings) || [])
 
   const joinAdressBookMutation = await useJoinAddressBookMutation()
   const onJoin = async () => {
     await joinAdressBookMutation.executeMutation({})
     const { data } = await executeQuery({requestPolicy: 'network-only'})
-    abUsers.value = (data.value?.getAbListings?.nodes) || []
+    abUsers.value = (data.value?.getAbListings) || []
   }
   const leaveAdressBookMutation = await useLeaveAddressBookMutation()
   const onLeave = async () => {
     await leaveAdressBookMutation.executeMutation({})
     const { data } = await executeQuery({requestPolicy: 'network-only'})
-    abUsers.value = (data.value?.getAbListings?.nodes) || []
+    abUsers.value = (data.value?.getAbListings) || []
   }
   const onInvite = async (email: string) => {
     const url = `/api/invite-user`
