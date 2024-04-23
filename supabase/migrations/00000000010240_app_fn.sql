@@ -300,6 +300,21 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
         ]::app_fn.license_pack_info[]
         ,array[
           row(
+            'todo'::citext
+            ,'Todo'::citext
+            ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
+            ,null::citext
+            ,array[
+              row(
+                'todo'::citext
+                ,'Todo'::citext
+                ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
+                ,null::citext
+                ,'/tools/todo'
+              )::app_fn.tool_info
+            ]::app_fn.tool_info[]
+          )::app_fn.module_info
+          ,row(
             'base-tools'::citext
             ,'Tools'::citext
             ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
@@ -312,6 +327,13 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
                 ,null::citext
                 ,'/tools/address-book'
               )::app_fn.tool_info
+              ,row(
+                'maps'::citext
+                ,'Maps'::citext
+                ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
+                ,null::citext
+                ,'/tools/maps'
+              )::app_fn.tool_info
             ]::app_fn.tool_info[]
           )::app_fn.module_info
           ,row(
@@ -321,11 +343,54 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
             ,null::citext
             ,array[
               row(
+                'base-admin-app-users'::citext
+                ,'App Users'::citext
+                ,'{"p:app-admin","p:app-super-admin"}'::citext[]
+                ,null::citext
+                ,'/admin/app-tenant-residencies'
+              )::app_fn.tool_info
+              ,row(
                 'base-admin-subscriptions'::citext
                 ,'Subscriptions'::citext
                 ,'{"p:app-admin","p:app-super-admin"}'::citext[]
                 ,null::citext
-                ,'/admin/subscriptions'
+                ,'/admin/app-tenant-subscriptions'
+              )::app_fn.tool_info
+            ]::app_fn.tool_info[]
+          )::app_fn.module_info
+          ,row(
+            'base-site-admin'::citext
+            ,'Site Admin'::citext
+            ,'{"p:app-super_admin"}'::citext[]
+            ,null::citext
+            ,array[
+              row(
+                'base-site-admin-tenant'::citext
+                ,'Tenant Support'::citext
+                ,'{"p:app-super-admin"}'::citext[]
+                ,null::citext
+                ,'/site-admin/tenant'
+              )::app_fn.tool_info
+              ,row(
+                'base-site-admin-tenant-residents'::citext
+                ,'Resident Support'::citext
+                ,'{"p:app-super-admin"}'::citext[]
+                ,null::citext
+                ,'/site-admin/tenant-residents'
+              )::app_fn.tool_info
+              ,row(
+                'base-site-admin-license-pack'::citext
+                ,'License Packs'::citext
+                ,'{"p:app-super-admin"}'::citext[]
+                ,null::citext
+                ,'/site-admin/license-pack'
+              )::app_fn.tool_info
+              ,row(
+                'base-site-admin-applications'::citext
+                ,'License Packs'::citext
+                ,'{"p:app-super-admin"}'::citext[]
+                ,null::citext
+                ,'/site-admin/applications'
               )::app_fn.tool_info
             ]::app_fn.tool_info[]
           )::app_fn.module_info
