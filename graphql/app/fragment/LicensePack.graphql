@@ -1,0 +1,5 @@
+fragment LicensePack on LicensePack {
+  key
+  displayName
+  description
+}

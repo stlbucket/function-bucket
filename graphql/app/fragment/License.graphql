@@ -1,0 +1,6 @@
+fragment License on License {
+  id
+  licenseTypeKey
+  createdAt
+  expiresAt
+}

@@ -1,7 +1,5 @@
 query ActiveLicensePacks {
   licensePacksList {
-    key
-    displayName
-    description
+    ...LicensePack
   }
 }

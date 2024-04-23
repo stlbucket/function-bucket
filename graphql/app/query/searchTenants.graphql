@@ -5,31 +5,18 @@ query SearchTenants(
     searchTerm: $searchTerm
   }) {
    nodes {
-      id
-      name
-      createdAt
-      identifier
-      status
-      type
-      licenses {
-        totalCount
-      }
-      subscriptions: tenantSubscriptionsList(
-        orderBy: LICENSE_PACK_KEY_ASC
-      ) {
-        id
-        licensePackKey
-        createdAt
+    ...Tenant
+    subscriptions: tenantSubscriptionsList(
+      orderBy: LICENSE_PACK_KEY_ASC
+    ) {
+        ...TenantSubscription
         licensePack {
-          key
-          displayName
+          ...LicensePack
           licenseTypes: licensePackLicenseTypesByLicensePackKeyList(orderBy: LICENSE_TYPE_KEY_ASC) {
-            licensePackKey
-            licenseTypeKey
+            ...LicensePackLicenseType
           }
         }
       }
-
     }    
   }
 }

@@ -1,0 +1,8 @@
+fragment LicensePackLicenseType on LicensePackLicenseType {
+  licensePackKey
+  licenseTypeKey
+  numberOfLicenses
+  expirationIntervalType
+  expirationIntervalMultiplier
+  issuedCount
+}

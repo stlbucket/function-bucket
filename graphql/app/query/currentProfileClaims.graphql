@@ -1,13 +1,5 @@
 query CurrentProfileClaims {
   currentProfileClaims {
-    profileId
-    tenantId
-    residentId
-    actualResidentId
-    profileStatus
-    permissions
-    email
-    displayName
-    tenantName
+    ...ProfileClaim
   }
 }

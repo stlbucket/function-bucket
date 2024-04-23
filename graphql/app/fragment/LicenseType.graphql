@@ -1,0 +1,5 @@
+fragment LicenseType on LicenseType {
+  key
+  displayName
+  assignmentScope
+}

@@ -1,0 +1,11 @@
+fragment Tenant on Tenant {
+  id
+  name
+  createdAt
+  identifier
+  status
+  type
+  licenses {
+    totalCount
+  }
+}

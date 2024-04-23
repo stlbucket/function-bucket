@@ -1,11 +1,5 @@
 query TenantResidents {
-  residents {
-    nodes {
-      id
-      tenantName
-      email
-      status      
-      displayName
-    }
+  residents: residentsList {
+    ...Resident
   }
 }

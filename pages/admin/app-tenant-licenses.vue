@@ -25,11 +25,11 @@
     const { data } = await licensesQuery.executeQuery({
       tenantId: user.data.user?.user_metadata.app_tenant_id
     })
-    licenses.value = (data.value?.tenantLicenses?.nodes || []).map(l => {
+    licenses.value = (data.value?.tenantLicenses || []).map(l => {
       return {
         ...l,
-        status: l.residency.status,
-        email: l.residency.email
+        status: l?.resident?.status,
+        email: l?.resident?.email
       }
     })
   }

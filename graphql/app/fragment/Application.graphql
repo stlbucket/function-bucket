@@ -1,0 +1,4 @@
+fragment Application on Application {
+  key
+  name
+}

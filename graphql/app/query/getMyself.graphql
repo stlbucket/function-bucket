@@ -1,13 +1,5 @@
 query GetMyself {
   getMyself {
-    id
-    email
-    firstName
-    lastName
-    fullName
-    phone
-    displayName
-    isPublic
-    identifier
+    ...Profile
   }
 }

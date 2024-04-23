@@ -2,17 +2,9 @@ query ResidentById(
   $residentId: UUID!
 ) {
   resident(id: $residentId) {
-    id
-    email
-    tenantName
-    displayName
-    status
-    tenantId
+    ...Resident
     licenses: licensesList {
-      id
-      licenseTypeKey
-      createdAt
-      expiresAt
+      ...License
     }
   }
 }

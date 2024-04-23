@@ -50,7 +50,7 @@
 
   const { data } = await useTenantResidentsQuery()
   if (data.value?.residents) {
-    profileResidents.value = data.value.residents.nodes.map(n => {
+    profileResidents.value = data.value.residents.map(n => {
       return {
         name: n.displayName,
         value: n.id

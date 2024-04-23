@@ -1,0 +1,15 @@
+fragment Profile on Profile {
+  id
+  email
+  identifier
+  firstName
+  lastName
+  fullName
+  phone
+  isPublic
+  displayName
+  avatarKey
+  status
+  createdAt
+  updatedAt
+}

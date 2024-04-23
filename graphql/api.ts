@@ -5691,6 +5691,28 @@ export type GetAbListingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAbListingsQuery = { __typename: 'Query', getAbListings?: { __typename: 'AbListingsConnection', nodes: Array<{ __typename: 'AbListing', profileId?: any | null, fullName?: string | null, email?: string | null, phone?: string | null, displayName?: string | null, canInvite?: boolean | null } | null> } | null };
 
+export type ApplicationFragment = { __typename: 'Application', key: string, name: string };
+
+export type LicenseFragment = { __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null };
+
+export type LicensePackFragment = { __typename: 'LicensePack', key: string, displayName: string, description: string };
+
+export type LicensePackLicenseTypeFragment = { __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string, numberOfLicenses: number, expirationIntervalType: ExpirationIntervalType, expirationIntervalMultiplier: number, issuedCount?: number | null };
+
+export type LicenseTypeFragment = { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope };
+
+export type LicenseTypePermissionFragment = { __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string };
+
+export type ProfileFragment = { __typename: 'Profile', id: any, email: string, identifier?: string | null, firstName?: string | null, lastName?: string | null, fullName?: string | null, phone?: string | null, isPublic: boolean, displayName?: string | null, avatarKey?: string | null, status: ProfileStatus, createdAt: any, updatedAt: any };
+
+export type ProfileClaimFragment = { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null };
+
+export type ResidentFragment = { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType };
+
+export type TenantFragment = { __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, licenses: { __typename: 'LicensesConnection', totalCount: number } };
+
+export type TenantSubscriptionFragment = { __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus };
+
 export type ActivateTenantMutationVariables = Exact<{
   tenantId: Scalars['UUID']['input'];
 }>;
@@ -5808,22 +5830,12 @@ export type ActiveLicensePacksQuery = { __typename: 'Query', licensePacksList?: 
 export type AllAppProfilesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllAppProfilesQuery = { __typename: 'Query', profiles?: { __typename: 'ProfilesConnection', nodes: Array<{ __typename: 'Profile', id: any, email: string, identifier?: string | null, firstName?: string | null, lastName?: string | null, displayName?: string | null, avatarKey?: string | null, status: ProfileStatus, createdAt: any, updatedAt: any, residents: Array<{ __typename: 'Resident', id: any, tenantId: any, tenantName: string, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string }> }> } | null> } | null };
-
-export type AllTenantsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllTenantsQuery = { __typename: 'Query', tenants?: { __typename: 'TenantsConnection', nodes: Array<{ __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, licenses: { __typename: 'LicensesConnection', totalCount: number }, subscriptions: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, createdAt: any, licensePack?: { __typename: 'LicensePack', key: string, displayName: string, licenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string }> } | null }> } | null> } | null };
+export type AllAppProfilesQuery = { __typename: 'Query', profiles?: { __typename: 'ProfilesConnection', nodes: Array<{ __typename: 'Profile', id: any, email: string, identifier?: string | null, firstName?: string | null, lastName?: string | null, fullName?: string | null, phone?: string | null, isPublic: boolean, displayName?: string | null, avatarKey?: string | null, status: ProfileStatus, createdAt: any, updatedAt: any, residents: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null }> }> } | null> } | null };
 
 export type AllApplicationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllApplicationsQuery = { __typename: 'Query', applications?: Array<{ __typename: 'Application', key: string, name: string, licenseTypes: Array<{ __typename: 'LicenseType', key: string, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } }> }> | null };
-
-export type DemoResidentsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type DemoResidentsQuery = { __typename: 'Query', demoProfileResidencies?: { __typename: 'ResidentsConnection', nodes: Array<{ __typename: 'Resident', id: any, email: string, tenantName: string, status: ResidentStatus } | null> } | null };
+export type AllApplicationsQuery = { __typename: 'Query', applications?: Array<{ __typename: 'Application', key: string, name: string, licenseTypes: Array<{ __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } }> }> | null };
 
 export type AllLicensePacksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5833,31 +5845,31 @@ export type AllLicensePacksQuery = { __typename: 'Query', licensePacks?: Array<{
 export type AllResidentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllResidentsQuery = { __typename: 'Query', residents?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string, licenseType?: { __typename: 'LicenseType', key: string, assignmentScope: LicenseTypeAssignmentScope } | null }> }> | null };
+export type AllResidentsQuery = { __typename: 'Query', residents?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope } | null }> }> | null };
 
 export type TenantByIdQueryVariables = Exact<{
   tenantId: Scalars['UUID']['input'];
 }>;
 
 
-export type TenantByIdQuery = { __typename: 'Query', tenant?: { __typename: 'Tenant', id: any, name: string, identifier?: string | null, status: TenantStatus, type: TenantType, createdAt: any, residents: { __typename: 'ResidentsConnection', totalCount: number }, tenantSubscriptions: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus, licenses: { __typename: 'LicensesConnection', totalCount: number } }> } | null };
+export type TenantByIdQuery = { __typename: 'Query', tenant?: { __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, residents: { __typename: 'ResidentsConnection', totalCount: number }, tenantSubscriptions: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus, licenses: { __typename: 'LicensesConnection', totalCount: number } }>, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null };
 
 export type TenantLicensesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TenantLicensesQuery = { __typename: 'Query', tenantLicenses?: { __typename: 'LicensesConnection', nodes: Array<{ __typename: 'License', id: any, licenseTypeKey: string, resident?: { __typename: 'Resident', id: any, email: string, status: ResidentStatus } | null } | null> } | null };
+export type TenantLicensesQuery = { __typename: 'Query', tenantLicenses?: Array<{ __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null, resident?: { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType } | null } | null> | null };
 
 export type TenantResidentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TenantResidentsQuery = { __typename: 'Query', residents?: { __typename: 'ResidentsConnection', nodes: Array<{ __typename: 'Resident', id: any, tenantName: string, email: string, status: ResidentStatus, displayName?: string | null } | null> } | null };
+export type TenantResidentsQuery = { __typename: 'Query', residents?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType }> | null };
 
 export type TenantSubscriptionsQueryVariables = Exact<{
   tenantId: Scalars['UUID']['input'];
 }>;
 
 
-export type TenantSubscriptionsQuery = { __typename: 'Query', tenantSubscriptions?: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus, tenant?: { __typename: 'Tenant', id: any, name: string, type: TenantType } | null, licenses: { __typename: 'LicensesConnection', totalCount: number }, licensePack?: { __typename: 'LicensePack', key: string, displayName: string, description: string, licensePackLicenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string, numberOfLicenses: number, expirationIntervalType: ExpirationIntervalType, expirationIntervalMultiplier: number, issuedCount?: number | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null }> } | null }> | null };
+export type TenantSubscriptionsQuery = { __typename: 'Query', tenantSubscriptions?: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus, tenant?: { __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null, licenses: { __typename: 'LicensesConnection', totalCount: number }, licensePack?: { __typename: 'LicensePack', key: string, displayName: string, description: string, licensePackLicenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string, numberOfLicenses: number, expirationIntervalType: ExpirationIntervalType, expirationIntervalMultiplier: number, issuedCount?: number | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null }> } | null }> | null };
 
 export type CurrentProfileClaimsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5867,40 +5879,40 @@ export type CurrentProfileClaimsQuery = { __typename: 'Query', currentProfileCla
 export type GetMyselfQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyselfQuery = { __typename: 'Query', getMyself?: { __typename: 'Profile', id: any, email: string, firstName?: string | null, lastName?: string | null, fullName?: string | null, phone?: string | null, displayName?: string | null, isPublic: boolean, identifier?: string | null } | null };
+export type GetMyselfQuery = { __typename: 'Query', getMyself?: { __typename: 'Profile', id: any, email: string, identifier?: string | null, firstName?: string | null, lastName?: string | null, fullName?: string | null, phone?: string | null, isPublic: boolean, displayName?: string | null, avatarKey?: string | null, status: ProfileStatus, createdAt: any, updatedAt: any } | null };
 
 export type MyProfileResidenciesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyProfileResidenciesQuery = { __typename: 'Query', myProfileResidenciesList?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, type: ResidentType, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string, licenseType?: { __typename: 'LicenseType', key: string, assignmentScope: LicenseTypeAssignmentScope } | null }> } | null> | null };
+export type MyProfileResidenciesQuery = { __typename: 'Query', myProfileResidenciesList?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope } | null }> } | null> | null };
 
 export type ResidentByIdQueryVariables = Exact<{
   residentId: Scalars['UUID']['input'];
 }>;
 
 
-export type ResidentByIdQuery = { __typename: 'Query', resident?: { __typename: 'Resident', id: any, email: string, tenantName: string, displayName?: string | null, status: ResidentStatus, tenantId: any, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null }> } | null };
+export type ResidentByIdQuery = { __typename: 'Query', resident?: { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null }> } | null };
 
 export type SearchProfilesQueryVariables = Exact<{
   searchTerm?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type SearchProfilesQuery = { __typename: 'Query', searchProfiles?: { __typename: 'ProfilesConnection', nodes: Array<{ __typename: 'Profile', id: any, email: string, firstName?: string | null, lastName?: string | null, fullName?: string | null, status: ProfileStatus } | null> } | null };
+export type SearchProfilesQuery = { __typename: 'Query', searchProfiles?: { __typename: 'ProfilesConnection', nodes: Array<{ __typename: 'Profile', id: any, email: string, identifier?: string | null, firstName?: string | null, lastName?: string | null, fullName?: string | null, phone?: string | null, isPublic: boolean, displayName?: string | null, avatarKey?: string | null, status: ProfileStatus, createdAt: any, updatedAt: any } | null> } | null };
 
 export type SearchResidentsQueryVariables = Exact<{
   searchTerm?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type SearchResidentsQuery = { __typename: 'Query', searchResidents?: { __typename: 'ResidentsConnection', nodes: Array<{ __typename: 'Resident', id: any, email: string, displayName?: string | null, tenantName: string, tenantId: any, status: ResidentStatus, type: ResidentType } | null> } | null };
+export type SearchResidentsQuery = { __typename: 'Query', searchResidents?: { __typename: 'ResidentsConnection', nodes: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType } | null> } | null };
 
 export type SearchTenantsQueryVariables = Exact<{
   searchTerm?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type SearchTenantsQuery = { __typename: 'Query', searchTenants?: { __typename: 'TenantsConnection', nodes: Array<{ __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, licenses: { __typename: 'LicensesConnection', totalCount: number }, subscriptions: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, createdAt: any, licensePack?: { __typename: 'LicensePack', key: string, displayName: string, licenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string }> } | null }> } | null> } | null };
+export type SearchTenantsQuery = { __typename: 'Query', searchTenants?: { __typename: 'TenantsConnection', nodes: Array<{ __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, subscriptions: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus, licensePack?: { __typename: 'LicensePack', key: string, displayName: string, description: string, licenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string, numberOfLicenses: number, expirationIntervalType: ExpirationIntervalType, expirationIntervalMultiplier: number, issuedCount?: number | null }> } | null }>, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null> } | null };
 
 export type SiteUserByIdQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5948,8 +5960,6 @@ export type TopicMessageSubscriptionVariables = Exact<{
 
 
 export type TopicMessageSubscription = { __typename: 'Subscription', topicMessage?: { __typename: 'TopicMessageSubscriptionPayload', event?: string | null, messageId?: any | null, message?: { __typename: 'Message', id: any, createdAt: any, status: MessageStatus, content: string, postedBy?: { __typename: 'MsgResident', residentId: any, displayName: string } | null } | null } | null };
-
-export type ResidentFragFragment = { __typename: 'Resident', id: any, tenantName: string, email: string, displayName?: string | null, status: ResidentStatus };
 
 export type CreateLocationMutationVariables = Exact<{
   locationInfo: LocationInfoInput;
@@ -6056,12 +6066,110 @@ export type TodoByIdForRefreshQueryVariables = Exact<{
 
 export type TodoByIdForRefreshQuery = { __typename: 'Query', todo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus } | null } | null } | null } | null } | null } | null } | null } | null } | null } | null } | null } | null };
 
-export const ResidentFragFragmentDoc = gql`
-    fragment ResidentFrag on Resident {
+export const ApplicationFragmentDoc = gql`
+    fragment Application on Application {
+  key
+  name
+}
+    `;
+export const LicenseFragmentDoc = gql`
+    fragment License on License {
   id
-  tenantName
+  licenseTypeKey
+  createdAt
+  expiresAt
+}
+    `;
+export const LicensePackFragmentDoc = gql`
+    fragment LicensePack on LicensePack {
+  key
+  displayName
+  description
+}
+    `;
+export const LicensePackLicenseTypeFragmentDoc = gql`
+    fragment LicensePackLicenseType on LicensePackLicenseType {
+  licensePackKey
+  licenseTypeKey
+  numberOfLicenses
+  expirationIntervalType
+  expirationIntervalMultiplier
+  issuedCount
+}
+    `;
+export const LicenseTypeFragmentDoc = gql`
+    fragment LicenseType on LicenseType {
+  key
+  displayName
+  assignmentScope
+}
+    `;
+export const LicenseTypePermissionFragmentDoc = gql`
+    fragment LicenseTypePermission on LicenseTypePermission {
+  licenseTypeKey
+  permissionKey
+}
+    `;
+export const ProfileFragmentDoc = gql`
+    fragment Profile on Profile {
+  id
+  email
+  identifier
+  firstName
+  lastName
+  fullName
+  phone
+  isPublic
+  displayName
+  avatarKey
+  status
+  createdAt
+  updatedAt
+}
+    `;
+export const ProfileClaimFragmentDoc = gql`
+    fragment ProfileClaim on ProfileClaim {
+  profileId
+  tenantId
+  residentId
+  actualResidentId
+  profileStatus
+  permissions
   email
   displayName
+  tenantName
+}
+    `;
+export const ResidentFragmentDoc = gql`
+    fragment Resident on Resident {
+  id
+  profileId
+  tenantId
+  tenantName
+  status
+  displayName
+  email
+  type
+  tenantId
+}
+    `;
+export const TenantFragmentDoc = gql`
+    fragment Tenant on Tenant {
+  id
+  name
+  createdAt
+  identifier
+  status
+  type
+  licenses {
+    totalCount
+  }
+}
+    `;
+export const TenantSubscriptionFragmentDoc = gql`
+    fragment TenantSubscription on TenantSubscription {
+  id
+  licensePackKey
   status
 }
     `;
@@ -6372,12 +6480,10 @@ export function useUpdateProfileMutation() {
 export const ActiveLicensePacksDocument = gql`
     query ActiveLicensePacks {
   licensePacksList {
-    key
-    displayName
-    description
+    ...LicensePack
   }
 }
-    `;
+    ${LicensePackFragmentDoc}`;
 
 export function useActiveLicensePacksQuery(options: Omit<Urql.UseQueryArgs<never, ActiveLicensePacksQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<ActiveLicensePacksQuery>({ query: ActiveLicensePacksDocument, ...options });
@@ -6386,79 +6492,31 @@ export const AllAppProfilesDocument = gql`
     query AllAppProfiles {
   profiles {
     nodes {
-      id
-      email
-      identifier
-      firstName
-      lastName
-      displayName
-      avatarKey
-      status
-      createdAt
-      updatedAt
+      ...Profile
       residents: residentsList {
-        id
-        tenantId
-        tenantName
+        ...Resident
         licenses: licensesList {
-          id
-          licenseTypeKey
+          ...License
         }
       }
     }
   }
 }
-    `;
+    ${ProfileFragmentDoc}
+${ResidentFragmentDoc}
+${LicenseFragmentDoc}`;
 
 export function useAllAppProfilesQuery(options: Omit<Urql.UseQueryArgs<never, AllAppProfilesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<AllAppProfilesQuery>({ query: AllAppProfilesDocument, ...options });
 };
-export const AllTenantsDocument = gql`
-    query AllTenants {
-  tenants(orderBy: NAME_ASC) {
-    nodes {
-      id
-      name
-      createdAt
-      identifier
-      status
-      type
-      licenses {
-        totalCount
-      }
-      subscriptions: tenantSubscriptionsList(orderBy: LICENSE_PACK_KEY_ASC) {
-        id
-        licensePackKey
-        createdAt
-        licensePack {
-          key
-          displayName
-          licenseTypes: licensePackLicenseTypesByLicensePackKeyList(
-            orderBy: LICENSE_TYPE_KEY_ASC
-          ) {
-            licensePackKey
-            licenseTypeKey
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-
-export function useAllTenantsQuery(options: Omit<Urql.UseQueryArgs<never, AllTenantsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<AllTenantsQuery>({ query: AllTenantsDocument, ...options });
-};
 export const AllApplicationsDocument = gql`
     query AllApplications {
   applications: applicationsList {
-    key
-    name
+    ...Application
     licenseTypes: licenseTypesByApplicationKeyList {
-      key
+      ...LicenseType
       permissions: licenseTypePermissionsByLicenseTypeKeyList {
-        licenseTypeKey
-        permissionKey
+        ...LicenseTypePermission
       }
       licenses: licensesByLicenseTypeKey {
         totalCount
@@ -6466,47 +6524,23 @@ export const AllApplicationsDocument = gql`
     }
   }
 }
-    `;
+    ${ApplicationFragmentDoc}
+${LicenseTypeFragmentDoc}
+${LicenseTypePermissionFragmentDoc}`;
 
 export function useAllApplicationsQuery(options: Omit<Urql.UseQueryArgs<never, AllApplicationsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<AllApplicationsQuery>({ query: AllApplicationsDocument, ...options });
 };
-export const DemoResidentsDocument = gql`
-    query DemoResidents {
-  demoProfileResidencies {
-    nodes {
-      id
-      email
-      tenantName
-      status
-    }
-  }
-}
-    `;
-
-export function useDemoResidentsQuery(options: Omit<Urql.UseQueryArgs<never, DemoResidentsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<DemoResidentsQuery>({ query: DemoResidentsDocument, ...options });
-};
 export const AllLicensePacksDocument = gql`
     query AllLicensePacks {
   licensePacks: licensePacksList {
-    key
-    displayName
-    description
+    ...LicensePack
     licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
-      licensePackKey
-      licenseTypeKey
-      numberOfLicenses
-      expirationIntervalType
-      expirationIntervalMultiplier
-      issuedCount
+      ...LicensePackLicenseType
       licenseType {
-        key
-        displayName
-        assignmentScope
+        ...LicenseType
         permissions: licenseTypePermissionsByLicenseTypeKeyList {
-          licenseTypeKey
-          permissionKey
+          ...LicenseTypePermission
         }
         licenses: licensesByLicenseTypeKey {
           totalCount
@@ -6518,7 +6552,10 @@ export const AllLicensePacksDocument = gql`
     }
   }
 }
-    `;
+    ${LicensePackFragmentDoc}
+${LicensePackLicenseTypeFragmentDoc}
+${LicenseTypeFragmentDoc}
+${LicenseTypePermissionFragmentDoc}`;
 
 export function useAllLicensePacksQuery(options: Omit<Urql.UseQueryArgs<never, AllLicensePacksQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<AllLicensePacksQuery>({ query: AllLicensePacksDocument, ...options });
@@ -6526,26 +6563,18 @@ export function useAllLicensePacksQuery(options: Omit<Urql.UseQueryArgs<never, A
 export const AllResidentsDocument = gql`
     query AllResidents {
   residents: residentsList {
-    id
-    profileId
-    tenantId
-    tenantName
-    status
-    displayName
-    email
-    type
-    tenantId
+    ...Resident
     licenses: licensesList {
-      id
-      licenseTypeKey
+      ...License
       licenseType {
-        key
-        assignmentScope
+        ...LicenseType
       }
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}
+${LicenseFragmentDoc}
+${LicenseTypeFragmentDoc}`;
 
 export function useAllResidentsQuery(options: Omit<Urql.UseQueryArgs<never, AllResidentsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<AllResidentsQuery>({ query: AllResidentsDocument, ...options });
@@ -6553,62 +6582,46 @@ export function useAllResidentsQuery(options: Omit<Urql.UseQueryArgs<never, AllR
 export const TenantByIdDocument = gql`
     query TenantById($tenantId: UUID!) {
   tenant(id: $tenantId) {
-    id
-    name
-    identifier
-    status
-    type
-    createdAt
+    ...Tenant
     residents: residents {
       totalCount
     }
     tenantSubscriptions: tenantSubscriptionsList {
-      id
-      licensePackKey
-      status
+      ...TenantSubscription
       licenses: licenses {
         totalCount
       }
     }
   }
 }
-    `;
+    ${TenantFragmentDoc}
+${TenantSubscriptionFragmentDoc}`;
 
 export function useTenantByIdQuery(options: Omit<Urql.UseQueryArgs<never, TenantByIdQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TenantByIdQuery>({ query: TenantByIdDocument, ...options });
 };
 export const TenantLicensesDocument = gql`
     query TenantLicenses {
-  tenantLicenses {
-    nodes {
-      id
-      licenseTypeKey
-      resident {
-        id
-        email
-        status
-      }
+  tenantLicenses: tenantLicensesList {
+    ...License
+    resident {
+      ...Resident
     }
   }
 }
-    `;
+    ${LicenseFragmentDoc}
+${ResidentFragmentDoc}`;
 
 export function useTenantLicensesQuery(options: Omit<Urql.UseQueryArgs<never, TenantLicensesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TenantLicensesQuery>({ query: TenantLicensesDocument, ...options });
 };
 export const TenantResidentsDocument = gql`
     query TenantResidents {
-  residents {
-    nodes {
-      id
-      tenantName
-      email
-      status
-      displayName
-    }
+  residents: residentsList {
+    ...Resident
   }
 }
-    `;
+    ${ResidentFragmentDoc}`;
 
 export function useTenantResidentsQuery(options: Omit<Urql.UseQueryArgs<never, TenantResidentsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TenantResidentsQuery>({ query: TenantResidentsDocument, ...options });
@@ -6616,35 +6629,21 @@ export function useTenantResidentsQuery(options: Omit<Urql.UseQueryArgs<never, T
 export const TenantSubscriptionsDocument = gql`
     query TenantSubscriptions($tenantId: UUID!) {
   tenantSubscriptions: tenantSubscriptionsList(condition: {tenantId: $tenantId}) {
-    id
-    licensePackKey
-    status
+    ...TenantSubscription
     tenant {
-      id
-      name
-      type
+      ...Tenant
     }
     licenses {
       totalCount
     }
     licensePack {
-      key
-      displayName
-      description
+      ...LicensePack
       licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
-        licensePackKey
-        licenseTypeKey
-        numberOfLicenses
-        expirationIntervalType
-        expirationIntervalMultiplier
-        issuedCount
+        ...LicensePackLicenseType
         licenseType {
-          key
-          displayName
-          assignmentScope
+          ...LicenseType
           permissions: licenseTypePermissionsByLicenseTypeKeyList {
-            licenseTypeKey
-            permissionKey
+            ...LicenseTypePermission
           }
           licenses: licensesByLicenseTypeKey {
             totalCount
@@ -6654,7 +6653,12 @@ export const TenantSubscriptionsDocument = gql`
     }
   }
 }
-    `;
+    ${TenantSubscriptionFragmentDoc}
+${TenantFragmentDoc}
+${LicensePackFragmentDoc}
+${LicensePackLicenseTypeFragmentDoc}
+${LicenseTypeFragmentDoc}
+${LicenseTypePermissionFragmentDoc}`;
 
 export function useTenantSubscriptionsQuery(options: Omit<Urql.UseQueryArgs<never, TenantSubscriptionsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TenantSubscriptionsQuery>({ query: TenantSubscriptionsDocument, ...options });
@@ -6662,18 +6666,10 @@ export function useTenantSubscriptionsQuery(options: Omit<Urql.UseQueryArgs<neve
 export const CurrentProfileClaimsDocument = gql`
     query CurrentProfileClaims {
   currentProfileClaims {
-    profileId
-    tenantId
-    residentId
-    actualResidentId
-    profileStatus
-    permissions
-    email
-    displayName
-    tenantName
+    ...ProfileClaim
   }
 }
-    `;
+    ${ProfileClaimFragmentDoc}`;
 
 export function useCurrentProfileClaimsQuery(options: Omit<Urql.UseQueryArgs<never, CurrentProfileClaimsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<CurrentProfileClaimsQuery>({ query: CurrentProfileClaimsDocument, ...options });
@@ -6681,18 +6677,10 @@ export function useCurrentProfileClaimsQuery(options: Omit<Urql.UseQueryArgs<nev
 export const GetMyselfDocument = gql`
     query GetMyself {
   getMyself {
-    id
-    email
-    firstName
-    lastName
-    fullName
-    phone
-    displayName
-    isPublic
-    identifier
+    ...Profile
   }
 }
-    `;
+    ${ProfileFragmentDoc}`;
 
 export function useGetMyselfQuery(options: Omit<Urql.UseQueryArgs<never, GetMyselfQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<GetMyselfQuery>({ query: GetMyselfDocument, ...options });
@@ -6700,24 +6688,18 @@ export function useGetMyselfQuery(options: Omit<Urql.UseQueryArgs<never, GetMyse
 export const MyProfileResidenciesDocument = gql`
     query MyProfileResidencies {
   myProfileResidenciesList {
-    id
-    profileId
-    tenantId
-    tenantName
-    status
-    displayName
-    type
+    ...Resident
     licenses: licensesList {
-      id
-      licenseTypeKey
+      ...License
       licenseType {
-        key
-        assignmentScope
+        ...LicenseType
       }
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}
+${LicenseFragmentDoc}
+${LicenseTypeFragmentDoc}`;
 
 export function useMyProfileResidenciesQuery(options: Omit<Urql.UseQueryArgs<never, MyProfileResidenciesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MyProfileResidenciesQuery>({ query: MyProfileResidenciesDocument, ...options });
@@ -6725,21 +6707,14 @@ export function useMyProfileResidenciesQuery(options: Omit<Urql.UseQueryArgs<nev
 export const ResidentByIdDocument = gql`
     query ResidentById($residentId: UUID!) {
   resident(id: $residentId) {
-    id
-    email
-    tenantName
-    displayName
-    status
-    tenantId
+    ...Resident
     licenses: licensesList {
-      id
-      licenseTypeKey
-      createdAt
-      expiresAt
+      ...License
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}
+${LicenseFragmentDoc}`;
 
 export function useResidentByIdQuery(options: Omit<Urql.UseQueryArgs<never, ResidentByIdQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<ResidentByIdQuery>({ query: ResidentByIdDocument, ...options });
@@ -6748,16 +6723,11 @@ export const SearchProfilesDocument = gql`
     query SearchProfiles($searchTerm: String) {
   searchProfiles(_options: {searchTerm: $searchTerm}) {
     nodes {
-      id
-      email
-      firstName
-      lastName
-      fullName
-      status
+      ...Profile
     }
   }
 }
-    `;
+    ${ProfileFragmentDoc}`;
 
 export function useSearchProfilesQuery(options: Omit<Urql.UseQueryArgs<never, SearchProfilesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SearchProfilesQuery>({ query: SearchProfilesDocument, ...options });
@@ -6766,17 +6736,11 @@ export const SearchResidentsDocument = gql`
     query SearchResidents($searchTerm: String) {
   searchResidents(_options: {searchTerm: $searchTerm}) {
     nodes {
-      id
-      email
-      displayName
-      tenantName
-      tenantId
-      status
-      type
+      ...Resident
     }
   }
 }
-    `;
+    ${ResidentFragmentDoc}`;
 
 export function useSearchResidentsQuery(options: Omit<Urql.UseQueryArgs<never, SearchResidentsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SearchResidentsQuery>({ query: SearchResidentsDocument, ...options });
@@ -6785,34 +6749,25 @@ export const SearchTenantsDocument = gql`
     query SearchTenants($searchTerm: String) {
   searchTenants(_options: {searchTerm: $searchTerm}) {
     nodes {
-      id
-      name
-      createdAt
-      identifier
-      status
-      type
-      licenses {
-        totalCount
-      }
+      ...Tenant
       subscriptions: tenantSubscriptionsList(orderBy: LICENSE_PACK_KEY_ASC) {
-        id
-        licensePackKey
-        createdAt
+        ...TenantSubscription
         licensePack {
-          key
-          displayName
+          ...LicensePack
           licenseTypes: licensePackLicenseTypesByLicensePackKeyList(
             orderBy: LICENSE_TYPE_KEY_ASC
           ) {
-            licensePackKey
-            licenseTypeKey
+            ...LicensePackLicenseType
           }
         }
       }
     }
   }
 }
-    `;
+    ${TenantFragmentDoc}
+${TenantSubscriptionFragmentDoc}
+${LicensePackFragmentDoc}
+${LicensePackLicenseTypeFragmentDoc}`;
 
 export function useSearchTenantsQuery(options: Omit<Urql.UseQueryArgs<never, SearchTenantsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SearchTenantsQuery>({ query: SearchTenantsDocument, ...options });

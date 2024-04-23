@@ -5,12 +5,7 @@ query SearchProfiles(
     searchTerm: $searchTerm
   }) {
    nodes {
-      id
-    	email
-      firstName
-      lastName
-      fullName
-      status
+      ...Profile
     }    
   }
 }

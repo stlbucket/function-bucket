@@ -4,14 +4,8 @@ query SearchResidents(
   searchResidents(_options: {
     searchTerm: $searchTerm
   }) {
-   nodes {
-      id
-    	email
-      displayName
-      tenantName
-      tenantId
-      status
-      type
+    nodes {
+      ...Resident
     }    
   }
 }

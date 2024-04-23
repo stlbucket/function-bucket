@@ -4,35 +4,21 @@ query TenantSubscriptions(
   tenantSubscriptions: tenantSubscriptionsList(condition: {
     tenantId: $tenantId
   }) {
-    id
-    licensePackKey
-    status
+    ...TenantSubscription
     tenant {
-      id
-      name
-      type
+      ...Tenant
     }
     licenses {
       totalCount
     }
     licensePack {
-      key
-      displayName
-      description
+      ...LicensePack
       licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
-        licensePackKey
-        licenseTypeKey
-        numberOfLicenses
-        expirationIntervalType
-        expirationIntervalMultiplier
-        issuedCount
+        ...LicensePackLicenseType
         licenseType {
-          key
-          displayName
-          assignmentScope
+          ...LicenseType
           permissions: licenseTypePermissionsByLicenseTypeKeyList {
-            licenseTypeKey
-            permissionKey
+            ...LicenseTypePermission
           }
           licenses: licensesByLicenseTypeKey {
             totalCount

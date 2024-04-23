@@ -2,19 +2,12 @@ query TenantById(
   $tenantId: UUID!
 ) {
   tenant(id: $tenantId) {
-    id
-    name
-    identifier
-    status
-    type
-    createdAt
+    ...Tenant
     residents: residents {
       totalCount
     }
     tenantSubscriptions: tenantSubscriptionsList {
-      id
-      licensePackKey
-      status
+      ...TenantSubscription
       licenses: licenses {
         totalCount
       }

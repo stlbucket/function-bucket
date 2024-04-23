@@ -1,0 +1,11 @@
+fragment Resident on Resident {
+  id
+  profileId
+  tenantId
+  tenantName
+  status
+  displayName
+  email
+  type
+  tenantId
+}

@@ -1,0 +1,4 @@
+fragment LicenseTypePermission on LicenseTypePermission {
+  licenseTypeKey
+  permissionKey
+}

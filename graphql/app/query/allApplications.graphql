@@ -1,12 +1,10 @@
 query AllApplications {
   applications: applicationsList {
-    key
-    name
+    ...Application
     licenseTypes: licenseTypesByApplicationKeyList {
-      key
+      ...LicenseType
       permissions: licenseTypePermissionsByLicenseTypeKeyList {
-        licenseTypeKey
-        permissionKey
+        ...LicenseTypePermission
       }
       licenses: licensesByLicenseTypeKey {
         totalCount

@@ -1,13 +1,8 @@
 query TenantLicenses{
-  tenantLicenses {
-    nodes {
-      id
-      licenseTypeKey
-      resident {
-        id
-        email
-        status
-      }
+  tenantLicenses: tenantLicensesList {
+    ...License
+    resident {
+      ...Resident
     }
   }
 }

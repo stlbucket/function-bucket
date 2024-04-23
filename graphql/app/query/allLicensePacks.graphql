@@ -1,22 +1,12 @@
 query AllLicensePacks {
   licensePacks: licensePacksList {
-    key
-    displayName
-    description
+    ...LicensePack
     licensePackLicenseTypes: licensePackLicenseTypesByLicensePackKeyList {
-      licensePackKey
-      licenseTypeKey
-      numberOfLicenses
-      expirationIntervalType
-      expirationIntervalMultiplier
-      issuedCount
+      ...LicensePackLicenseType
       licenseType {
-        key
-        displayName
-        assignmentScope
+        ...LicenseType
         permissions: licenseTypePermissionsByLicenseTypeKeyList {
-          licenseTypeKey
-          permissionKey
+          ...LicenseTypePermission
         }
         licenses: licensesByLicenseTypeKey {
           totalCount

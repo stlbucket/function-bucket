@@ -1,23 +1,11 @@
 query AllAppProfiles {
   profiles {
     nodes {
-      id
-      email
-      identifier
-      firstName
-      lastName
-      displayName
-      avatarKey
-      status
-      createdAt
-      updatedAt
+      ...Profile
       residents: residentsList {
-        id
-        tenantId
-        tenantName
+        ...Resident
         licenses: licensesList {
-          id
-          licenseTypeKey
+          ...License
         }
       }
     }
