@@ -1,19 +1,19 @@
 <template>
   <USlideover
-    :modelValue="showNav.all"
+    :modelValue="showNav"
     side="left"
     :ui="{
       width: 'w-screen max-w-[300px]'
     }"
-    :preventClose="false"
+    :preventClose="true"
   >
   <UCard
       class="flex grow flex-col"
     >
       <UButton 
-        icon="i-heroicons-bars-4"
-        size="xs"
-        square 
+        icon="heroicons:x-mark-solid"
+        square
+        color="red"
         title="Close Menu"
         @click="onToggleCollapsed"
       />
@@ -32,13 +32,21 @@
 const appStateStore = useAppStateStore()
 const {data: modulesData} = await useAvailableModulesQuery()
 const availableModules = ref((modulesData.value?.availableModules || []) as unknown as Module[])
-const showNav = ref({ all: false })
+const showNav = ref(false)
 
 const onToggleCollapsed = async () => {
   appStateStore.toggleNavCollapsed()
 }
 
-watch(() => appStateStore.navCollapsed, () => showNav.value.all = !appStateStore.navCollapsed)
+defineShortcuts({
+  escape: {
+    usingInput: true,
+    whenever: [showNav],
+    handler: () => { appStateStore.navCollapsed = true }
+  }
+})
+
+watch(() => appStateStore.navCollapsed, () => showNav.value = !appStateStore.navCollapsed)
 
 const enableDevTools = computed(() => useRuntimeConfig())
 </script>

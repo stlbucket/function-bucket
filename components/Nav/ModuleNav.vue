@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div v-if="!hideTitle">{{ module.name }}</div>
+    <div v-if="!hideTitle" class="flex gap-2 items-center">
+      <div class=""><UIcon v-if="module.defaultIconKey" :name="module.defaultIconKey"></UIcon></div>
+      <div class="p-1">{{ module.name }}</div>
+    </div>
     <UVerticalNavigation 
-    :links="links"
-  />
+      :links="links"
+    />
   </div>
 </template>
 

@@ -15,8 +15,8 @@
       />
       <div class="hidden md:flex text-xl hover:bg-sky-700 focus:cursor-pointer" @click="navigateTo('/')">SupaNuxtPhile</div>
       <div class="flex gap-3">
-        <Auth />
         <ColorMode />
+        <Auth />
       </div>
     </div>
     <DemoInfo />

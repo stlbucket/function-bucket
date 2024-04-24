@@ -8,6 +8,7 @@
       <NuxtPage />
     </NuxtLayout>
   </UContainer>
+  <USlideovers />
   <UNotifications />
 </template>
 
