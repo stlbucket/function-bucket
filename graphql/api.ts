@@ -1968,6 +1968,7 @@ export type Module = Node & {
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  ordinal: Scalars['Int']['output'];
   permissionKeys: Array<Maybe<Scalars['String']['output']>>;
   /** Reads and enables pagination through a set of `Tool`. */
   toolsByModuleKey: ToolsConnection;
@@ -2004,6 +2005,8 @@ export type ModuleCondition = {
   key?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `name` field. */
   name?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `ordinal` field. */
+  ordinal?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `permissionKeys` field. */
   permissionKeys?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -2051,6 +2054,8 @@ export enum ModulesOrderBy {
   NameAsc = 'NAME_ASC',
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
+  OrdinalAsc = 'ORDINAL_ASC',
+  OrdinalDesc = 'ORDINAL_DESC',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
 }
@@ -2790,7 +2795,6 @@ export type ProfileClaim = {
   actualResidentId?: Maybe<Scalars['UUID']['output']>;
   displayName?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
-  modules?: Maybe<Array<Maybe<ModuleInfo>>>;
   permissions?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   profileId?: Maybe<Scalars['UUID']['output']>;
   profileStatus?: Maybe<ProfileStatus>;
@@ -2909,6 +2913,7 @@ export type Query = Node & {
   applications?: Maybe<ApplicationsConnection>;
   /** Reads a set of `Application`. */
   applicationsList?: Maybe<Array<Application>>;
+  availableModules?: Maybe<Array<Maybe<ModuleInfo>>>;
   currentProfileClaims?: Maybe<ProfileClaim>;
   /** Reads and enables pagination through a set of `Resident`. */
   demoProfileResidencies?: Maybe<ResidentsConnection>;
@@ -5380,6 +5385,7 @@ export type Tool = Node & {
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  ordinal: Scalars['Int']['output'];
   permissionKeys: Array<Maybe<Scalars['String']['output']>>;
   route: Scalars['String']['output'];
 };
@@ -5394,6 +5400,8 @@ export type ToolCondition = {
   moduleKey?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `name` field. */
   name?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `ordinal` field. */
+  ordinal?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `permissionKeys` field. */
   permissionKeys?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Checks for equality with the object’s `route` field. */
@@ -5443,6 +5451,8 @@ export enum ToolsOrderBy {
   NameAsc = 'NAME_ASC',
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
+  OrdinalAsc = 'ORDINAL_ASC',
+  OrdinalDesc = 'ORDINAL_DESC',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
   RouteAsc = 'ROUTE_ASC',
@@ -5987,7 +5997,7 @@ export type LicenseTypePermissionFragment = { __typename: 'LicenseTypePermission
 
 export type ProfileFragment = { __typename: 'Profile', id: any, email: string, identifier?: string | null, firstName?: string | null, lastName?: string | null, fullName?: string | null, phone?: string | null, isPublic: boolean, displayName?: string | null, avatarKey?: string | null, status: ProfileStatus, createdAt: any, updatedAt: any };
 
-export type ProfileClaimFragment = { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null, modules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, defaultIconKey?: string | null, ordinal?: number | null, tools?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, defaultIconKey?: string | null, route?: string | null, ordinal?: number | null } | null> | null } | null> | null };
+export type ProfileClaimFragment = { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null };
 
 export type ResidentFragment = { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType };
 
@@ -6153,10 +6163,15 @@ export type TenantSubscriptionsQueryVariables = Exact<{
 
 export type TenantSubscriptionsQuery = { __typename: 'Query', tenantSubscriptions?: Array<{ __typename: 'TenantSubscription', id: any, licensePackKey: string, status: TenantSubscriptionStatus, tenant?: { __typename: 'Tenant', id: any, name: string, createdAt: any, identifier?: string | null, status: TenantStatus, type: TenantType, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null, licenses: { __typename: 'LicensesConnection', totalCount: number }, licensePack?: { __typename: 'LicensePack', key: string, displayName: string, description: string, licensePackLicenseTypes: Array<{ __typename: 'LicensePackLicenseType', licensePackKey: string, licenseTypeKey: string, numberOfLicenses: number, expirationIntervalType: ExpirationIntervalType, expirationIntervalMultiplier: number, issuedCount?: number | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope, permissions: Array<{ __typename: 'LicenseTypePermission', licenseTypeKey: string, permissionKey: string }>, licenses: { __typename: 'LicensesConnection', totalCount: number } } | null }> } | null }> | null };
 
+export type AvailableModulesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AvailableModulesQuery = { __typename: 'Query', availableModules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, tools?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, route?: string | null } | null> | null } | null> | null };
+
 export type CurrentProfileClaimsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentProfileClaimsQuery = { __typename: 'Query', currentProfileClaims?: { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null, modules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, defaultIconKey?: string | null, ordinal?: number | null, tools?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, defaultIconKey?: string | null, route?: string | null, ordinal?: number | null } | null> | null } | null> | null } | null };
+export type CurrentProfileClaimsQuery = { __typename: 'Query', currentProfileClaims?: { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null } | null };
 
 export type GetMyselfQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6430,19 +6445,6 @@ export const ProfileClaimFragmentDoc = gql`
   email
   displayName
   tenantName
-  modules {
-    key
-    name
-    defaultIconKey
-    ordinal
-    tools {
-      key
-      name
-      defaultIconKey
-      route
-      ordinal
-    }
-  }
 }
     `;
 export const ResidentFragmentDoc = gql`
@@ -6982,6 +6984,29 @@ ${LicenseTypePermissionFragmentDoc}`;
 
 export function useTenantSubscriptionsQuery(options: Omit<Urql.UseQueryArgs<never, TenantSubscriptionsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TenantSubscriptionsQuery>({ query: TenantSubscriptionsDocument, ...options });
+};
+export const AvailableModulesDocument = gql`
+    query AvailableModules {
+  availableModules {
+    key
+    name
+    permissionKeys
+    defaultIconKey
+    ordinal
+    tools {
+      key
+      name
+      permissionKeys
+      defaultIconKey
+      ordinal
+      route
+    }
+  }
+}
+    `;
+
+export function useAvailableModulesQuery(options: Omit<Urql.UseQueryArgs<never, AvailableModulesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<AvailableModulesQuery>({ query: AvailableModulesDocument, ...options });
 };
 export const CurrentProfileClaimsDocument = gql`
     query CurrentProfileClaims {
@@ -7671,6 +7696,7 @@ export type GraphCacheResolvers = {
     applicationByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryApplicationByNodeIdArgs, WithTypename<Application> | string>,
     applications?: GraphCacheResolver<WithTypename<Query>, QueryApplicationsArgs, WithTypename<ApplicationsConnection> | string>,
     applicationsList?: GraphCacheResolver<WithTypename<Query>, QueryApplicationsListArgs, Array<WithTypename<Application> | string>>,
+    availableModules?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, Array<WithTypename<ModuleInfo> | string>>,
     currentProfileClaims?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, WithTypename<ProfileClaim> | string>,
     demoProfileResidencies?: GraphCacheResolver<WithTypename<Query>, QueryDemoProfileResidenciesArgs, WithTypename<ResidentsConnection> | string>,
     demoProfileResidenciesList?: GraphCacheResolver<WithTypename<Query>, QueryDemoProfileResidenciesListArgs, Array<WithTypename<Resident> | string>>,
@@ -8257,6 +8283,7 @@ export type GraphCacheResolvers = {
     key?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
     name?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
     nodeId?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['ID'] | string>,
+    ordinal?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['Int'] | string>,
     permissionKeys?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Array<Scalars['String'] | string>>,
     toolsByModuleKey?: GraphCacheResolver<WithTypename<Module>, ModuleToolsByModuleKeyArgs, WithTypename<ToolsConnection> | string>,
     toolsByModuleKeyList?: GraphCacheResolver<WithTypename<Module>, ModuleToolsByModuleKeyListArgs, Array<WithTypename<Tool> | string>>
@@ -8385,7 +8412,6 @@ export type GraphCacheResolvers = {
     actualResidentId?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['UUID'] | string>,
     displayName?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['String'] | string>,
     email?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['String'] | string>,
-    modules?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Array<WithTypename<ModuleInfo> | string>>,
     permissions?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Array<Scalars['String'] | string>>,
     profileId?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['UUID'] | string>,
     profileStatus?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, ProfileStatus | string>,
@@ -8639,6 +8665,7 @@ export type GraphCacheResolvers = {
     moduleKey?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
     name?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
     nodeId?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['ID'] | string>,
+    ordinal?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['Int'] | string>,
     permissionKeys?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Array<Scalars['String'] | string>>,
     route?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>
   },

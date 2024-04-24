@@ -18,8 +18,26 @@
         @click="onToggleCollapsed"
       />
       <div class="flex flex-col grow">
-        <div class="flex grow-1 bg-blue-400 h-1 mt-3 mb-2"></div>
-        <ModuleNav v-for="m in availableModules" :module="m"></ModuleNav>
+        <div v-if="showNav.todo">
+          <div v-if="showNav.all">Todo</div>
+          <TodoNav />
+        </div>
+        <div v-if="showNav.tools">
+          <div v-if="showNav.all">Tools</div>
+          <ToolsNav />
+        </div>
+        <div v-if="showNav.tenantAdmin">
+          <div v-if="showNav.all">Admin</div>
+          <TenantAdminNav />    
+        </div>
+        <div v-if="showNav.siteAdmin">
+          <div v-if="showNav.all">Site Admin</div>
+          <SiteAdminNav />    
+        </div>
+        <div v-if="showNav.siteAdmin">
+          <div v-if="showNav.all">Dev</div>
+          <DevNav />  
+        </div>
       </div>
     </UCard>
   </USlideover>
@@ -29,8 +47,6 @@
 const appStateStore = useAppStateStore()
 const { currentProfileClaims } = storeToRefs(appStateStore)
 const claims = ref()
-const {data: modulesData} = await useAvailableModulesQuery()
-const availableModules = ref((modulesData.value?.availableModules || []) as unknown as Module[])
 
 const showNav = ref({
   all: false,

@@ -9,14 +9,24 @@
           <MyResidents/>
         </div>
       </div>
-      <UCard>
-        <template #header>
-          CURRENT PROFILE CLAIMS
-        </template>
-        <div class="flex">
-          <pre class="text-xs flex max-w-lg flex-wrap">{{ JSON.stringify(claims,null,2) }}</pre>
-        </div>
-      </UCard>
+      <div class="flex flex-col md:flex-row md:justify-between">
+        <UCard>
+          <template #header>
+            CURRENT PROFILE CLAIMS
+          </template>
+          <div class="flex">
+            <pre class="text-xs flex max-w-lg flex-wrap">{{ claims }}</pre>
+          </div>
+        </UCard>
+        <UCard>
+          <template #header>
+            AVAILABLE MODULES
+          </template>
+          <div class="flex">
+            <pre class="text-xs flex max-w-lg flex-wrap">{{ availableModules }}</pre>
+          </div>
+        </UCard>
+      </div>
       <!-- <UCard>
         <template #header>
           SUPABASE SESSION
@@ -31,15 +41,10 @@
 
 <script lang="ts" setup>
   const appStateStore = useAppStateStore()
-  const claims = ref()
+  const {data, error} = await useCurrentProfileClaimsQuery()
+  const claims = ref(data.value?.currentProfileClaims)
 
-  const loadUser = async () => {
-    try{
-      const {data, error} = await useCurrentProfileClaimsQuery()
-      claims.value = data.value?.currentProfileClaims
-    } catch (e) {
-      console.log('ERROR', e)
-    }
-  }
-  loadUser()
+  const {data: modulesData} = await useAvailableModulesQuery()
+  const availableModules = ref(modulesData.value?.availableModules || [])
+
 </script>

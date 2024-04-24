@@ -1,0 +1,17 @@
+query AvailableModules {
+  availableModules {
+    key
+    name
+    permissionKeys
+    defaultIconKey
+    ordinal
+    tools {
+      key
+      name
+      permissionKeys
+      defaultIconKey
+      ordinal
+      route
+    }
+  }
+}

@@ -8,17 +8,4 @@ fragment ProfileClaim on ProfileClaim {
   email
   displayName
   tenantName
-  modules {
-    key
-    name
-    defaultIconKey
-    ordinal
-    tools {
-      key
-      name
-      defaultIconKey
-      route
-      ordinal
-    }
-  }
 }

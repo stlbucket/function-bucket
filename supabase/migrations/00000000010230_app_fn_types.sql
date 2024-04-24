@@ -30,7 +30,6 @@ create type app_fn.profile_claims as (
   ,email citext
   ,display_name citext
   ,tenant_name citext
-  ,modules app_fn.module_info[]
 );
 ----------------------------------------------------------------------------------------------
 create type app_fn.license_type_info as (
