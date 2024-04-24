@@ -8,17 +8,18 @@
 </template>
 
 <script setup lang="ts">
+  import type { Module } from "@/graphql/api"
   const props = defineProps<{
     module: Module,
     hideTitle?: false
   }>()
 
   const links = computed(() => {
-    return props.module.tools.map(t => {
+    return props.module.toolsByModuleKeyList.map(t => {
       return {
         label: t.name,
         icon: t.defaultIconKey,
-        to: { path: t.route },
+        to: t.route,
         title: t.name
       }
     })

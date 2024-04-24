@@ -19,7 +19,10 @@
       />
       <div class="flex flex-col grow">
         <div class="flex grow-1 bg-blue-400 h-1 mt-3 mb-2"></div>
-        <ModuleNav v-for="m in availableModules" :module="m"></ModuleNav>
+        <div v-for="m in availableModules" :key="m.key">
+          <ModuleNav :module="m"></ModuleNav>
+        </div>
+        <DevNav v-if="enableDevTools"></DevNav>
       </div>
     </UCard>
   </USlideover>
@@ -27,38 +30,15 @@
 
 <script lang="ts" setup>
 const appStateStore = useAppStateStore()
-const { currentProfileClaims } = storeToRefs(appStateStore)
-const claims = ref()
 const {data: modulesData} = await useAvailableModulesQuery()
 const availableModules = ref((modulesData.value?.availableModules || []) as unknown as Module[])
-
-const showNav = ref({
-  all: false,
-  todo: false,
-  addressBook: false,
-  tools: false,
-  tenantAdmin: false,
-  siteAdmin: false
-})
-
-const load = async () => {
-  const {data, error} = await useCurrentProfileClaimsQuery()
-  claims.value = data.value?.currentProfileClaims
-  showNav.value.tools = claimsHasPermission(claims.value, 'p:address-book') || claimsHasPermission(claims.value, 'p:discussions') || claimsHasPermission(claims.value, 'p:todo')
-  showNav.value.siteAdmin = claimsHasPermission(claims.value, 'p:app-admin-super')
-  showNav.value.tenantAdmin = claimsHasPermission(claims.value, 'p:app-admin')
-  showNav.value.todo = claimsHasPermission(claims.value, 'p:todo')
-}
-load()
-
-watch(() => currentProfileClaims.value, () => {
-  load()
-})
-
+const showNav = ref({ all: false })
 
 const onToggleCollapsed = async () => {
   appStateStore.toggleNavCollapsed()
 }
 
 watch(() => appStateStore.navCollapsed, () => showNav.value.all = !appStateStore.navCollapsed)
+
+const enableDevTools = computed(() => useRuntimeConfig())
 </script>

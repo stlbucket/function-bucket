@@ -5,7 +5,7 @@ query AvailableModules {
     permissionKeys
     defaultIconKey
     ordinal
-    tools {
+    toolsByModuleKeyList: tools {
       key
       name
       permissionKeys

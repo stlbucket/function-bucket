@@ -6166,7 +6166,7 @@ export type TenantSubscriptionsQuery = { __typename: 'Query', tenantSubscription
 export type AvailableModulesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AvailableModulesQuery = { __typename: 'Query', availableModules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, tools?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, route?: string | null } | null> | null } | null> | null };
+export type AvailableModulesQuery = { __typename: 'Query', availableModules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, toolsByModuleKeyList?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, route?: string | null } | null> | null } | null> | null };
 
 export type CurrentProfileClaimsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6993,7 +6993,7 @@ export const AvailableModulesDocument = gql`
     permissionKeys
     defaultIconKey
     ordinal
-    tools {
+    toolsByModuleKeyList: tools {
       key
       name
       permissionKeys
