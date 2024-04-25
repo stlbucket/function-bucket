@@ -343,14 +343,14 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
                 ,'/tools/maps'
                 ,200
               )::app_fn.tool_info
-              ,row(
-                'workflow'::citext
-                ,'Workflow'::citext
-                ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
-                ,'solar:wineglass-triangle-bold'::citext
-                ,'/tools/workflow'
-                ,100
-              )::app_fn.tool_info
+              -- ,row(
+              --   'workflow'::citext
+              --   ,'Workflow'::citext
+              --   ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
+              --   ,'solar:wineglass-triangle-bold'::citext
+              --   ,'/tools/workflow'
+              --   ,100
+              -- )::app_fn.tool_info
             ]::app_fn.tool_info[]
           )::app_fn.module_info
           ,row(
