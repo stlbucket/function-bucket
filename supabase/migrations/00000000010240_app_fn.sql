@@ -333,7 +333,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
                 ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
                 ,'i-heroicons-book-open'::citext
                 ,'/tools/address-book'
-                ,200
+                ,300
               )::app_fn.tool_info
               ,row(
                 'maps'::citext
@@ -341,6 +341,14 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
                 ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
                 ,'i-heroicons-globe-americas'::citext
                 ,'/tools/maps'
+                ,200
+              )::app_fn.tool_info
+              ,row(
+                'workflow'::citext
+                ,'Workflow'::citext
+                ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
+                ,'solar:wineglass-triangle-bold'::citext
+                ,'/tools/workflow'
                 ,100
               )::app_fn.tool_info
             ]::app_fn.tool_info[]
