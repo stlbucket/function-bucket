@@ -25,7 +25,8 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
   if (error) {
     alert('Bad email or password')
   } else {
-    await appStateStore.getCurrentProfileClaims(true)
+    await refreshCurrentProfileClaims()
+    await refreshAvailableModules()
     navigateTo('./my-profile')
   }
 

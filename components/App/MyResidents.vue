@@ -98,7 +98,9 @@
     })
     if (error) alert(error.toString())
 
-    reloadNuxtApp({path: '/my-profile', force: true})
+    await refreshCurrentProfileClaims()
+    await refreshAvailableModules()
+    showModal.value = false
   }
 
   const declineResidency = async (row: Resident) => {
@@ -107,7 +109,9 @@
     })
     if (error) alert(error.toString())
 
-    reloadNuxtApp({path: '/my-profile', force: true})
+    await refreshCurrentProfileClaims()
+    await refreshAvailableModules()
+    showModal.value = false
   }
 
   const activeResidency = computed(()=> residents.value.find(r => String(r.status).toLowerCase() === 'active'))

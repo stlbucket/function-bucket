@@ -47,11 +47,13 @@
       tenantId: tenant.id
     })
     await supabase.auth.refreshSession()
-    await appStateStore.getCurrentProfileClaims(true)
-    reloadNuxtApp({path: '/admin/app-tenant-residencies'})
+    await refreshCurrentProfileClaims()
+    await refreshAvailableModules()
+    navigateTo('/admin/app-tenant-residencies')
   }
 
-  const onNewTenant = async (createTenantInput: NewTenantInfo) => {
+  const onNewTenant = async (createTenantInput: any) => {
+    alert ('NOT IMPLEMENTED')
     // const url = `/api/create-tenant`
     // const { data, pending, error, refresh } = await useFetch(url, {
     //   method: 'POST',

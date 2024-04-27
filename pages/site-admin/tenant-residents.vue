@@ -59,7 +59,8 @@
       tenantId: resident.tenantId
     })
     await supabase.auth.refreshSession()
-    await appStateStore.getCurrentProfileClaims(true)
-    reloadNuxtApp({path: `/admin/app-tenant-residencies/${resident.id}`})
+    await refreshCurrentProfileClaims()
+    await refreshAvailableModules()
+    navigateTo(`/admin/app-tenant-residencies/${resident.id}`)
   }
 </script>

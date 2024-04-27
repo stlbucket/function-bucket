@@ -29,8 +29,9 @@
 
 <script lang="ts" setup>
 const appStateStore = useAppStateStore()
-const {data: modulesData} = await useAvailableModulesQuery()
-const availableModules = ref((modulesData.value?.availableModules || []) as unknown as Module[])
+// const {data: modulesData} = await useAvailableModulesQuery()
+// const availableModules = ref((modulesData.value?.availableModules || []) as unknown as Module[])
+const availableModules = await useAvailableModules()
 const showNav = ref(false)
 
 const onToggleCollapsed = async () => {

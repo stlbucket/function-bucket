@@ -96,7 +96,7 @@
   const loadSession = async () => {
     const refresh_token = tokens.value.refresh_token || ''
       const { data, error } = await supabase.auth.refreshSession({ refresh_token })
-      await appStateStore.getCurrentProfileClaims(true)
+      await refreshCurrentProfileClaims()
       const { session, user } = data
       supSession.value = session
       supUser.value = user
@@ -106,7 +106,6 @@
     try{
       await parseTokens()
       await loadSession()
-      // await loadResidencies()
       showModal.value = true
 
     } catch (e) {
@@ -123,7 +122,8 @@
     if (error) alert(error.toString())
 
     await supabase.auth.refreshSession()
-    await appStateStore.getCurrentProfileClaims(true)
+    await refreshCurrentProfileClaims()
+    await refreshAvailableModules()
     navigateTo('./change-password')
   }
 
@@ -134,8 +134,8 @@
     })
     if (error) alert(error.toString())
 
-    await supabase.auth.refreshSession()
-    await appStateStore.getCurrentProfileClaims(true)
+    await refreshCurrentProfileClaims()
+    await refreshAvailableModules()
     navigateTo('./logout')
   }
 

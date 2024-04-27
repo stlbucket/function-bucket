@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
   const store = useAppStateStore()
-  const currentProfileClaims = ref(store.currentProfileClaims)
+  const currentProfileClaims = await useCurrentProfileClaims()
   const { data } = await useTenantSubscriptionsQuery({
     variables: {
       tenantId: currentProfileClaims.value?.tenantId

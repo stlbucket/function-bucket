@@ -15,7 +15,7 @@
             CURRENT PROFILE CLAIMS
           </template>
           <div class="flex">
-            <pre class="text-xs flex max-w-lg flex-wrap">{{ claims }}</pre>
+            <pre class="text-xs flex max-w-lg flex-wrap">{{ currentProfileClaims }}</pre>
           </div>
         </UCard>
         <UCard>
@@ -27,24 +27,11 @@
           </div>
         </UCard>
       </div>
-      <!-- <UCard>
-        <template #header>
-          SUPABASE SESSION
-        </template>
-        <div class="flex">
-          <pre class="text-xs flex max-w-lg flex-wrap">{{ JSON.stringify(supSession,null,2) }}</pre>
-        </div>
-      </UCard> -->
     </div>
   </ClientOnly>
 </template>
 
 <script lang="ts" setup>
-  const appStateStore = useAppStateStore()
-  const {data, error} = await useCurrentProfileClaimsQuery()
-  const claims = ref(data.value?.currentProfileClaims)
-
-  const {data: modulesData} = await useAvailableModulesQuery()
-  const availableModules = ref(modulesData.value?.availableModules || [])
-
+  const currentProfileClaims = await useCurrentProfileClaims()
+  const availableModules = await useAvailableModules()
 </script>
