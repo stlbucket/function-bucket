@@ -1,12 +1,3 @@
-# Nuxt dev/build outputs
-.output
-.data
-.nuxt
-.nitro
-.cache
-dist
-.dist
-
 # Node dependencies
 node_modules
 
@@ -23,9 +14,6 @@ logs
 .env
 .env.*
 !.env.example
-
-# for nuxt pwa
-sw.*
 
 _cruft
 
