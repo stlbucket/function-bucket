@@ -4,15 +4,14 @@ import urql, { cacheExchange, mapExchange, fetchExchange, subscriptionExchange, 
 import { createClient as createWSClient } from 'graphql-ws';
 import { dedupExchange } from '@urql/core';
 
-const GRAPHQL_ENDPOINT = 'localhost:3000/api/graphql'
-const GRAPHQL_HTTP_URL = `http://${GRAPHQL_ENDPOINT}`
-const GRAPHQL_WS_URL = `ws://${GRAPHQL_ENDPOINT}`
-
-const wsClient = createWSClient({
-  url: GRAPHQL_WS_URL,
-});
-
 export default defineNuxtPlugin(nuxtApp => {
+  const GRAPHQL_ENDPOINT = useRuntimeConfig().public.GQL_HOST  
+  const GRAPHQL_HTTP_URL = `${GRAPHQL_ENDPOINT}`
+  const GRAPHQL_WS_URL = GRAPHQL_HTTP_URL.replace('http://', 'ws://')
+  const wsClient = createWSClient({
+    url: GRAPHQL_WS_URL,
+  });
+
   nuxtApp.vueApp.use(urql, {
     url: GRAPHQL_HTTP_URL,
     exchanges: [

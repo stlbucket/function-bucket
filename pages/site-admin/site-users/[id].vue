@@ -63,14 +63,6 @@
               </UTable>
             </UCard>
           </div>
-          <!-- <div class="flex flex-col items-stretch">
-            <UCard>
-              <template #header>
-                RAW USER META DATA (user claims)
-              </template>
-              <pre class="flex">{{ JSON.stringify(siteUser.raw_user_meta_data,null,2) }}</pre>
-            </UCard>
-          </div> -->
         </div>
       </UCard>
       <UCard>

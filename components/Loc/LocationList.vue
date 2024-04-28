@@ -26,7 +26,7 @@
         <UPopover mode="hover">
           {{ row.name }}
           <template #panel>
-            <pre>{{ JSON.stringify(row,null,2) }}</pre>
+            <pre>{{ row }}</pre>
           </template>
         </UPopover>        
       </template>
@@ -34,7 +34,7 @@
         <UPopover mode="hover">
           {{ row.address1 }}
           <template #panel>
-            <pre>{{ JSON.stringify(row,null,2) }}</pre>
+            <pre>{{ row }}</pre>
           </template>
         </UPopover>        
       </template>
@@ -84,7 +84,7 @@
         <UPopover mode="hover">
           {{ row.name }}
           <template #panel>
-            <pre>{{ JSON.stringify(row,null,2) }}</pre>
+            <pre>{{ row }}</pre>
           </template>
         </UPopover>        
       </template>
@@ -92,7 +92,7 @@
         <UPopover mode="hover">
           {{ row.address1 }}
           <template #panel>
-            <pre>{{ JSON.stringify(row,null,2) }}</pre>
+            <pre>{{ row }}</pre>
           </template>
         </UPopover>        
       </template>

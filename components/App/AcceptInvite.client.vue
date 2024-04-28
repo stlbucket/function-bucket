@@ -12,7 +12,7 @@
       RESIDENCIES
     </template>
     <div class="flex" client-only>
-      <pre class="text-xs flex max-w-lg flex-wrap">{{ JSON.stringify(residencies,null,2) }}</pre>
+      <pre class="text-xs flex max-w-lg flex-wrap">{{ residencies }}</pre>
     </div>
   </UCard>
   <UCard>
@@ -20,7 +20,7 @@
       CURRENT PROFILE CLAIMS
     </template>
     <div class="flex">
-      <pre class="text-xs flex max-w-lg flex-wrap">{{ JSON.stringify(currentProfileClaims,null,2) }}</pre>
+      <pre class="text-xs flex max-w-lg flex-wrap">{{ currentProfileClaims }}</pre>
     </div>
   </UCard>
   <UCard>
@@ -62,7 +62,7 @@
   const showModal = ref(false)
   const tokens = ref()
 
-  const { currentProfileClaims } = storeToRefs(appStateStore)
+  const currentProfileClaims = await useCurrentProfileClaims()
 
   const { data } = await useMyProfileResidenciesQuery()
   const residencies = ref((data.value?.myProfileResidenciesList || []) as unknown as Resident[])

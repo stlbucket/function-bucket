@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-  const { currentProfileClaims } = storeToRefs(useAppStateStore())
+  const currentProfileClaims = await useCurrentProfileClaims()
   const emit = defineEmits<{
     (e: 'grantLicense', licenseTypeKey: string): void
     (e: 'revokeLicense', license: License): void

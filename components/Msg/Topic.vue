@@ -44,7 +44,7 @@
     topicId: string,
     title?: string
   }>()
-  const { currentProfileClaims } = storeToRefs(useAppStateStore())
+  const currentProfileClaims = await useCurrentProfileClaims()
   const { data, executeQuery } = await useDiscussionByIdQuery({
     variables: {
       topicId: props.topicId
@@ -58,7 +58,6 @@
     if (response.topicMessage?.message) {
       const existing = (topicMessages.value || [])
       const allMessages = [...existing, response.topicMessage?.message]
-      console.log('ALL MESSAGES', JSON.stringify(allMessages,null,2))
       // @ts-ignore
       topicMessages.value = allMessages
     }

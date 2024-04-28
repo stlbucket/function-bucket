@@ -1,7 +1,7 @@
 <template>
-  <pre>{{ JSON.stringify(currentProfileClaims,null,2) }}</pre>
+  <pre>{{ currentProfileClaims }}</pre>
 </template>
 
 <script lang="ts" setup>
-  const { currentProfileClaims } = storeToRefs(useAppStateStore())
+  const currentProfileClaims = await useCurrentProfileClaims()
 </script>

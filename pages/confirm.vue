@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const { currentProfileClaims } = storeToRefs(useAppStateStore())
+  const currentProfileClaims = await useCurrentProfileClaims()
 
 watch(currentProfileClaims.value, () => {
   if (currentProfileClaims.value) {
