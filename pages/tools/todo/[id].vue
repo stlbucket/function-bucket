@@ -13,7 +13,7 @@
         />
       </div>
       <div class="flex md:hidden grow">
-        <TodoDetailSmall 
+        <!-- <TodoDetailSmall 
           v-if="todoTree" 
           :todo-tree="todoTree" 
           @new-location="onNewLocation"
@@ -21,7 +21,7 @@
           @clone-template="onCloneTemplate"
           @make-template="onMakeTemplate"
           @delete="onDelete"
-        />
+        /> -->
       </div>
     </UCard>
   </ClientOnly>
@@ -35,7 +35,7 @@
     }
   })
   const todoTree = ref(data.value?.todo)
-  const selectedLocations: Ref<ALocation[]> = ref([])
+  const selectedLocations: Ref<Location[]> = ref([])
 
   const loadData = async () => {
     const { data } = await executeQuery({
@@ -59,18 +59,18 @@
     // }
   ])
 
-  const onLocationSelected = async (locations: ALocation[]) => {
+  const onLocationSelected = async (locations: Location[]) => {
     selectedLocations.value = locations
   }
   const createLocationQuery = await useCreateLocationMutation()
-  const onNewLocation = async(locationInfo: LocationInfo) => {
+  const onNewLocation = async(locationInfo: LocationInfoInput) => {
     await createLocationQuery.executeMutation({
       locationInfo: locationInfo
     })
     await loadData()
   }
   const updateLocationQuery = await useUpdateLocationMutation()
-  const onUpdateLocation = async(locationInfo: LocationInfo) => {
+  const onUpdateLocation = async(locationInfo: LocationInfoInput) => {
     await updateLocationQuery.executeMutation({
       locationInfo: locationInfo
     })

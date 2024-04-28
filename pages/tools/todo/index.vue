@@ -4,7 +4,7 @@
       <div class="flex flex-col gap-2">
         <div class="flex justify-between">
           <div class="text-2xl">Todo</div>
-          <TodoModal @updated="handleCreate"></TodoModal>
+          <TodoModal @updated="handleCreate" show-text-button ></TodoModal>
         </div>
         <div class="flex flex-col">
           <div class="text-xs">SEARCH TERM</div>
@@ -48,10 +48,12 @@
 
   const createTodoMutation = await useCreateTodoMutation()
   const handleCreate = async (todo: Todo) => {
-    await createTodoMutation.executeMutation({
+    const { data, error } = await createTodoMutation.executeMutation({
       name: todo.name,
       description: todo.description
     })
-    await reload()
+    if (!error) {
+      await navigateTo(`/tools/todo/${data?.createTodo?.todo?.id}`)
+    }
   }
 </script>

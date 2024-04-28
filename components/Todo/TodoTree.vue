@@ -16,7 +16,7 @@
         />
         <TodoTask 
           v-if="String(todoTree.type) === 'TASK'"
-          :todo-tree="todoTree" 
+          :todo-tree="todoTree"
           :detailed="detailed"
           @selected="onSelected"
           @closed="onClosed"

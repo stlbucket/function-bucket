@@ -9,7 +9,7 @@
       />
       <UButton
         v-if="String(todoTree.status) === 'INCOMPLETE'"
-        icon="none"
+        icon="solar:close-square-line-duotone"
         size="xs"
         color="yellow"
         :title="Boolean(todoTree.isTemplate) ? 'This is a template so no action can be taken' : 'Close'"

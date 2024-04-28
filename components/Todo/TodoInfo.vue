@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-  const { currentProfileClaims } = storeToRefs(useAppStateStore())
+  const currentProfileClaims = await useCurrentProfileClaims()
   const props = defineProps<{
     todo: Todo
   }>()

@@ -101,7 +101,7 @@
     todoTree: Todo
   }>()
 
-  const selectedLocations: Ref<ALocation[]> = ref([])
+  const selectedLocations: Ref<Location[]> = ref([])
 
   const tabItems = ref([
     {
@@ -119,20 +119,20 @@
   ])
   
   const emit = defineEmits<{
-    (e: 'new-location', locationInfo: LocationInfo): void
-    (e: 'update-location', locationInfo: LocationInfo): void
+    (e: 'new-location', locationInfo: LocationInfoInput): void
+    (e: 'update-location', locationInfo: LocationInfoInput): void
     (e: 'make-template', todoId: string): void
     (e: 'clone-template', todoId: string): void
     (e: 'delete', todoId: string): void
   }>()
 
-  const onLocationSelected = async (locations: ALocation[]) => {
+  const onLocationSelected = async (locations: Location[]) => {
     selectedLocations.value = locations
   }
-  const onNewLocation = async(locationInfo: LocationInfo) => {
+  const onNewLocation = async(locationInfo: LocationInfoInput) => {
     emit('new-location', locationInfo)
   }
-  const onUpdateLocation = async(locationInfo: LocationInfo) => {
+  const onUpdateLocation = async(locationInfo: LocationInfoInput) => {
     emit('update-location', locationInfo)
   }
 

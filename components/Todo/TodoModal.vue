@@ -1,6 +1,9 @@
 <template>
-  <UButton v-if="todo" icon="i-heroicons-pencil" size="xs" color="white" title="Edit Todo"  @click="showModal = true"/>
-  <UButton v-else icon="i-heroicons-plus-circle" size="xs" color="white" :title="addButtonTitle"  @click="showModal = true"/>
+  <UButton v-if="todo" icon="i-heroicons-pencil" color="white" title="Edit Todo"  @click="showModal = true"/>
+  <div v-else>
+    <UButton v-if="showTextButton" :title="addButtonTitle"  @click="showModal = true">New Task</UButton>
+    <UButton v-else icon="i-heroicons-plus-circle" color="white" :title="addButtonTitle"  @click="showModal = true"/>
+  </div>
   <UModal v-model="showModal">
     <UCard :ui="{ divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
       <template #header>
@@ -28,6 +31,7 @@
   const props = defineProps<{
     todo?: Todo
     parentTodo?: Todo
+    showTextButton?: boolean
   }>()
 
   const showModal = ref(false)
