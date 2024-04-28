@@ -6,11 +6,12 @@
       }"
     >
       <template #header>
-        <div class="flex justify-between">
+        <div class="flex gap-10">
           <div class="flex text-xl">LOCATIONS</div>
           <LocationModal
             @new-location="onNewLocation"
           ></LocationModal>
+          <div class="flex text-sm text-red-700">More to do on this feature</div>
         </div>
       </template>
       <div class="flex gap-2 flex-col">

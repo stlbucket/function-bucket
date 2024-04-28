@@ -41,7 +41,7 @@
               </UCard>
             </div>
           </template>
-          <template #map="{ item }">
+          <!-- <template #map="{ item }">
             <div class="flex flex-col gap-2 grow min-h-[600px]">
               <div class="flex grow">
                 <MarkerMap 
@@ -63,7 +63,7 @@
                 />
               </UCard>
             </div>
-          </template>
+          </template> -->
         </UTabs>          
       </div>
       <div class="flex grow flex-col gap-2">
@@ -108,10 +108,10 @@
       slot: 'detail',
       label: 'DETAIL',
     }, 
-    {
-      slot: 'map',
-      label: 'MAP',
-    }, 
+    // {
+    //   slot: 'map',
+    //   label: 'MAP',
+    // }, 
     // {
     //   slot: 'attachments',
     //   label: 'ATTACHMENTS',

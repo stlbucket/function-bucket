@@ -13,7 +13,7 @@
         />
       </div>
       <div class="flex md:hidden grow">
-        <!-- <TodoDetailSmall 
+        <TodoDetailSmall 
           v-if="todoTree" 
           :todo-tree="todoTree" 
           @new-location="onNewLocation"
@@ -21,7 +21,7 @@
           @clone-template="onCloneTemplate"
           @make-template="onMakeTemplate"
           @delete="onDelete"
-        /> -->
+        />
       </div>
     </UCard>
   </ClientOnly>
@@ -95,10 +95,12 @@
   const deleteTodoMutation = await useDeleteTodoMutation()
   const onDelete = async(todoId: string) => {
     const forSure = confirm(`Are you sure you want to delete: ${todoId}`)
-    const result = await deleteTodoMutation.executeMutation({
-      todoId: route.params.id
-    })
-    navigateTo('/tools/todos')
+    if (forSure) {
+      await deleteTodoMutation.executeMutation({
+        todoId: route.params.id
+      })
+      navigateTo('/tools/todos')
+    }
   }
   const onAddAttachment = async () => {
     alert('NOT IMPLEMENTED')
