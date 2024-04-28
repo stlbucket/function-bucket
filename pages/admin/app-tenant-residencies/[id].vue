@@ -51,7 +51,7 @@
 
 <script lang="ts" setup>
   const componentKey = ref(1)
-  const route = useRoute()
+  const route = await useRoute()
   const subscriptions: Ref<any[]> = ref([])
 
   const { data: residentsData, executeQuery: executeResident } = await useResidentByIdQuery({
