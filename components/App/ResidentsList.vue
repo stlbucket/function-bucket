@@ -10,7 +10,8 @@
       <NuxtLink :to="`/admin/app-tenant-residencies/${row.id}`">{{ row.email }}</NuxtLink>
     </template>
     <template #assume-data="{ row }">
-      <UButton @click="onAssume(row)">{{ String(row.status).toLowerCase() === 'active' ? 'Refresh' : 'Select' }}</UButton>
+      <!-- <UButton @click="onAssume(row)">{{ String(row.status).toLowerCase() === 'active' ? 'Refresh' : 'Select' }}</UButton> -->
+      <UButton @click="onAssume(row)" :class="`${String(row.status).toLowerCase() === 'active' ? 'invisible' : ''}`">Select</UButton>
     </template>
     <template #license-data="{ row }">
       <div class="flex flex-col">

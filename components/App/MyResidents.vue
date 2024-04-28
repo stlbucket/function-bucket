@@ -16,7 +16,7 @@
           <div>
             <UButton
               :disabled="changeResidencyDisabled"
-              @click="showModal = true"
+              @click="onBeginChange"
             >Change</UButton>
           </div>
         </div>
@@ -63,14 +63,14 @@
   import { useMutation, useQuery } from '@urql/vue';
   const assumeResidentMutation = useAssumeResidentMutation()
   const declineResidencyMutation = useDeclineResidentMutation()
-  const myProfileResidenciesQuery = await useMyProfileResidenciesQuery()
+  const { data: profileData, executeQuery: profileQuery } = await useMyProfileResidenciesQuery()
 
   type CurrentResidencyStatus = 'INVITED' | 'ACTIVE' | 'INACTIVE' | 'UNINVITED'
   const residents: Ref<Resident[]> = ref([])
   const currentResidencyStatus: Ref<CurrentResidencyStatus> = ref('UNINVITED')
   const showModal = ref(false)
 
-  residents.value = (myProfileResidenciesQuery.data.value?.myProfileResidenciesList || []) as unknown as Resident[]
+  residents.value = (profileData.value?.myProfileResidenciesList || []) as unknown as Resident[]
 
   const loadData = async () => {
     const supportingResidency = residents.value.find(r => String(r.status).toLowerCase() === 'supporting')
@@ -114,8 +114,13 @@
     showModal.value = false
   }
 
+  const onBeginChange = async () => {
+    const { data } = await profileQuery({requestPolicy: 'network-only'})
+    residents.value = (data.value?.myProfileResidenciesList || []) as unknown as Resident[]
+    showModal.value = true
+  }
+
   const activeResidency = computed(()=> residents.value.find(r => String(r.status).toLowerCase() === 'active'))
   const assumableResidencies = computed(()=> residents.value.filter(r => ['inactive', 'invited'].indexOf(String(r.status).toLowerCase()) > -1))
   const changeResidencyDisabled = computed(()=> assumableResidencies.value?.length === 0)
-  // const changeResidencyDisabled = computed(() => true)
 </script>
