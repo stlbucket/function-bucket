@@ -6171,7 +6171,7 @@ export type AvailableModulesQuery = { __typename: 'Query', availableModules?: Ar
 export type CurrentProfileClaimsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentProfileClaimsQuery = { __typename: 'Query', currentProfileClaims?: { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null } | null };
+export type CurrentProfileClaimsQuery = { __typename: 'Query', currentProfileClaims?: { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null } | null, availableModules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, toolsByModuleKeyList?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, route?: string | null } | null> | null } | null> | null, activeResidency?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType }> | null };
 
 export type GetMyselfQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7013,8 +7013,27 @@ export const CurrentProfileClaimsDocument = gql`
   currentProfileClaims {
     ...ProfileClaim
   }
+  availableModules {
+    key
+    name
+    permissionKeys
+    defaultIconKey
+    ordinal
+    toolsByModuleKeyList: tools {
+      key
+      name
+      permissionKeys
+      defaultIconKey
+      ordinal
+      route
+    }
+  }
+  activeResidency: residentsList(condition: {status: ACTIVE}) {
+    ...Resident
+  }
 }
-    ${ProfileClaimFragmentDoc}`;
+    ${ProfileClaimFragmentDoc}
+${ResidentFragmentDoc}`;
 
 export function useCurrentProfileClaimsQuery(options: Omit<Urql.UseQueryArgs<never, CurrentProfileClaimsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<CurrentProfileClaimsQuery>({ query: CurrentProfileClaimsDocument, ...options });

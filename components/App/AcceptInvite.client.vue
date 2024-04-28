@@ -123,7 +123,7 @@
 
     await supabase.auth.refreshSession()
     await refreshCurrentProfileClaims()
-    await refreshAvailableModules()
+    // await refreshAvailableModules()
     navigateTo('./change-password')
   }
 
@@ -135,7 +135,7 @@
     if (error) alert(error.toString())
 
     await refreshCurrentProfileClaims()
-    await refreshAvailableModules()
+    // await refreshAvailableModules()
     navigateTo('./logout')
   }
 

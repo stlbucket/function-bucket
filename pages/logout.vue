@@ -10,9 +10,11 @@
       alert(error.message)
     }
     appStateStore.setLoggedIn(false)
-    await refreshCurrentProfileClaims()
-    await refreshAvailableModules()
-    navigateTo('/')
+    await clearCurrentProfileClaims()
+    await reloadNuxtApp({
+      path: '/',
+      force: true
+    })    
   }
   handleLogout()
 </script>

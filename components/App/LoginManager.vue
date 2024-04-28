@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-2" v-if="mode === 'login'">
+  <div class="flex flex-col gap-2 justify-center" v-if="mode === 'login'">
     <Login></Login>
-    <a @click="mode = 'reset'" class="hover:cursor-pointer underline text-blue-400">Forgot my password.</a>
+    <div class="flex grow justify-center"><a @click="mode = 'reset'" class="hover:cursor-pointer underline text-blue-400">Forgot my password.</a></div>
   </div>
   <div class="flex flex-col gap-2" v-if="mode === 'reset'">
     <ResetPassword></ResetPassword>

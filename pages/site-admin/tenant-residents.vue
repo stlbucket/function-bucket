@@ -60,7 +60,7 @@
     })
     await supabase.auth.refreshSession()
     await refreshCurrentProfileClaims()
-    await refreshAvailableModules()
+    // await refreshAvailableModules()
     navigateTo(`/admin/app-tenant-residencies/${resident.id}`)
   }
 </script>

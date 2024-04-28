@@ -1,5 +1,5 @@
 <template>
-  <UButton @click="showModal = true" :disabled="disablepw">Change Passwords</UButton>
+  <UButton @click="showModal = true" :disabled="disablepw" color="yellow">Change Password</UButton>
   <UModal v-model="showModal">
     <UCard>
       <template #header>

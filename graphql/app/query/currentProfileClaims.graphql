@@ -2,4 +2,26 @@ query CurrentProfileClaims {
   currentProfileClaims {
     ...ProfileClaim
   }
+
+  availableModules {
+    key
+    name
+    permissionKeys
+    defaultIconKey
+    ordinal
+    toolsByModuleKeyList: tools {
+      key
+      name
+      permissionKeys
+      defaultIconKey
+      ordinal
+      route
+    }
+  }
+
+  activeResidency: residentsList(condition: {
+    status: ACTIVE
+  }) {
+    ...Resident
+  }  
 }

@@ -1,6 +1,6 @@
 
 <template>
-  <UButton icon="i-heroicons-pencil" size="sm" color="blue" square variant="solid" title="Edit Profile"  @click="showModal = true"/>
+  <UButton color="blue" square variant="solid" title="Edit Profile"  @click="showModal = true">Edit Profile</UButton>
   <UModal v-model="showModal">
     <UCard :ui="{ divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
       <template #header>

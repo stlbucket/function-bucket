@@ -26,8 +26,11 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
     alert('Bad email or password')
   } else {
     await refreshCurrentProfileClaims()
-    await refreshAvailableModules()
-    navigateTo('./my-profile')
+    // await refreshAvailableModules()
+    await reloadNuxtApp({
+      path: './my-profile',
+      force: true
+    })
   }
 
 }
@@ -35,9 +38,9 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
 
 <template>
   <UCard>
-    <template #header>
+    <!-- <template #header>
       Login
-    </template>
+    </template> -->
     <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
       <UFormGroup label="Email" name="email">
         <UInput v-model="state.email" />
@@ -47,9 +50,11 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
         <UInput v-model="state.password" type="password" />
       </UFormGroup>
 
-      <UButton type="submit">
-        Submit
-      </UButton>
+      <div class="flex grow justify-center">
+        <UButton type="submit">
+          Login
+        </UButton>
+      </div>
     </UForm>
   </UCard>
 </template>
