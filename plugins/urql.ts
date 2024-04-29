@@ -10,6 +10,7 @@ export default defineNuxtPlugin(nuxtApp => {
   const GRAPHQL_WS_URL = GRAPHQL_HTTP_URL.replace('http://', 'ws://')
   const wsClient = createWSClient({
     url: GRAPHQL_WS_URL,
+    keepAlive: 90_0000
   });
 
   nuxtApp.vueApp.use(urql, {
