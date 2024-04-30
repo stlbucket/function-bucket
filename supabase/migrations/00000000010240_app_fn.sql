@@ -343,6 +343,14 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
                 ,'/tools/maps'
                 ,200
               )::app_fn.tool_info
+              ,row(
+                'flow'::citext
+                ,'Flow'::citext
+                ,'{"p:app-user","p:app-admin","p:super-admin"}'::citext[]
+                ,'solar:water-bold-duotone'::citext
+                ,'/tools/flow'
+                ,100
+              )::app_fn.tool_info
               -- ,row(
               --   'workflow'::citext
               --   ,'Workflow'::citext
