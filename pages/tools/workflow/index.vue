@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { useActorRef, useMachine, useInterpret } from '@xstate/vue'
+import { useActorRef, useMachine } from '@xstate/vue'
 import { setup, assign } from 'xstate';
 
 const machine = setup({
@@ -47,17 +47,17 @@ const machine = setup({
 })
 
 const actorRef = useActorRef(machine);
-// const actor = useMachine(machine)
-  const actor = useInterpret(
-    machine,
-    {
-      actions: {
-        /* ... */
-      },
-    },
-    (state) => {
-      // subscribes to state changes
-      console.log(state.value);
-    },
-  );
+const actor = useMachine(machine)
+  // const actor = useInterpret(
+  //   machine,
+  //   {
+  //     actions: {
+  //       /* ... */
+  //     },
+  //   },
+  //   (state) => {
+  //     // subscribes to state changes
+  //     console.log(state.value);
+  //   },
+  // );
 </script>

@@ -1,4 +1,3 @@
-#! /server/api/graphql.ts
 import { CloseCode, makeServer } from 'graphql-ws';
 import { makeGraphQLWSConfig } from 'postgraphile/grafserv';
 import { postgraphile } from "postgraphile"
