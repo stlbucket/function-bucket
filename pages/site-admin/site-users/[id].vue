@@ -85,7 +85,6 @@
       id: route.params.id
     }
   })
-  // console.log(data.value)
   const siteUser = ref(data.value?.siteUserById)
 
   const activeResidency = computed(() => siteUser.value.residencies.filter((r: Resident) => String(r.status) === 'active'))

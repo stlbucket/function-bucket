@@ -2,14 +2,14 @@
   <ClientOnly>
     <div class="flex flex-col gap-2">
       <div class="flex flex-col md:flex-row">
-        <div class="flex flex-col min-w-[50%]">
+        <div class="flex flex-col">
           <Myself />
         </div>
-        <div class="flex min-w-[50%]">
+        <div class="flex">
           <MyResidents/>
         </div>
       </div>
-      <div class="flex flex-col md:flex-row md:justify-between">
+      <div class="hidden md:flex md:flex-col md:flex-row">
         <UCard>
           <template #header>
             CURRENT PROFILE CLAIMS

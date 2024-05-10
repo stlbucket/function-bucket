@@ -7,6 +7,7 @@ export default defineAppConfig({
     },
     primary: 'green',
     gray: 'stone',
+    modal: { container: 'max-sm:items-start'},
     card: {
       "base": "overflow-hidden",
       "background": "bg-white dark:bg-gray-900",

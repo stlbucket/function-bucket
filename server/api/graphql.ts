@@ -1,8 +1,6 @@
-// /server/api/graphql.ts
+#! /server/api/graphql.ts
 import { CloseCode, makeServer } from 'graphql-ws';
 import { makeGraphQLWSConfig } from 'postgraphile/grafserv';
-// import { serv } from '@/server/grafserv/serv'; // <-- PATH TO YOUR SERV
-
 import { postgraphile } from "postgraphile"
 import { grafserv } from "grafserv/h3/v1";
 import preset from "./graphile.config.js";
@@ -58,18 +56,3 @@ export default eventHandler({
     },
   },
 });
-
-// import { postgraphile } from "postgraphile"
-// import { grafserv } from "grafserv/h3/v1";
-// import preset from "./graphile.config.js";
-// // utils/grafserv.mjs
-
-// const pgl = postgraphile(preset);
-// const serv = pgl.createServ(grafserv);
-
-// export default defineEventHandler(async (event) => {
-//   // console.log('blah', process.env.GRAPHQL_SCHEMAS)
-//   return serv.handleGraphQLEvent(event)  
-// })
-
-// export { serv }

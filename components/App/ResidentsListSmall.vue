@@ -1,17 +1,8 @@
 <template>
   <div class="flex flex-col gap-3 grow">
-    <div class="flex grow" v-for="r in residents">
-      <div class="flex flex-col gap-1 grow">
-        <div class="flex">
-          <NuxtLink :to="`/admin/app-tenant-residencies/${r.id}`">{{ r.email }}</NuxtLink>
-        </div>
-        <div class="flex justify-end">
-          {{ r.tenantName }}
-        </div>
-        <div class="flex justify-end">
-          <UButton v-if="rowActionName" @click="handleRowAction(r)">{{rowActionName}}</UButton>
-        </div>
-      </div>
+    <div class="flex grow justify-between " v-for="r in sortedResidents">
+      {{ r.tenantName }}
+      <UButton @click="handleRowAction(r)" :class="`${String(r.status).toLowerCase() === 'active' ? 'invisible' : ''}`">Work Here</UButton>
     </div>
   </div>
 </template>
@@ -47,4 +38,7 @@
     .filter(c => c.key !== 'action'  || props.rowActionName)
   })
 
+  const sortedResidents = computed(() => {
+    return props.residents.sort((a,b) => a.tenantName < b.tenantName ? -1 : 1)
+  })
 </script>

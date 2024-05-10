@@ -31,7 +31,6 @@ export async function refreshCurrentProfileClaims () {
   const { data } = await currentProfileClaimsQuery.value.executeQuery({
     requestPolicy: 'network-only'
   });
-  console.log(JSON.stringify(data.value.currentProfileClaims))
   currentProfileClaims.value = data.value.currentProfileClaims || undefined
   availableModules.value = data.value.availableModules || []
   activeResidency.value = data.value.activeResidency[0]

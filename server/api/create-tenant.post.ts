@@ -3,10 +3,7 @@ import pg from 'pg'
 
 export default defineEventHandler(async (event) => {
   const supabaseClient = await serverSupabaseServiceRole(event)
-  const supabaseUser = await serverSupabaseUser(event)
-
-  // console.log('CLAIMS', event.context.claims)
-
+  // const supabaseUser = await serverSupabaseUser(event)
   const body = await readBody(event)
 
   const client = new pg.Client({
@@ -23,7 +20,6 @@ export default defineEventHandler(async (event) => {
   let inviteResult    
 if (permissions.length > 0) {
     // make the tenant
-    console.log('wtf', body)
     const tenantRes = await client.query(`
       select (t.*) from app_fn.create_tenant(
         _name => $1::citext
