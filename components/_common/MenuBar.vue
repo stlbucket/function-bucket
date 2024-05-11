@@ -15,7 +15,6 @@
             @click="onToggleCollapsed"
           />
         </div>
-        <!-- <NuxtLink to="/"><UIcon name="solar:home-linear" class="w-6 h-6 hover:text-blue-600" @click="navigateTo('/')"></UIcon></NuxtLink> -->
         <div :class="` flex grow p-1 dark:bg-gray-800 hover:bg-gray-600 ${tenantNameBounce ? 'animate-ping bg-gray-800' : ''}`">
           {{ currentProfileClaims.tenantName }}
         </div>

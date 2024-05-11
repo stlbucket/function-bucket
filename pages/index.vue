@@ -2,7 +2,7 @@
   <div class="flex justify-center items-center h-full bg-gray-700" v-if="showLoginManager">
     <LoginManager></LoginManager>
   </div>
-  <div class="flex flex-col justify-center h-full bg-gray-700" v-else>
+  <div class="flex flex-col justify-start h-full bg-gray-700" v-else>
     <UserHome />
   </div>
 </template>

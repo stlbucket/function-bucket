@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-3 grow">
+  <div class="flex flex-col gap-1 grow">
     <div class="flex grow justify-between " v-for="r in sortedResidents">
       {{ r.tenantName }}
       <UButton @click="handleRowAction(r)" :class="`${String(r.status).toLowerCase() === 'active' ? 'invisible' : ''}`">Work Here</UButton>
@@ -28,10 +28,10 @@
   const columns = computed(()=>{
     return [
       {key: 'action'},
+      {key: 'tenantName', label: 'Workspace', sortable: !props.disableSort},
+      {key: 'status', label: 'Status', sortable: !props.disableSort},
       {key: 'displayName', label: 'Display Name', sortable: !props.disableSort},
       {key: 'email', label: 'Email', sortable: !props.disableSort},
-      {key: 'status', label: 'Status', sortable: !props.disableSort},
-      {key: 'tenantName', label: 'Tenant', sortable: !props.disableSort},
     ]
     .filter(c => c.key !== 'displayName' || props.showDisplayName )
     .filter(c => c.key !== 'email'  || props.showEmail)

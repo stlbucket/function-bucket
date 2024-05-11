@@ -67,10 +67,10 @@
     return [
       {key: 'support'},
       {key: 'assume'},
+      {key: 'tenantName', label: 'Workspace', sortable: !props.disableSort},
+      {key: 'status', label: 'Status', sortable: !props.disableSort},
       {key: 'displayName', label: 'Display Name', sortable: !props.disableSort},
       {key: 'email', label: 'Email', sortable: !props.disableSort},
-      {key: 'status', label: 'Status', sortable: !props.disableSort},
-      {key: 'tenantName', label: 'Tenant', sortable: !props.disableSort},
       {key: 'type', label: 'Type', sortable: !props.disableSort},
       {key: 'license', label: 'Licenses', sortable: !props.disableSort},
       {key: 'decline'},

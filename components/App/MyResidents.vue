@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col grow">
+  <div class="flex flex-col">
     <UCard :ui="{
       header: {
         padding: 'py-4 px-4'
       }
     }">
-      <div class="flex justify-center">
-        MY WORKSPACES
+      <div class="flex justify-center p-3 gap-3 md:hidden">
+        <div>CURRENT WORKSPACE:</div><div>{{ currentProfileClaims.tenantName }}</div>
       </div>
       <ResidentsListSmall
         class="md:hidden"
@@ -18,6 +18,9 @@
         show-email
         @row-action="assumeResidency"
       />
+      <div class="flex justify-center text-2xl p-3 gap-10 max-sm:hidden">
+        <div>CURRENT WORKSPACE:</div><div>{{ currentProfileClaims.tenantName }}</div>
+      </div>
       <ResidentsList
         class="max-sm:hidden"
         title="MY APP USER TENANCIES" 
@@ -31,27 +34,6 @@
       </ResidentsList>
     </UCard>
   </div>
-  <!-- <UModal v-model="showModal">
-    <UCard :ui="{ divide: 'divide-y divide-gray-100 dark:divide-gray-800 w-full' }">
-      <template #header>
-        <div class="flex justify-center">
-          Assume Residency
-        </div>
-      </template>
-      <div class="flex flex-col gap-3">
-        <ResidentsList
-          title="Select Residency" 
-          :residents="activeResidency ? [...assumableResidencies, activeResidency] : assumableResidencies"
-          :show-assume="true"
-          :show-decline="true"
-          @assume="assumeResidency"
-          @decline="declineResidency"
-          disable-sort
-        >
-        </ResidentsList>
-      </div>
-    </UCard>
-  </UModal> -->
 </template>
 
 <script lang="ts" setup>
