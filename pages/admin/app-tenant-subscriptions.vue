@@ -5,7 +5,7 @@
     >
       <template #activeSubscriptions="{ item }">
         <UCard>
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2 grow">
             <TenantSubscription
               v-if="activeSubscriptions.length > 0" 
               v-for="s in activeSubscriptions" 

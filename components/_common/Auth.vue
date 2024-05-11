@@ -1,6 +1,11 @@
 <template>
   <div v-if="currentProfileClaims" class="flex grow items-center justify-around gap-2">
-    <div v-if="currentProfileClaims.displayName === 'Site Support'"><UButton color="yellow" @click="exitSupportMode">Exit Support Mode</UButton></div>
+    <div class="flex flex-col gap-1">
+      <div :class="` flex grow p-1 dark:bg-gray-800 hover:bg-gray-600 ${tenantNameBounce ? 'animate-ping bg-gray-800' : ''}`">
+        {{ currentProfileClaims.tenantName }}
+      </div>
+      <div v-if="showExitSupport"><UButton color="yellow" @click="exitSupportMode">Exit Support Mode</UButton></div>
+    </div>
     <NuxtLink to="/my-profile" v-if="currentProfileClaims.displayName">
       <div class="flex gap-1 p-1 dark:bg-gray-800">
         <UIcon name="solar:user-bold" class="w-6 h-6 hover:text-blue-600" />
@@ -38,8 +43,8 @@
     // await refreshAvailableModules()
     navigateTo('/site-admin/tenant')
   }
-  const loggedIn = computed(() => {
-    return appStateStore.loggedIn;
+  const showExitSupport = computed(() => {
+    return currentProfileClaims.value.displayName === 'Site Support'
   })
   watch (() => currentProfileClaims.value.tenantName, () => {
     tenantNameBounce.value = true

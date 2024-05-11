@@ -48,7 +48,6 @@
     })
     await supabase.auth.refreshSession()
     await refreshCurrentProfileClaims()
-    // await refreshAvailableModules()
     navigateTo('/admin/app-tenant-residencies')
   }
 

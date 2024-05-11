@@ -2,10 +2,10 @@
   <UCard>
     <template #header>
       <div class="flex justify-center text-2xl p-2">Throw example error</div>
-      <p class="flex justify-center">This utility calls the graphql api, which will return the given error message.  You will see an alert from the urql mapExchange.</p>
+      <p class="flex justify-center flex-wrap">This utility calls the graphql api, which will return the given error message.  You will see an alert from the urql mapExchange.</p>
     </template>
       <UInput v-model="variables.message" placeholder="...custom error message..."></UInput>
-      <div class="flex justify-between">
+      <div class="flex justify-between flex-wrap">
         <UCard>
           <template #header>
             Current Data
@@ -16,7 +16,7 @@
           <template #header>
             Current Error
           </template>
-          <pre>{{ error }}</pre>
+          <p class="flex flex-wrap">{{ error }}</p>
         </UCard>
       </div>
     <template #footer>

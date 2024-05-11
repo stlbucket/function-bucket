@@ -29,7 +29,7 @@
             row-action-name="Support"
             show-display-name
             show-email
-            @support="onSupport"
+            @row-action="onSupport"
             show-support
           />
         </div>  

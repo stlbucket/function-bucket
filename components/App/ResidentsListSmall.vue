@@ -1,8 +1,13 @@
 <template>
   <div class="flex flex-col gap-1 grow">
-    <div class="flex grow justify-between " v-for="r in sortedResidents">
-      {{ r.tenantName }}
-      <UButton @click="handleRowAction(r)" :class="`${String(r.status).toLowerCase() === 'active' ? 'invisible' : ''}`">Work Here</UButton>
+    <div class="flex flex-col grow justify-between border-2 rounded p-2" v-for="r in sortedResidents">
+      <div v-if="showDisplayName">{{ r.displayName }}</div>
+      <div v-if="showEmail"><NuxtLink :to="`/admin/app-tenant-residencies/${r.id}`">{{ r.email }}</NuxtLink></div>
+      <div v-if="showTenantName">{{ r.tenantName }}</div>
+      <UButton v-if="rowActionName"
+        @click="handleRowAction(r)"
+        :class="`${String(r.status).toLowerCase() === 'active' ? 'invisible' : ''}`"
+      >{{ rowActionName }}</UButton>
     </div>
   </div>
 </template>
@@ -12,6 +17,7 @@
   const props = defineProps<{
     residents: Resident[]
     rowActionName?: string
+    showTenantName?: boolean
     showEmail?: boolean
     showDisplayName?: boolean
     disableSort?: boolean
@@ -25,18 +31,18 @@
     emit('rowAction', row)
   }
 
-  const columns = computed(()=>{
-    return [
-      {key: 'action'},
-      {key: 'tenantName', label: 'Workspace', sortable: !props.disableSort},
-      {key: 'status', label: 'Status', sortable: !props.disableSort},
-      {key: 'displayName', label: 'Display Name', sortable: !props.disableSort},
-      {key: 'email', label: 'Email', sortable: !props.disableSort},
-    ]
-    .filter(c => c.key !== 'displayName' || props.showDisplayName )
-    .filter(c => c.key !== 'email'  || props.showEmail)
-    .filter(c => c.key !== 'action'  || props.rowActionName)
-  })
+  // const columns = computed(()=>{
+  //   return [
+  //     {key: 'action'},
+  //     {key: 'tenantName', label: 'Workspace', sortable: !props.disableSort},
+  //     {key: 'status', label: 'Status', sortable: !props.disableSort},
+  //     {key: 'displayName', label: 'Display Name', sortable: !props.disableSort},
+  //     {key: 'email', label: 'Email', sortable: !props.disableSort},
+  //   ]
+  //   .filter(c => c.key !== 'displayName' || props.showDisplayName )
+  //   .filter(c => c.key !== 'email'  || props.showEmail)
+  //   .filter(c => c.key !== 'action'  || props.rowActionName)
+  // })
 
   const sortedResidents = computed(() => {
     return props.residents.sort((a,b) => a.tenantName < b.tenantName ? -1 : 1)

@@ -1,10 +1,12 @@
 <template>
-  <div class="flex justify-center">{{ subscription.licensePackKey }}</div>
-  <div class="hidden md:flex">
-    <LicensePack :license-pack="subscription.licensePack" />    
-  </div>
-  <div class="flex md:hidden">
-    <LicensePackSmall :license-pack="subscription.licensePack" />    
+  <div class="flex flex-col grow">
+    <div class="flex justify-center text-2xl p-3">{{ subscription.licensePackKey }}</div>
+    <div class="hidden md:flex grow">
+      <LicensePack :license-pack="subscription.licensePack" />    
+    </div>
+    <div class="flex md:hidden grow">
+      <LicensePackSmall :license-pack="subscription.licensePack" />    
+    </div>
   </div>
 </template>
 
