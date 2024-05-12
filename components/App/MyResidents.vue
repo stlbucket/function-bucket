@@ -16,6 +16,7 @@
         disable-sort
         show-display-name
         show-email
+        show-tenant-name
         @row-action="assumeResidency"
       />
       <div class="flex justify-center text-2xl p-3 gap-10 max-sm:hidden">
@@ -29,6 +30,7 @@
         disable-sort
         show-licenses
         show-assume
+        show-tenant-name
         @assume="assumeResidency"
       >
       </ResidentsList>

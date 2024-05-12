@@ -19,7 +19,7 @@
           <ResidentsListSmall
           :residents="residents"
           show-display-name
-          show-email
+          show-tenant-name
         />
       </div>
     </UCard>
