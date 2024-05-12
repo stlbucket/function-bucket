@@ -4,7 +4,7 @@
       <template #header>
         <div class="flex justify-between">
           <div class="flex text-2xl">SITE USERS</div>
-          <div class="flex text-xs">Users who have actually joined the system - not including invitees</div>
+          <div class="flex text-xs flex-wrap">Users who have actually joined the system - not including invitees</div>
         </div>
       </template>
       <div class="flex flex-col grow">

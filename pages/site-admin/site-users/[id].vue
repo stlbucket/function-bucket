@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <div class="flex justify-between">
+    <div class="flex justify-between flex-wrap">
       <UCard v-if="siteUser">
         <template #header>
         </template>

@@ -3,7 +3,7 @@
     <UCard>
       <template #header>
         <div class="flex flex-col grow">
-          <p>{{ licensePack.description }}</p>
+          <p class="flex flex-wrap">{{ licensePack.description }}</p>
         </div>
       </template>
         <LicensePackLicenseTypeListSmall :license-pack-license-types="licensePack.licensePackLicenseTypes || []" />
