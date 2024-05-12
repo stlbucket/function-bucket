@@ -13,7 +13,6 @@ export default {
         items: [
           { text: 'Overview', link: '/overview' },
           { text: 'Getting started', link: '/getting-started' },
-          { text: 'Demo Data', link: '/demo-tenants' },
           { text: 'Postraphile v5', link: '/postgraphile' },
           { text: 'Credentials Flow', link: '/credentials-flow' },
           { text: 'Typescript', link: '/typescript' },

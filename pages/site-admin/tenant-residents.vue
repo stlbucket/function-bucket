@@ -21,6 +21,7 @@
             show-email
             @support="onSupport"
             show-support
+            show-tenant-name
           />
         </div>
         <div class="flex grow md:hidden">
@@ -31,6 +32,7 @@
             show-email
             @row-action="onSupport"
             show-support
+            show-tenant-name
           />
         </div>  
       </div>
