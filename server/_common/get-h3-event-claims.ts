@@ -9,16 +9,12 @@ async function getH3EventClaims(event: H3Event) {
     const client = await serverSupabaseClient(event)
     const session = (await client.auth.getSession()).data.session
 
-    // the session could be used later by graphql
-    // right now we do nothing if there is no session
-    // this results in no claims at the postgraphile layer, so anonymous user.
-
     // this implementation is retrieving current user claims from the database
     // on every call.  there is currently no user metadata stored in the jwt
     // in favor of this approach. this could be adjusted, depending on 
     // scalability concerns and/or auth provider implementations
 
-    if (session) {
+    if (session && session.user) {
       event.context.session = session
       const client = useFnbPgClient()
       const claims = (await client.doQuery(`
