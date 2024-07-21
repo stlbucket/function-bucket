@@ -15,6 +15,16 @@
             @click="onToggleCollapsed"
           />
         </div>
+        <div>
+          <UButton 
+            icon="i-heroicons-home"
+            color="white"
+            square 
+            variant="solid" 
+            title="Home"
+            @click="onHome"
+          />
+        </div>
       </div>
       <div class="flex gap-1">
         <Auth />
@@ -38,6 +48,10 @@
 
   const onToggleCollapsed = async () => {
     appStateStore.toggleNavCollapsed()
+  }
+
+  const onHome = async () => {
+    navigateTo('/')
   }
 
   onMounted(() => {

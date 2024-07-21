@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col gap-1 grow">
-    <div class="flex flex-col grow justify-between border-2 rounded p-2" v-for="r in sortedResidents">
+  <div class="flex flex-col gap-1 grow justify-center">
+    <div class="flex flex-col grow justify-between border-2 rounded p-2 justify-center" v-for="r in sortedResidents">
       <div v-if="showDisplayName">{{ r.displayName }}</div>
       <div v-if="showEmail"><NuxtLink :to="`/admin/app-tenant-residencies/${r.id}`">{{ r.email }}</NuxtLink></div>
-      <div v-if="showTenantName">{{ r.tenantName }}</div>
+      <div v-if="showTenantName" class="flex justify-center text-2xl">{{ r.tenantName }}</div>
       <UButton v-if="rowActionName"
         @click="handleRowAction(r)"
-        :class="`${String(r.status).toLowerCase() === 'active' ? 'invisible' : ''}`"
+        :class="`${String(r.status).toLowerCase() === 'active' ? 'invisible' : ''} w-full text-xl flex justify-center`"
       >{{ rowActionName }}</UButton>
     </div>
   </div>

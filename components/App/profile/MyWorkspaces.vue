@@ -1,0 +1,160 @@
+<template>
+  <div class="flex flex-col gap-2">
+    <div class="flex justify-center text-2xl">
+      <div>CURRENT WORKSPACE</div>
+    </div>
+    <ResidentsList
+      class="max-sm:hidden"
+      title="MY APP USER TENANCIES" 
+      row-action-name="Work Here"
+      :residents="[activeResidency]"
+      disable-sort
+      show-licenses
+      show-assume
+      show-tenant-name
+      @assume="assumeResidency"
+    >
+    </ResidentsList>
+    <ResidentsListSmall
+      class="md:hidden"
+      title="MY APP USER TENANCIES" 
+      :residents="[activeResidency]"
+      disable-sort
+      show-licenses
+      show-assume
+      show-tenant-name
+      @assume="assumeResidency"
+    >
+    </ResidentsListSmall>
+    <div class="flex justify-center text-2xl">
+      <div>Your Other Workpaces</div>
+    </div>
+    <div class="flex justify-around">
+      <UCard class="h-full" v-if="inactiveResidencies.length">
+        <template #header><div class="flex justify-center text-2xl">Inactive</div></template>
+        <ResidentsListSmall
+          title="MY APP USER TENANCIES" 
+          row-action-name="Work Here"
+          :residents="inactiveResidencies"
+          disable-sort
+          show-licenses
+          show-assume
+          show-tenant-name
+          @row-action="assumeResidency"
+        >
+        </ResidentsListSmall>
+      </UCard>
+      <UCard class="h-full" v-if="invitedResidencies.length">
+        <template #header><div class="flex justify-center text-2xl">Invited</div></template>
+        <ResidentsListSmall
+          title="MY APP USER TENANCIES" 
+          row-action-name="Work Here"
+          :residents="invitedResidencies"
+          disable-sort
+          show-licenses
+          show-assume
+          show-tenant-name
+          @row-action="assumeResidency"
+        >
+        </ResidentsListSmall>
+      </UCard>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+  const props = withDefaults(defineProps<{
+    navToOnAssume?: string
+  }>(), {
+    navToOnAssume: '/'
+  })
+  const route = useRoute()
+  const tenantNameBounce = ref(false);
+  const currentProfileClaims = await useCurrentProfileClaims()
+  // const activeResidency = await useActiveResidency()
+
+  const assumeResidentMutation = useAssumeResidentMutation()
+  const declineResidencyMutation = useDeclineResidentMutation()
+  const { data: profileData, executeQuery: profileQuery } = await useMyProfileResidenciesQuery()
+
+  type CurrentResidencyStatus = 'INVITED' | 'ACTIVE' | 'INACTIVE' | 'UNINVITED'
+  const residents: Ref<Resident[]> = ref([])
+  const currentResidencyStatus: Ref<CurrentResidencyStatus> = ref('UNINVITED')
+  const activeResidency = ref()
+  const inactiveResidencies = ref<Resident[]>([])
+  const invitedResidencies = ref<Resident[]>([])
+
+  residents.value = (profileData.value?.myProfileResidenciesList || []) as unknown as Resident[]
+
+  const loadData = async () => {
+    const {data: profileData} = await profileQuery()
+    residents.value = (profileData.value?.myProfileResidenciesList || []) as unknown as Resident[]
+    const supportingResidency = residents.value.find(r => String(r.status).toLowerCase() === 'supporting')
+    activeResidency.value = residents.value.find(r => String(r.status).toLowerCase() === 'active')
+    inactiveResidencies.value = residents.value.filter(r => String(r.status).toLowerCase() === 'inactive')
+    invitedResidencies.value = residents.value.filter(r => String(r.status).toLowerCase() === 'invited')
+
+    const inactiveResidency = residents.value.find(r => String(r.status).toLowerCase() === 'inactive')
+    const invitedResidency = residents.value.find(r => String(r.status).toLowerCase() === 'invited')
+
+    if (activeResidency.value) {
+      currentResidencyStatus.value = 'ACTIVE'
+    } else if (inactiveResidency) {
+      currentResidencyStatus.value = 'INACTIVE'
+    } else if (invitedResidency) {
+      currentResidencyStatus.value = 'INVITED'
+    } else {
+      currentResidencyStatus.value = 'UNINVITED'
+    }
+
+    // showModal.value = (['INVITED', 'INACTIVE'].indexOf(currentResidencyStatus.value) > -1) && !supportingResidency
+  }
+  await loadData()
+
+  const assumeResidency = async (row: Resident) => {
+    const { data, error } = await assumeResidentMutation.executeMutation({
+      residentId: row.id
+    })
+    if (error) alert(error.toString())
+    // showModal.value = false
+    await refreshCurrentProfileClaims()
+    await loadData()
+    if (props.navToOnAssume && route.path !== props.navToOnAssume) {
+      // await navigateTo('/')
+      await reloadNuxtApp({
+        path: '/',
+        force: true
+      })
+    } else {
+      tenantNameBounce.value = true
+      setTimeout(() => { tenantNameBounce.value = false }, 1469)
+    }
+  }
+
+  const declineResidency = async (row: Resident) => {
+    const { data, error } = await declineResidencyMutation.executeMutation({
+      residentId: row.id
+    })
+    if (error) alert(error.toString())
+    // showModal.value = false
+    await refreshCurrentProfileClaims()
+    // await refreshAvailableModules()
+    loadData()
+  }
+
+  const onBeginChange = async () => {
+    const { data } = await profileQuery({requestPolicy: 'network-only'})
+    residents.value = (data.value?.myProfileResidenciesList || []) as unknown as Resident[]
+    // showModal.value = true
+  }
+
+  // const activeResidency = computed(()=> residents.value.find(r => String(r.status).toLowerCase() === 'active'))
+  const assumableResidencies = computed(()=> residents.value.filter(r => ['inactive', 'invited'].indexOf(String(r.status).toLowerCase()) > -1))
+  const changeResidencyDisabled = computed(()=> assumableResidencies.value?.length === 0)
+
+  watch (() => currentProfileClaims.value.tenantName, async () => {
+    await loadData()
+    tenantNameBounce.value = true
+    setTimeout(() => { tenantNameBounce.value = false }, 1469)
+  })
+</script>

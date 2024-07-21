@@ -92,38 +92,10 @@ export default defineNuxtConfig({
   components: {
     "dirs": [
       {
-        "path": "~/components/_common",
+        "path": "~/components",
+        "pathPrefix": false,
         "global": true
       },
-      {
-        "path": "~/components/Nav",
-        "global": true
-      },
-      {
-        "path": "~/components/App",
-        "global": true
-      },
-      {
-        "path": "~/components/Map",
-        "global": true
-      },
-      {
-        "path": "~/components/Loc",
-        "global": true
-      },
-      {
-        "path": "~/components/Msg",
-        "global": true
-      },
-      {
-        "path": "~/components/Todo",
-        "global": true
-      },
-      {
-        "path": "~/components/Dev",
-        "global": true
-      },
-      "~/components"
     ]
   },
   ignore: [
