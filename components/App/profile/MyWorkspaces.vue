@@ -7,7 +7,7 @@
       class="max-sm:hidden"
       title="MY APP USER TENANCIES" 
       row-action-name="Work Here"
-      :residents="[activeResidency]"
+      :residents="activeResidency ? [activeResidency] : []"
       disable-sort
       show-licenses
       show-assume
@@ -18,7 +18,7 @@
     <ResidentsListSmall
       class="md:hidden"
       title="MY APP USER TENANCIES" 
-      :residents="[activeResidency]"
+      :residents="activeResidency ? [activeResidency] : []"
       disable-sort
       show-licenses
       show-assume

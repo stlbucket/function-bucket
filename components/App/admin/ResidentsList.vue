@@ -87,6 +87,7 @@
     return props.residents.map(r => {
       return {
         ...r,
+        // @ts-ignore
         licenses: (r.licenses || []).map(l => {
           return {
             ...l,
