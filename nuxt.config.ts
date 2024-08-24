@@ -49,7 +49,7 @@ export default defineNuxtConfig({
       'lib'
       ,'store'
       ,'types'
-      ,'graphql'
+      ,'graphql/**'
     ],
     global: true
   },
