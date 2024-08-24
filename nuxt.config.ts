@@ -2,20 +2,25 @@
 // import defaultTheme from 'tailwindcss/defaultTheme'
 export default defineNuxtConfig({
   ssr: false,
+
   nitro: {
     experimental: {
       websocket: true
     }
   },
+
   piniaPersistedstate: {
     storage: 'localStorage'
   },
+
   buildModules: [
     '@nuxtjs/pwa',
   ],
+
   pwa: {
     
   },
+
   supabase: {
     redirect: false,
     redirectOptions: {
@@ -38,6 +43,7 @@ export default defineNuxtConfig({
       // },
     }
   },
+
   imports: {
     dirs: [
       'lib'
@@ -47,6 +53,7 @@ export default defineNuxtConfig({
     ],
     global: true
   },
+
   modules: [
     '@nuxt/ui',
     '@nuxtjs/supabase',
@@ -55,18 +62,23 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt3-leaflet'
   ],
+
   pinia: {
     autoImports: [
       ['defineStore', 'definePiniaStore'],
     ],
   },
+
   devtools: { enabled: true },
+
   css: [
     '@/assets/css/main.scss'
   ],
+
   devServer: {
     port: 3000
   },
+
   runtimeConfig: {
     SUPABASE_SERVICE_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU',
     SUPABASE_JWT_SECRET: 'super-secret-jwt-token-with-at-least-32-characters-long',    
@@ -89,6 +101,7 @@ export default defineNuxtConfig({
       }
     }  
   },
+
   components: {
     "dirs": [
       {
@@ -98,9 +111,11 @@ export default defineNuxtConfig({
       },
     ]
   },
+
   ignore: [
     "server/api/mutation-hooks/**"
   ],
+
   tailwindcss: {
     config: {
       theme: {
@@ -122,5 +137,7 @@ export default defineNuxtConfig({
         }
       }  
     }
-  }
+  },
+
+  compatibilityDate: '2024-08-23'
 })
