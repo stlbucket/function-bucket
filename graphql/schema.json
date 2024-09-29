@@ -14,6 +14,7 @@
         "kind": "OBJECT",
         "name": "AbListing",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "canInvite",
@@ -97,6 +98,7 @@
         "kind": "OBJECT",
         "name": "AbListingsConnection",
         "description": "A connection to a list of `AbListing` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -180,6 +182,7 @@
         "kind": "OBJECT",
         "name": "AbListingsEdge",
         "description": "A `AbListing` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -215,6 +218,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ActivateTenantInput",
         "description": "All input for the `activateTenant` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -250,6 +254,7 @@
         "kind": "OBJECT",
         "name": "ActivateTenantPayload",
         "description": "The output of our `activateTenant` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -334,6 +339,7 @@
         "kind": "OBJECT",
         "name": "AppSetting",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "application",
@@ -443,6 +449,7 @@
         "kind": "INPUT_OBJECT",
         "name": "AppSettingCondition",
         "description": "A condition to be used against `AppSetting` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -502,6 +509,7 @@
         "kind": "OBJECT",
         "name": "AppSettingsConnection",
         "description": "A connection to a list of `AppSetting` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -585,6 +593,7 @@
         "kind": "OBJECT",
         "name": "AppSettingsEdge",
         "description": "A `AppSetting` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -620,6 +629,7 @@
         "kind": "ENUM",
         "name": "AppSettingsOrderBy",
         "description": "Methods to use when ordering `AppSetting`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -697,6 +707,7 @@
         "kind": "OBJECT",
         "name": "Application",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "appSettingsByApplicationKey",
@@ -1344,6 +1355,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ApplicationCondition",
         "description": "A condition to be used against `Application` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1379,6 +1391,7 @@
         "kind": "OBJECT",
         "name": "ApplicationsConnection",
         "description": "A connection to a list of `Application` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -1462,6 +1475,7 @@
         "kind": "OBJECT",
         "name": "ApplicationsEdge",
         "description": "A `Application` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -1497,6 +1511,7 @@
         "kind": "ENUM",
         "name": "ApplicationsOrderBy",
         "description": "Methods to use when ordering `Application`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1550,6 +1565,7 @@
         "kind": "INPUT_OBJECT",
         "name": "AssignTodoInput",
         "description": "All input for the `assignTodo` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1597,6 +1613,7 @@
         "kind": "OBJECT",
         "name": "AssignTodoPayload",
         "description": "The output of our `assignTodo` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -1753,6 +1770,7 @@
         "kind": "INPUT_OBJECT",
         "name": "AssumeResidencyInput",
         "description": "All input for the `assumeResidency` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1788,6 +1806,7 @@
         "kind": "OBJECT",
         "name": "AssumeResidencyPayload",
         "description": "The output of our `assumeResidency` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -1908,6 +1927,7 @@
         "kind": "INPUT_OBJECT",
         "name": "BecomeSupportInput",
         "description": "All input for the `becomeSupport` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1943,6 +1963,7 @@
         "kind": "OBJECT",
         "name": "BecomeSupportPayload",
         "description": "The output of our `becomeSupport` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -2063,6 +2084,7 @@
         "kind": "INPUT_OBJECT",
         "name": "BlockResidentInput",
         "description": "All input for the `blockResident` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -2098,6 +2120,7 @@
         "kind": "OBJECT",
         "name": "BlockResidentPayload",
         "description": "The output of our `blockResident` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -2218,6 +2241,7 @@
         "kind": "SCALAR",
         "name": "Boolean",
         "description": "The `Boolean` scalar type represents `true` or `false`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2228,6 +2252,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CreateLocationInput",
         "description": "All input for the `createLocation` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -2263,6 +2288,7 @@
         "kind": "OBJECT",
         "name": "CreateLocationPayload",
         "description": "The output of our `createLocation` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -2371,6 +2397,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CreateTenantInput",
         "description": "All input for the `createTenant` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -2442,6 +2469,7 @@
         "kind": "OBJECT",
         "name": "CreateTenantPayload",
         "description": "The output of our `createTenant` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -2526,6 +2554,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CreateTodoInput",
         "description": "All input for the `createTodo` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -2573,6 +2602,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CreateTodoOptionInput",
         "description": "An input for mutations affecting `CreateTodoOption`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -2648,6 +2678,7 @@
         "kind": "OBJECT",
         "name": "CreateTodoPayload",
         "description": "The output of our `createTodo` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -2804,6 +2835,7 @@
         "kind": "SCALAR",
         "name": "Cursor",
         "description": "A location in a connection that can be used for resuming pagination.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2814,6 +2846,7 @@
         "kind": "SCALAR",
         "name": "Datetime",
         "description": "A point in time as described by the [ISO\n8601](https://en.wikipedia.org/wiki/ISO_8601) and, if it has a timezone, [RFC\n3339](https://datatracker.ietf.org/doc/html/rfc3339) standards. Input values\nthat do not conform to both ISO 8601 and RFC 3339 may be coerced, which may lead\nto unexpected results.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2824,6 +2857,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DeactivateSubscriberInput",
         "description": "All input for the `deactivateSubscriber` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -2859,6 +2893,7 @@
         "kind": "OBJECT",
         "name": "DeactivateSubscriberPayload",
         "description": "The output of our `deactivateSubscriber` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -2979,6 +3014,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DeactivateTenantInput",
         "description": "All input for the `deactivateTenant` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3014,6 +3050,7 @@
         "kind": "OBJECT",
         "name": "DeactivateTenantPayload",
         "description": "The output of our `deactivateTenant` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -3098,6 +3135,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DeactivateTenantSubscriptionInput",
         "description": "All input for the `deactivateTenantSubscription` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3133,6 +3171,7 @@
         "kind": "OBJECT",
         "name": "DeactivateTenantSubscriptionPayload",
         "description": "The output of our `deactivateTenantSubscription` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -3241,6 +3280,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DeclineInvitationInput",
         "description": "All input for the `declineInvitation` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3276,6 +3316,7 @@
         "kind": "OBJECT",
         "name": "DeclineInvitationPayload",
         "description": "The output of our `declineInvitation` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -3396,6 +3437,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DeclineResidencyInput",
         "description": "All input for the `declineResidency` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3431,6 +3473,7 @@
         "kind": "OBJECT",
         "name": "DeclineResidencyPayload",
         "description": "The output of our `declineResidency` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -3551,6 +3594,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DeleteLocationInput",
         "description": "All input for the `deleteLocation` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3586,6 +3630,7 @@
         "kind": "OBJECT",
         "name": "DeleteLocationPayload",
         "description": "The output of our `deleteLocation` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "boolean",
@@ -3633,6 +3678,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DeleteTodoInput",
         "description": "All input for the `deleteTodo` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3668,6 +3714,7 @@
         "kind": "OBJECT",
         "name": "DeleteTodoPayload",
         "description": "The output of our `deleteTodo` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "boolean",
@@ -3715,6 +3762,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DeleteTopicInput",
         "description": "All input for the `deleteTopic` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3750,6 +3798,7 @@
         "kind": "OBJECT",
         "name": "DeleteTopicPayload",
         "description": "The output of our `deleteTopic` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "boolean",
@@ -3797,6 +3846,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ExitSupportModeInput",
         "description": "All input for the `exitSupportMode` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3820,6 +3870,7 @@
         "kind": "OBJECT",
         "name": "ExitSupportModePayload",
         "description": "The output of our `exitSupportMode` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -3940,6 +3991,7 @@
         "kind": "ENUM",
         "name": "ExpirationIntervalType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3993,6 +4045,7 @@
         "kind": "INPUT_OBJECT",
         "name": "GrantUserLicenseInput",
         "description": "All input for the `grantUserLicense` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4040,6 +4093,7 @@
         "kind": "OBJECT",
         "name": "GrantUserLicensePayload",
         "description": "The output of our `grantUserLicense` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -4184,6 +4238,7 @@
         "kind": "SCALAR",
         "name": "ID",
         "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"4\"`) or integer (such as `4`) input value will be accepted as an ID.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4194,6 +4249,7 @@
         "kind": "SCALAR",
         "name": "Int",
         "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4204,6 +4260,7 @@
         "kind": "SCALAR",
         "name": "JSON",
         "description": "Represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4214,6 +4271,7 @@
         "kind": "INPUT_OBJECT",
         "name": "JoinAddressBookInput",
         "description": "All input for the `joinAddressBook` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4237,6 +4295,7 @@
         "kind": "OBJECT",
         "name": "JoinAddressBookPayload",
         "description": "The output of our `joinAddressBook` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -4321,6 +4380,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LeaveAddressBookInput",
         "description": "All input for the `leaveAddressBook` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4344,6 +4404,7 @@
         "kind": "OBJECT",
         "name": "LeaveAddressBookPayload",
         "description": "The output of our `leaveAddressBook` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -4428,6 +4489,7 @@
         "kind": "OBJECT",
         "name": "License",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createdAt",
@@ -4673,6 +4735,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LicenseCondition",
         "description": "A condition to be used against `License` object types. All fields are tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4804,6 +4867,7 @@
         "kind": "OBJECT",
         "name": "LicensePack",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "autoSubscribe",
@@ -5313,6 +5377,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LicensePackCondition",
         "description": "A condition to be used against `LicensePack` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -5396,6 +5461,7 @@
         "kind": "OBJECT",
         "name": "LicensePackLicenseType",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "expirationIntervalMultiplier",
@@ -5561,6 +5627,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LicensePackLicenseTypeCondition",
         "description": "A condition to be used against `LicensePackLicenseType` object types. All fields\nare tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -5644,6 +5711,7 @@
         "kind": "OBJECT",
         "name": "LicensePackLicenseTypesConnection",
         "description": "A connection to a list of `LicensePackLicenseType` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -5727,6 +5795,7 @@
         "kind": "OBJECT",
         "name": "LicensePackLicenseTypesEdge",
         "description": "A `LicensePackLicenseType` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -5762,6 +5831,7 @@
         "kind": "ENUM",
         "name": "LicensePackLicenseTypesOrderBy",
         "description": "Methods to use when ordering `LicensePackLicenseType`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5863,6 +5933,7 @@
         "kind": "OBJECT",
         "name": "LicensePacksConnection",
         "description": "A connection to a list of `LicensePack` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -5946,6 +6017,7 @@
         "kind": "OBJECT",
         "name": "LicensePacksEdge",
         "description": "A `LicensePack` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -5981,6 +6053,7 @@
         "kind": "ENUM",
         "name": "LicensePacksOrderBy",
         "description": "Methods to use when ordering `LicensePack`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6082,6 +6155,7 @@
         "kind": "ENUM",
         "name": "LicenseStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6111,6 +6185,7 @@
         "kind": "OBJECT",
         "name": "LicenseType",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "application",
@@ -6822,6 +6897,7 @@
         "kind": "ENUM",
         "name": "LicenseTypeAssignmentScope",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6869,6 +6945,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LicenseTypeCondition",
         "description": "A condition to be used against `LicenseType` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6952,6 +7029,7 @@
         "kind": "OBJECT",
         "name": "LicenseTypePermission",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "licenseType",
@@ -7019,6 +7097,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LicenseTypePermissionCondition",
         "description": "A condition to be used against `LicenseTypePermission` object types. All fields\nare tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -7054,6 +7133,7 @@
         "kind": "OBJECT",
         "name": "LicenseTypePermissionsConnection",
         "description": "A connection to a list of `LicenseTypePermission` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -7137,6 +7217,7 @@
         "kind": "OBJECT",
         "name": "LicenseTypePermissionsEdge",
         "description": "A `LicenseTypePermission` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -7172,6 +7253,7 @@
         "kind": "ENUM",
         "name": "LicenseTypePermissionsOrderBy",
         "description": "Methods to use when ordering `LicenseTypePermission`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -7213,6 +7295,7 @@
         "kind": "OBJECT",
         "name": "LicenseTypesConnection",
         "description": "A connection to a list of `LicenseType` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -7296,6 +7379,7 @@
         "kind": "OBJECT",
         "name": "LicenseTypesEdge",
         "description": "A `LicenseType` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -7331,6 +7415,7 @@
         "kind": "ENUM",
         "name": "LicenseTypesOrderBy",
         "description": "Methods to use when ordering `LicenseType`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -7432,6 +7517,7 @@
         "kind": "OBJECT",
         "name": "LicensesConnection",
         "description": "A connection to a list of `License` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -7515,6 +7601,7 @@
         "kind": "OBJECT",
         "name": "LicensesEdge",
         "description": "A `License` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -7550,6 +7637,7 @@
         "kind": "ENUM",
         "name": "LicensesOrderBy",
         "description": "Methods to use when ordering `License`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -7699,6 +7787,7 @@
         "kind": "OBJECT",
         "name": "LocResident",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "displayName",
@@ -7994,6 +8083,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LocResidentCondition",
         "description": "A condition to be used against `LocResident` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -8041,6 +8131,7 @@
         "kind": "OBJECT",
         "name": "LocResidentsConnection",
         "description": "A connection to a list of `LocResident` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -8124,6 +8215,7 @@
         "kind": "OBJECT",
         "name": "LocResidentsEdge",
         "description": "A `LocResident` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -8159,6 +8251,7 @@
         "kind": "ENUM",
         "name": "LocResidentsOrderBy",
         "description": "Methods to use when ordering `LocResident`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -8224,6 +8317,7 @@
         "kind": "OBJECT",
         "name": "LocTenant",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "locResidentsByTenantId",
@@ -8681,6 +8775,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LocTenantCondition",
         "description": "A condition to be used against `LocTenant` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -8716,6 +8811,7 @@
         "kind": "OBJECT",
         "name": "LocTenantsConnection",
         "description": "A connection to a list of `LocTenant` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -8799,6 +8895,7 @@
         "kind": "OBJECT",
         "name": "LocTenantsEdge",
         "description": "A `LocTenant` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -8834,6 +8931,7 @@
         "kind": "ENUM",
         "name": "LocTenantsOrderBy",
         "description": "Methods to use when ordering `LocTenant`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -8887,6 +8985,7 @@
         "kind": "OBJECT",
         "name": "Location",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "address1",
@@ -9290,6 +9389,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LocationCondition",
         "description": "A condition to be used against `Location` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -9445,6 +9545,7 @@
         "kind": "INPUT_OBJECT",
         "name": "LocationInfoInput",
         "description": "An input for mutations affecting `LocationInfo`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -9576,6 +9677,7 @@
         "kind": "OBJECT",
         "name": "LocationsConnection",
         "description": "A connection to a list of `Location` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -9659,6 +9761,7 @@
         "kind": "OBJECT",
         "name": "LocationsEdge",
         "description": "A `Location` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -9694,6 +9797,7 @@
         "kind": "ENUM",
         "name": "LocationsOrderBy",
         "description": "Methods to use when ordering `Location`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -9867,6 +9971,7 @@
         "kind": "INPUT_OBJECT",
         "name": "MakeTemplateFromTodoInput",
         "description": "All input for the `makeTemplateFromTodo` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -9902,6 +10007,7 @@
         "kind": "OBJECT",
         "name": "MakeTemplateFromTodoPayload",
         "description": "The output of our `makeTemplateFromTodo` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -10058,6 +10164,7 @@
         "kind": "INPUT_OBJECT",
         "name": "MakeTodoFromTemplateInput",
         "description": "All input for the `makeTodoFromTemplate` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -10093,6 +10200,7 @@
         "kind": "OBJECT",
         "name": "MakeTodoFromTemplatePayload",
         "description": "The output of our `makeTodoFromTemplate` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -10249,6 +10357,7 @@
         "kind": "OBJECT",
         "name": "Message",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "content",
@@ -10450,6 +10559,7 @@
         "kind": "INPUT_OBJECT",
         "name": "MessageCondition",
         "description": "A condition to be used against `Message` object types. All fields are tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -10561,6 +10671,7 @@
         "kind": "INPUT_OBJECT",
         "name": "MessageInfoInput",
         "description": "An input for mutations affecting `MessageInfo`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -10624,6 +10735,7 @@
         "kind": "ENUM",
         "name": "MessageStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -10653,6 +10765,7 @@
         "kind": "OBJECT",
         "name": "MessagesConnection",
         "description": "A connection to a list of `Message` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -10736,6 +10849,7 @@
         "kind": "OBJECT",
         "name": "MessagesEdge",
         "description": "A `Message` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -10771,6 +10885,7 @@
         "kind": "ENUM",
         "name": "MessagesOrderBy",
         "description": "Methods to use when ordering `Message`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -10884,6 +10999,7 @@
         "kind": "OBJECT",
         "name": "Module",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "application",
@@ -11215,6 +11331,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ModuleCondition",
         "description": "A condition to be used against `Module` object types. All fields are tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -11302,6 +11419,7 @@
         "kind": "OBJECT",
         "name": "ModuleInfo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "defaultIconKey",
@@ -11393,6 +11511,7 @@
         "kind": "OBJECT",
         "name": "ModulesConnection",
         "description": "A connection to a list of `Module` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -11476,6 +11595,7 @@
         "kind": "OBJECT",
         "name": "ModulesEdge",
         "description": "A `Module` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -11511,6 +11631,7 @@
         "kind": "ENUM",
         "name": "ModulesOrderBy",
         "description": "Methods to use when ordering `Module`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -11600,6 +11721,7 @@
         "kind": "OBJECT",
         "name": "MsgResident",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "displayName",
@@ -12085,6 +12207,7 @@
         "kind": "INPUT_OBJECT",
         "name": "MsgResidentCondition",
         "description": "A condition to be used against `MsgResident` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -12132,6 +12255,7 @@
         "kind": "OBJECT",
         "name": "MsgResidentsConnection",
         "description": "A connection to a list of `MsgResident` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -12215,6 +12339,7 @@
         "kind": "OBJECT",
         "name": "MsgResidentsEdge",
         "description": "A `MsgResident` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -12250,6 +12375,7 @@
         "kind": "ENUM",
         "name": "MsgResidentsOrderBy",
         "description": "Methods to use when ordering `MsgResident`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -12315,6 +12441,7 @@
         "kind": "OBJECT",
         "name": "MsgTenant",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "messagesByTenantId",
@@ -13152,6 +13279,7 @@
         "kind": "INPUT_OBJECT",
         "name": "MsgTenantCondition",
         "description": "A condition to be used against `MsgTenant` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13187,6 +13315,7 @@
         "kind": "OBJECT",
         "name": "MsgTenantsConnection",
         "description": "A connection to a list of `MsgTenant` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -13270,6 +13399,7 @@
         "kind": "OBJECT",
         "name": "MsgTenantsEdge",
         "description": "A `MsgTenant` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -13305,6 +13435,7 @@
         "kind": "ENUM",
         "name": "MsgTenantsOrderBy",
         "description": "Methods to use when ordering `MsgTenant`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13358,6 +13489,7 @@
         "kind": "OBJECT",
         "name": "Mutation",
         "description": "The root mutation type which contains root level fields which mutate data.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "activateTenant",
@@ -14384,6 +14516,7 @@
         "kind": "INTERFACE",
         "name": "Node",
         "description": "An object with a globally unique `ID`.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodeId",
@@ -14542,6 +14675,7 @@
         "kind": "OBJECT",
         "name": "PageInfo",
         "description": "Information about pagination in a connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "endCursor",
@@ -14609,6 +14743,7 @@
         "kind": "INPUT_OBJECT",
         "name": "PagingOptionInput",
         "description": "An input for mutations affecting `PagingOption`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14656,6 +14791,7 @@
         "kind": "OBJECT",
         "name": "Permission",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "key",
@@ -14895,6 +15031,7 @@
         "kind": "INPUT_OBJECT",
         "name": "PermissionCondition",
         "description": "A condition to be used against `Permission` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14918,6 +15055,7 @@
         "kind": "OBJECT",
         "name": "PermissionsConnection",
         "description": "A connection to a list of `Permission` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -15001,6 +15139,7 @@
         "kind": "OBJECT",
         "name": "PermissionsEdge",
         "description": "A `Permission` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -15036,6 +15175,7 @@
         "kind": "ENUM",
         "name": "PermissionsOrderBy",
         "description": "Methods to use when ordering `Permission`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -15077,6 +15217,7 @@
         "kind": "INPUT_OBJECT",
         "name": "PinTodoInput",
         "description": "All input for the `pinTodo` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15112,6 +15253,7 @@
         "kind": "OBJECT",
         "name": "PinTodoPayload",
         "description": "The output of our `pinTodo` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -15268,6 +15410,7 @@
         "kind": "OBJECT",
         "name": "Profile",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "avatarKey",
@@ -16051,6 +16194,7 @@
         "kind": "OBJECT",
         "name": "ProfileClaim",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actualResidentId",
@@ -16174,6 +16318,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProfileCondition",
         "description": "A condition to be used against `Profile` object types. All fields are tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -16341,6 +16486,7 @@
         "kind": "ENUM",
         "name": "ProfileStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -16370,6 +16516,7 @@
         "kind": "OBJECT",
         "name": "ProfilesConnection",
         "description": "A connection to a list of `Profile` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -16453,6 +16600,7 @@
         "kind": "OBJECT",
         "name": "ProfilesEdge",
         "description": "A `Profile` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -16488,6 +16636,7 @@
         "kind": "ENUM",
         "name": "ProfilesOrderBy",
         "description": "Methods to use when ordering `Profile`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -16673,6 +16822,7 @@
         "kind": "OBJECT",
         "name": "Query",
         "description": "The root query type which gives access points into the data universe.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "appSetting",
@@ -24555,6 +24705,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ReactivateTenantSubscriptionInput",
         "description": "All input for the `reactivateTenantSubscription` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -24590,6 +24741,7 @@
         "kind": "OBJECT",
         "name": "ReactivateTenantSubscriptionPayload",
         "description": "The output of our `reactivateTenantSubscription` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -24698,6 +24850,7 @@
         "kind": "OBJECT",
         "name": "Resident",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createdAt",
@@ -25169,6 +25322,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ResidentCondition",
         "description": "A condition to be used against `Resident` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -25324,6 +25478,7 @@
         "kind": "ENUM",
         "name": "ResidentStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -25377,6 +25532,7 @@
         "kind": "ENUM",
         "name": "ResidentType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -25406,6 +25562,7 @@
         "kind": "OBJECT",
         "name": "ResidentsConnection",
         "description": "A connection to a list of `Resident` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -25489,6 +25646,7 @@
         "kind": "OBJECT",
         "name": "ResidentsEdge",
         "description": "A `Resident` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -25524,6 +25682,7 @@
         "kind": "ENUM",
         "name": "ResidentsOrderBy",
         "description": "Methods to use when ordering `Resident`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -25697,6 +25856,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RevokeUserLicenseInput",
         "description": "All input for the `revokeUserLicense` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -25732,6 +25892,7 @@
         "kind": "OBJECT",
         "name": "RevokeUserLicensePayload",
         "description": "The output of our `revokeUserLicense` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "boolean",
@@ -25779,6 +25940,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SearchProfilesOptionInput",
         "description": "An input for mutations affecting `SearchProfilesOption`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -25826,6 +25988,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SearchResidentsOptionInput",
         "description": "An input for mutations affecting `SearchResidentsOption`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -25873,6 +26036,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SearchTenantsOptionInput",
         "description": "An input for mutations affecting `SearchTenantsOption`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -25932,6 +26096,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SearchTodosOptionInput",
         "description": "An input for mutations affecting `SearchTodosOption`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -26015,6 +26180,7 @@
         "kind": "SCALAR",
         "name": "String",
         "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -26025,6 +26191,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SubscribeTenantToLicensePackInput",
         "description": "All input for the `subscribeTenantToLicensePack` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -26072,6 +26239,7 @@
         "kind": "OBJECT",
         "name": "SubscribeTenantToLicensePackPayload",
         "description": "The output of our `subscribeTenantToLicensePack` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -26180,6 +26348,7 @@
         "kind": "OBJECT",
         "name": "Subscriber",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createdAt",
@@ -26361,6 +26530,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SubscriberCondition",
         "description": "A condition to be used against `Subscriber` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -26456,6 +26626,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SubscriberInfoInput",
         "description": "An input for mutations affecting `SubscriberInfo`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -26491,6 +26662,7 @@
         "kind": "ENUM",
         "name": "SubscriberStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -26520,6 +26692,7 @@
         "kind": "OBJECT",
         "name": "SubscribersConnection",
         "description": "A connection to a list of `Subscriber` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -26603,6 +26776,7 @@
         "kind": "OBJECT",
         "name": "SubscribersEdge",
         "description": "A `Subscriber` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -26638,6 +26812,7 @@
         "kind": "ENUM",
         "name": "SubscribersOrderBy",
         "description": "Methods to use when ordering `Subscriber`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -26751,6 +26926,7 @@
         "kind": "OBJECT",
         "name": "Subscription",
         "description": "The root subscription type: contains realtime events you can subscribe to with the `subscription` operation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "topicMessage",
@@ -26791,6 +26967,7 @@
         "kind": "OBJECT",
         "name": "Tenant",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createdAt",
@@ -27728,6 +27905,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TenantCondition",
         "description": "A condition to be used against `Tenant` object types. All fields are tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -27823,6 +28001,7 @@
         "kind": "ENUM",
         "name": "TenantStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -27852,6 +28031,7 @@
         "kind": "OBJECT",
         "name": "TenantSubscription",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createdAt",
@@ -28195,6 +28375,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TenantSubscriptionCondition",
         "description": "A condition to be used against `TenantSubscription` object types. All fields are\ntested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -28278,6 +28459,7 @@
         "kind": "ENUM",
         "name": "TenantSubscriptionStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -28301,6 +28483,7 @@
         "kind": "OBJECT",
         "name": "TenantSubscriptionsConnection",
         "description": "A connection to a list of `TenantSubscription` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -28384,6 +28567,7 @@
         "kind": "OBJECT",
         "name": "TenantSubscriptionsEdge",
         "description": "A `TenantSubscription` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -28419,6 +28603,7 @@
         "kind": "ENUM",
         "name": "TenantSubscriptionsOrderBy",
         "description": "Methods to use when ordering `TenantSubscription`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -28520,6 +28705,7 @@
         "kind": "ENUM",
         "name": "TenantType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -28561,6 +28747,7 @@
         "kind": "OBJECT",
         "name": "TenantsConnection",
         "description": "A connection to a list of `Tenant` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -28644,6 +28831,7 @@
         "kind": "OBJECT",
         "name": "TenantsEdge",
         "description": "A `Tenant` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -28679,6 +28867,7 @@
         "kind": "ENUM",
         "name": "TenantsOrderBy",
         "description": "Methods to use when ordering `Tenant`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -28792,6 +28981,7 @@
         "kind": "OBJECT",
         "name": "Thing",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -28897,6 +29087,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ThingCondition",
         "description": "A condition to be used against `Thing` object types. All fields are tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -28956,6 +29147,7 @@
         "kind": "ENUM",
         "name": "ThingStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -28979,6 +29171,7 @@
         "kind": "OBJECT",
         "name": "ThingsConnection",
         "description": "A connection to a list of `Thing` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -29062,6 +29255,7 @@
         "kind": "OBJECT",
         "name": "ThingsEdge",
         "description": "A `Thing` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -29097,6 +29291,7 @@
         "kind": "ENUM",
         "name": "ThingsOrderBy",
         "description": "Methods to use when ordering `Thing`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -29174,6 +29369,7 @@
         "kind": "OBJECT",
         "name": "Todo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createdAt",
@@ -29919,6 +30115,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TodoCondition",
         "description": "A condition to be used against `Todo` object types. All fields are tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -30138,6 +30335,7 @@
         "kind": "OBJECT",
         "name": "TodoResident",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "displayName",
@@ -30433,6 +30631,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TodoResidentCondition",
         "description": "A condition to be used against `TodoResident` object types. All fields are\ntested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -30480,6 +30679,7 @@
         "kind": "OBJECT",
         "name": "TodoResidentsConnection",
         "description": "A connection to a list of `TodoResident` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -30563,6 +30763,7 @@
         "kind": "OBJECT",
         "name": "TodoResidentsEdge",
         "description": "A `TodoResident` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -30598,6 +30799,7 @@
         "kind": "ENUM",
         "name": "TodoResidentsOrderBy",
         "description": "Methods to use when ordering `TodoResident`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -30663,6 +30865,7 @@
         "kind": "ENUM",
         "name": "TodoStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -30698,6 +30901,7 @@
         "kind": "OBJECT",
         "name": "TodoTenant",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -31155,6 +31359,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TodoTenantCondition",
         "description": "A condition to be used against `TodoTenant` object types. All fields are tested\nfor equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -31190,6 +31395,7 @@
         "kind": "OBJECT",
         "name": "TodoTenantsConnection",
         "description": "A connection to a list of `TodoTenant` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -31273,6 +31479,7 @@
         "kind": "OBJECT",
         "name": "TodoTenantsEdge",
         "description": "A `TodoTenant` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -31308,6 +31515,7 @@
         "kind": "ENUM",
         "name": "TodoTenantsOrderBy",
         "description": "Methods to use when ordering `TodoTenant`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -31361,6 +31569,7 @@
         "kind": "ENUM",
         "name": "TodoType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -31384,6 +31593,7 @@
         "kind": "OBJECT",
         "name": "TodosConnection",
         "description": "A connection to a list of `Todo` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -31467,6 +31677,7 @@
         "kind": "OBJECT",
         "name": "TodosEdge",
         "description": "A `Todo` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -31502,6 +31713,7 @@
         "kind": "ENUM",
         "name": "TodosOrderBy",
         "description": "Methods to use when ordering `Todo`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -31723,6 +31935,7 @@
         "kind": "OBJECT",
         "name": "Tool",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "defaultIconKey",
@@ -31880,6 +32093,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ToolCondition",
         "description": "A condition to be used against `Tool` object types. All fields are tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -31979,6 +32193,7 @@
         "kind": "OBJECT",
         "name": "ToolInfo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "defaultIconKey",
@@ -32066,6 +32281,7 @@
         "kind": "OBJECT",
         "name": "ToolsConnection",
         "description": "A connection to a list of `Tool` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -32149,6 +32365,7 @@
         "kind": "OBJECT",
         "name": "ToolsEdge",
         "description": "A `Tool` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -32184,6 +32401,7 @@
         "kind": "ENUM",
         "name": "ToolsOrderBy",
         "description": "Methods to use when ordering `Tool`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -32285,6 +32503,7 @@
         "kind": "OBJECT",
         "name": "Topic",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createdAt",
@@ -33012,6 +33231,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TopicCondition",
         "description": "A condition to be used against `Topic` object types. All fields are tested for equality and combined with a logical ‘and.’",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -33111,6 +33331,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TopicInfoInput",
         "description": "An input for mutations affecting `TopicInfo`",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -33170,6 +33391,7 @@
         "kind": "OBJECT",
         "name": "TopicMessageSubscriptionPayload",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "event",
@@ -33217,6 +33439,7 @@
         "kind": "ENUM",
         "name": "TopicStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -33246,6 +33469,7 @@
         "kind": "OBJECT",
         "name": "TopicsConnection",
         "description": "A connection to a list of `Topic` values.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "edges",
@@ -33329,6 +33553,7 @@
         "kind": "OBJECT",
         "name": "TopicsEdge",
         "description": "A `Topic` edge in the connection.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "cursor",
@@ -33364,6 +33589,7 @@
         "kind": "ENUM",
         "name": "TopicsOrderBy",
         "description": "Methods to use when ordering `Topic`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -33465,6 +33691,7 @@
         "kind": "SCALAR",
         "name": "UUID",
         "description": "A universally unique identifier as defined by [RFC 4122](https://tools.ietf.org/html/rfc4122).",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -33475,6 +33702,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UnblockResidentInput",
         "description": "All input for the `unblockResident` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -33510,6 +33738,7 @@
         "kind": "OBJECT",
         "name": "UnblockResidentPayload",
         "description": "The output of our `unblockResident` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -33630,6 +33859,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UnpinTodoInput",
         "description": "All input for the `unpinTodo` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -33665,6 +33895,7 @@
         "kind": "OBJECT",
         "name": "UnpinTodoPayload",
         "description": "The output of our `unpinTodo` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -33821,6 +34052,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateLocationInput",
         "description": "All input for the `updateLocation` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -33856,6 +34088,7 @@
         "kind": "OBJECT",
         "name": "UpdateLocationPayload",
         "description": "The output of our `updateLocation` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -33964,6 +34197,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateProfileInput",
         "description": "All input for the `updateProfile` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -34035,6 +34269,7 @@
         "kind": "OBJECT",
         "name": "UpdateProfilePayload",
         "description": "The output of our `updateProfile` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -34119,6 +34354,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateTodoInput",
         "description": "All input for the `updateTodo` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -34178,6 +34414,7 @@
         "kind": "OBJECT",
         "name": "UpdateTodoPayload",
         "description": "The output of our `updateTodo` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -34334,6 +34571,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateTodoStatusInput",
         "description": "All input for the `updateTodoStatus` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -34381,6 +34619,7 @@
         "kind": "OBJECT",
         "name": "UpdateTodoStatusPayload",
         "description": "The output of our `updateTodoStatus` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -34537,6 +34776,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpsertMessageInput",
         "description": "All input for the `upsertMessage` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -34572,6 +34812,7 @@
         "kind": "OBJECT",
         "name": "UpsertMessagePayload",
         "description": "The output of our `upsertMessage` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -34692,6 +34933,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpsertSubscriberInput",
         "description": "All input for the `upsertSubscriber` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -34727,6 +34969,7 @@
         "kind": "OBJECT",
         "name": "UpsertSubscriberPayload",
         "description": "The output of our `upsertSubscriber` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -34847,6 +35090,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpsertTopicInput",
         "description": "All input for the `upsertTopic` mutation.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -34882,6 +35126,7 @@
         "kind": "OBJECT",
         "name": "UpsertTopicPayload",
         "description": "The output of our `upsertTopic` mutation.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "clientMutationId",
@@ -34978,6 +35223,7 @@
         "kind": "OBJECT",
         "name": "__Directive",
         "description": "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -35094,6 +35340,7 @@
         "kind": "ENUM",
         "name": "__DirectiveLocation",
         "description": "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -35219,6 +35466,7 @@
         "kind": "OBJECT",
         "name": "__EnumValue",
         "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -35286,6 +35534,7 @@
         "kind": "OBJECT",
         "name": "__Field",
         "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -35406,6 +35655,7 @@
         "kind": "OBJECT",
         "name": "__InputValue",
         "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -35501,6 +35751,7 @@
         "kind": "OBJECT",
         "name": "__Schema",
         "description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "description",
@@ -35612,6 +35863,7 @@
         "kind": "OBJECT",
         "name": "__Type",
         "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "kind",
@@ -35815,6 +36067,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "isOneOf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -35826,6 +36090,7 @@
         "kind": "ENUM",
         "name": "__TypeKind",
         "description": "An enum describing what kind of type a given `__Type` is.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -35935,6 +36200,15 @@
             "deprecationReason": null
           }
         ]
+      },
+      {
+        "name": "oneOf",
+        "description": "Indicates exactly one field must be supplied and this field must not be `null`.",
+        "isRepeatable": false,
+        "locations": [
+          "INPUT_OBJECT"
+        ],
+        "args": []
       },
       {
         "name": "skip",

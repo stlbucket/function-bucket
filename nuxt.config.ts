@@ -49,7 +49,7 @@ export default defineNuxtConfig({
       'lib'
       ,'store'
       ,'types'
-      ,'graphql/**'
+      ,'graphql'
     ],
     global: true
   },
@@ -64,9 +64,9 @@ export default defineNuxtConfig({
   ],
 
   pinia: {
-    autoImports: [
-      ['defineStore', 'definePiniaStore'],
-    ],
+    // autoImports: [
+    //   ['defineStore', 'definePiniaStore'],
+    // ],
   },
 
   devtools: { enabled: true },

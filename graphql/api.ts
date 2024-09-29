@@ -1,6 +1,3 @@
-import { offlineExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
-
 import { gql } from '@urql/vue';
 import * as Urql from '@urql/vue';
 export type Maybe<T> = T | null;
@@ -6593,8 +6590,8 @@ export const GetAbListingsDocument = gql`
 }
     `;
 
-export function useGetAbListingsQuery(options: Omit<Urql.UseQueryArgs<never, GetAbListingsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<GetAbListingsQuery>({ query: GetAbListingsDocument, ...options });
+export function useGetAbListingsQuery(options: Omit<Urql.UseQueryArgs<never, GetAbListingsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetAbListingsQuery, GetAbListingsQueryVariables>({ query: GetAbListingsDocument, ...options });
 };
 export const ActivateTenantDocument = gql`
     mutation ActivateTenant($tenantId: UUID!) {
@@ -6807,8 +6804,8 @@ export const ActiveLicensePacksDocument = gql`
 }
     ${LicensePackFragmentDoc}`;
 
-export function useActiveLicensePacksQuery(options: Omit<Urql.UseQueryArgs<never, ActiveLicensePacksQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<ActiveLicensePacksQuery>({ query: ActiveLicensePacksDocument, ...options });
+export function useActiveLicensePacksQuery(options: Omit<Urql.UseQueryArgs<never, ActiveLicensePacksQueryVariables>, 'query'>) {
+  return Urql.useQuery<ActiveLicensePacksQuery, ActiveLicensePacksQueryVariables>({ query: ActiveLicensePacksDocument, ...options });
 };
 export const AllAppProfilesDocument = gql`
     query AllAppProfiles {
@@ -6828,8 +6825,8 @@ export const AllAppProfilesDocument = gql`
 ${ResidentFragmentDoc}
 ${LicenseFragmentDoc}`;
 
-export function useAllAppProfilesQuery(options: Omit<Urql.UseQueryArgs<never, AllAppProfilesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<AllAppProfilesQuery>({ query: AllAppProfilesDocument, ...options });
+export function useAllAppProfilesQuery(options: Omit<Urql.UseQueryArgs<never, AllAppProfilesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllAppProfilesQuery, AllAppProfilesQueryVariables>({ query: AllAppProfilesDocument, ...options });
 };
 export const AllApplicationsDocument = gql`
     query AllApplications {
@@ -6850,8 +6847,8 @@ export const AllApplicationsDocument = gql`
 ${LicenseTypeFragmentDoc}
 ${LicenseTypePermissionFragmentDoc}`;
 
-export function useAllApplicationsQuery(options: Omit<Urql.UseQueryArgs<never, AllApplicationsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<AllApplicationsQuery>({ query: AllApplicationsDocument, ...options });
+export function useAllApplicationsQuery(options: Omit<Urql.UseQueryArgs<never, AllApplicationsQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllApplicationsQuery, AllApplicationsQueryVariables>({ query: AllApplicationsDocument, ...options });
 };
 export const AllLicensePacksDocument = gql`
     query AllLicensePacks {
@@ -6879,8 +6876,8 @@ ${LicensePackLicenseTypeFragmentDoc}
 ${LicenseTypeFragmentDoc}
 ${LicenseTypePermissionFragmentDoc}`;
 
-export function useAllLicensePacksQuery(options: Omit<Urql.UseQueryArgs<never, AllLicensePacksQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<AllLicensePacksQuery>({ query: AllLicensePacksDocument, ...options });
+export function useAllLicensePacksQuery(options: Omit<Urql.UseQueryArgs<never, AllLicensePacksQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllLicensePacksQuery, AllLicensePacksQueryVariables>({ query: AllLicensePacksDocument, ...options });
 };
 export const AllResidentsDocument = gql`
     query AllResidents {
@@ -6898,8 +6895,8 @@ export const AllResidentsDocument = gql`
 ${LicenseFragmentDoc}
 ${LicenseTypeFragmentDoc}`;
 
-export function useAllResidentsQuery(options: Omit<Urql.UseQueryArgs<never, AllResidentsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<AllResidentsQuery>({ query: AllResidentsDocument, ...options });
+export function useAllResidentsQuery(options: Omit<Urql.UseQueryArgs<never, AllResidentsQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllResidentsQuery, AllResidentsQueryVariables>({ query: AllResidentsDocument, ...options });
 };
 export const TenantByIdDocument = gql`
     query TenantById($tenantId: UUID!) {
@@ -6919,8 +6916,8 @@ export const TenantByIdDocument = gql`
     ${TenantFragmentDoc}
 ${TenantSubscriptionFragmentDoc}`;
 
-export function useTenantByIdQuery(options: Omit<Urql.UseQueryArgs<never, TenantByIdQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<TenantByIdQuery>({ query: TenantByIdDocument, ...options });
+export function useTenantByIdQuery(options: Omit<Urql.UseQueryArgs<never, TenantByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<TenantByIdQuery, TenantByIdQueryVariables>({ query: TenantByIdDocument, ...options });
 };
 export const TenantLicensesDocument = gql`
     query TenantLicenses {
@@ -6934,8 +6931,8 @@ export const TenantLicensesDocument = gql`
     ${LicenseFragmentDoc}
 ${ResidentFragmentDoc}`;
 
-export function useTenantLicensesQuery(options: Omit<Urql.UseQueryArgs<never, TenantLicensesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<TenantLicensesQuery>({ query: TenantLicensesDocument, ...options });
+export function useTenantLicensesQuery(options: Omit<Urql.UseQueryArgs<never, TenantLicensesQueryVariables>, 'query'>) {
+  return Urql.useQuery<TenantLicensesQuery, TenantLicensesQueryVariables>({ query: TenantLicensesDocument, ...options });
 };
 export const TenantResidentsDocument = gql`
     query TenantResidents {
@@ -6945,8 +6942,8 @@ export const TenantResidentsDocument = gql`
 }
     ${ResidentFragmentDoc}`;
 
-export function useTenantResidentsQuery(options: Omit<Urql.UseQueryArgs<never, TenantResidentsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<TenantResidentsQuery>({ query: TenantResidentsDocument, ...options });
+export function useTenantResidentsQuery(options: Omit<Urql.UseQueryArgs<never, TenantResidentsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TenantResidentsQuery, TenantResidentsQueryVariables>({ query: TenantResidentsDocument, ...options });
 };
 export const TenantSubscriptionsDocument = gql`
     query TenantSubscriptions($tenantId: UUID!) {
@@ -6982,8 +6979,8 @@ ${LicensePackLicenseTypeFragmentDoc}
 ${LicenseTypeFragmentDoc}
 ${LicenseTypePermissionFragmentDoc}`;
 
-export function useTenantSubscriptionsQuery(options: Omit<Urql.UseQueryArgs<never, TenantSubscriptionsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<TenantSubscriptionsQuery>({ query: TenantSubscriptionsDocument, ...options });
+export function useTenantSubscriptionsQuery(options: Omit<Urql.UseQueryArgs<never, TenantSubscriptionsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TenantSubscriptionsQuery, TenantSubscriptionsQueryVariables>({ query: TenantSubscriptionsDocument, ...options });
 };
 export const AvailableModulesDocument = gql`
     query AvailableModules {
@@ -7005,8 +7002,8 @@ export const AvailableModulesDocument = gql`
 }
     `;
 
-export function useAvailableModulesQuery(options: Omit<Urql.UseQueryArgs<never, AvailableModulesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<AvailableModulesQuery>({ query: AvailableModulesDocument, ...options });
+export function useAvailableModulesQuery(options: Omit<Urql.UseQueryArgs<never, AvailableModulesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AvailableModulesQuery, AvailableModulesQueryVariables>({ query: AvailableModulesDocument, ...options });
 };
 export const CurrentProfileClaimsDocument = gql`
     query CurrentProfileClaims {
@@ -7035,8 +7032,8 @@ export const CurrentProfileClaimsDocument = gql`
     ${ProfileClaimFragmentDoc}
 ${ResidentFragmentDoc}`;
 
-export function useCurrentProfileClaimsQuery(options: Omit<Urql.UseQueryArgs<never, CurrentProfileClaimsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<CurrentProfileClaimsQuery>({ query: CurrentProfileClaimsDocument, ...options });
+export function useCurrentProfileClaimsQuery(options: Omit<Urql.UseQueryArgs<never, CurrentProfileClaimsQueryVariables>, 'query'>) {
+  return Urql.useQuery<CurrentProfileClaimsQuery, CurrentProfileClaimsQueryVariables>({ query: CurrentProfileClaimsDocument, ...options });
 };
 export const GetMyselfDocument = gql`
     query GetMyself {
@@ -7046,8 +7043,8 @@ export const GetMyselfDocument = gql`
 }
     ${ProfileFragmentDoc}`;
 
-export function useGetMyselfQuery(options: Omit<Urql.UseQueryArgs<never, GetMyselfQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<GetMyselfQuery>({ query: GetMyselfDocument, ...options });
+export function useGetMyselfQuery(options: Omit<Urql.UseQueryArgs<never, GetMyselfQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetMyselfQuery, GetMyselfQueryVariables>({ query: GetMyselfDocument, ...options });
 };
 export const MyProfileResidenciesDocument = gql`
     query MyProfileResidencies {
@@ -7065,8 +7062,8 @@ export const MyProfileResidenciesDocument = gql`
 ${LicenseFragmentDoc}
 ${LicenseTypeFragmentDoc}`;
 
-export function useMyProfileResidenciesQuery(options: Omit<Urql.UseQueryArgs<never, MyProfileResidenciesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<MyProfileResidenciesQuery>({ query: MyProfileResidenciesDocument, ...options });
+export function useMyProfileResidenciesQuery(options: Omit<Urql.UseQueryArgs<never, MyProfileResidenciesQueryVariables>, 'query'>) {
+  return Urql.useQuery<MyProfileResidenciesQuery, MyProfileResidenciesQueryVariables>({ query: MyProfileResidenciesDocument, ...options });
 };
 export const ResidentByIdDocument = gql`
     query ResidentById($residentId: UUID!) {
@@ -7080,8 +7077,8 @@ export const ResidentByIdDocument = gql`
     ${ResidentFragmentDoc}
 ${LicenseFragmentDoc}`;
 
-export function useResidentByIdQuery(options: Omit<Urql.UseQueryArgs<never, ResidentByIdQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<ResidentByIdQuery>({ query: ResidentByIdDocument, ...options });
+export function useResidentByIdQuery(options: Omit<Urql.UseQueryArgs<never, ResidentByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<ResidentByIdQuery, ResidentByIdQueryVariables>({ query: ResidentByIdDocument, ...options });
 };
 export const SearchProfilesDocument = gql`
     query SearchProfiles($searchTerm: String) {
@@ -7093,8 +7090,8 @@ export const SearchProfilesDocument = gql`
 }
     ${ProfileFragmentDoc}`;
 
-export function useSearchProfilesQuery(options: Omit<Urql.UseQueryArgs<never, SearchProfilesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<SearchProfilesQuery>({ query: SearchProfilesDocument, ...options });
+export function useSearchProfilesQuery(options: Omit<Urql.UseQueryArgs<never, SearchProfilesQueryVariables>, 'query'>) {
+  return Urql.useQuery<SearchProfilesQuery, SearchProfilesQueryVariables>({ query: SearchProfilesDocument, ...options });
 };
 export const SearchResidentsDocument = gql`
     query SearchResidents($searchTerm: String) {
@@ -7106,8 +7103,8 @@ export const SearchResidentsDocument = gql`
 }
     ${ResidentFragmentDoc}`;
 
-export function useSearchResidentsQuery(options: Omit<Urql.UseQueryArgs<never, SearchResidentsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<SearchResidentsQuery>({ query: SearchResidentsDocument, ...options });
+export function useSearchResidentsQuery(options: Omit<Urql.UseQueryArgs<never, SearchResidentsQueryVariables>, 'query'>) {
+  return Urql.useQuery<SearchResidentsQuery, SearchResidentsQueryVariables>({ query: SearchResidentsDocument, ...options });
 };
 export const SearchTenantsDocument = gql`
     query SearchTenants($searchTerm: String) {
@@ -7133,8 +7130,8 @@ ${TenantSubscriptionFragmentDoc}
 ${LicensePackFragmentDoc}
 ${LicensePackLicenseTypeFragmentDoc}`;
 
-export function useSearchTenantsQuery(options: Omit<Urql.UseQueryArgs<never, SearchTenantsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<SearchTenantsQuery>({ query: SearchTenantsDocument, ...options });
+export function useSearchTenantsQuery(options: Omit<Urql.UseQueryArgs<never, SearchTenantsQueryVariables>, 'query'>) {
+  return Urql.useQuery<SearchTenantsQuery, SearchTenantsQueryVariables>({ query: SearchTenantsDocument, ...options });
 };
 export const SiteUserByIdDocument = gql`
     query SiteUserById($id: UUID!) {
@@ -7142,8 +7139,8 @@ export const SiteUserByIdDocument = gql`
 }
     `;
 
-export function useSiteUserByIdQuery(options: Omit<Urql.UseQueryArgs<never, SiteUserByIdQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<SiteUserByIdQuery>({ query: SiteUserByIdDocument, ...options });
+export function useSiteUserByIdQuery(options: Omit<Urql.UseQueryArgs<never, SiteUserByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<SiteUserByIdQuery, SiteUserByIdQueryVariables>({ query: SiteUserByIdDocument, ...options });
 };
 export const ThrowErrorDocument = gql`
     query ThrowError($message: String) {
@@ -7151,8 +7148,8 @@ export const ThrowErrorDocument = gql`
 }
     `;
 
-export function useThrowErrorQuery(options: Omit<Urql.UseQueryArgs<never, ThrowErrorQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<ThrowErrorQuery>({ query: ThrowErrorDocument, ...options });
+export function useThrowErrorQuery(options: Omit<Urql.UseQueryArgs<never, ThrowErrorQueryVariables>, 'query'>) {
+  return Urql.useQuery<ThrowErrorQuery, ThrowErrorQueryVariables>({ query: ThrowErrorDocument, ...options });
 };
 export const UpsertMessageDocument = gql`
     mutation UpsertMessage($messageInfo: MessageInfoInput!) {
@@ -7202,8 +7199,8 @@ export const AllDiscussionsDocument = gql`
     ${TopicFragmentDoc}
 ${SubscriberFragmentDoc}`;
 
-export function useAllDiscussionsQuery(options: Omit<Urql.UseQueryArgs<never, AllDiscussionsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<AllDiscussionsQuery>({ query: AllDiscussionsDocument, ...options });
+export function useAllDiscussionsQuery(options: Omit<Urql.UseQueryArgs<never, AllDiscussionsQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllDiscussionsQuery, AllDiscussionsQueryVariables>({ query: AllDiscussionsDocument, ...options });
 };
 export const DiscussionByIdDocument = gql`
     query DiscussionById($topicId: UUID!) {
@@ -7221,8 +7218,8 @@ export const DiscussionByIdDocument = gql`
 ${SubscriberFragmentDoc}
 ${MessageFragmentDoc}`;
 
-export function useDiscussionByIdQuery(options: Omit<Urql.UseQueryArgs<never, DiscussionByIdQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<DiscussionByIdQuery>({ query: DiscussionByIdDocument, ...options });
+export function useDiscussionByIdQuery(options: Omit<Urql.UseQueryArgs<never, DiscussionByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<DiscussionByIdQuery, DiscussionByIdQueryVariables>({ query: DiscussionByIdDocument, ...options });
 };
 export const TopicMessageDocument = gql`
     subscription TopicMessage($topicId: UUID!) {
@@ -7237,7 +7234,7 @@ export const TopicMessageDocument = gql`
 }
     ${MessageFragmentDoc}`;
 
-export function useTopicMessageSubscription<R = TopicMessageSubscription>(options: Omit<Urql.UseSubscriptionArgs<never, TopicMessageSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandlerArg<TopicMessageSubscription, R>) {
+export function useTopicMessageSubscription<R = TopicMessageSubscription>(options: Omit<Urql.UseSubscriptionArgs<never, TopicMessageSubscriptionVariables>, 'query'>, handler?: Urql.SubscriptionHandlerArg<TopicMessageSubscription, R>) {
   return Urql.useSubscription<TopicMessageSubscription, R, TopicMessageSubscriptionVariables>({ query: TopicMessageDocument, ...options }, handler);
 };
 export const CreateLocationDocument = gql`
@@ -7285,8 +7282,8 @@ export const AllLocationsDocument = gql`
 }
     ${LocationFragmentDoc}`;
 
-export function useAllLocationsQuery(options: Omit<Urql.UseQueryArgs<never, AllLocationsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<AllLocationsQuery>({ query: AllLocationsDocument, ...options });
+export function useAllLocationsQuery(options: Omit<Urql.UseQueryArgs<never, AllLocationsQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllLocationsQuery, AllLocationsQueryVariables>({ query: AllLocationsDocument, ...options });
 };
 export const CreateTodoDocument = gql`
     mutation CreateTodo($name: String!, $description: String, $parentTodoId: UUID) {
@@ -7468,8 +7465,8 @@ export const SearchTodosDocument = gql`
 }
     ${TodoFragmentDoc}`;
 
-export function useSearchTodosQuery(options: Omit<Urql.UseQueryArgs<never, SearchTodosQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<SearchTodosQuery>({ query: SearchTodosDocument, ...options });
+export function useSearchTodosQuery(options: Omit<Urql.UseQueryArgs<never, SearchTodosQueryVariables>, 'query'>) {
+  return Urql.useQuery<SearchTodosQuery, SearchTodosQueryVariables>({ query: SearchTodosDocument, ...options });
 };
 export const TodoByIdDocument = gql`
     query TodoById($id: UUID!) {
@@ -7520,8 +7517,8 @@ export const TodoByIdDocument = gql`
     ${TodoFragmentDoc}
 ${LocationFragmentDoc}`;
 
-export function useTodoByIdQuery(options: Omit<Urql.UseQueryArgs<never, TodoByIdQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<TodoByIdQuery>({ query: TodoByIdDocument, ...options });
+export function useTodoByIdQuery(options: Omit<Urql.UseQueryArgs<never, TodoByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<TodoByIdQuery, TodoByIdQueryVariables>({ query: TodoByIdDocument, ...options });
 };
 export const TodoByIdForRefreshDocument = gql`
     query TodoByIdForRefresh($id: UUID!) {
@@ -7576,1338 +7573,6 @@ export const TodoByIdForRefreshDocument = gql`
 }
     `;
 
-export function useTodoByIdForRefreshQuery(options: Omit<Urql.UseQueryArgs<never, TodoByIdForRefreshQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<TodoByIdForRefreshQuery>({ query: TodoByIdForRefreshDocument, ...options });
-};
-export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
-
-export type GraphCacheKeysConfig = {
-  AbListing?: (data: WithTypename<AbListing>) => null | string,
-  AbListingsConnection?: (data: WithTypename<AbListingsConnection>) => null | string,
-  AbListingsEdge?: (data: WithTypename<AbListingsEdge>) => null | string,
-  ActivateTenantPayload?: (data: WithTypename<ActivateTenantPayload>) => null | string,
-  AppSetting?: (data: WithTypename<AppSetting>) => null | string,
-  AppSettingsConnection?: (data: WithTypename<AppSettingsConnection>) => null | string,
-  AppSettingsEdge?: (data: WithTypename<AppSettingsEdge>) => null | string,
-  Application?: (data: WithTypename<Application>) => null | string,
-  ApplicationsConnection?: (data: WithTypename<ApplicationsConnection>) => null | string,
-  ApplicationsEdge?: (data: WithTypename<ApplicationsEdge>) => null | string,
-  AssignTodoPayload?: (data: WithTypename<AssignTodoPayload>) => null | string,
-  AssumeResidencyPayload?: (data: WithTypename<AssumeResidencyPayload>) => null | string,
-  BecomeSupportPayload?: (data: WithTypename<BecomeSupportPayload>) => null | string,
-  BlockResidentPayload?: (data: WithTypename<BlockResidentPayload>) => null | string,
-  CreateLocationPayload?: (data: WithTypename<CreateLocationPayload>) => null | string,
-  CreateTenantPayload?: (data: WithTypename<CreateTenantPayload>) => null | string,
-  CreateTodoPayload?: (data: WithTypename<CreateTodoPayload>) => null | string,
-  DeactivateSubscriberPayload?: (data: WithTypename<DeactivateSubscriberPayload>) => null | string,
-  DeactivateTenantPayload?: (data: WithTypename<DeactivateTenantPayload>) => null | string,
-  DeactivateTenantSubscriptionPayload?: (data: WithTypename<DeactivateTenantSubscriptionPayload>) => null | string,
-  DeclineInvitationPayload?: (data: WithTypename<DeclineInvitationPayload>) => null | string,
-  DeclineResidencyPayload?: (data: WithTypename<DeclineResidencyPayload>) => null | string,
-  DeleteLocationPayload?: (data: WithTypename<DeleteLocationPayload>) => null | string,
-  DeleteTodoPayload?: (data: WithTypename<DeleteTodoPayload>) => null | string,
-  DeleteTopicPayload?: (data: WithTypename<DeleteTopicPayload>) => null | string,
-  ExitSupportModePayload?: (data: WithTypename<ExitSupportModePayload>) => null | string,
-  GrantUserLicensePayload?: (data: WithTypename<GrantUserLicensePayload>) => null | string,
-  JoinAddressBookPayload?: (data: WithTypename<JoinAddressBookPayload>) => null | string,
-  LeaveAddressBookPayload?: (data: WithTypename<LeaveAddressBookPayload>) => null | string,
-  License?: (data: WithTypename<License>) => null | string,
-  LicensePack?: (data: WithTypename<LicensePack>) => null | string,
-  LicensePackLicenseType?: (data: WithTypename<LicensePackLicenseType>) => null | string,
-  LicensePackLicenseTypesConnection?: (data: WithTypename<LicensePackLicenseTypesConnection>) => null | string,
-  LicensePackLicenseTypesEdge?: (data: WithTypename<LicensePackLicenseTypesEdge>) => null | string,
-  LicensePacksConnection?: (data: WithTypename<LicensePacksConnection>) => null | string,
-  LicensePacksEdge?: (data: WithTypename<LicensePacksEdge>) => null | string,
-  LicenseType?: (data: WithTypename<LicenseType>) => null | string,
-  LicenseTypePermission?: (data: WithTypename<LicenseTypePermission>) => null | string,
-  LicenseTypePermissionsConnection?: (data: WithTypename<LicenseTypePermissionsConnection>) => null | string,
-  LicenseTypePermissionsEdge?: (data: WithTypename<LicenseTypePermissionsEdge>) => null | string,
-  LicenseTypesConnection?: (data: WithTypename<LicenseTypesConnection>) => null | string,
-  LicenseTypesEdge?: (data: WithTypename<LicenseTypesEdge>) => null | string,
-  LicensesConnection?: (data: WithTypename<LicensesConnection>) => null | string,
-  LicensesEdge?: (data: WithTypename<LicensesEdge>) => null | string,
-  LocResident?: (data: WithTypename<LocResident>) => null | string,
-  LocResidentsConnection?: (data: WithTypename<LocResidentsConnection>) => null | string,
-  LocResidentsEdge?: (data: WithTypename<LocResidentsEdge>) => null | string,
-  LocTenant?: (data: WithTypename<LocTenant>) => null | string,
-  LocTenantsConnection?: (data: WithTypename<LocTenantsConnection>) => null | string,
-  LocTenantsEdge?: (data: WithTypename<LocTenantsEdge>) => null | string,
-  Location?: (data: WithTypename<Location>) => null | string,
-  LocationsConnection?: (data: WithTypename<LocationsConnection>) => null | string,
-  LocationsEdge?: (data: WithTypename<LocationsEdge>) => null | string,
-  MakeTemplateFromTodoPayload?: (data: WithTypename<MakeTemplateFromTodoPayload>) => null | string,
-  MakeTodoFromTemplatePayload?: (data: WithTypename<MakeTodoFromTemplatePayload>) => null | string,
-  Message?: (data: WithTypename<Message>) => null | string,
-  MessagesConnection?: (data: WithTypename<MessagesConnection>) => null | string,
-  MessagesEdge?: (data: WithTypename<MessagesEdge>) => null | string,
-  Module?: (data: WithTypename<Module>) => null | string,
-  ModuleInfo?: (data: WithTypename<ModuleInfo>) => null | string,
-  ModulesConnection?: (data: WithTypename<ModulesConnection>) => null | string,
-  ModulesEdge?: (data: WithTypename<ModulesEdge>) => null | string,
-  MsgResident?: (data: WithTypename<MsgResident>) => null | string,
-  MsgResidentsConnection?: (data: WithTypename<MsgResidentsConnection>) => null | string,
-  MsgResidentsEdge?: (data: WithTypename<MsgResidentsEdge>) => null | string,
-  MsgTenant?: (data: WithTypename<MsgTenant>) => null | string,
-  MsgTenantsConnection?: (data: WithTypename<MsgTenantsConnection>) => null | string,
-  MsgTenantsEdge?: (data: WithTypename<MsgTenantsEdge>) => null | string,
-  PageInfo?: (data: WithTypename<PageInfo>) => null | string,
-  Permission?: (data: WithTypename<Permission>) => null | string,
-  PermissionsConnection?: (data: WithTypename<PermissionsConnection>) => null | string,
-  PermissionsEdge?: (data: WithTypename<PermissionsEdge>) => null | string,
-  PinTodoPayload?: (data: WithTypename<PinTodoPayload>) => null | string,
-  Profile?: (data: WithTypename<Profile>) => null | string,
-  ProfileClaim?: (data: WithTypename<ProfileClaim>) => null | string,
-  ProfilesConnection?: (data: WithTypename<ProfilesConnection>) => null | string,
-  ProfilesEdge?: (data: WithTypename<ProfilesEdge>) => null | string,
-  ReactivateTenantSubscriptionPayload?: (data: WithTypename<ReactivateTenantSubscriptionPayload>) => null | string,
-  Resident?: (data: WithTypename<Resident>) => null | string,
-  ResidentsConnection?: (data: WithTypename<ResidentsConnection>) => null | string,
-  ResidentsEdge?: (data: WithTypename<ResidentsEdge>) => null | string,
-  RevokeUserLicensePayload?: (data: WithTypename<RevokeUserLicensePayload>) => null | string,
-  SubscribeTenantToLicensePackPayload?: (data: WithTypename<SubscribeTenantToLicensePackPayload>) => null | string,
-  Subscriber?: (data: WithTypename<Subscriber>) => null | string,
-  SubscribersConnection?: (data: WithTypename<SubscribersConnection>) => null | string,
-  SubscribersEdge?: (data: WithTypename<SubscribersEdge>) => null | string,
-  Tenant?: (data: WithTypename<Tenant>) => null | string,
-  TenantSubscription?: (data: WithTypename<TenantSubscription>) => null | string,
-  TenantSubscriptionsConnection?: (data: WithTypename<TenantSubscriptionsConnection>) => null | string,
-  TenantSubscriptionsEdge?: (data: WithTypename<TenantSubscriptionsEdge>) => null | string,
-  TenantsConnection?: (data: WithTypename<TenantsConnection>) => null | string,
-  TenantsEdge?: (data: WithTypename<TenantsEdge>) => null | string,
-  Thing?: (data: WithTypename<Thing>) => null | string,
-  ThingsConnection?: (data: WithTypename<ThingsConnection>) => null | string,
-  ThingsEdge?: (data: WithTypename<ThingsEdge>) => null | string,
-  Todo?: (data: WithTypename<Todo>) => null | string,
-  TodoResident?: (data: WithTypename<TodoResident>) => null | string,
-  TodoResidentsConnection?: (data: WithTypename<TodoResidentsConnection>) => null | string,
-  TodoResidentsEdge?: (data: WithTypename<TodoResidentsEdge>) => null | string,
-  TodoTenant?: (data: WithTypename<TodoTenant>) => null | string,
-  TodoTenantsConnection?: (data: WithTypename<TodoTenantsConnection>) => null | string,
-  TodoTenantsEdge?: (data: WithTypename<TodoTenantsEdge>) => null | string,
-  TodosConnection?: (data: WithTypename<TodosConnection>) => null | string,
-  TodosEdge?: (data: WithTypename<TodosEdge>) => null | string,
-  Tool?: (data: WithTypename<Tool>) => null | string,
-  ToolInfo?: (data: WithTypename<ToolInfo>) => null | string,
-  ToolsConnection?: (data: WithTypename<ToolsConnection>) => null | string,
-  ToolsEdge?: (data: WithTypename<ToolsEdge>) => null | string,
-  Topic?: (data: WithTypename<Topic>) => null | string,
-  TopicMessageSubscriptionPayload?: (data: WithTypename<TopicMessageSubscriptionPayload>) => null | string,
-  TopicsConnection?: (data: WithTypename<TopicsConnection>) => null | string,
-  TopicsEdge?: (data: WithTypename<TopicsEdge>) => null | string,
-  UnblockResidentPayload?: (data: WithTypename<UnblockResidentPayload>) => null | string,
-  UnpinTodoPayload?: (data: WithTypename<UnpinTodoPayload>) => null | string,
-  UpdateLocationPayload?: (data: WithTypename<UpdateLocationPayload>) => null | string,
-  UpdateProfilePayload?: (data: WithTypename<UpdateProfilePayload>) => null | string,
-  UpdateTodoPayload?: (data: WithTypename<UpdateTodoPayload>) => null | string,
-  UpdateTodoStatusPayload?: (data: WithTypename<UpdateTodoStatusPayload>) => null | string,
-  UpsertMessagePayload?: (data: WithTypename<UpsertMessagePayload>) => null | string,
-  UpsertSubscriberPayload?: (data: WithTypename<UpsertSubscriberPayload>) => null | string,
-  UpsertTopicPayload?: (data: WithTypename<UpsertTopicPayload>) => null | string
-}
-
-export type GraphCacheResolvers = {
-  Query?: {
-    appSetting?: GraphCacheResolver<WithTypename<Query>, QueryAppSettingArgs, WithTypename<AppSetting> | string>,
-    appSettingByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryAppSettingByNodeIdArgs, WithTypename<AppSetting> | string>,
-    appSettings?: GraphCacheResolver<WithTypename<Query>, QueryAppSettingsArgs, WithTypename<AppSettingsConnection> | string>,
-    appSettingsList?: GraphCacheResolver<WithTypename<Query>, QueryAppSettingsListArgs, Array<WithTypename<AppSetting> | string>>,
-    application?: GraphCacheResolver<WithTypename<Query>, QueryApplicationArgs, WithTypename<Application> | string>,
-    applicationByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryApplicationByNodeIdArgs, WithTypename<Application> | string>,
-    applications?: GraphCacheResolver<WithTypename<Query>, QueryApplicationsArgs, WithTypename<ApplicationsConnection> | string>,
-    applicationsList?: GraphCacheResolver<WithTypename<Query>, QueryApplicationsListArgs, Array<WithTypename<Application> | string>>,
-    availableModules?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, Array<WithTypename<ModuleInfo> | string>>,
-    currentProfileClaims?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, WithTypename<ProfileClaim> | string>,
-    demoProfileResidencies?: GraphCacheResolver<WithTypename<Query>, QueryDemoProfileResidenciesArgs, WithTypename<ResidentsConnection> | string>,
-    demoProfileResidenciesList?: GraphCacheResolver<WithTypename<Query>, QueryDemoProfileResidenciesListArgs, Array<WithTypename<Resident> | string>>,
-    getAbListings?: GraphCacheResolver<WithTypename<Query>, QueryGetAbListingsArgs, WithTypename<AbListingsConnection> | string>,
-    getAbListingsList?: GraphCacheResolver<WithTypename<Query>, QueryGetAbListingsListArgs, Array<WithTypename<AbListing> | string>>,
-    getMyself?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, WithTypename<Profile> | string>,
-    license?: GraphCacheResolver<WithTypename<Query>, QueryLicenseArgs, WithTypename<License> | string>,
-    licenseByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryLicenseByNodeIdArgs, WithTypename<License> | string>,
-    licenseByResidentIdAndLicenseTypeKey?: GraphCacheResolver<WithTypename<Query>, QueryLicenseByResidentIdAndLicenseTypeKeyArgs, WithTypename<License> | string>,
-    licensePack?: GraphCacheResolver<WithTypename<Query>, QueryLicensePackArgs, WithTypename<LicensePack> | string>,
-    licensePackByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryLicensePackByNodeIdArgs, WithTypename<LicensePack> | string>,
-    licensePackLicenseType?: GraphCacheResolver<WithTypename<Query>, QueryLicensePackLicenseTypeArgs, WithTypename<LicensePackLicenseType> | string>,
-    licensePackLicenseTypeByLicensePackKeyAndLicenseTypeKey?: GraphCacheResolver<WithTypename<Query>, QueryLicensePackLicenseTypeByLicensePackKeyAndLicenseTypeKeyArgs, WithTypename<LicensePackLicenseType> | string>,
-    licensePackLicenseTypeByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryLicensePackLicenseTypeByNodeIdArgs, WithTypename<LicensePackLicenseType> | string>,
-    licensePackLicenseTypes?: GraphCacheResolver<WithTypename<Query>, QueryLicensePackLicenseTypesArgs, WithTypename<LicensePackLicenseTypesConnection> | string>,
-    licensePackLicenseTypesList?: GraphCacheResolver<WithTypename<Query>, QueryLicensePackLicenseTypesListArgs, Array<WithTypename<LicensePackLicenseType> | string>>,
-    licensePacks?: GraphCacheResolver<WithTypename<Query>, QueryLicensePacksArgs, WithTypename<LicensePacksConnection> | string>,
-    licensePacksList?: GraphCacheResolver<WithTypename<Query>, QueryLicensePacksListArgs, Array<WithTypename<LicensePack> | string>>,
-    licenseType?: GraphCacheResolver<WithTypename<Query>, QueryLicenseTypeArgs, WithTypename<LicenseType> | string>,
-    licenseTypeByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryLicenseTypeByNodeIdArgs, WithTypename<LicenseType> | string>,
-    licenseTypePermissionByLicenseTypeKeyAndPermissionKey?: GraphCacheResolver<WithTypename<Query>, QueryLicenseTypePermissionByLicenseTypeKeyAndPermissionKeyArgs, WithTypename<LicenseTypePermission> | string>,
-    licenseTypePermissions?: GraphCacheResolver<WithTypename<Query>, QueryLicenseTypePermissionsArgs, WithTypename<LicenseTypePermissionsConnection> | string>,
-    licenseTypePermissionsList?: GraphCacheResolver<WithTypename<Query>, QueryLicenseTypePermissionsListArgs, Array<WithTypename<LicenseTypePermission> | string>>,
-    licenseTypes?: GraphCacheResolver<WithTypename<Query>, QueryLicenseTypesArgs, WithTypename<LicenseTypesConnection> | string>,
-    licenseTypesList?: GraphCacheResolver<WithTypename<Query>, QueryLicenseTypesListArgs, Array<WithTypename<LicenseType> | string>>,
-    licenses?: GraphCacheResolver<WithTypename<Query>, QueryLicensesArgs, WithTypename<LicensesConnection> | string>,
-    licensesList?: GraphCacheResolver<WithTypename<Query>, QueryLicensesListArgs, Array<WithTypename<License> | string>>,
-    locResident?: GraphCacheResolver<WithTypename<Query>, QueryLocResidentArgs, WithTypename<LocResident> | string>,
-    locResidentByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryLocResidentByNodeIdArgs, WithTypename<LocResident> | string>,
-    locResidents?: GraphCacheResolver<WithTypename<Query>, QueryLocResidentsArgs, WithTypename<LocResidentsConnection> | string>,
-    locResidentsList?: GraphCacheResolver<WithTypename<Query>, QueryLocResidentsListArgs, Array<WithTypename<LocResident> | string>>,
-    locTenant?: GraphCacheResolver<WithTypename<Query>, QueryLocTenantArgs, WithTypename<LocTenant> | string>,
-    locTenantByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryLocTenantByNodeIdArgs, WithTypename<LocTenant> | string>,
-    locTenants?: GraphCacheResolver<WithTypename<Query>, QueryLocTenantsArgs, WithTypename<LocTenantsConnection> | string>,
-    locTenantsList?: GraphCacheResolver<WithTypename<Query>, QueryLocTenantsListArgs, Array<WithTypename<LocTenant> | string>>,
-    location?: GraphCacheResolver<WithTypename<Query>, QueryLocationArgs, WithTypename<Location> | string>,
-    locationByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryLocationByNodeIdArgs, WithTypename<Location> | string>,
-    locations?: GraphCacheResolver<WithTypename<Query>, QueryLocationsArgs, WithTypename<LocationsConnection> | string>,
-    locationsList?: GraphCacheResolver<WithTypename<Query>, QueryLocationsListArgs, Array<WithTypename<Location> | string>>,
-    message?: GraphCacheResolver<WithTypename<Query>, QueryMessageArgs, WithTypename<Message> | string>,
-    messageByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryMessageByNodeIdArgs, WithTypename<Message> | string>,
-    messages?: GraphCacheResolver<WithTypename<Query>, QueryMessagesArgs, WithTypename<MessagesConnection> | string>,
-    messagesList?: GraphCacheResolver<WithTypename<Query>, QueryMessagesListArgs, Array<WithTypename<Message> | string>>,
-    module?: GraphCacheResolver<WithTypename<Query>, QueryModuleArgs, WithTypename<Module> | string>,
-    moduleByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryModuleByNodeIdArgs, WithTypename<Module> | string>,
-    modules?: GraphCacheResolver<WithTypename<Query>, QueryModulesArgs, WithTypename<ModulesConnection> | string>,
-    modulesList?: GraphCacheResolver<WithTypename<Query>, QueryModulesListArgs, Array<WithTypename<Module> | string>>,
-    msgResident?: GraphCacheResolver<WithTypename<Query>, QueryMsgResidentArgs, WithTypename<MsgResident> | string>,
-    msgResidentByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryMsgResidentByNodeIdArgs, WithTypename<MsgResident> | string>,
-    msgResidents?: GraphCacheResolver<WithTypename<Query>, QueryMsgResidentsArgs, WithTypename<MsgResidentsConnection> | string>,
-    msgResidentsList?: GraphCacheResolver<WithTypename<Query>, QueryMsgResidentsListArgs, Array<WithTypename<MsgResident> | string>>,
-    msgTenant?: GraphCacheResolver<WithTypename<Query>, QueryMsgTenantArgs, WithTypename<MsgTenant> | string>,
-    msgTenantByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryMsgTenantByNodeIdArgs, WithTypename<MsgTenant> | string>,
-    msgTenants?: GraphCacheResolver<WithTypename<Query>, QueryMsgTenantsArgs, WithTypename<MsgTenantsConnection> | string>,
-    msgTenantsList?: GraphCacheResolver<WithTypename<Query>, QueryMsgTenantsListArgs, Array<WithTypename<MsgTenant> | string>>,
-    myProfileResidencies?: GraphCacheResolver<WithTypename<Query>, QueryMyProfileResidenciesArgs, WithTypename<ResidentsConnection> | string>,
-    myProfileResidenciesList?: GraphCacheResolver<WithTypename<Query>, QueryMyProfileResidenciesListArgs, Array<WithTypename<Resident> | string>>,
-    node?: GraphCacheResolver<WithTypename<Query>, QueryNodeArgs, WithTypename<AppSetting> | WithTypename<Application> | WithTypename<License> | WithTypename<LicensePack> | WithTypename<LicensePackLicenseType> | WithTypename<LicenseType> | WithTypename<LocResident> | WithTypename<LocTenant> | WithTypename<Location> | WithTypename<Message> | WithTypename<Module> | WithTypename<MsgResident> | WithTypename<MsgTenant> | WithTypename<Permission> | WithTypename<Profile> | WithTypename<Query> | WithTypename<Resident> | WithTypename<Subscriber> | WithTypename<Tenant> | WithTypename<TenantSubscription> | WithTypename<Thing> | WithTypename<Todo> | WithTypename<TodoResident> | WithTypename<TodoTenant> | WithTypename<Tool> | WithTypename<Topic> | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, Scalars['ID'] | string>,
-    permission?: GraphCacheResolver<WithTypename<Query>, QueryPermissionArgs, WithTypename<Permission> | string>,
-    permissionByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryPermissionByNodeIdArgs, WithTypename<Permission> | string>,
-    permissions?: GraphCacheResolver<WithTypename<Query>, QueryPermissionsArgs, WithTypename<PermissionsConnection> | string>,
-    permissionsList?: GraphCacheResolver<WithTypename<Query>, QueryPermissionsListArgs, Array<WithTypename<Permission> | string>>,
-    profile?: GraphCacheResolver<WithTypename<Query>, QueryProfileArgs, WithTypename<Profile> | string>,
-    profileByDisplayName?: GraphCacheResolver<WithTypename<Query>, QueryProfileByDisplayNameArgs, WithTypename<Profile> | string>,
-    profileByEmail?: GraphCacheResolver<WithTypename<Query>, QueryProfileByEmailArgs, WithTypename<Profile> | string>,
-    profileByIdentifier?: GraphCacheResolver<WithTypename<Query>, QueryProfileByIdentifierArgs, WithTypename<Profile> | string>,
-    profileByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryProfileByNodeIdArgs, WithTypename<Profile> | string>,
-    profiles?: GraphCacheResolver<WithTypename<Query>, QueryProfilesArgs, WithTypename<ProfilesConnection> | string>,
-    profilesList?: GraphCacheResolver<WithTypename<Query>, QueryProfilesListArgs, Array<WithTypename<Profile> | string>>,
-    query?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<Query>, QueryResidentArgs, WithTypename<Resident> | string>,
-    residentByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryResidentByNodeIdArgs, WithTypename<Resident> | string>,
-    residentByTenantIdAndProfileIdAndType?: GraphCacheResolver<WithTypename<Query>, QueryResidentByTenantIdAndProfileIdAndTypeArgs, WithTypename<Resident> | string>,
-    residents?: GraphCacheResolver<WithTypename<Query>, QueryResidentsArgs, WithTypename<ResidentsConnection> | string>,
-    residentsList?: GraphCacheResolver<WithTypename<Query>, QueryResidentsListArgs, Array<WithTypename<Resident> | string>>,
-    searchProfiles?: GraphCacheResolver<WithTypename<Query>, QuerySearchProfilesArgs, WithTypename<ProfilesConnection> | string>,
-    searchProfilesList?: GraphCacheResolver<WithTypename<Query>, QuerySearchProfilesListArgs, Array<WithTypename<Profile> | string>>,
-    searchResidents?: GraphCacheResolver<WithTypename<Query>, QuerySearchResidentsArgs, WithTypename<ResidentsConnection> | string>,
-    searchResidentsList?: GraphCacheResolver<WithTypename<Query>, QuerySearchResidentsListArgs, Array<WithTypename<Resident> | string>>,
-    searchTenants?: GraphCacheResolver<WithTypename<Query>, QuerySearchTenantsArgs, WithTypename<TenantsConnection> | string>,
-    searchTenantsList?: GraphCacheResolver<WithTypename<Query>, QuerySearchTenantsListArgs, Array<WithTypename<Tenant> | string>>,
-    searchTodos?: GraphCacheResolver<WithTypename<Query>, QuerySearchTodosArgs, WithTypename<TodosConnection> | string>,
-    searchTodosList?: GraphCacheResolver<WithTypename<Query>, QuerySearchTodosListArgs, Array<WithTypename<Todo> | string>>,
-    siteUserById?: GraphCacheResolver<WithTypename<Query>, QuerySiteUserByIdArgs, Scalars['JSON'] | string>,
-    subscriber?: GraphCacheResolver<WithTypename<Query>, QuerySubscriberArgs, WithTypename<Subscriber> | string>,
-    subscriberByNodeId?: GraphCacheResolver<WithTypename<Query>, QuerySubscriberByNodeIdArgs, WithTypename<Subscriber> | string>,
-    subscriberByTopicIdAndMsgResidentId?: GraphCacheResolver<WithTypename<Query>, QuerySubscriberByTopicIdAndMsgResidentIdArgs, WithTypename<Subscriber> | string>,
-    subscribers?: GraphCacheResolver<WithTypename<Query>, QuerySubscribersArgs, WithTypename<SubscribersConnection> | string>,
-    subscribersList?: GraphCacheResolver<WithTypename<Query>, QuerySubscribersListArgs, Array<WithTypename<Subscriber> | string>>,
-    tenant?: GraphCacheResolver<WithTypename<Query>, QueryTenantArgs, WithTypename<Tenant> | string>,
-    tenantByIdentifier?: GraphCacheResolver<WithTypename<Query>, QueryTenantByIdentifierArgs, WithTypename<Tenant> | string>,
-    tenantByName?: GraphCacheResolver<WithTypename<Query>, QueryTenantByNameArgs, WithTypename<Tenant> | string>,
-    tenantByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryTenantByNodeIdArgs, WithTypename<Tenant> | string>,
-    tenantLicenses?: GraphCacheResolver<WithTypename<Query>, QueryTenantLicensesArgs, WithTypename<LicensesConnection> | string>,
-    tenantLicensesList?: GraphCacheResolver<WithTypename<Query>, QueryTenantLicensesListArgs, Array<WithTypename<License> | string>>,
-    tenantProfileResidencies?: GraphCacheResolver<WithTypename<Query>, QueryTenantProfileResidenciesArgs, WithTypename<ResidentsConnection> | string>,
-    tenantProfileResidenciesList?: GraphCacheResolver<WithTypename<Query>, QueryTenantProfileResidenciesListArgs, Array<WithTypename<Resident> | string>>,
-    tenantSubscription?: GraphCacheResolver<WithTypename<Query>, QueryTenantSubscriptionArgs, WithTypename<TenantSubscription> | string>,
-    tenantSubscriptionByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryTenantSubscriptionByNodeIdArgs, WithTypename<TenantSubscription> | string>,
-    tenantSubscriptions?: GraphCacheResolver<WithTypename<Query>, QueryTenantSubscriptionsArgs, WithTypename<TenantSubscriptionsConnection> | string>,
-    tenantSubscriptionsList?: GraphCacheResolver<WithTypename<Query>, QueryTenantSubscriptionsListArgs, Array<WithTypename<TenantSubscription> | string>>,
-    tenants?: GraphCacheResolver<WithTypename<Query>, QueryTenantsArgs, WithTypename<TenantsConnection> | string>,
-    tenantsList?: GraphCacheResolver<WithTypename<Query>, QueryTenantsListArgs, Array<WithTypename<Tenant> | string>>,
-    thing?: GraphCacheResolver<WithTypename<Query>, QueryThingArgs, WithTypename<Thing> | string>,
-    thingByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryThingByNodeIdArgs, WithTypename<Thing> | string>,
-    things?: GraphCacheResolver<WithTypename<Query>, QueryThingsArgs, WithTypename<ThingsConnection> | string>,
-    thingsList?: GraphCacheResolver<WithTypename<Query>, QueryThingsListArgs, Array<WithTypename<Thing> | string>>,
-    throwError?: GraphCacheResolver<WithTypename<Query>, QueryThrowErrorArgs, Scalars['Boolean'] | string>,
-    todo?: GraphCacheResolver<WithTypename<Query>, QueryTodoArgs, WithTypename<Todo> | string>,
-    todoByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryTodoByNodeIdArgs, WithTypename<Todo> | string>,
-    todoResident?: GraphCacheResolver<WithTypename<Query>, QueryTodoResidentArgs, WithTypename<TodoResident> | string>,
-    todoResidentByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryTodoResidentByNodeIdArgs, WithTypename<TodoResident> | string>,
-    todoResidents?: GraphCacheResolver<WithTypename<Query>, QueryTodoResidentsArgs, WithTypename<TodoResidentsConnection> | string>,
-    todoResidentsList?: GraphCacheResolver<WithTypename<Query>, QueryTodoResidentsListArgs, Array<WithTypename<TodoResident> | string>>,
-    todoTenant?: GraphCacheResolver<WithTypename<Query>, QueryTodoTenantArgs, WithTypename<TodoTenant> | string>,
-    todoTenantByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryTodoTenantByNodeIdArgs, WithTypename<TodoTenant> | string>,
-    todoTenants?: GraphCacheResolver<WithTypename<Query>, QueryTodoTenantsArgs, WithTypename<TodoTenantsConnection> | string>,
-    todoTenantsList?: GraphCacheResolver<WithTypename<Query>, QueryTodoTenantsListArgs, Array<WithTypename<TodoTenant> | string>>,
-    todos?: GraphCacheResolver<WithTypename<Query>, QueryTodosArgs, WithTypename<TodosConnection> | string>,
-    todosList?: GraphCacheResolver<WithTypename<Query>, QueryTodosListArgs, Array<WithTypename<Todo> | string>>,
-    tool?: GraphCacheResolver<WithTypename<Query>, QueryToolArgs, WithTypename<Tool> | string>,
-    toolByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryToolByNodeIdArgs, WithTypename<Tool> | string>,
-    tools?: GraphCacheResolver<WithTypename<Query>, QueryToolsArgs, WithTypename<ToolsConnection> | string>,
-    toolsList?: GraphCacheResolver<WithTypename<Query>, QueryToolsListArgs, Array<WithTypename<Tool> | string>>,
-    topic?: GraphCacheResolver<WithTypename<Query>, QueryTopicArgs, WithTypename<Topic> | string>,
-    topicByNodeId?: GraphCacheResolver<WithTypename<Query>, QueryTopicByNodeIdArgs, WithTypename<Topic> | string>,
-    topics?: GraphCacheResolver<WithTypename<Query>, QueryTopicsArgs, WithTypename<TopicsConnection> | string>,
-    topicsList?: GraphCacheResolver<WithTypename<Query>, QueryTopicsListArgs, Array<WithTypename<Topic> | string>>
-  },
-  AbListing?: {
-    canInvite?: GraphCacheResolver<WithTypename<AbListing>, Record<string, never>, Scalars['Boolean'] | string>,
-    displayName?: GraphCacheResolver<WithTypename<AbListing>, Record<string, never>, Scalars['String'] | string>,
-    email?: GraphCacheResolver<WithTypename<AbListing>, Record<string, never>, Scalars['String'] | string>,
-    fullName?: GraphCacheResolver<WithTypename<AbListing>, Record<string, never>, Scalars['String'] | string>,
-    phone?: GraphCacheResolver<WithTypename<AbListing>, Record<string, never>, Scalars['String'] | string>,
-    profileId?: GraphCacheResolver<WithTypename<AbListing>, Record<string, never>, Scalars['UUID'] | string>
-  },
-  AbListingsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<AbListingsConnection>, Record<string, never>, Array<WithTypename<AbListingsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<AbListingsConnection>, Record<string, never>, Array<WithTypename<AbListing> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<AbListingsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<AbListingsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  AbListingsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<AbListingsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<AbListingsEdge>, Record<string, never>, WithTypename<AbListing> | string>
-  },
-  ActivateTenantPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<ActivateTenantPayload>, Record<string, never>, Scalars['String'] | string>,
-    query?: GraphCacheResolver<WithTypename<ActivateTenantPayload>, Record<string, never>, WithTypename<Query> | string>,
-    tenant?: GraphCacheResolver<WithTypename<ActivateTenantPayload>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantEdge?: GraphCacheResolver<WithTypename<ActivateTenantPayload>, ActivateTenantPayloadTenantEdgeArgs, WithTypename<TenantsEdge> | string>
-  },
-  AppSetting?: {
-    application?: GraphCacheResolver<WithTypename<AppSetting>, Record<string, never>, WithTypename<Application> | string>,
-    applicationKey?: GraphCacheResolver<WithTypename<AppSetting>, Record<string, never>, Scalars['String'] | string>,
-    displayName?: GraphCacheResolver<WithTypename<AppSetting>, Record<string, never>, Scalars['String'] | string>,
-    key?: GraphCacheResolver<WithTypename<AppSetting>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<AppSetting>, Record<string, never>, Scalars['ID'] | string>,
-    value?: GraphCacheResolver<WithTypename<AppSetting>, Record<string, never>, Scalars['String'] | string>
-  },
-  AppSettingsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<AppSettingsConnection>, Record<string, never>, Array<WithTypename<AppSettingsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<AppSettingsConnection>, Record<string, never>, Array<WithTypename<AppSetting> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<AppSettingsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<AppSettingsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  AppSettingsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<AppSettingsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<AppSettingsEdge>, Record<string, never>, WithTypename<AppSetting> | string>
-  },
-  Application?: {
-    appSettingsByApplicationKey?: GraphCacheResolver<WithTypename<Application>, ApplicationAppSettingsByApplicationKeyArgs, WithTypename<AppSettingsConnection> | string>,
-    appSettingsByApplicationKeyList?: GraphCacheResolver<WithTypename<Application>, ApplicationAppSettingsByApplicationKeyListArgs, Array<WithTypename<AppSetting> | string>>,
-    key?: GraphCacheResolver<WithTypename<Application>, Record<string, never>, Scalars['String'] | string>,
-    licenseCount?: GraphCacheResolver<WithTypename<Application>, Record<string, never>, Scalars['Int'] | string>,
-    licenseTypesByApplicationKey?: GraphCacheResolver<WithTypename<Application>, ApplicationLicenseTypesByApplicationKeyArgs, WithTypename<LicenseTypesConnection> | string>,
-    licenseTypesByApplicationKeyList?: GraphCacheResolver<WithTypename<Application>, ApplicationLicenseTypesByApplicationKeyListArgs, Array<WithTypename<LicenseType> | string>>,
-    modulesByApplicationKey?: GraphCacheResolver<WithTypename<Application>, ApplicationModulesByApplicationKeyArgs, WithTypename<ModulesConnection> | string>,
-    modulesByApplicationKeyList?: GraphCacheResolver<WithTypename<Application>, ApplicationModulesByApplicationKeyListArgs, Array<WithTypename<Module> | string>>,
-    name?: GraphCacheResolver<WithTypename<Application>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Application>, Record<string, never>, Scalars['ID'] | string>
-  },
-  ApplicationsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<ApplicationsConnection>, Record<string, never>, Array<WithTypename<ApplicationsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<ApplicationsConnection>, Record<string, never>, Array<WithTypename<Application> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<ApplicationsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<ApplicationsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  ApplicationsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<ApplicationsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<ApplicationsEdge>, Record<string, never>, WithTypename<Application> | string>
-  },
-  AssignTodoPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<AssignTodoPayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<AssignTodoPayload>, Record<string, never>, WithTypename<Location> | string>,
-    parentTodo?: GraphCacheResolver<WithTypename<AssignTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    query?: GraphCacheResolver<WithTypename<AssignTodoPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<AssignTodoPayload>, Record<string, never>, WithTypename<TodoResident> | string>,
-    rootTodo?: GraphCacheResolver<WithTypename<AssignTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    tenant?: GraphCacheResolver<WithTypename<AssignTodoPayload>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    todo?: GraphCacheResolver<WithTypename<AssignTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    todoEdge?: GraphCacheResolver<WithTypename<AssignTodoPayload>, AssignTodoPayloadTodoEdgeArgs, WithTypename<TodosEdge> | string>,
-    topic?: GraphCacheResolver<WithTypename<AssignTodoPayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  AssumeResidencyPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<AssumeResidencyPayload>, Record<string, never>, Scalars['String'] | string>,
-    invitedByProfile?: GraphCacheResolver<WithTypename<AssumeResidencyPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profile?: GraphCacheResolver<WithTypename<AssumeResidencyPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    query?: GraphCacheResolver<WithTypename<AssumeResidencyPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<AssumeResidencyPayload>, Record<string, never>, WithTypename<Resident> | string>,
-    residentEdge?: GraphCacheResolver<WithTypename<AssumeResidencyPayload>, AssumeResidencyPayloadResidentEdgeArgs, WithTypename<ResidentsEdge> | string>,
-    tenant?: GraphCacheResolver<WithTypename<AssumeResidencyPayload>, Record<string, never>, WithTypename<Tenant> | string>
-  },
-  BecomeSupportPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<BecomeSupportPayload>, Record<string, never>, Scalars['String'] | string>,
-    invitedByProfile?: GraphCacheResolver<WithTypename<BecomeSupportPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profile?: GraphCacheResolver<WithTypename<BecomeSupportPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    query?: GraphCacheResolver<WithTypename<BecomeSupportPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<BecomeSupportPayload>, Record<string, never>, WithTypename<Resident> | string>,
-    residentEdge?: GraphCacheResolver<WithTypename<BecomeSupportPayload>, BecomeSupportPayloadResidentEdgeArgs, WithTypename<ResidentsEdge> | string>,
-    tenant?: GraphCacheResolver<WithTypename<BecomeSupportPayload>, Record<string, never>, WithTypename<Tenant> | string>
-  },
-  BlockResidentPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<BlockResidentPayload>, Record<string, never>, Scalars['String'] | string>,
-    invitedByProfile?: GraphCacheResolver<WithTypename<BlockResidentPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profile?: GraphCacheResolver<WithTypename<BlockResidentPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    query?: GraphCacheResolver<WithTypename<BlockResidentPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<BlockResidentPayload>, Record<string, never>, WithTypename<Resident> | string>,
-    residentEdge?: GraphCacheResolver<WithTypename<BlockResidentPayload>, BlockResidentPayloadResidentEdgeArgs, WithTypename<ResidentsEdge> | string>,
-    tenant?: GraphCacheResolver<WithTypename<BlockResidentPayload>, Record<string, never>, WithTypename<Tenant> | string>
-  },
-  CreateLocationPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<CreateLocationPayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<CreateLocationPayload>, Record<string, never>, WithTypename<Location> | string>,
-    locationEdge?: GraphCacheResolver<WithTypename<CreateLocationPayload>, CreateLocationPayloadLocationEdgeArgs, WithTypename<LocationsEdge> | string>,
-    query?: GraphCacheResolver<WithTypename<CreateLocationPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<CreateLocationPayload>, Record<string, never>, WithTypename<LocResident> | string>,
-    tenant?: GraphCacheResolver<WithTypename<CreateLocationPayload>, Record<string, never>, WithTypename<LocTenant> | string>
-  },
-  CreateTenantPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<CreateTenantPayload>, Record<string, never>, Scalars['String'] | string>,
-    query?: GraphCacheResolver<WithTypename<CreateTenantPayload>, Record<string, never>, WithTypename<Query> | string>,
-    tenant?: GraphCacheResolver<WithTypename<CreateTenantPayload>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantEdge?: GraphCacheResolver<WithTypename<CreateTenantPayload>, CreateTenantPayloadTenantEdgeArgs, WithTypename<TenantsEdge> | string>
-  },
-  CreateTodoPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<CreateTodoPayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<CreateTodoPayload>, Record<string, never>, WithTypename<Location> | string>,
-    parentTodo?: GraphCacheResolver<WithTypename<CreateTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    query?: GraphCacheResolver<WithTypename<CreateTodoPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<CreateTodoPayload>, Record<string, never>, WithTypename<TodoResident> | string>,
-    rootTodo?: GraphCacheResolver<WithTypename<CreateTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    tenant?: GraphCacheResolver<WithTypename<CreateTodoPayload>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    todo?: GraphCacheResolver<WithTypename<CreateTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    todoEdge?: GraphCacheResolver<WithTypename<CreateTodoPayload>, CreateTodoPayloadTodoEdgeArgs, WithTypename<TodosEdge> | string>,
-    topic?: GraphCacheResolver<WithTypename<CreateTodoPayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  DeactivateSubscriberPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<DeactivateSubscriberPayload>, Record<string, never>, Scalars['String'] | string>,
-    msgResident?: GraphCacheResolver<WithTypename<DeactivateSubscriberPayload>, Record<string, never>, WithTypename<MsgResident> | string>,
-    query?: GraphCacheResolver<WithTypename<DeactivateSubscriberPayload>, Record<string, never>, WithTypename<Query> | string>,
-    subscriber?: GraphCacheResolver<WithTypename<DeactivateSubscriberPayload>, Record<string, never>, WithTypename<Subscriber> | string>,
-    subscriberEdge?: GraphCacheResolver<WithTypename<DeactivateSubscriberPayload>, DeactivateSubscriberPayloadSubscriberEdgeArgs, WithTypename<SubscribersEdge> | string>,
-    tenant?: GraphCacheResolver<WithTypename<DeactivateSubscriberPayload>, Record<string, never>, WithTypename<MsgTenant> | string>,
-    topic?: GraphCacheResolver<WithTypename<DeactivateSubscriberPayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  DeactivateTenantPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<DeactivateTenantPayload>, Record<string, never>, Scalars['String'] | string>,
-    query?: GraphCacheResolver<WithTypename<DeactivateTenantPayload>, Record<string, never>, WithTypename<Query> | string>,
-    tenant?: GraphCacheResolver<WithTypename<DeactivateTenantPayload>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantEdge?: GraphCacheResolver<WithTypename<DeactivateTenantPayload>, DeactivateTenantPayloadTenantEdgeArgs, WithTypename<TenantsEdge> | string>
-  },
-  DeactivateTenantSubscriptionPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<DeactivateTenantSubscriptionPayload>, Record<string, never>, Scalars['String'] | string>,
-    licensePack?: GraphCacheResolver<WithTypename<DeactivateTenantSubscriptionPayload>, Record<string, never>, WithTypename<LicensePack> | string>,
-    query?: GraphCacheResolver<WithTypename<DeactivateTenantSubscriptionPayload>, Record<string, never>, WithTypename<Query> | string>,
-    tenant?: GraphCacheResolver<WithTypename<DeactivateTenantSubscriptionPayload>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantSubscription?: GraphCacheResolver<WithTypename<DeactivateTenantSubscriptionPayload>, Record<string, never>, WithTypename<TenantSubscription> | string>,
-    tenantSubscriptionEdge?: GraphCacheResolver<WithTypename<DeactivateTenantSubscriptionPayload>, DeactivateTenantSubscriptionPayloadTenantSubscriptionEdgeArgs, WithTypename<TenantSubscriptionsEdge> | string>
-  },
-  DeclineInvitationPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<DeclineInvitationPayload>, Record<string, never>, Scalars['String'] | string>,
-    invitedByProfile?: GraphCacheResolver<WithTypename<DeclineInvitationPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profile?: GraphCacheResolver<WithTypename<DeclineInvitationPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    query?: GraphCacheResolver<WithTypename<DeclineInvitationPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<DeclineInvitationPayload>, Record<string, never>, WithTypename<Resident> | string>,
-    residentEdge?: GraphCacheResolver<WithTypename<DeclineInvitationPayload>, DeclineInvitationPayloadResidentEdgeArgs, WithTypename<ResidentsEdge> | string>,
-    tenant?: GraphCacheResolver<WithTypename<DeclineInvitationPayload>, Record<string, never>, WithTypename<Tenant> | string>
-  },
-  DeclineResidencyPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<DeclineResidencyPayload>, Record<string, never>, Scalars['String'] | string>,
-    invitedByProfile?: GraphCacheResolver<WithTypename<DeclineResidencyPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profile?: GraphCacheResolver<WithTypename<DeclineResidencyPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    query?: GraphCacheResolver<WithTypename<DeclineResidencyPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<DeclineResidencyPayload>, Record<string, never>, WithTypename<Resident> | string>,
-    residentEdge?: GraphCacheResolver<WithTypename<DeclineResidencyPayload>, DeclineResidencyPayloadResidentEdgeArgs, WithTypename<ResidentsEdge> | string>,
-    tenant?: GraphCacheResolver<WithTypename<DeclineResidencyPayload>, Record<string, never>, WithTypename<Tenant> | string>
-  },
-  DeleteLocationPayload?: {
-    boolean?: GraphCacheResolver<WithTypename<DeleteLocationPayload>, Record<string, never>, Scalars['Boolean'] | string>,
-    clientMutationId?: GraphCacheResolver<WithTypename<DeleteLocationPayload>, Record<string, never>, Scalars['String'] | string>,
-    query?: GraphCacheResolver<WithTypename<DeleteLocationPayload>, Record<string, never>, WithTypename<Query> | string>
-  },
-  DeleteTodoPayload?: {
-    boolean?: GraphCacheResolver<WithTypename<DeleteTodoPayload>, Record<string, never>, Scalars['Boolean'] | string>,
-    clientMutationId?: GraphCacheResolver<WithTypename<DeleteTodoPayload>, Record<string, never>, Scalars['String'] | string>,
-    query?: GraphCacheResolver<WithTypename<DeleteTodoPayload>, Record<string, never>, WithTypename<Query> | string>
-  },
-  DeleteTopicPayload?: {
-    boolean?: GraphCacheResolver<WithTypename<DeleteTopicPayload>, Record<string, never>, Scalars['Boolean'] | string>,
-    clientMutationId?: GraphCacheResolver<WithTypename<DeleteTopicPayload>, Record<string, never>, Scalars['String'] | string>,
-    query?: GraphCacheResolver<WithTypename<DeleteTopicPayload>, Record<string, never>, WithTypename<Query> | string>
-  },
-  ExitSupportModePayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, Record<string, never>, Scalars['String'] | string>,
-    invitedByProfile?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profile?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, Record<string, never>, WithTypename<Profile> | string>,
-    query?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, Record<string, never>, WithTypename<Resident> | string>,
-    residentEdge?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, ExitSupportModePayloadResidentEdgeArgs, WithTypename<ResidentsEdge> | string>,
-    tenant?: GraphCacheResolver<WithTypename<ExitSupportModePayload>, Record<string, never>, WithTypename<Tenant> | string>
-  },
-  GrantUserLicensePayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, Record<string, never>, Scalars['String'] | string>,
-    license?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, Record<string, never>, WithTypename<License> | string>,
-    licenseEdge?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, GrantUserLicensePayloadLicenseEdgeArgs, WithTypename<LicensesEdge> | string>,
-    licenseType?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, Record<string, never>, WithTypename<LicenseType> | string>,
-    profile?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, Record<string, never>, WithTypename<Profile> | string>,
-    query?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, Record<string, never>, WithTypename<Resident> | string>,
-    tenant?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantSubscription?: GraphCacheResolver<WithTypename<GrantUserLicensePayload>, Record<string, never>, WithTypename<TenantSubscription> | string>
-  },
-  JoinAddressBookPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<JoinAddressBookPayload>, Record<string, never>, Scalars['String'] | string>,
-    profile?: GraphCacheResolver<WithTypename<JoinAddressBookPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profileEdge?: GraphCacheResolver<WithTypename<JoinAddressBookPayload>, JoinAddressBookPayloadProfileEdgeArgs, WithTypename<ProfilesEdge> | string>,
-    query?: GraphCacheResolver<WithTypename<JoinAddressBookPayload>, Record<string, never>, WithTypename<Query> | string>
-  },
-  LeaveAddressBookPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<LeaveAddressBookPayload>, Record<string, never>, Scalars['String'] | string>,
-    profile?: GraphCacheResolver<WithTypename<LeaveAddressBookPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profileEdge?: GraphCacheResolver<WithTypename<LeaveAddressBookPayload>, LeaveAddressBookPayloadProfileEdgeArgs, WithTypename<ProfilesEdge> | string>,
-    query?: GraphCacheResolver<WithTypename<LeaveAddressBookPayload>, Record<string, never>, WithTypename<Query> | string>
-  },
-  License?: {
-    createdAt?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['Datetime'] | string>,
-    expiresAt?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['Datetime'] | string>,
-    id?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['UUID'] | string>,
-    licenseType?: GraphCacheResolver<WithTypename<License>, Record<string, never>, WithTypename<LicenseType> | string>,
-    licenseTypeKey?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['ID'] | string>,
-    profile?: GraphCacheResolver<WithTypename<License>, Record<string, never>, WithTypename<Profile> | string>,
-    profileId?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['UUID'] | string>,
-    resident?: GraphCacheResolver<WithTypename<License>, Record<string, never>, WithTypename<Resident> | string>,
-    residentId?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['UUID'] | string>,
-    status?: GraphCacheResolver<WithTypename<License>, Record<string, never>, LicenseStatus | string>,
-    tenant?: GraphCacheResolver<WithTypename<License>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['UUID'] | string>,
-    tenantSubscription?: GraphCacheResolver<WithTypename<License>, Record<string, never>, WithTypename<TenantSubscription> | string>,
-    tenantSubscriptionId?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['UUID'] | string>,
-    updatedAt?: GraphCacheResolver<WithTypename<License>, Record<string, never>, Scalars['Datetime'] | string>
-  },
-  LicensePack?: {
-    autoSubscribe?: GraphCacheResolver<WithTypename<LicensePack>, Record<string, never>, Scalars['Boolean'] | string>,
-    createdAt?: GraphCacheResolver<WithTypename<LicensePack>, Record<string, never>, Scalars['Datetime'] | string>,
-    description?: GraphCacheResolver<WithTypename<LicensePack>, Record<string, never>, Scalars['String'] | string>,
-    displayName?: GraphCacheResolver<WithTypename<LicensePack>, Record<string, never>, Scalars['String'] | string>,
-    key?: GraphCacheResolver<WithTypename<LicensePack>, Record<string, never>, Scalars['String'] | string>,
-    licensePackLicenseTypesByLicensePackKey?: GraphCacheResolver<WithTypename<LicensePack>, LicensePackLicensePackLicenseTypesByLicensePackKeyArgs, WithTypename<LicensePackLicenseTypesConnection> | string>,
-    licensePackLicenseTypesByLicensePackKeyList?: GraphCacheResolver<WithTypename<LicensePack>, LicensePackLicensePackLicenseTypesByLicensePackKeyListArgs, Array<WithTypename<LicensePackLicenseType> | string>>,
-    nodeId?: GraphCacheResolver<WithTypename<LicensePack>, Record<string, never>, Scalars['ID'] | string>,
-    tenantSubscriptionsByLicensePackKey?: GraphCacheResolver<WithTypename<LicensePack>, LicensePackTenantSubscriptionsByLicensePackKeyArgs, WithTypename<TenantSubscriptionsConnection> | string>,
-    tenantSubscriptionsByLicensePackKeyList?: GraphCacheResolver<WithTypename<LicensePack>, LicensePackTenantSubscriptionsByLicensePackKeyListArgs, Array<WithTypename<TenantSubscription> | string>>,
-    updatedAt?: GraphCacheResolver<WithTypename<LicensePack>, Record<string, never>, Scalars['Datetime'] | string>
-  },
-  LicensePackLicenseType?: {
-    expirationIntervalMultiplier?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, Scalars['Int'] | string>,
-    expirationIntervalType?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, ExpirationIntervalType | string>,
-    id?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, Scalars['UUID'] | string>,
-    issuedCount?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, Scalars['Int'] | string>,
-    licensePack?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, WithTypename<LicensePack> | string>,
-    licensePackKey?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, Scalars['String'] | string>,
-    licenseType?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, WithTypename<LicenseType> | string>,
-    licenseTypeKey?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, Scalars['ID'] | string>,
-    numberOfLicenses?: GraphCacheResolver<WithTypename<LicensePackLicenseType>, Record<string, never>, Scalars['Int'] | string>
-  },
-  LicensePackLicenseTypesConnection?: {
-    edges?: GraphCacheResolver<WithTypename<LicensePackLicenseTypesConnection>, Record<string, never>, Array<WithTypename<LicensePackLicenseTypesEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<LicensePackLicenseTypesConnection>, Record<string, never>, Array<WithTypename<LicensePackLicenseType> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<LicensePackLicenseTypesConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<LicensePackLicenseTypesConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  LicensePackLicenseTypesEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<LicensePackLicenseTypesEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<LicensePackLicenseTypesEdge>, Record<string, never>, WithTypename<LicensePackLicenseType> | string>
-  },
-  LicensePacksConnection?: {
-    edges?: GraphCacheResolver<WithTypename<LicensePacksConnection>, Record<string, never>, Array<WithTypename<LicensePacksEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<LicensePacksConnection>, Record<string, never>, Array<WithTypename<LicensePack> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<LicensePacksConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<LicensePacksConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  LicensePacksEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<LicensePacksEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<LicensePacksEdge>, Record<string, never>, WithTypename<LicensePack> | string>
-  },
-  LicenseType?: {
-    application?: GraphCacheResolver<WithTypename<LicenseType>, Record<string, never>, WithTypename<Application> | string>,
-    applicationKey?: GraphCacheResolver<WithTypename<LicenseType>, Record<string, never>, Scalars['String'] | string>,
-    assignmentScope?: GraphCacheResolver<WithTypename<LicenseType>, Record<string, never>, LicenseTypeAssignmentScope | string>,
-    createdAt?: GraphCacheResolver<WithTypename<LicenseType>, Record<string, never>, Scalars['Datetime'] | string>,
-    displayName?: GraphCacheResolver<WithTypename<LicenseType>, Record<string, never>, Scalars['String'] | string>,
-    key?: GraphCacheResolver<WithTypename<LicenseType>, Record<string, never>, Scalars['String'] | string>,
-    licensePackLicenseTypesByLicenseTypeKey?: GraphCacheResolver<WithTypename<LicenseType>, LicenseTypeLicensePackLicenseTypesByLicenseTypeKeyArgs, WithTypename<LicensePackLicenseTypesConnection> | string>,
-    licensePackLicenseTypesByLicenseTypeKeyList?: GraphCacheResolver<WithTypename<LicenseType>, LicenseTypeLicensePackLicenseTypesByLicenseTypeKeyListArgs, Array<WithTypename<LicensePackLicenseType> | string>>,
-    licenseTypePermissionsByLicenseTypeKey?: GraphCacheResolver<WithTypename<LicenseType>, LicenseTypeLicenseTypePermissionsByLicenseTypeKeyArgs, WithTypename<LicenseTypePermissionsConnection> | string>,
-    licenseTypePermissionsByLicenseTypeKeyList?: GraphCacheResolver<WithTypename<LicenseType>, LicenseTypeLicenseTypePermissionsByLicenseTypeKeyListArgs, Array<WithTypename<LicenseTypePermission> | string>>,
-    licensesByLicenseTypeKey?: GraphCacheResolver<WithTypename<LicenseType>, LicenseTypeLicensesByLicenseTypeKeyArgs, WithTypename<LicensesConnection> | string>,
-    licensesByLicenseTypeKeyList?: GraphCacheResolver<WithTypename<LicenseType>, LicenseTypeLicensesByLicenseTypeKeyListArgs, Array<WithTypename<License> | string>>,
-    nodeId?: GraphCacheResolver<WithTypename<LicenseType>, Record<string, never>, Scalars['ID'] | string>,
-    updatedAt?: GraphCacheResolver<WithTypename<LicenseType>, Record<string, never>, Scalars['Datetime'] | string>
-  },
-  LicenseTypePermission?: {
-    licenseType?: GraphCacheResolver<WithTypename<LicenseTypePermission>, Record<string, never>, WithTypename<LicenseType> | string>,
-    licenseTypeKey?: GraphCacheResolver<WithTypename<LicenseTypePermission>, Record<string, never>, Scalars['String'] | string>,
-    permission?: GraphCacheResolver<WithTypename<LicenseTypePermission>, Record<string, never>, WithTypename<Permission> | string>,
-    permissionKey?: GraphCacheResolver<WithTypename<LicenseTypePermission>, Record<string, never>, Scalars['String'] | string>
-  },
-  LicenseTypePermissionsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<LicenseTypePermissionsConnection>, Record<string, never>, Array<WithTypename<LicenseTypePermissionsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<LicenseTypePermissionsConnection>, Record<string, never>, Array<WithTypename<LicenseTypePermission> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<LicenseTypePermissionsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<LicenseTypePermissionsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  LicenseTypePermissionsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<LicenseTypePermissionsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<LicenseTypePermissionsEdge>, Record<string, never>, WithTypename<LicenseTypePermission> | string>
-  },
-  LicenseTypesConnection?: {
-    edges?: GraphCacheResolver<WithTypename<LicenseTypesConnection>, Record<string, never>, Array<WithTypename<LicenseTypesEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<LicenseTypesConnection>, Record<string, never>, Array<WithTypename<LicenseType> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<LicenseTypesConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<LicenseTypesConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  LicenseTypesEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<LicenseTypesEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<LicenseTypesEdge>, Record<string, never>, WithTypename<LicenseType> | string>
-  },
-  LicensesConnection?: {
-    edges?: GraphCacheResolver<WithTypename<LicensesConnection>, Record<string, never>, Array<WithTypename<LicensesEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<LicensesConnection>, Record<string, never>, Array<WithTypename<License> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<LicensesConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<LicensesConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  LicensesEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<LicensesEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<LicensesEdge>, Record<string, never>, WithTypename<License> | string>
-  },
-  LocResident?: {
-    displayName?: GraphCacheResolver<WithTypename<LocResident>, Record<string, never>, Scalars['String'] | string>,
-    locationsByResidentId?: GraphCacheResolver<WithTypename<LocResident>, LocResidentLocationsByResidentIdArgs, WithTypename<LocationsConnection> | string>,
-    locationsByResidentIdList?: GraphCacheResolver<WithTypename<LocResident>, LocResidentLocationsByResidentIdListArgs, Array<WithTypename<Location> | string>>,
-    nodeId?: GraphCacheResolver<WithTypename<LocResident>, Record<string, never>, Scalars['ID'] | string>,
-    resident?: GraphCacheResolver<WithTypename<LocResident>, Record<string, never>, WithTypename<Resident> | string>,
-    residentId?: GraphCacheResolver<WithTypename<LocResident>, Record<string, never>, Scalars['UUID'] | string>,
-    tenant?: GraphCacheResolver<WithTypename<LocResident>, Record<string, never>, WithTypename<LocTenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<LocResident>, Record<string, never>, Scalars['UUID'] | string>
-  },
-  LocResidentsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<LocResidentsConnection>, Record<string, never>, Array<WithTypename<LocResidentsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<LocResidentsConnection>, Record<string, never>, Array<WithTypename<LocResident> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<LocResidentsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<LocResidentsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  LocResidentsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<LocResidentsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<LocResidentsEdge>, Record<string, never>, WithTypename<LocResident> | string>
-  },
-  LocTenant?: {
-    locResidentsByTenantId?: GraphCacheResolver<WithTypename<LocTenant>, LocTenantLocResidentsByTenantIdArgs, WithTypename<LocResidentsConnection> | string>,
-    locResidentsByTenantIdList?: GraphCacheResolver<WithTypename<LocTenant>, LocTenantLocResidentsByTenantIdListArgs, Array<WithTypename<LocResident> | string>>,
-    locationsByTenantId?: GraphCacheResolver<WithTypename<LocTenant>, LocTenantLocationsByTenantIdArgs, WithTypename<LocationsConnection> | string>,
-    locationsByTenantIdList?: GraphCacheResolver<WithTypename<LocTenant>, LocTenantLocationsByTenantIdListArgs, Array<WithTypename<Location> | string>>,
-    name?: GraphCacheResolver<WithTypename<LocTenant>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<LocTenant>, Record<string, never>, Scalars['ID'] | string>,
-    tenant?: GraphCacheResolver<WithTypename<LocTenant>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<LocTenant>, Record<string, never>, Scalars['UUID'] | string>
-  },
-  LocTenantsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<LocTenantsConnection>, Record<string, never>, Array<WithTypename<LocTenantsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<LocTenantsConnection>, Record<string, never>, Array<WithTypename<LocTenant> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<LocTenantsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<LocTenantsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  LocTenantsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<LocTenantsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<LocTenantsEdge>, Record<string, never>, WithTypename<LocTenant> | string>
-  },
-  Location?: {
-    address1?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['String'] | string>,
-    address2?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['String'] | string>,
-    city?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['String'] | string>,
-    country?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['String'] | string>,
-    id?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['UUID'] | string>,
-    lat?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['String'] | string>,
-    lon?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['String'] | string>,
-    name?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['ID'] | string>,
-    postalCode?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['String'] | string>,
-    resident?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, WithTypename<LocResident> | string>,
-    residentId?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['UUID'] | string>,
-    state?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['String'] | string>,
-    tenant?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, WithTypename<LocTenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<Location>, Record<string, never>, Scalars['UUID'] | string>,
-    todos?: GraphCacheResolver<WithTypename<Location>, LocationTodosArgs, WithTypename<TodosConnection> | string>,
-    todosList?: GraphCacheResolver<WithTypename<Location>, LocationTodosListArgs, Array<WithTypename<Todo> | string>>
-  },
-  LocationsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<LocationsConnection>, Record<string, never>, Array<WithTypename<LocationsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<LocationsConnection>, Record<string, never>, Array<WithTypename<Location> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<LocationsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<LocationsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  LocationsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<LocationsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<LocationsEdge>, Record<string, never>, WithTypename<Location> | string>
-  },
-  MakeTemplateFromTodoPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, Record<string, never>, WithTypename<Location> | string>,
-    parentTodo?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    query?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, Record<string, never>, WithTypename<TodoResident> | string>,
-    rootTodo?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    tenant?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    todo?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    todoEdge?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, MakeTemplateFromTodoPayloadTodoEdgeArgs, WithTypename<TodosEdge> | string>,
-    topic?: GraphCacheResolver<WithTypename<MakeTemplateFromTodoPayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  MakeTodoFromTemplatePayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, Record<string, never>, WithTypename<Location> | string>,
-    parentTodo?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, Record<string, never>, WithTypename<Todo> | string>,
-    query?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, Record<string, never>, WithTypename<TodoResident> | string>,
-    rootTodo?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, Record<string, never>, WithTypename<Todo> | string>,
-    tenant?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    todo?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, Record<string, never>, WithTypename<Todo> | string>,
-    todoEdge?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, MakeTodoFromTemplatePayloadTodoEdgeArgs, WithTypename<TodosEdge> | string>,
-    topic?: GraphCacheResolver<WithTypename<MakeTodoFromTemplatePayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  Message?: {
-    content?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, Scalars['String'] | string>,
-    createdAt?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, Scalars['Datetime'] | string>,
-    id?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, Scalars['UUID'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, Scalars['ID'] | string>,
-    postedByMsgResident?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, WithTypename<MsgResident> | string>,
-    postedByMsgResidentId?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, Scalars['UUID'] | string>,
-    status?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, MessageStatus | string>,
-    tags?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, Array<Scalars['String'] | string>>,
-    tenant?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, WithTypename<MsgTenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, Scalars['UUID'] | string>,
-    topic?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, WithTypename<Topic> | string>,
-    topicId?: GraphCacheResolver<WithTypename<Message>, Record<string, never>, Scalars['UUID'] | string>
-  },
-  MessagesConnection?: {
-    edges?: GraphCacheResolver<WithTypename<MessagesConnection>, Record<string, never>, Array<WithTypename<MessagesEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<MessagesConnection>, Record<string, never>, Array<WithTypename<Message> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<MessagesConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<MessagesConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  MessagesEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<MessagesEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<MessagesEdge>, Record<string, never>, WithTypename<Message> | string>
-  },
-  Module?: {
-    application?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, WithTypename<Application> | string>,
-    applicationKey?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
-    defaultIconKey?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
-    key?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
-    name?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['ID'] | string>,
-    ordinal?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Scalars['Int'] | string>,
-    permissionKeys?: GraphCacheResolver<WithTypename<Module>, Record<string, never>, Array<Scalars['String'] | string>>,
-    toolsByModuleKey?: GraphCacheResolver<WithTypename<Module>, ModuleToolsByModuleKeyArgs, WithTypename<ToolsConnection> | string>,
-    toolsByModuleKeyList?: GraphCacheResolver<WithTypename<Module>, ModuleToolsByModuleKeyListArgs, Array<WithTypename<Tool> | string>>
-  },
-  ModuleInfo?: {
-    defaultIconKey?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Scalars['String'] | string>,
-    key?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Scalars['String'] | string>,
-    name?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Scalars['String'] | string>,
-    ordinal?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Scalars['Int'] | string>,
-    permissionKeys?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Array<Scalars['String'] | string>>,
-    tools?: GraphCacheResolver<WithTypename<ModuleInfo>, Record<string, never>, Array<WithTypename<ToolInfo> | string>>
-  },
-  ModulesConnection?: {
-    edges?: GraphCacheResolver<WithTypename<ModulesConnection>, Record<string, never>, Array<WithTypename<ModulesEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<ModulesConnection>, Record<string, never>, Array<WithTypename<Module> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<ModulesConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<ModulesConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  ModulesEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<ModulesEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<ModulesEdge>, Record<string, never>, WithTypename<Module> | string>
-  },
-  MsgResident?: {
-    displayName?: GraphCacheResolver<WithTypename<MsgResident>, Record<string, never>, Scalars['String'] | string>,
-    messagesByPostedByMsgResidentId?: GraphCacheResolver<WithTypename<MsgResident>, MsgResidentMessagesByPostedByMsgResidentIdArgs, WithTypename<MessagesConnection> | string>,
-    messagesByPostedByMsgResidentIdList?: GraphCacheResolver<WithTypename<MsgResident>, MsgResidentMessagesByPostedByMsgResidentIdListArgs, Array<WithTypename<Message> | string>>,
-    nodeId?: GraphCacheResolver<WithTypename<MsgResident>, Record<string, never>, Scalars['ID'] | string>,
-    resident?: GraphCacheResolver<WithTypename<MsgResident>, Record<string, never>, WithTypename<Resident> | string>,
-    residentId?: GraphCacheResolver<WithTypename<MsgResident>, Record<string, never>, Scalars['UUID'] | string>,
-    subscribers?: GraphCacheResolver<WithTypename<MsgResident>, MsgResidentSubscribersArgs, WithTypename<SubscribersConnection> | string>,
-    subscribersList?: GraphCacheResolver<WithTypename<MsgResident>, MsgResidentSubscribersListArgs, Array<WithTypename<Subscriber> | string>>,
-    tenant?: GraphCacheResolver<WithTypename<MsgResident>, Record<string, never>, WithTypename<MsgTenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<MsgResident>, Record<string, never>, Scalars['UUID'] | string>
-  },
-  MsgResidentsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<MsgResidentsConnection>, Record<string, never>, Array<WithTypename<MsgResidentsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<MsgResidentsConnection>, Record<string, never>, Array<WithTypename<MsgResident> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<MsgResidentsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<MsgResidentsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  MsgResidentsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<MsgResidentsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<MsgResidentsEdge>, Record<string, never>, WithTypename<MsgResident> | string>
-  },
-  MsgTenant?: {
-    messagesByTenantId?: GraphCacheResolver<WithTypename<MsgTenant>, MsgTenantMessagesByTenantIdArgs, WithTypename<MessagesConnection> | string>,
-    messagesByTenantIdList?: GraphCacheResolver<WithTypename<MsgTenant>, MsgTenantMessagesByTenantIdListArgs, Array<WithTypename<Message> | string>>,
-    msgResidentsByTenantId?: GraphCacheResolver<WithTypename<MsgTenant>, MsgTenantMsgResidentsByTenantIdArgs, WithTypename<MsgResidentsConnection> | string>,
-    msgResidentsByTenantIdList?: GraphCacheResolver<WithTypename<MsgTenant>, MsgTenantMsgResidentsByTenantIdListArgs, Array<WithTypename<MsgResident> | string>>,
-    name?: GraphCacheResolver<WithTypename<MsgTenant>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<MsgTenant>, Record<string, never>, Scalars['ID'] | string>,
-    subscribersByTenantId?: GraphCacheResolver<WithTypename<MsgTenant>, MsgTenantSubscribersByTenantIdArgs, WithTypename<SubscribersConnection> | string>,
-    subscribersByTenantIdList?: GraphCacheResolver<WithTypename<MsgTenant>, MsgTenantSubscribersByTenantIdListArgs, Array<WithTypename<Subscriber> | string>>,
-    tenant?: GraphCacheResolver<WithTypename<MsgTenant>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<MsgTenant>, Record<string, never>, Scalars['UUID'] | string>,
-    topicsByTenantId?: GraphCacheResolver<WithTypename<MsgTenant>, MsgTenantTopicsByTenantIdArgs, WithTypename<TopicsConnection> | string>,
-    topicsByTenantIdList?: GraphCacheResolver<WithTypename<MsgTenant>, MsgTenantTopicsByTenantIdListArgs, Array<WithTypename<Topic> | string>>
-  },
-  MsgTenantsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<MsgTenantsConnection>, Record<string, never>, Array<WithTypename<MsgTenantsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<MsgTenantsConnection>, Record<string, never>, Array<WithTypename<MsgTenant> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<MsgTenantsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<MsgTenantsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  MsgTenantsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<MsgTenantsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<MsgTenantsEdge>, Record<string, never>, WithTypename<MsgTenant> | string>
-  },
-  PageInfo?: {
-    endCursor?: GraphCacheResolver<WithTypename<PageInfo>, Record<string, never>, Scalars['Cursor'] | string>,
-    hasNextPage?: GraphCacheResolver<WithTypename<PageInfo>, Record<string, never>, Scalars['Boolean'] | string>,
-    hasPreviousPage?: GraphCacheResolver<WithTypename<PageInfo>, Record<string, never>, Scalars['Boolean'] | string>,
-    startCursor?: GraphCacheResolver<WithTypename<PageInfo>, Record<string, never>, Scalars['Cursor'] | string>
-  },
-  Permission?: {
-    key?: GraphCacheResolver<WithTypename<Permission>, Record<string, never>, Scalars['String'] | string>,
-    licenseTypePermissionsByPermissionKey?: GraphCacheResolver<WithTypename<Permission>, PermissionLicenseTypePermissionsByPermissionKeyArgs, WithTypename<LicenseTypePermissionsConnection> | string>,
-    licenseTypePermissionsByPermissionKeyList?: GraphCacheResolver<WithTypename<Permission>, PermissionLicenseTypePermissionsByPermissionKeyListArgs, Array<WithTypename<LicenseTypePermission> | string>>,
-    nodeId?: GraphCacheResolver<WithTypename<Permission>, Record<string, never>, Scalars['ID'] | string>
-  },
-  PermissionsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<PermissionsConnection>, Record<string, never>, Array<WithTypename<PermissionsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<PermissionsConnection>, Record<string, never>, Array<WithTypename<Permission> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<PermissionsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<PermissionsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  PermissionsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<PermissionsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<PermissionsEdge>, Record<string, never>, WithTypename<Permission> | string>
-  },
-  PinTodoPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<PinTodoPayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<PinTodoPayload>, Record<string, never>, WithTypename<Location> | string>,
-    parentTodo?: GraphCacheResolver<WithTypename<PinTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    query?: GraphCacheResolver<WithTypename<PinTodoPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<PinTodoPayload>, Record<string, never>, WithTypename<TodoResident> | string>,
-    rootTodo?: GraphCacheResolver<WithTypename<PinTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    tenant?: GraphCacheResolver<WithTypename<PinTodoPayload>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    todo?: GraphCacheResolver<WithTypename<PinTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    todoEdge?: GraphCacheResolver<WithTypename<PinTodoPayload>, PinTodoPayloadTodoEdgeArgs, WithTypename<TodosEdge> | string>,
-    topic?: GraphCacheResolver<WithTypename<PinTodoPayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  Profile?: {
-    avatarKey?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['String'] | string>,
-    createdAt?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['Datetime'] | string>,
-    displayName?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['String'] | string>,
-    email?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['String'] | string>,
-    firstName?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['String'] | string>,
-    fullName?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['String'] | string>,
-    id?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['UUID'] | string>,
-    identifier?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['String'] | string>,
-    isPublic?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['Boolean'] | string>,
-    lastName?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['String'] | string>,
-    licenses?: GraphCacheResolver<WithTypename<Profile>, ProfileLicensesArgs, WithTypename<LicensesConnection> | string>,
-    licensesList?: GraphCacheResolver<WithTypename<Profile>, ProfileLicensesListArgs, Array<WithTypename<License> | string>>,
-    nodeId?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['ID'] | string>,
-    phone?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['String'] | string>,
-    residents?: GraphCacheResolver<WithTypename<Profile>, ProfileResidentsArgs, WithTypename<ResidentsConnection> | string>,
-    residentsByInvitedByProfileId?: GraphCacheResolver<WithTypename<Profile>, ProfileResidentsByInvitedByProfileIdArgs, WithTypename<ResidentsConnection> | string>,
-    residentsByInvitedByProfileIdList?: GraphCacheResolver<WithTypename<Profile>, ProfileResidentsByInvitedByProfileIdListArgs, Array<WithTypename<Resident> | string>>,
-    residentsList?: GraphCacheResolver<WithTypename<Profile>, ProfileResidentsListArgs, Array<WithTypename<Resident> | string>>,
-    status?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, ProfileStatus | string>,
-    updatedAt?: GraphCacheResolver<WithTypename<Profile>, Record<string, never>, Scalars['Datetime'] | string>
-  },
-  ProfileClaim?: {
-    actualResidentId?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['UUID'] | string>,
-    displayName?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['String'] | string>,
-    email?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['String'] | string>,
-    permissions?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Array<Scalars['String'] | string>>,
-    profileId?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['UUID'] | string>,
-    profileStatus?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, ProfileStatus | string>,
-    residentId?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['UUID'] | string>,
-    tenantId?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['UUID'] | string>,
-    tenantName?: GraphCacheResolver<WithTypename<ProfileClaim>, Record<string, never>, Scalars['String'] | string>
-  },
-  ProfilesConnection?: {
-    edges?: GraphCacheResolver<WithTypename<ProfilesConnection>, Record<string, never>, Array<WithTypename<ProfilesEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<ProfilesConnection>, Record<string, never>, Array<WithTypename<Profile> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<ProfilesConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<ProfilesConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  ProfilesEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<ProfilesEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<ProfilesEdge>, Record<string, never>, WithTypename<Profile> | string>
-  },
-  ReactivateTenantSubscriptionPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<ReactivateTenantSubscriptionPayload>, Record<string, never>, Scalars['String'] | string>,
-    licensePack?: GraphCacheResolver<WithTypename<ReactivateTenantSubscriptionPayload>, Record<string, never>, WithTypename<LicensePack> | string>,
-    query?: GraphCacheResolver<WithTypename<ReactivateTenantSubscriptionPayload>, Record<string, never>, WithTypename<Query> | string>,
-    tenant?: GraphCacheResolver<WithTypename<ReactivateTenantSubscriptionPayload>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantSubscription?: GraphCacheResolver<WithTypename<ReactivateTenantSubscriptionPayload>, Record<string, never>, WithTypename<TenantSubscription> | string>,
-    tenantSubscriptionEdge?: GraphCacheResolver<WithTypename<ReactivateTenantSubscriptionPayload>, ReactivateTenantSubscriptionPayloadTenantSubscriptionEdgeArgs, WithTypename<TenantSubscriptionsEdge> | string>
-  },
-  Resident?: {
-    createdAt?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['Datetime'] | string>,
-    displayName?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['String'] | string>,
-    email?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['String'] | string>,
-    id?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['UUID'] | string>,
-    invitedByDisplayName?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['String'] | string>,
-    invitedByProfile?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, WithTypename<Profile> | string>,
-    invitedByProfileId?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['UUID'] | string>,
-    licenses?: GraphCacheResolver<WithTypename<Resident>, ResidentLicensesArgs, WithTypename<LicensesConnection> | string>,
-    licensesList?: GraphCacheResolver<WithTypename<Resident>, ResidentLicensesListArgs, Array<WithTypename<License> | string>>,
-    locResident?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, WithTypename<LocResident> | string>,
-    msgResident?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, WithTypename<MsgResident> | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['ID'] | string>,
-    profile?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, WithTypename<Profile> | string>,
-    profileId?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['UUID'] | string>,
-    status?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, ResidentStatus | string>,
-    tenant?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['UUID'] | string>,
-    tenantName?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['String'] | string>,
-    todoResident?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, WithTypename<TodoResident> | string>,
-    type?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, ResidentType | string>,
-    updatedAt?: GraphCacheResolver<WithTypename<Resident>, Record<string, never>, Scalars['Datetime'] | string>
-  },
-  ResidentsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<ResidentsConnection>, Record<string, never>, Array<WithTypename<ResidentsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<ResidentsConnection>, Record<string, never>, Array<WithTypename<Resident> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<ResidentsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<ResidentsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  ResidentsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<ResidentsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<ResidentsEdge>, Record<string, never>, WithTypename<Resident> | string>
-  },
-  RevokeUserLicensePayload?: {
-    boolean?: GraphCacheResolver<WithTypename<RevokeUserLicensePayload>, Record<string, never>, Scalars['Boolean'] | string>,
-    clientMutationId?: GraphCacheResolver<WithTypename<RevokeUserLicensePayload>, Record<string, never>, Scalars['String'] | string>,
-    query?: GraphCacheResolver<WithTypename<RevokeUserLicensePayload>, Record<string, never>, WithTypename<Query> | string>
-  },
-  SubscribeTenantToLicensePackPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<SubscribeTenantToLicensePackPayload>, Record<string, never>, Scalars['String'] | string>,
-    licensePack?: GraphCacheResolver<WithTypename<SubscribeTenantToLicensePackPayload>, Record<string, never>, WithTypename<LicensePack> | string>,
-    query?: GraphCacheResolver<WithTypename<SubscribeTenantToLicensePackPayload>, Record<string, never>, WithTypename<Query> | string>,
-    tenant?: GraphCacheResolver<WithTypename<SubscribeTenantToLicensePackPayload>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantSubscription?: GraphCacheResolver<WithTypename<SubscribeTenantToLicensePackPayload>, Record<string, never>, WithTypename<TenantSubscription> | string>,
-    tenantSubscriptionEdge?: GraphCacheResolver<WithTypename<SubscribeTenantToLicensePackPayload>, SubscribeTenantToLicensePackPayloadTenantSubscriptionEdgeArgs, WithTypename<TenantSubscriptionsEdge> | string>
-  },
-  Subscriber?: {
-    createdAt?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, Scalars['Datetime'] | string>,
-    id?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, Scalars['UUID'] | string>,
-    lastRead?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, Scalars['Datetime'] | string>,
-    msgResident?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, WithTypename<MsgResident> | string>,
-    msgResidentId?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, Scalars['UUID'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, Scalars['ID'] | string>,
-    status?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, SubscriberStatus | string>,
-    tenant?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, WithTypename<MsgTenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, Scalars['UUID'] | string>,
-    topic?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, WithTypename<Topic> | string>,
-    topicId?: GraphCacheResolver<WithTypename<Subscriber>, Record<string, never>, Scalars['UUID'] | string>
-  },
-  SubscribersConnection?: {
-    edges?: GraphCacheResolver<WithTypename<SubscribersConnection>, Record<string, never>, Array<WithTypename<SubscribersEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<SubscribersConnection>, Record<string, never>, Array<WithTypename<Subscriber> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<SubscribersConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<SubscribersConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  SubscribersEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<SubscribersEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<SubscribersEdge>, Record<string, never>, WithTypename<Subscriber> | string>
-  },
-  Tenant?: {
-    createdAt?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, Scalars['Datetime'] | string>,
-    id?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, Scalars['UUID'] | string>,
-    identifier?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, Scalars['String'] | string>,
-    licenses?: GraphCacheResolver<WithTypename<Tenant>, TenantLicensesArgs, WithTypename<LicensesConnection> | string>,
-    licensesList?: GraphCacheResolver<WithTypename<Tenant>, TenantLicensesListArgs, Array<WithTypename<License> | string>>,
-    locTenant?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, WithTypename<LocTenant> | string>,
-    msgTenant?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, WithTypename<MsgTenant> | string>,
-    name?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, Scalars['ID'] | string>,
-    residents?: GraphCacheResolver<WithTypename<Tenant>, TenantResidentsArgs, WithTypename<ResidentsConnection> | string>,
-    residentsList?: GraphCacheResolver<WithTypename<Tenant>, TenantResidentsListArgs, Array<WithTypename<Resident> | string>>,
-    status?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, TenantStatus | string>,
-    tenantSubscriptions?: GraphCacheResolver<WithTypename<Tenant>, TenantTenantSubscriptionsArgs, WithTypename<TenantSubscriptionsConnection> | string>,
-    tenantSubscriptionsList?: GraphCacheResolver<WithTypename<Tenant>, TenantTenantSubscriptionsListArgs, Array<WithTypename<TenantSubscription> | string>>,
-    things?: GraphCacheResolver<WithTypename<Tenant>, TenantThingsArgs, WithTypename<ThingsConnection> | string>,
-    thingsList?: GraphCacheResolver<WithTypename<Tenant>, TenantThingsListArgs, Array<WithTypename<Thing> | string>>,
-    todoTenant?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    type?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, TenantType | string>,
-    updatedAt?: GraphCacheResolver<WithTypename<Tenant>, Record<string, never>, Scalars['Datetime'] | string>
-  },
-  TenantSubscription?: {
-    createdAt?: GraphCacheResolver<WithTypename<TenantSubscription>, Record<string, never>, Scalars['Datetime'] | string>,
-    id?: GraphCacheResolver<WithTypename<TenantSubscription>, Record<string, never>, Scalars['UUID'] | string>,
-    licensePack?: GraphCacheResolver<WithTypename<TenantSubscription>, Record<string, never>, WithTypename<LicensePack> | string>,
-    licensePackKey?: GraphCacheResolver<WithTypename<TenantSubscription>, Record<string, never>, Scalars['String'] | string>,
-    licenses?: GraphCacheResolver<WithTypename<TenantSubscription>, TenantSubscriptionLicensesArgs, WithTypename<LicensesConnection> | string>,
-    licensesList?: GraphCacheResolver<WithTypename<TenantSubscription>, TenantSubscriptionLicensesListArgs, Array<WithTypename<License> | string>>,
-    nodeId?: GraphCacheResolver<WithTypename<TenantSubscription>, Record<string, never>, Scalars['ID'] | string>,
-    status?: GraphCacheResolver<WithTypename<TenantSubscription>, Record<string, never>, TenantSubscriptionStatus | string>,
-    tenant?: GraphCacheResolver<WithTypename<TenantSubscription>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<TenantSubscription>, Record<string, never>, Scalars['UUID'] | string>,
-    updatedAt?: GraphCacheResolver<WithTypename<TenantSubscription>, Record<string, never>, Scalars['Datetime'] | string>
-  },
-  TenantSubscriptionsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<TenantSubscriptionsConnection>, Record<string, never>, Array<WithTypename<TenantSubscriptionsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<TenantSubscriptionsConnection>, Record<string, never>, Array<WithTypename<TenantSubscription> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<TenantSubscriptionsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<TenantSubscriptionsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  TenantSubscriptionsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<TenantSubscriptionsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<TenantSubscriptionsEdge>, Record<string, never>, WithTypename<TenantSubscription> | string>
-  },
-  TenantsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<TenantsConnection>, Record<string, never>, Array<WithTypename<TenantsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<TenantsConnection>, Record<string, never>, Array<WithTypename<Tenant> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<TenantsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<TenantsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  TenantsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<TenantsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<TenantsEdge>, Record<string, never>, WithTypename<Tenant> | string>
-  },
-  Thing?: {
-    id?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, Scalars['UUID'] | string>,
-    name?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, Scalars['ID'] | string>,
-    status?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, ThingStatus | string>,
-    tenant?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<Thing>, Record<string, never>, Scalars['UUID'] | string>
-  },
-  ThingsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<ThingsConnection>, Record<string, never>, Array<WithTypename<ThingsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<ThingsConnection>, Record<string, never>, Array<WithTypename<Thing> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<ThingsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<ThingsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  ThingsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<ThingsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<ThingsEdge>, Record<string, never>, WithTypename<Thing> | string>
-  },
-  Todo?: {
-    createdAt?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Datetime'] | string>,
-    description?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String'] | string>,
-    id?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['UUID'] | string>,
-    isTemplate?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean'] | string>,
-    location?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, WithTypename<Location> | string>,
-    locationId?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['UUID'] | string>,
-    name?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['ID'] | string>,
-    ordinal?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Int'] | string>,
-    parentTodo?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, WithTypename<Todo> | string>,
-    parentTodoId?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['UUID'] | string>,
-    pinned?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean'] | string>,
-    resident?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, WithTypename<TodoResident> | string>,
-    residentId?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['UUID'] | string>,
-    rootTodo?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, WithTypename<Todo> | string>,
-    rootTodoId?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['UUID'] | string>,
-    status?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, TodoStatus | string>,
-    tags?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Array<Scalars['String'] | string>>,
-    tenant?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['UUID'] | string>,
-    todosByParentTodoId?: GraphCacheResolver<WithTypename<Todo>, TodoTodosByParentTodoIdArgs, WithTypename<TodosConnection> | string>,
-    todosByParentTodoIdList?: GraphCacheResolver<WithTypename<Todo>, TodoTodosByParentTodoIdListArgs, Array<WithTypename<Todo> | string>>,
-    todosByRootTodoId?: GraphCacheResolver<WithTypename<Todo>, TodoTodosByRootTodoIdArgs, WithTypename<TodosConnection> | string>,
-    todosByRootTodoIdList?: GraphCacheResolver<WithTypename<Todo>, TodoTodosByRootTodoIdListArgs, Array<WithTypename<Todo> | string>>,
-    topic?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, WithTypename<Topic> | string>,
-    topicId?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['UUID'] | string>,
-    type?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, TodoType | string>,
-    updatedAt?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Datetime'] | string>
-  },
-  TodoResident?: {
-    displayName?: GraphCacheResolver<WithTypename<TodoResident>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<TodoResident>, Record<string, never>, Scalars['ID'] | string>,
-    resident?: GraphCacheResolver<WithTypename<TodoResident>, Record<string, never>, WithTypename<Resident> | string>,
-    residentId?: GraphCacheResolver<WithTypename<TodoResident>, Record<string, never>, Scalars['UUID'] | string>,
-    tenant?: GraphCacheResolver<WithTypename<TodoResident>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<TodoResident>, Record<string, never>, Scalars['UUID'] | string>,
-    todosByResidentId?: GraphCacheResolver<WithTypename<TodoResident>, TodoResidentTodosByResidentIdArgs, WithTypename<TodosConnection> | string>,
-    todosByResidentIdList?: GraphCacheResolver<WithTypename<TodoResident>, TodoResidentTodosByResidentIdListArgs, Array<WithTypename<Todo> | string>>
-  },
-  TodoResidentsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<TodoResidentsConnection>, Record<string, never>, Array<WithTypename<TodoResidentsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<TodoResidentsConnection>, Record<string, never>, Array<WithTypename<TodoResident> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<TodoResidentsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<TodoResidentsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  TodoResidentsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<TodoResidentsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<TodoResidentsEdge>, Record<string, never>, WithTypename<TodoResident> | string>
-  },
-  TodoTenant?: {
-    name?: GraphCacheResolver<WithTypename<TodoTenant>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<TodoTenant>, Record<string, never>, Scalars['ID'] | string>,
-    tenant?: GraphCacheResolver<WithTypename<TodoTenant>, Record<string, never>, WithTypename<Tenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<TodoTenant>, Record<string, never>, Scalars['UUID'] | string>,
-    todoResidentsByTenantId?: GraphCacheResolver<WithTypename<TodoTenant>, TodoTenantTodoResidentsByTenantIdArgs, WithTypename<TodoResidentsConnection> | string>,
-    todoResidentsByTenantIdList?: GraphCacheResolver<WithTypename<TodoTenant>, TodoTenantTodoResidentsByTenantIdListArgs, Array<WithTypename<TodoResident> | string>>,
-    todosByTenantId?: GraphCacheResolver<WithTypename<TodoTenant>, TodoTenantTodosByTenantIdArgs, WithTypename<TodosConnection> | string>,
-    todosByTenantIdList?: GraphCacheResolver<WithTypename<TodoTenant>, TodoTenantTodosByTenantIdListArgs, Array<WithTypename<Todo> | string>>
-  },
-  TodoTenantsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<TodoTenantsConnection>, Record<string, never>, Array<WithTypename<TodoTenantsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<TodoTenantsConnection>, Record<string, never>, Array<WithTypename<TodoTenant> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<TodoTenantsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<TodoTenantsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  TodoTenantsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<TodoTenantsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<TodoTenantsEdge>, Record<string, never>, WithTypename<TodoTenant> | string>
-  },
-  TodosConnection?: {
-    edges?: GraphCacheResolver<WithTypename<TodosConnection>, Record<string, never>, Array<WithTypename<TodosEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<TodosConnection>, Record<string, never>, Array<WithTypename<Todo> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<TodosConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<TodosConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  TodosEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<TodosEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<TodosEdge>, Record<string, never>, WithTypename<Todo> | string>
-  },
-  Tool?: {
-    defaultIconKey?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
-    key?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
-    module?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, WithTypename<Module> | string>,
-    moduleKey?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
-    name?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['ID'] | string>,
-    ordinal?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['Int'] | string>,
-    permissionKeys?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Array<Scalars['String'] | string>>,
-    route?: GraphCacheResolver<WithTypename<Tool>, Record<string, never>, Scalars['String'] | string>
-  },
-  ToolInfo?: {
-    defaultIconKey?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['String'] | string>,
-    key?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['String'] | string>,
-    name?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['String'] | string>,
-    ordinal?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['Int'] | string>,
-    permissionKeys?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Array<Scalars['String'] | string>>,
-    route?: GraphCacheResolver<WithTypename<ToolInfo>, Record<string, never>, Scalars['String'] | string>
-  },
-  ToolsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<ToolsConnection>, Record<string, never>, Array<WithTypename<ToolsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<ToolsConnection>, Record<string, never>, Array<WithTypename<Tool> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<ToolsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<ToolsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  ToolsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<ToolsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<ToolsEdge>, Record<string, never>, WithTypename<Tool> | string>
-  },
-  Topic?: {
-    createdAt?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, Scalars['Datetime'] | string>,
-    id?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, Scalars['UUID'] | string>,
-    identifier?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, Scalars['String'] | string>,
-    messages?: GraphCacheResolver<WithTypename<Topic>, TopicMessagesArgs, WithTypename<MessagesConnection> | string>,
-    messagesList?: GraphCacheResolver<WithTypename<Topic>, TopicMessagesListArgs, Array<WithTypename<Message> | string>>,
-    name?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, Scalars['String'] | string>,
-    nodeId?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, Scalars['ID'] | string>,
-    status?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, TopicStatus | string>,
-    subscribers?: GraphCacheResolver<WithTypename<Topic>, TopicSubscribersArgs, WithTypename<SubscribersConnection> | string>,
-    subscribersList?: GraphCacheResolver<WithTypename<Topic>, TopicSubscribersListArgs, Array<WithTypename<Subscriber> | string>>,
-    tags?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, Array<Scalars['String'] | string>>,
-    tenant?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, WithTypename<MsgTenant> | string>,
-    tenantId?: GraphCacheResolver<WithTypename<Topic>, Record<string, never>, Scalars['UUID'] | string>,
-    todos?: GraphCacheResolver<WithTypename<Topic>, TopicTodosArgs, WithTypename<TodosConnection> | string>,
-    todosList?: GraphCacheResolver<WithTypename<Topic>, TopicTodosListArgs, Array<WithTypename<Todo> | string>>
-  },
-  TopicMessageSubscriptionPayload?: {
-    event?: GraphCacheResolver<WithTypename<TopicMessageSubscriptionPayload>, Record<string, never>, Scalars['String'] | string>,
-    message?: GraphCacheResolver<WithTypename<TopicMessageSubscriptionPayload>, Record<string, never>, WithTypename<Message> | string>,
-    messageId?: GraphCacheResolver<WithTypename<TopicMessageSubscriptionPayload>, Record<string, never>, Scalars['UUID'] | string>
-  },
-  TopicsConnection?: {
-    edges?: GraphCacheResolver<WithTypename<TopicsConnection>, Record<string, never>, Array<WithTypename<TopicsEdge> | string>>,
-    nodes?: GraphCacheResolver<WithTypename<TopicsConnection>, Record<string, never>, Array<WithTypename<Topic> | string>>,
-    pageInfo?: GraphCacheResolver<WithTypename<TopicsConnection>, Record<string, never>, WithTypename<PageInfo> | string>,
-    totalCount?: GraphCacheResolver<WithTypename<TopicsConnection>, Record<string, never>, Scalars['Int'] | string>
-  },
-  TopicsEdge?: {
-    cursor?: GraphCacheResolver<WithTypename<TopicsEdge>, Record<string, never>, Scalars['Cursor'] | string>,
-    node?: GraphCacheResolver<WithTypename<TopicsEdge>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  UnblockResidentPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<UnblockResidentPayload>, Record<string, never>, Scalars['String'] | string>,
-    invitedByProfile?: GraphCacheResolver<WithTypename<UnblockResidentPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profile?: GraphCacheResolver<WithTypename<UnblockResidentPayload>, Record<string, never>, WithTypename<Profile> | string>,
-    query?: GraphCacheResolver<WithTypename<UnblockResidentPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<UnblockResidentPayload>, Record<string, never>, WithTypename<Resident> | string>,
-    residentEdge?: GraphCacheResolver<WithTypename<UnblockResidentPayload>, UnblockResidentPayloadResidentEdgeArgs, WithTypename<ResidentsEdge> | string>,
-    tenant?: GraphCacheResolver<WithTypename<UnblockResidentPayload>, Record<string, never>, WithTypename<Tenant> | string>
-  },
-  UnpinTodoPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, Record<string, never>, WithTypename<Location> | string>,
-    parentTodo?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    query?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, Record<string, never>, WithTypename<TodoResident> | string>,
-    rootTodo?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    tenant?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    todo?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    todoEdge?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, UnpinTodoPayloadTodoEdgeArgs, WithTypename<TodosEdge> | string>,
-    topic?: GraphCacheResolver<WithTypename<UnpinTodoPayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  UpdateLocationPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<UpdateLocationPayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<UpdateLocationPayload>, Record<string, never>, WithTypename<Location> | string>,
-    locationEdge?: GraphCacheResolver<WithTypename<UpdateLocationPayload>, UpdateLocationPayloadLocationEdgeArgs, WithTypename<LocationsEdge> | string>,
-    query?: GraphCacheResolver<WithTypename<UpdateLocationPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<UpdateLocationPayload>, Record<string, never>, WithTypename<LocResident> | string>,
-    tenant?: GraphCacheResolver<WithTypename<UpdateLocationPayload>, Record<string, never>, WithTypename<LocTenant> | string>
-  },
-  UpdateProfilePayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<UpdateProfilePayload>, Record<string, never>, Scalars['String'] | string>,
-    profile?: GraphCacheResolver<WithTypename<UpdateProfilePayload>, Record<string, never>, WithTypename<Profile> | string>,
-    profileEdge?: GraphCacheResolver<WithTypename<UpdateProfilePayload>, UpdateProfilePayloadProfileEdgeArgs, WithTypename<ProfilesEdge> | string>,
-    query?: GraphCacheResolver<WithTypename<UpdateProfilePayload>, Record<string, never>, WithTypename<Query> | string>
-  },
-  UpdateTodoPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, Record<string, never>, WithTypename<Location> | string>,
-    parentTodo?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    query?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, Record<string, never>, WithTypename<TodoResident> | string>,
-    rootTodo?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    tenant?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    todo?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    todoEdge?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, UpdateTodoPayloadTodoEdgeArgs, WithTypename<TodosEdge> | string>,
-    topic?: GraphCacheResolver<WithTypename<UpdateTodoPayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  UpdateTodoStatusPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, Record<string, never>, Scalars['String'] | string>,
-    location?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, Record<string, never>, WithTypename<Location> | string>,
-    parentTodo?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    query?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, Record<string, never>, WithTypename<Query> | string>,
-    resident?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, Record<string, never>, WithTypename<TodoResident> | string>,
-    rootTodo?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    tenant?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, Record<string, never>, WithTypename<TodoTenant> | string>,
-    todo?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, Record<string, never>, WithTypename<Todo> | string>,
-    todoEdge?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, UpdateTodoStatusPayloadTodoEdgeArgs, WithTypename<TodosEdge> | string>,
-    topic?: GraphCacheResolver<WithTypename<UpdateTodoStatusPayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  UpsertMessagePayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<UpsertMessagePayload>, Record<string, never>, Scalars['String'] | string>,
-    message?: GraphCacheResolver<WithTypename<UpsertMessagePayload>, Record<string, never>, WithTypename<Message> | string>,
-    messageEdge?: GraphCacheResolver<WithTypename<UpsertMessagePayload>, UpsertMessagePayloadMessageEdgeArgs, WithTypename<MessagesEdge> | string>,
-    postedByMsgResident?: GraphCacheResolver<WithTypename<UpsertMessagePayload>, Record<string, never>, WithTypename<MsgResident> | string>,
-    query?: GraphCacheResolver<WithTypename<UpsertMessagePayload>, Record<string, never>, WithTypename<Query> | string>,
-    tenant?: GraphCacheResolver<WithTypename<UpsertMessagePayload>, Record<string, never>, WithTypename<MsgTenant> | string>,
-    topic?: GraphCacheResolver<WithTypename<UpsertMessagePayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  UpsertSubscriberPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<UpsertSubscriberPayload>, Record<string, never>, Scalars['String'] | string>,
-    msgResident?: GraphCacheResolver<WithTypename<UpsertSubscriberPayload>, Record<string, never>, WithTypename<MsgResident> | string>,
-    query?: GraphCacheResolver<WithTypename<UpsertSubscriberPayload>, Record<string, never>, WithTypename<Query> | string>,
-    subscriber?: GraphCacheResolver<WithTypename<UpsertSubscriberPayload>, Record<string, never>, WithTypename<Subscriber> | string>,
-    subscriberEdge?: GraphCacheResolver<WithTypename<UpsertSubscriberPayload>, UpsertSubscriberPayloadSubscriberEdgeArgs, WithTypename<SubscribersEdge> | string>,
-    tenant?: GraphCacheResolver<WithTypename<UpsertSubscriberPayload>, Record<string, never>, WithTypename<MsgTenant> | string>,
-    topic?: GraphCacheResolver<WithTypename<UpsertSubscriberPayload>, Record<string, never>, WithTypename<Topic> | string>
-  },
-  UpsertTopicPayload?: {
-    clientMutationId?: GraphCacheResolver<WithTypename<UpsertTopicPayload>, Record<string, never>, Scalars['String'] | string>,
-    query?: GraphCacheResolver<WithTypename<UpsertTopicPayload>, Record<string, never>, WithTypename<Query> | string>,
-    tenant?: GraphCacheResolver<WithTypename<UpsertTopicPayload>, Record<string, never>, WithTypename<MsgTenant> | string>,
-    topic?: GraphCacheResolver<WithTypename<UpsertTopicPayload>, Record<string, never>, WithTypename<Topic> | string>,
-    topicEdge?: GraphCacheResolver<WithTypename<UpsertTopicPayload>, UpsertTopicPayloadTopicEdgeArgs, WithTypename<TopicsEdge> | string>
-  }
-};
-
-export type GraphCacheOptimisticUpdaters = {
-  activateTenant?: GraphCacheOptimisticMutationResolver<MutationActivateTenantArgs, Maybe<WithTypename<ActivateTenantPayload>>>,
-  assignTodo?: GraphCacheOptimisticMutationResolver<MutationAssignTodoArgs, Maybe<WithTypename<AssignTodoPayload>>>,
-  assumeResidency?: GraphCacheOptimisticMutationResolver<MutationAssumeResidencyArgs, Maybe<WithTypename<AssumeResidencyPayload>>>,
-  becomeSupport?: GraphCacheOptimisticMutationResolver<MutationBecomeSupportArgs, Maybe<WithTypename<BecomeSupportPayload>>>,
-  blockResident?: GraphCacheOptimisticMutationResolver<MutationBlockResidentArgs, Maybe<WithTypename<BlockResidentPayload>>>,
-  createLocation?: GraphCacheOptimisticMutationResolver<MutationCreateLocationArgs, Maybe<WithTypename<CreateLocationPayload>>>,
-  createTenant?: GraphCacheOptimisticMutationResolver<MutationCreateTenantArgs, Maybe<WithTypename<CreateTenantPayload>>>,
-  createTodo?: GraphCacheOptimisticMutationResolver<MutationCreateTodoArgs, Maybe<WithTypename<CreateTodoPayload>>>,
-  deactivateSubscriber?: GraphCacheOptimisticMutationResolver<MutationDeactivateSubscriberArgs, Maybe<WithTypename<DeactivateSubscriberPayload>>>,
-  deactivateTenant?: GraphCacheOptimisticMutationResolver<MutationDeactivateTenantArgs, Maybe<WithTypename<DeactivateTenantPayload>>>,
-  deactivateTenantSubscription?: GraphCacheOptimisticMutationResolver<MutationDeactivateTenantSubscriptionArgs, Maybe<WithTypename<DeactivateTenantSubscriptionPayload>>>,
-  declineInvitation?: GraphCacheOptimisticMutationResolver<MutationDeclineInvitationArgs, Maybe<WithTypename<DeclineInvitationPayload>>>,
-  declineResidency?: GraphCacheOptimisticMutationResolver<MutationDeclineResidencyArgs, Maybe<WithTypename<DeclineResidencyPayload>>>,
-  deleteLocation?: GraphCacheOptimisticMutationResolver<MutationDeleteLocationArgs, Maybe<WithTypename<DeleteLocationPayload>>>,
-  deleteTodo?: GraphCacheOptimisticMutationResolver<MutationDeleteTodoArgs, Maybe<WithTypename<DeleteTodoPayload>>>,
-  deleteTopic?: GraphCacheOptimisticMutationResolver<MutationDeleteTopicArgs, Maybe<WithTypename<DeleteTopicPayload>>>,
-  exitSupportMode?: GraphCacheOptimisticMutationResolver<MutationExitSupportModeArgs, Maybe<WithTypename<ExitSupportModePayload>>>,
-  grantUserLicense?: GraphCacheOptimisticMutationResolver<MutationGrantUserLicenseArgs, Maybe<WithTypename<GrantUserLicensePayload>>>,
-  joinAddressBook?: GraphCacheOptimisticMutationResolver<MutationJoinAddressBookArgs, Maybe<WithTypename<JoinAddressBookPayload>>>,
-  leaveAddressBook?: GraphCacheOptimisticMutationResolver<MutationLeaveAddressBookArgs, Maybe<WithTypename<LeaveAddressBookPayload>>>,
-  makeTemplateFromTodo?: GraphCacheOptimisticMutationResolver<MutationMakeTemplateFromTodoArgs, Maybe<WithTypename<MakeTemplateFromTodoPayload>>>,
-  makeTodoFromTemplate?: GraphCacheOptimisticMutationResolver<MutationMakeTodoFromTemplateArgs, Maybe<WithTypename<MakeTodoFromTemplatePayload>>>,
-  pinTodo?: GraphCacheOptimisticMutationResolver<MutationPinTodoArgs, Maybe<WithTypename<PinTodoPayload>>>,
-  reactivateTenantSubscription?: GraphCacheOptimisticMutationResolver<MutationReactivateTenantSubscriptionArgs, Maybe<WithTypename<ReactivateTenantSubscriptionPayload>>>,
-  revokeUserLicense?: GraphCacheOptimisticMutationResolver<MutationRevokeUserLicenseArgs, Maybe<WithTypename<RevokeUserLicensePayload>>>,
-  subscribeTenantToLicensePack?: GraphCacheOptimisticMutationResolver<MutationSubscribeTenantToLicensePackArgs, Maybe<WithTypename<SubscribeTenantToLicensePackPayload>>>,
-  unblockResident?: GraphCacheOptimisticMutationResolver<MutationUnblockResidentArgs, Maybe<WithTypename<UnblockResidentPayload>>>,
-  unpinTodo?: GraphCacheOptimisticMutationResolver<MutationUnpinTodoArgs, Maybe<WithTypename<UnpinTodoPayload>>>,
-  updateLocation?: GraphCacheOptimisticMutationResolver<MutationUpdateLocationArgs, Maybe<WithTypename<UpdateLocationPayload>>>,
-  updateProfile?: GraphCacheOptimisticMutationResolver<MutationUpdateProfileArgs, Maybe<WithTypename<UpdateProfilePayload>>>,
-  updateTodo?: GraphCacheOptimisticMutationResolver<MutationUpdateTodoArgs, Maybe<WithTypename<UpdateTodoPayload>>>,
-  updateTodoStatus?: GraphCacheOptimisticMutationResolver<MutationUpdateTodoStatusArgs, Maybe<WithTypename<UpdateTodoStatusPayload>>>,
-  upsertMessage?: GraphCacheOptimisticMutationResolver<MutationUpsertMessageArgs, Maybe<WithTypename<UpsertMessagePayload>>>,
-  upsertSubscriber?: GraphCacheOptimisticMutationResolver<MutationUpsertSubscriberArgs, Maybe<WithTypename<UpsertSubscriberPayload>>>,
-  upsertTopic?: GraphCacheOptimisticMutationResolver<MutationUpsertTopicArgs, Maybe<WithTypename<UpsertTopicPayload>>>
-};
-
-export type GraphCacheUpdaters = {
-  Mutation?: {
-    activateTenant?: GraphCacheUpdateResolver<{ activateTenant: Maybe<WithTypename<ActivateTenantPayload>> }, MutationActivateTenantArgs>,
-    assignTodo?: GraphCacheUpdateResolver<{ assignTodo: Maybe<WithTypename<AssignTodoPayload>> }, MutationAssignTodoArgs>,
-    assumeResidency?: GraphCacheUpdateResolver<{ assumeResidency: Maybe<WithTypename<AssumeResidencyPayload>> }, MutationAssumeResidencyArgs>,
-    becomeSupport?: GraphCacheUpdateResolver<{ becomeSupport: Maybe<WithTypename<BecomeSupportPayload>> }, MutationBecomeSupportArgs>,
-    blockResident?: GraphCacheUpdateResolver<{ blockResident: Maybe<WithTypename<BlockResidentPayload>> }, MutationBlockResidentArgs>,
-    createLocation?: GraphCacheUpdateResolver<{ createLocation: Maybe<WithTypename<CreateLocationPayload>> }, MutationCreateLocationArgs>,
-    createTenant?: GraphCacheUpdateResolver<{ createTenant: Maybe<WithTypename<CreateTenantPayload>> }, MutationCreateTenantArgs>,
-    createTodo?: GraphCacheUpdateResolver<{ createTodo: Maybe<WithTypename<CreateTodoPayload>> }, MutationCreateTodoArgs>,
-    deactivateSubscriber?: GraphCacheUpdateResolver<{ deactivateSubscriber: Maybe<WithTypename<DeactivateSubscriberPayload>> }, MutationDeactivateSubscriberArgs>,
-    deactivateTenant?: GraphCacheUpdateResolver<{ deactivateTenant: Maybe<WithTypename<DeactivateTenantPayload>> }, MutationDeactivateTenantArgs>,
-    deactivateTenantSubscription?: GraphCacheUpdateResolver<{ deactivateTenantSubscription: Maybe<WithTypename<DeactivateTenantSubscriptionPayload>> }, MutationDeactivateTenantSubscriptionArgs>,
-    declineInvitation?: GraphCacheUpdateResolver<{ declineInvitation: Maybe<WithTypename<DeclineInvitationPayload>> }, MutationDeclineInvitationArgs>,
-    declineResidency?: GraphCacheUpdateResolver<{ declineResidency: Maybe<WithTypename<DeclineResidencyPayload>> }, MutationDeclineResidencyArgs>,
-    deleteLocation?: GraphCacheUpdateResolver<{ deleteLocation: Maybe<WithTypename<DeleteLocationPayload>> }, MutationDeleteLocationArgs>,
-    deleteTodo?: GraphCacheUpdateResolver<{ deleteTodo: Maybe<WithTypename<DeleteTodoPayload>> }, MutationDeleteTodoArgs>,
-    deleteTopic?: GraphCacheUpdateResolver<{ deleteTopic: Maybe<WithTypename<DeleteTopicPayload>> }, MutationDeleteTopicArgs>,
-    exitSupportMode?: GraphCacheUpdateResolver<{ exitSupportMode: Maybe<WithTypename<ExitSupportModePayload>> }, MutationExitSupportModeArgs>,
-    grantUserLicense?: GraphCacheUpdateResolver<{ grantUserLicense: Maybe<WithTypename<GrantUserLicensePayload>> }, MutationGrantUserLicenseArgs>,
-    joinAddressBook?: GraphCacheUpdateResolver<{ joinAddressBook: Maybe<WithTypename<JoinAddressBookPayload>> }, MutationJoinAddressBookArgs>,
-    leaveAddressBook?: GraphCacheUpdateResolver<{ leaveAddressBook: Maybe<WithTypename<LeaveAddressBookPayload>> }, MutationLeaveAddressBookArgs>,
-    makeTemplateFromTodo?: GraphCacheUpdateResolver<{ makeTemplateFromTodo: Maybe<WithTypename<MakeTemplateFromTodoPayload>> }, MutationMakeTemplateFromTodoArgs>,
-    makeTodoFromTemplate?: GraphCacheUpdateResolver<{ makeTodoFromTemplate: Maybe<WithTypename<MakeTodoFromTemplatePayload>> }, MutationMakeTodoFromTemplateArgs>,
-    pinTodo?: GraphCacheUpdateResolver<{ pinTodo: Maybe<WithTypename<PinTodoPayload>> }, MutationPinTodoArgs>,
-    reactivateTenantSubscription?: GraphCacheUpdateResolver<{ reactivateTenantSubscription: Maybe<WithTypename<ReactivateTenantSubscriptionPayload>> }, MutationReactivateTenantSubscriptionArgs>,
-    revokeUserLicense?: GraphCacheUpdateResolver<{ revokeUserLicense: Maybe<WithTypename<RevokeUserLicensePayload>> }, MutationRevokeUserLicenseArgs>,
-    subscribeTenantToLicensePack?: GraphCacheUpdateResolver<{ subscribeTenantToLicensePack: Maybe<WithTypename<SubscribeTenantToLicensePackPayload>> }, MutationSubscribeTenantToLicensePackArgs>,
-    unblockResident?: GraphCacheUpdateResolver<{ unblockResident: Maybe<WithTypename<UnblockResidentPayload>> }, MutationUnblockResidentArgs>,
-    unpinTodo?: GraphCacheUpdateResolver<{ unpinTodo: Maybe<WithTypename<UnpinTodoPayload>> }, MutationUnpinTodoArgs>,
-    updateLocation?: GraphCacheUpdateResolver<{ updateLocation: Maybe<WithTypename<UpdateLocationPayload>> }, MutationUpdateLocationArgs>,
-    updateProfile?: GraphCacheUpdateResolver<{ updateProfile: Maybe<WithTypename<UpdateProfilePayload>> }, MutationUpdateProfileArgs>,
-    updateTodo?: GraphCacheUpdateResolver<{ updateTodo: Maybe<WithTypename<UpdateTodoPayload>> }, MutationUpdateTodoArgs>,
-    updateTodoStatus?: GraphCacheUpdateResolver<{ updateTodoStatus: Maybe<WithTypename<UpdateTodoStatusPayload>> }, MutationUpdateTodoStatusArgs>,
-    upsertMessage?: GraphCacheUpdateResolver<{ upsertMessage: Maybe<WithTypename<UpsertMessagePayload>> }, MutationUpsertMessageArgs>,
-    upsertSubscriber?: GraphCacheUpdateResolver<{ upsertSubscriber: Maybe<WithTypename<UpsertSubscriberPayload>> }, MutationUpsertSubscriberArgs>,
-    upsertTopic?: GraphCacheUpdateResolver<{ upsertTopic: Maybe<WithTypename<UpsertTopicPayload>> }, MutationUpsertTopicArgs>
-  },
-  Subscription?: {
-    topicMessage?: GraphCacheUpdateResolver<{ topicMessage: Maybe<WithTypename<TopicMessageSubscriptionPayload>> }, SubscriptionTopicMessageArgs>
-  },
-};
-
-export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
-  updates?: GraphCacheUpdaters,
-  keys?: GraphCacheKeysConfig,
-  optimistic?: GraphCacheOptimisticUpdaters,
-  resolvers?: GraphCacheResolvers,
+export function useTodoByIdForRefreshQuery(options: Omit<Urql.UseQueryArgs<never, TodoByIdForRefreshQueryVariables>, 'query'>) {
+  return Urql.useQuery<TodoByIdForRefreshQuery, TodoByIdForRefreshQueryVariables>({ query: TodoByIdForRefreshDocument, ...options });
 };
