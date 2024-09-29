@@ -18,7 +18,7 @@ commit;
 begin;
   select app_fn.subscribe_tenant_to_license_pack(
     (select id from app.tenant where identifier = 'my-app')
-    ,'my_app'
+    ,'my-app'
   );
 commit;
 

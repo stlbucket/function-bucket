@@ -533,7 +533,29 @@ CREATE OR REPLACE FUNCTION app_fn.current_profile_claims(_profile_id uuid)
     else
       _profile_claims.profile_id = _profile_id;
     end if;
-    
+
+    -- this query determines the current application key
+    -- this implementation may need to be revisited in more complex scenarios    
+    with hp as (
+      select distinct on (r.display_name)
+        r.display_name
+        ,lt.application_key
+        ,r.status
+      from app.license l
+      join app.license_type lt on l.license_type_key = lt.key
+      join app.resident r on r.id = l.resident_id
+      join app.application a on a.key = lt.application_key
+      where r.status = 'active'
+      group by r.display_name, lt.application_key, r.status
+      order by r.display_name, (lt.application_key = 'base')
+      limit 1
+    )
+    select hp.application_key
+    into _profile_claims.application_key
+    from hp
+    ;
+    -- select coalesce(_profile_claims.application_key, 'base') into _profile_claims.application_key;
+
     return _profile_claims;
   end;
   $function$

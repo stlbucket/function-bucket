@@ -86,10 +86,10 @@ export default defineEventHandler(async (event) => {
     if (appState.loggedIn) {
       // Here is where we get user session info from anywhere:  redis, our current database, useSupabaseUser(), etc...
       const client = await serverSupabaseClient(event)
-      const session = (await client.auth.getSession()).data.session
+      const user = (await client.auth.getUser()).data.user
 
       // the session will be used later by graphql
-      event.context.session = session || 'INVALID SESSION'  
+      event.context.user = user || 'INVALID SESSION'  
     }
   } catch(e: any) {
     console.log('AUTH ERROR', e)

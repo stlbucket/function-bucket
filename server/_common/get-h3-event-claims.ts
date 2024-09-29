@@ -7,7 +7,6 @@ async function getH3EventClaims(event: H3Event) {
     // Here is where we get user session info from anywhere:  redis, our current database, useSupabaseUser(), etc...
     // Since we are using supabase, we use the supabase client, but this could integrate with any auth provider
     const client = await serverSupabaseClient(event)
-    // const session = (await client.auth.getSession()).data.session
     const user = (await client.auth.getUser()).data.user
 
     // this implementation is retrieving current user claims from the database

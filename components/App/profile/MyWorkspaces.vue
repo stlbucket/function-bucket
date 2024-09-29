@@ -121,10 +121,11 @@
     await loadData()
     if (props.navToOnAssume && route.path !== props.navToOnAssume) {
       // await navigateTo('/')
-      await reloadNuxtApp({
-        path: '/',
-        force: true
-      })
+      // await reloadNuxtApp({
+      //   path: '/',
+      //   force: true
+      // })
+      await navigateTo('/bounce')
     } else {
       tenantNameBounce.value = true
       setTimeout(() => { tenantNameBounce.value = false }, 1469)

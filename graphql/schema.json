@@ -16209,6 +16209,18 @@
             "deprecationReason": null
           },
           {
+            "name": "applicationKey",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "displayName",
             "description": null,
             "args": [],

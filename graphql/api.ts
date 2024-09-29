@@ -2790,6 +2790,7 @@ export type ProfileResidentsListArgs = {
 export type ProfileClaim = {
   __typename: 'ProfileClaim';
   actualResidentId?: Maybe<Scalars['UUID']['output']>;
+  applicationKey?: Maybe<Scalars['String']['output']>;
   displayName?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   permissions?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
@@ -5994,7 +5995,7 @@ export type LicenseTypePermissionFragment = { __typename: 'LicenseTypePermission
 
 export type ProfileFragment = { __typename: 'Profile', id: any, email: string, identifier?: string | null, firstName?: string | null, lastName?: string | null, fullName?: string | null, phone?: string | null, isPublic: boolean, displayName?: string | null, avatarKey?: string | null, status: ProfileStatus, createdAt: any, updatedAt: any };
 
-export type ProfileClaimFragment = { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null };
+export type ProfileClaimFragment = { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null, applicationKey?: string | null };
 
 export type ResidentFragment = { __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType };
 
@@ -6168,7 +6169,7 @@ export type AvailableModulesQuery = { __typename: 'Query', availableModules?: Ar
 export type CurrentProfileClaimsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentProfileClaimsQuery = { __typename: 'Query', currentProfileClaims?: { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null } | null, availableModules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, toolsByModuleKeyList?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, route?: string | null } | null> | null } | null> | null, activeResidency?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType }> | null };
+export type CurrentProfileClaimsQuery = { __typename: 'Query', currentProfileClaims?: { __typename: 'ProfileClaim', profileId?: any | null, tenantId?: any | null, residentId?: any | null, actualResidentId?: any | null, profileStatus?: ProfileStatus | null, permissions?: Array<string | null> | null, email?: string | null, displayName?: string | null, tenantName?: string | null, applicationKey?: string | null } | null, availableModules?: Array<{ __typename: 'ModuleInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, toolsByModuleKeyList?: Array<{ __typename: 'ToolInfo', key?: string | null, name?: string | null, permissionKeys?: Array<string | null> | null, defaultIconKey?: string | null, ordinal?: number | null, route?: string | null } | null> | null } | null> | null, activeResidency?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType }> | null };
 
 export type GetMyselfQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6442,6 +6443,7 @@ export const ProfileClaimFragmentDoc = gql`
   email
   displayName
   tenantName
+  applicationKey
 }
     `;
 export const ResidentFragmentDoc = gql`
