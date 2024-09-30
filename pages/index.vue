@@ -16,6 +16,10 @@
       <div class="flex flex-col justify-start h-full bg-gray-700" v-if="!currentProfileClaims.applicationKey">
         <MyWorkspaces />
       </div>
+      <div class="flex flex-col justify-start h-full bg-gray-700" v-if="showOnlyNav">
+        <MyWorkspaces />
+        <HomePageNav />
+      </div>
     </div>
   </div>
 </template>
@@ -25,5 +29,9 @@
 
   const showLoginManager = computed(() => {
     return currentProfileClaims.value.profileStatus !== 'ACTIVE'
+  })
+
+  const showOnlyNav = computed(() => {
+    return !showLoginManager && ['base', 'my-app'].indexOf(currentProfileClaims.value.applicationKey) === -1
   })
 </script>
