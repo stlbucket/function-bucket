@@ -1,63 +1,28 @@
 <template>
-  <div class="flex flex-col gap-2">
-    <div class="flex justify-center text-2xl">
-      <div>CURRENT WORKSPACE</div>
+  <div class="flex flex-col gap-1 w-1/5 bg-gray-700">
+    <div class="flex flex-col justify-center">
+      <div class="flex justify-center text-s bg-gray-700">CURRENT</div>
+      <div class="flex justify-center text-xs bg-gray-600">{{ activeResidency.tenantName }}</div>
     </div>
-    <ResidentsList
-      class="max-sm:hidden"
-      title="MY APP USER TENANCIES" 
-      row-action-name="Work Here"
-      :residents="activeResidency ? [activeResidency] : []"
-      disable-sort
-      show-licenses
-      show-assume
-      show-tenant-name
-      @assume="assumeResidency"
-    >
-    </ResidentsList>
-    <ResidentsListSmall
-      class="md:hidden"
-      title="MY APP USER TENANCIES" 
-      :residents="activeResidency ? [activeResidency] : []"
-      disable-sort
-      show-licenses
-      show-assume
-      show-tenant-name
-      @assume="assumeResidency"
-    >
-    </ResidentsListSmall>
-    <div class="flex justify-center text-2xl">
-      <div>Your Other Workpaces</div>
+    <div class="flex flex-col justify-center" v-if="inactiveResidencies.length">
+      <div class="flex justify-center text-s bg-gray-700">INACTIVE</div>
+      <div 
+        class="flex justify-center text-xs bg-gray-600 hover:bg-blue-600" 
+        v-for="ir in inactiveResidencies"
+        @click="assumeResidency(ir)"
+      >
+        {{ ir.tenantName }}
+      </div>
     </div>
-    <div class="flex justify-around">
-      <UCard class="h-full" v-if="inactiveResidencies.length">
-        <template #header><div class="flex justify-center text-2xl">Inactive</div></template>
-        <ResidentsListSmall
-          title="MY APP USER TENANCIES" 
-          row-action-name="Work Here"
-          :residents="inactiveResidencies"
-          disable-sort
-          show-licenses
-          show-assume
-          show-tenant-name
-          @row-action="assumeResidency"
-        >
-        </ResidentsListSmall>
-      </UCard>
-      <UCard class="h-full" v-if="invitedResidencies.length">
-        <template #header><div class="flex justify-center text-2xl">Invited</div></template>
-        <ResidentsListSmall
-          title="MY APP USER TENANCIES" 
-          row-action-name="Work Here"
-          :residents="invitedResidencies"
-          disable-sort
-          show-licenses
-          show-assume
-          show-tenant-name
-          @row-action="assumeResidency"
-        >
-        </ResidentsListSmall>
-      </UCard>
+    <div class="flex flex-col justify-center" v-if="invitedResidencies.length">
+      <div class="flex justify-center text-s bg-gray-700">INVITED</div>
+      <div 
+        class="flex justify-center text-xs bg-gray-600 hover:bg-blue-600" 
+        v-for="ir in invitedResidencies"
+        @click="assumeResidency(ir)"
+      >
+        {{ ir.tenantName }}
+      </div>
     </div>
   </div>
 </template>

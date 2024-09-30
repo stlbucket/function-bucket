@@ -2,14 +2,21 @@
   <div class="flex justify-center items-center h-full bg-gray-700" v-if="showLoginManager">
     <LoginManager></LoginManager>
   </div>
-  <div class="flex flex-col justify-start h-full bg-gray-700" v-if="currentProfileClaims.applicationKey === 'base'">
-    <HomePageDefault />
-  </div>
-  <div class="flex flex-col justify-start h-full bg-gray-700" v-if="currentProfileClaims.applicationKey === 'my-app'">
-    <HomePageMyApp />
-  </div>
-  <div class="flex flex-col justify-start h-full bg-gray-700" v-if="!currentProfileClaims.applicationKey && !showLoginManager">
-    <MyWorkspaces />
+  <div v-else>
+    <div class="flex">
+      <MyWorkspaceSelector />
+      <div class="flex flex-col justify-start h-full bg-gray-700" v-if="currentProfileClaims.applicationKey === 'base'">
+        <HomePageDefault />
+        <HomePageNav />
+      </div>
+      <div class="flex flex-col justify-start h-full bg-gray-700" v-if="currentProfileClaims.applicationKey === 'my-app'">
+        <HomePageMyApp />
+        <HomePageNav />
+      </div>
+      <div class="flex flex-col justify-start h-full bg-gray-700" v-if="!currentProfileClaims.applicationKey">
+        <MyWorkspaces />
+      </div>
+    </div>
   </div>
 </template>
 
