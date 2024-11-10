@@ -1,11 +1,11 @@
 ------------------------------------------------------- clone_project_template
-CREATE OR REPLACE FUNCTION wf_api.clone_project_template(_identifier text, _options wf_fn.clone_project_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_project_template_options) RETURNS wf.project
+CREATE OR REPLACE FUNCTION wf_api.clone_project_template(_identifier citext, _options wf_fn.clone_project_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_project_template_options) RETURNS wf.project
     LANGUAGE plpgsql
     AS $$
   DECLARE
     _project wf.project;
     _project_uow wf.uow;
-    _err_context text;
+    _err_context citext;
   BEGIN
     _project := (
       select wf_fn.clone_project_template(
@@ -19,14 +19,14 @@ CREATE OR REPLACE FUNCTION wf_api.clone_project_template(_identifier text, _opti
   END
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier text, _tenant_id uuid, _options wf_fn.clone_project_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_project_template_options) RETURNS wf.project
+CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier citext, _tenant_id uuid, _options wf_fn.clone_project_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_project_template_options) RETURNS wf.project
     LANGUAGE plpgsql
     AS $$
   DECLARE
     _project_template wf.project;
     _project wf.project;
     _project_uow wf.uow;
-    _err_context text;
+    _err_context citext;
   BEGIN
 
     select * 
@@ -48,7 +48,8 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier text, _tenan
       name,
       type,
       is_template,
-      workflow_data
+      workflow_data,
+      input_definitions
     )
     values (
       _project_template.identifier
@@ -57,6 +58,7 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier text, _tenan
       ,_project_template.type
       ,false
       ,_options.data
+      ,coalesce(_project_info.input_definitions, '{}'::wf.workflow_input_definition[])
     )
     returning *
     into _project;
@@ -157,13 +159,13 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier text, _tenan
   end;
   $$;
 ------------------------------------------------------- queue_workflow
-CREATE OR REPLACE FUNCTION wf_api.queue_workflow(_identifier text, _workflow_input_data jsonb) RETURNS jsonb
+CREATE OR REPLACE FUNCTION wf_api.queue_workflow(_identifier citext, _workflow_input_data jsonb) RETURNS jsonb
     LANGUAGE plpgsql
     AS $$
   DECLARE
     _tenant_id uuid;
     _result jsonb;
-    _err_context text;
+    _err_context citext;
   BEGIN
     _tenant_id := auth_ext.tenant_id();
 
@@ -183,14 +185,14 @@ CREATE OR REPLACE FUNCTION wf_api.queue_workflow(_identifier text, _workflow_inp
   end;
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier text, _tenant_id uuid, _workflow_input_data jsonb) RETURNS jsonb
+CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id uuid, _workflow_input_data jsonb) RETURNS jsonb
     LANGUAGE plpgsql SECURITY DEFINER
     AS $$
   DECLARE
     _project wf.project;
     _uows_to_schedule wf.uow[];
     _result wf_fn.queue_workflow_result;
-    _err_context text;
+    _err_context citext;
   BEGIN
 
     _project := (
@@ -221,14 +223,14 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier text, _tenant_id uui
   end;
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier text, _workflow_input_data jsonb, _tenant_id uuid DEFAULT NULL::uuid) RETURNS jsonb
+CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier citext, _workflow_input_data jsonb, _tenant_id uuid DEFAULT NULL::uuid) RETURNS jsonb
     LANGUAGE plpgsql SECURITY DEFINER
     AS $$
   DECLARE
     _project wf.project;
     _uows_to_schedule wf.uow[];
     _result wf_fn.queue_workflow_result;
-    _err_context text;
+    _err_context citext;
   BEGIN
 
     -- if _identifier not in (
@@ -270,13 +272,13 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier text, _workflow
   end;
   $$;
 ------------------------------------------------------- upsert_project
-CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info) RETURNS wf.project
+CREATE OR REPLACE FUNCTION wf_api.upsert_project(_project_info wf_fn.project_info) RETURNS wf.project
     LANGUAGE plpgsql
     AS $$
   DECLARE
     _tenant_id uuid;
     _project wf.project;
-    _err_context text;
+    _err_context citext;
   BEGIN
     _tenant_id := auth_ext.tenant_id();
     _project := (select wf_fn.upsert_project(
@@ -299,25 +301,16 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info
     _uow_dependency wf.uow_dependency;
     _uow_dependee wf.uow;
     _uow_depender wf.uow;
-    _err_context text;
+    _err_context citext;
   BEGIN
-    if _project_info.is_template is null then
-      raise exception 'is_template must be specified for project_info';
-    end if;
-
     select *
     into _project
     from wf.project
     where tenant_id = _tenant_id
-    and (
-        (identifier = _project_info.identifier and is_template = true and _project_info.is_template = true)
-      or 
-        (id = _project_info.id and is_template = false and _project_info.is_template = false)
-    )
-    and is_template = _project_info.is_template
+    and identifier = _project_info.identifier
+    and is_template = true
     ;
 
-  -- raise exception '_project_info.workflow_input_definition: %', _project_info.workflow_input_definition;
     if _project.id is null then
       insert into wf.project_type(id)
       values (_project_info.type)
@@ -330,34 +323,34 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info
         ,identifier
         ,type
         ,is_template
-        ,workflow_input_definition
+        ,input_definitions
       )
       select
         _tenant_id
         ,_project_info.name
         ,_project_info.identifier
         ,_project_info.type
-        ,coalesce(_project_info.is_template, false)
-        ,coalesce(_project_info.workflow_input_definition, '{}'::jsonb)
+        -- ,coalesce(_project_info.is_template, false)
+        ,true
+        ,coalesce(_project_info.input_definitions, '{}'::wf.workflow_input_definition[])
       returning *
       into _project
       ;
 
-      _project_uow := (select wf_fn.do_upsert_uow(
+      _project_uow := (select wf_fn.upsert_uow(
         row(
-          null
-          ,_project_info.identifier
-          ,_project_info.name
-          ,coalesce(_project_info.is_template, false)
-          ,_project_info.name || ' root uow'
-          ,'project'
+          _project_info.identifier::citext
+          ,_project_info.name::citext
+          ,(_project_info.name || ' root uow')::citext
+          ,'project'::wf.uow_type
           ,'{}'
-          ,_project.id
-          ,null
-          ,null
-          ,_project_info.on_completed_workflow_handler_key
-          ,(_project_info.on_completed_workflow_handler_key is not null)
+          ,_project.id::citext
+          ,null::citext
+          ,null::timestamptz
+          ,_project_info.on_completed_workflow_handler_key::citext
+          ,(_project_info.on_completed_workflow_handler_key is not null)::boolean
         )
+        ,_project.id
         ,_tenant_id
       ));
 
@@ -373,29 +366,28 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info
       returning * into _project
       ;
 
-      _project_uow := (select wf_fn.do_upsert_uow(
+      _project_uow := (select wf_fn.upsert_uow(
         row(
-          null
-          ,_project_info.identifier
-          ,_project_info.name
-          ,coalesce(_project_info.is_template, false)
-          ,_project_info.name || ' root uow'
-          ,'project'
+          _project_info.identifier::citext
+          ,_project_info.name::citext
+          ,(_project_info.name || ' root uow')::citext
+          ,'project'::wf.uow_type
           ,'{}'
-          ,_project.id
-          ,null
-          ,null
-          ,_project_info.on_completed_workflow_handler_key
-          ,(_project_info.on_completed_workflow_handler_key is not null)
-        ),
-        _tenant_id
+          ,_project.id::citext
+          ,null::citext
+          ,null::timestamptz
+          ,_project_info.on_completed_workflow_handler_key::citext
+          ,(_project_info.on_completed_workflow_handler_key is not null)::boolean
+        )
+        ,_project.id
+        ,_tenant_id
       ));
     end if;
 
     foreach _uow_info in array(_project_info.uows)
     loop
       _uow_info.project_id := _project.id;
-      perform wf_fn.do_upsert_uow(_uow_info, _tenant_id);
+      perform wf_fn.upsert_uow(_uow_info, _project.id, _tenant_id);
     end loop;
 
     update wf.uow set 
@@ -460,7 +452,7 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info
   end;
   $$;
 ------------------------------------------------------- upsert_uow
-CREATE OR REPLACE FUNCTION wf_fn.upsert_uow_api(_uow_info wf_fn.uow_info, _tenant_id uuid) RETURNS wf.uow
+CREATE OR REPLACE FUNCTION wf_api.upsert_uow(_uow_info wf_fn.uow_info, _project_id uuid) RETURNS wf.uow
   LANGUAGE plpgsql
   VOLATILE
   SECURITY INVOKER
@@ -468,11 +460,12 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_uow_api(_uow_info wf_fn.uow_info, _tenan
   DECLARE
     _uow wf.uow;
     _tenant_id uuid;
-    _err_context text;
+    _err_context citext;
   BEGIN
     _tenant_id := auth_ext.tenant_id();
-    _uow := (select wf_fn.do_upsert_uow(
+    _uow := (select wf_fn.upsert_uow(
       _uow_info
+      ,_project_id
       ,_tenant_id
     ));
 
@@ -480,38 +473,28 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_uow_api(_uow_info wf_fn.uow_info, _tenan
   end;
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(_uow_info wf_fn.uow_info, _tenant_id uuid) RETURNS wf.uow
+CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(
+    _uow_info wf_fn.uow_info,
+    _project_id uuid,
+    _tenant_id uuid
+  ) RETURNS wf.uow
     LANGUAGE plpgsql
     AS $$
   DECLARE
     _uow wf.uow;
-    _err_context text;
+    _err_context citext;
   BEGIN
-    if _uow_info.id is not null then
-      select *
-      into _uow
-      from wf.uow
-      where tenant_id = _tenant_id
-      and id = _uow_info.id
-      ;
-      
-      if _uow.id is null then
-        raise exception 'uow id specified does not exist';
-      end if;
-    else 
-      select *
-      into _uow
-      from wf.uow
-      where tenant_id = _tenant_id
-      and identifier = _uow_info.identifier
-      and project_id = _uow_info.project_id
-      ;
-    end if;
+    select *
+    into _uow
+    from wf.uow
+    where tenant_id = _tenant_id
+    and identifier = _uow_info.identifier
+    and project_id = _project_id
+    ;
 
     if _uow.id is null then
       insert into wf.uow(
-        id
-        ,tenant_id
+        tenant_id
         ,identifier
         ,is_template
         ,name
@@ -526,26 +509,26 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(_uow_info wf_fn.uow_info, _tenant_id
         ,use_worker
       )
       select
-        coalesce(_uow_info.id, shard_1.id_generator())
-        ,_tenant_id
+        _tenant_id
         ,_uow_info.identifier
-        ,_uow_info.is_template
+        ,true
         ,_uow_info.name
         ,_uow_info.description
         ,_uow_info.type
         ,_uow_info.data
-        ,_uow_info.project_id
-        ,case
-          when _uow_info.is_template then
-            'template'::wf.uow_status_type
-          else
-            'incomplete'::wf.uow_status_type
-        end 
+        ,_project_id
+        ,'template'::wf.uow_status_type
+        -- ,case
+        --   when _uow_info.is_template then
+        --     'template'::wf.uow_status_type
+        --   else
+        --     'incomplete'::wf.uow_status_type
+        -- end 
         ,_uow_info.due_at
         ,(
           select id from wf.uow
-          where project_id = _uow_info.project_id
-          and (id = _uow_info.parent_uow_id or identifier = _uow_info.parent_uow_id)
+          where project_id = _project_id
+          and (id = _project_id or identifier = _project_id::citext)
         )
         ,_uow_info.workflow_handler_key
         ,coalesce(_uow_info.use_worker, false)
@@ -570,7 +553,7 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(_uow_info wf_fn.uow_info, _tenant_id
   end;
   $$;
 ------------------------------------------------------- delete_uow
-CREATE OR REPLACE FUNCTION wf_fn.delete_uow(_uow_id uuid)
+CREATE OR REPLACE FUNCTION wf_api.delete_uow(_uow_id uuid)
   RETURNS boolean
   LANGUAGE plpgsql
   VOLATILE
@@ -589,7 +572,7 @@ CREATE OR REPLACE FUNCTION wf_fn.delete_uow(_uow_id uuid) RETURNS boolean
   DECLARE
     _uow wf.uow;
     _sibling_count integer;
-    _err_context text;
+    _err_context citext;
   BEGIN
 
     select * into _uow from wf.uow where id = _uow_id;
@@ -610,7 +593,7 @@ CREATE OR REPLACE FUNCTION wf_fn.delete_uow(_uow_id uuid) RETURNS boolean
   end;
   $$;
 ------------------------------------------------------- error_uow
-CREATE OR REPLACE FUNCTION wf_fn.error_uow_api(_uow_id uuid, _message text, _stack text[])
+CREATE OR REPLACE FUNCTION wf_api.error_uow(_uow_id uuid, _message citext, _stack citext[])
   RETURNS wf.uow
   LANGUAGE plpgsql
   VOLATILE
@@ -624,13 +607,13 @@ CREATE OR REPLACE FUNCTION wf_fn.error_uow_api(_uow_id uuid, _message text, _sta
   end;
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.error_uow(_uow_id uuid, _message text, _stack text[]) RETURNS wf.uow
+CREATE OR REPLACE FUNCTION wf_fn.error_uow(_uow_id uuid, _message citext, _stack citext[]) RETURNS wf.uow
     LANGUAGE plpgsql
     AS $$
   DECLARE
     _uow wf.uow;
     _project_uow wf.uow;
-    _err_context text;
+    _err_context citext;
   BEGIN
     select *
     into _uow
@@ -684,7 +667,7 @@ CREATE OR REPLACE FUNCTION wf_fn.error_uow(_uow_id uuid, _message text, _stack t
   end;
   $$;
 ------------------------------------------------------- cancel_project
-CREATE OR REPLACE FUNCTION wf_fn.cancel_project_api(_project_id uuid)
+CREATE OR REPLACE FUNCTION wf_api.cancel_project(_project_id uuid)
   RETURNS wf.project
   LANGUAGE plpgsql
   VOLATILE
@@ -703,7 +686,7 @@ CREATE OR REPLACE FUNCTION wf_fn.cancel_project(_project_id uuid) RETURNS wf.pro
     AS $$
   DECLARE
     _project wf.project;
-    _err_context text;
+    _err_context citext;
   BEGIN
     select * into _project
     from wf.project 
@@ -723,7 +706,7 @@ CREATE OR REPLACE FUNCTION wf_fn.cancel_project(_project_id uuid) RETURNS wf.pro
   end;
   $$;
 -------------------------------------------------------
-CREATE OR REPLACE FUNCTION wf_fn.complete_uow_api(_uow_id uuid, _options wf_fn.complete_uow_options DEFAULT ROW(NULL::jsonb, NULL::jsonb))
+CREATE OR REPLACE FUNCTION wf_api.complete_uow(_uow_id uuid, _options wf_fn.complete_uow_options DEFAULT ROW(NULL::jsonb, NULL::jsonb))
   RETURNS wf.uow
   LANGUAGE plpgsql
   VOLATILE
@@ -751,7 +734,7 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
     _child_status wf.uow_status_type;
     _parent_status wf.uow_status_type;
     _result wf_fn.complete_uow_result;
-    _err_context text;
+    _err_context citext;
   BEGIN
     select *
     into _uow
@@ -882,7 +865,7 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
   end;
   $$;
 ------------------------------------------------------- incomplete_uow
-CREATE OR REPLACE FUNCTION wf_fn.incomplete_uow_api(_uow_id uuid)
+CREATE OR REPLACE FUNCTION wf_api.incomplete_uow(_uow_id uuid)
   RETURNS wf.uow
   LANGUAGE plpgsql
   VOLATILE
@@ -908,7 +891,7 @@ CREATE OR REPLACE FUNCTION wf_fn.incomplete_uow(_uow_id uuid) RETURNS wf.uow
     _depender_status wf.uow_status_type;
     _child_status wf.uow_status_type;
     _parent_status wf.uow_status_type;
-    _err_context text;
+    _err_context citext;
   BEGIN
     select *
     into _uow
@@ -994,7 +977,7 @@ CREATE OR REPLACE FUNCTION wf_fn.incomplete_uow(_uow_id uuid) RETURNS wf.uow
   end;
   $$;
 ------------------------------------------------------- pause_uow
-CREATE OR REPLACE FUNCTION wf_fn.pause_uow_api(_uow_id uuid)
+CREATE OR REPLACE FUNCTION wf_api.pause_uow(_uow_id uuid)
   RETURNS wf.uow
   LANGUAGE plpgsql
   VOLATILE
@@ -1015,7 +998,7 @@ CREATE OR REPLACE FUNCTION wf_fn.pause_uow(_uow_id uuid) RETURNS wf.uow
     _uow wf.uow;
     _project_uow wf.uow;
     _result wf_fn.complete_uow_result;
-    _err_context text;
+    _err_context citext;
   BEGIN
     select *
     into _uow
@@ -1051,7 +1034,7 @@ CREATE OR REPLACE FUNCTION wf_fn.pause_uow(_uow_id uuid) RETURNS wf.uow
   end;
   $$;
 ------------------------------------------------------- waiting_uow
-CREATE OR REPLACE FUNCTION wf_fn.waiting_uow_api(_uow_id uuid)
+CREATE OR REPLACE FUNCTION wf_api.waiting_uow(_uow_id uuid)
   RETURNS wf.uow
   LANGUAGE plpgsql
   VOLATILE
@@ -1120,7 +1103,7 @@ CREATE OR REPLACE FUNCTION wf_fn.compute_uow_status(_uow_id uuid)
     _dependency_count integer;
     _error_count integer;
     _status wf.uow_status_type;
-    _err_context text;
+    _err_context citext;
   BEGIN
     -- this function calculates status for the specified uow based on status of relative uows
     -- 
@@ -1198,7 +1181,7 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_uow_template(_uow_id uuid, _project wf.pr
     AS $$
   DECLARE
     _uow wf.uow;
-    _err_context text;
+    _err_context citext;
   BEGIN
     select * into _uow from wf.uow where id = _uow_id and is_template = 'true';
 
@@ -1245,8 +1228,8 @@ CREATE OR REPLACE FUNCTION wf_api.search_projects(_options wf_fn.search_projects
     LANGUAGE plpgsql STABLE SECURITY INVOKER
     AS $$
   DECLARE
-    _err_context text;
-    _search_terms text[];
+    _err_context citext;
+    _search_terms citext[];
   BEGIN
     -- _search_terms :=
     if 
@@ -1279,7 +1262,7 @@ CREATE OR REPLACE FUNCTION wf_api.search_projects(_options wf_fn.search_projects
   END
   $$;
 ------------------------------------------------------- uow_by_project_and_identifier
-CREATE OR REPLACE FUNCTION wf_api.uow_by_project_and_identifier(_project_id uuid, _identifier text) RETURNS wf.uow
+CREATE OR REPLACE FUNCTION wf_api.uow_by_project_and_identifier(_project_id uuid, _identifier citext) RETURNS wf.uow
     LANGUAGE plpgsql STABLE SECURITY INVOKER
     AS $$
   DECLARE

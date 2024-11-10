@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION my_app_fn.install_my_app_application()
     _application app.application;
   BEGIN
     _application := app_fn.install_basic_application(
-      _key => 'my_app'
+      _key => 'my-app'
       ,_name => 'my_app'
       ,_description => 'A custom app for me.'
       ,_auto_subscribe => false

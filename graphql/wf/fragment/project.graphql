@@ -1,0 +1,14 @@
+fragment Project on Project {
+  id
+  createdAt
+  updatedAt
+  tenantId
+  identifier
+  isTemplate
+  type
+  inputDefinitions {
+    name
+    dataType
+  }
+  workflowData
+}

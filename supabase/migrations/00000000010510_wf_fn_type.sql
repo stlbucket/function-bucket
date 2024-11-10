@@ -20,35 +20,31 @@ CREATE TYPE wf_fn.complete_uow_result AS (
 );
 -------------------------------------------------------
 CREATE TYPE wf_fn.uow_dependency_info AS (
-	depender_identifier text,
-	dependee_identifier text
+	depender_identifier citext,
+	dependee_identifier citext
 );
 -------------------------------------------------------
 CREATE TYPE wf_fn.uow_info AS (
-	id text,
-	identifier text,
-	name text,
-	is_template boolean,
-	description text,
+	identifier citext,
+	name citext,
+	description citext,
 	type wf.uow_type,
 	data jsonb,
-	project_id text,
-	parent_uow_id text,
+	project_id citext,
+	parent_uow_id citext,
 	due_at timestamp with time zone,
-	workflow_handler_key text,
+	workflow_handler_key citext,
 	use_worker boolean
 );
 -------------------------------------------------------
 CREATE TYPE wf_fn.project_info AS (
-	id text,
-	identifier text,
-	type text,
-	name text,
-	is_template boolean,
+	identifier citext,
+	type citext,
+	name citext,
 	uows wf_fn.uow_info[],
 	uow_dependencies wf_fn.uow_dependency_info[],
-	on_completed_workflow_handler_key text,
-	workflow_input_definition jsonb
+	on_completed_workflow_handler_key citext,
+	input_definitions wf.workflow_input_definition[]
 );
 -------------------------------------------------------
 CREATE TYPE wf_fn.queue_workflow_result AS (
@@ -56,12 +52,12 @@ CREATE TYPE wf_fn.queue_workflow_result AS (
 	uows_to_schedule wf.uow[]
 );
 CREATE TYPE wf_fn.search_projects_options AS (
-	project_type text,
+	project_type citext,
 	is_template boolean,
-	search_terms text[],
+	search_terms citext[],
 	date_range_start date,
 	date_range_end date,
-	tenant_id text,
+	tenant_id citext,
 	project_uow_status wf.uow_status_type,
 	result_limit integer
 );

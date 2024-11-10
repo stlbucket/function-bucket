@@ -1,4 +1,4 @@
-const { makeWorkerUtils } = require("graphile-worker");
+import { makeWorkerUtils } from 'graphile-worker'
 const connectionString = process.env.DB_OWNER_CONNECTION || process.env.DB_CONNECTION
 
 let workerUtils: any = null

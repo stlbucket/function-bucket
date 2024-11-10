@@ -9,11 +9,6 @@ const queueWorkflowPlugin =  makeWrapResolversPlugin({
         const resolution = await resolve()
         await scheduleUows(resolution.data.uows_to_schedule)
 
-        // if (!workerUrl || workerUrl === '') {
-        //   throw new Error('Invalid WORKER_URL')
-        // }
-        // await fetch(workerUrl)
-        
         return {
           ...resolution,
           data: {
