@@ -1,95 +1,97 @@
-------------------------------------------------------- clone_project_template
-CREATE OR REPLACE FUNCTION wf_api.clone_project_template(_identifier citext, _options wf_fn.clone_project_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_project_template_options) RETURNS wf.project
+------------------------------------------------------- clone_wf_template
+CREATE OR REPLACE FUNCTION wf_api.clone_wf_template(_identifier citext, _options wf_fn.clone_wf_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_wf_template_options) RETURNS wf.wf
     LANGUAGE plpgsql
     AS $$
   DECLARE
-    _project wf.project;
-    _project_uow wf.uow;
+    _wf wf.wf;
+    _wf_uow wf.uow;
     _err_context citext;
   BEGIN
-    _project := (
-      select wf_fn.clone_project_template(
+    _wf := (
+      select wf_fn.clone_wf_template(
         _identifier
         ,auth_ext.tenant_id()
         ,_options
       )
     );
 
-    return _project;
+    return _wf;
   END
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier citext, _tenant_id uuid, _options wf_fn.clone_project_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_project_template_options) RETURNS wf.project
+CREATE OR REPLACE FUNCTION wf_fn.clone_wf_template(_identifier citext, _tenant_id uuid, _options wf_fn.clone_wf_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_wf_template_options) RETURNS wf.wf
     LANGUAGE plpgsql
     AS $$
   DECLARE
-    _project_template wf.project;
-    _project wf.project;
-    _project_uow wf.uow;
+    _wf_template wf.wf;
+    _wf wf.wf;
+    _wf_uow wf.uow;
     _err_context citext;
   BEGIN
 
     select * 
-    into _project_template 
-    from wf.project 
+    into _wf_template 
+    from wf.wf 
     where 1=1
     -- tenant_id = _tenant_id
     and identifier = _identifier
     and is_template = true
     ;
 
-    if _project_template.id is null then
-      raise exception 'no project template for _identifier: %', _identifier;
+    if _wf_template.id is null then
+      raise exception 'no wf template for _identifier: %', _identifier;
     end if;
 
-    insert into wf.project(
+    insert into wf.wf(
       identifier,
       tenant_id,
       name,
+      description,
       type,
       is_template,
       workflow_data,
       input_definitions
     )
     values (
-      _project_template.identifier
+      _wf_template.identifier
       ,_tenant_id
-      ,_project_template.name
-      ,_project_template.type
+      ,_wf_template.name
+      ,_wf_template.description
+      ,_wf_template.type
       ,false
       ,_options.data
-      ,coalesce(_project_info.input_definitions, '{}'::wf.workflow_input_definition[])
+      ,coalesce(_wf_info.input_definitions, '{}'::wf.workflow_input_definition[])
     )
     returning *
-    into _project;
+    into _wf;
 
-    -- raise exception '_project: %', _project.id;
+    -- raise exception '_wf: %', _wf.id;
 
     perform wf_fn.clone_uow_template(
       id
-      ,_project
+      ,_wf
     ) 
     from wf.uow 
-    where project_id = _project_template.id
+    where wf_id = _wf_template.id
     ;
 
 
-    select * into _project_uow from wf.uow where project_id = _project.id and type = 'project';
+    select * into _wf_uow from wf.uow where wf_id = _wf.id and type = 'wf';
 
-    update wf.project set
-      uow_id = _project_uow.id
-    where id = _project.id
-    returning * into _project;
+    update wf.wf set
+      uow_id = _wf_uow.id
+    where id = _wf.id
+    returning * into _wf;
 
     -- calculate and apply task lineages
     with uow_map as (
       select
         pnt.identifier parent_identifier
         ,chd.identifier child_identifier
-      from wf.project p
-      join wf.uow pnt on pnt.project_id = p.id
+      from wf.wf p
+      join wf.uow pnt on pnt.wf_id = p.id
       join wf.uow chd on pnt.id = chd.parent_uow_id
-      where p.id = _project_template.id
+      where p.id = _wf_template.id
     )
     ,np_uows as (
       select
@@ -98,8 +100,8 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier citext, _ten
       from wf.uow chd
       join uow_map um on chd.identifier = um.child_identifier
       join wf.uow pnt on pnt.identifier = um.parent_identifier
-      where chd.project_id = _project.id
-      and pnt.project_id = _project.id
+      where chd.wf_id = _wf.id
+      and pnt.wf_id = _wf.id
     )
     update wf.uow c_uow set
       parent_uow_id = np_uows.parent_uow_id
@@ -114,7 +116,7 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier citext, _ten
       from wf.uow_dependency d
       join wf.uow dee on dee.id = d.dependee_id
       join wf.uow der on der.id = d.depender_id
-      where dee.project_id = _project_template.id
+      where dee.wf_id = _wf_template.id
     )
     ,np_uows as (
       select
@@ -125,16 +127,18 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier citext, _ten
       from wf.uow dee
       join uow_map um on dee.identifier = um.dee_identifier
       join wf.uow der on der.identifier = um.der_identifier
-      where dee.project_id = _project.id
-      and der.project_id = _project.id
+      where dee.wf_id = _wf.id
+      and der.wf_id = _wf.id
     )
     insert into wf.uow_dependency(
       tenant_id
+      ,wf_id
       ,dependee_id
       ,depender_id
     )
     select
       np_uows.tenant_id
+      ,_wf.id
       ,np_uows.dependee_uow_id
       ,np_uows.depender_uow_id
     from np_uows
@@ -142,20 +146,20 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_project_template(_identifier citext, _ten
 
     -- WAITING: all uows that are dependers on other uows
     update wf.uow set status = 'waiting' where id
-    in (select d.depender_id from wf.uow_dependency d join wf.uow u on d.depender_id = u.id where u.project_id = _project.id)
+    in (select d.depender_id from wf.uow_dependency d join wf.uow u on d.depender_id = u.id where u.wf_id = _wf.id)
     ;
 
     -- WAITING: all uows that are parents of other uows
     update wf.uow set status = 'waiting' where id
-    in (select parent_uow_id from wf.uow where project_id = _project.id)
+    in (select parent_uow_id from wf.uow where wf_id = _wf.id)
     ;
 
     -- WAITNG: all uows that are children of dependers
     update wf.uow set status = 'waiting' where parent_uow_id
-    in (select d.depender_id from wf.uow_dependency d join wf.uow u on d.depender_id = u.id where u.project_id = _project.id)
+    in (select d.depender_id from wf.uow_dependency d join wf.uow u on d.depender_id = u.id where u.wf_id = _wf.id)
     ;
 
-    return _project;
+    return _wf;
   end;
   $$;
 ------------------------------------------------------- queue_workflow
@@ -189,14 +193,14 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id u
     LANGUAGE plpgsql SECURITY DEFINER
     AS $$
   DECLARE
-    _project wf.project;
+    _wf wf.wf;
     _uows_to_schedule wf.uow[];
     _result wf_fn.queue_workflow_result;
     _err_context citext;
   BEGIN
 
-    _project := (
-      select wf_fn.clone_project_template(
+    _wf := (
+      select wf_fn.clone_wf_template(
         _identifier
         ,_tenant_id
         ,row(_workflow_input_data)
@@ -206,7 +210,7 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id u
     with uows as (
       select *
       from wf.uow
-      where project_id = _project.id
+      where wf_id = _wf.id
       and type = 'task'
       and status = 'incomplete'
       and use_worker = true
@@ -216,7 +220,7 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id u
     from uows u
     ;
 
-    _result.project := _project;
+    _result.wf := _wf;
     _result.uows_to_schedule := _uows_to_schedule;
 
     return to_jsonb(_result);
@@ -227,7 +231,7 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier citext, _workfl
     LANGUAGE plpgsql SECURITY DEFINER
     AS $$
   DECLARE
-    _project wf.project;
+    _wf wf.wf;
     _uows_to_schedule wf.uow[];
     _result wf_fn.queue_workflow_result;
     _err_context citext;
@@ -244,8 +248,8 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier citext, _workfl
       from app.tenant where type = 'anchor';
     end if;
 
-    _project := (
-      select wf_fn.clone_project_template(
+    _wf := (
+      select wf_fn.clone_wf_template(
         _identifier
         ,_tenant_id
         ,row(_workflow_input_data)
@@ -255,7 +259,7 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier citext, _workfl
     with uows as (
       select *
       from wf.uow
-      where project_id = _project.id
+      where wf_id = _wf.id
       and type = 'task'
       and status = 'incomplete'
       and use_worker = true
@@ -265,37 +269,37 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier citext, _workfl
     from uows u
     ;
 
-    _result.project := _project;
+    _result.wf := _wf;
     _result.uows_to_schedule := _uows_to_schedule;
 
     return to_jsonb(_result);
   end;
   $$;
-------------------------------------------------------- upsert_project
-CREATE OR REPLACE FUNCTION wf_api.upsert_project(_project_info wf_fn.project_info) RETURNS wf.project
+------------------------------------------------------- upsert_wf
+CREATE OR REPLACE FUNCTION wf_api.upsert_wf(_wf_info wf_fn.wf_info) RETURNS wf.wf
     LANGUAGE plpgsql
     AS $$
   DECLARE
     _tenant_id uuid;
-    _project wf.project;
+    _wf wf.wf;
     _err_context citext;
   BEGIN
     _tenant_id := auth_ext.tenant_id();
-    _project := (select wf_fn.upsert_project(
-      _project_info
+    _wf := (select wf_fn.upsert_wf(
+      _wf_info
       ,_tenant_id
     ));
 
-    return _project;
+    return _wf;
   end;
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info, _tenant_id uuid) RETURNS wf.project
+CREATE OR REPLACE FUNCTION wf_fn.upsert_wf(_wf_info wf_fn.wf_info, _tenant_id uuid) RETURNS wf.wf
     LANGUAGE plpgsql
     AS $$
   DECLARE
-    _project wf.project;
-    _project_uow wf.uow;
+    _wf wf.wf;
+    _wf_uow wf.uow;
     _uow_info wf_fn.uow_info;
     _uow_dependency_info wf_fn.uow_dependency_info;
     _uow_dependency wf.uow_dependency;
@@ -304,22 +308,23 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info
     _err_context citext;
   BEGIN
     select *
-    into _project
-    from wf.project
+    into _wf
+    from wf.wf
     where tenant_id = _tenant_id
-    and identifier = _project_info.identifier
+    and identifier = _wf_info.identifier
     and is_template = true
     ;
 
-    if _project.id is null then
-      insert into wf.project_type(id)
-      values (_project_info.type)
+    if _wf.id is null then
+      insert into wf.wf_type(id)
+      values (_wf_info.type)
       on conflict(id) do nothing
       ;
 
-      insert into wf.project(
+      insert into wf.wf(
         tenant_id
         ,name
+        ,description
         ,identifier
         ,type
         ,is_template
@@ -327,82 +332,83 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info
       )
       select
         _tenant_id
-        ,_project_info.name
-        ,_project_info.identifier
-        ,_project_info.type
-        -- ,coalesce(_project_info.is_template, false)
+        ,_wf_info.name
+        ,_wf_info.description
+        ,_wf_info.identifier
+        ,_wf_info.type
+        -- ,coalesce(_wf_info.is_template, false)
         ,true
-        ,coalesce(_project_info.input_definitions, '{}'::wf.workflow_input_definition[])
+        ,coalesce(_wf_info.input_definitions, '{}'::wf.workflow_input_definition[])
       returning *
-      into _project
+      into _wf
       ;
 
-      _project_uow := (select wf_fn.upsert_uow(
+      _wf_uow := (select wf_fn.upsert_uow(
         row(
-          _project_info.identifier::citext
-          ,_project_info.name::citext
-          ,(_project_info.name || ' root uow')::citext
-          ,'project'::wf.uow_type
+          _wf_info.identifier::citext
+          ,_wf_info.name::citext
+          ,(_wf_info.name || ' root uow')::citext
+          ,'wf'::wf.uow_type
           ,'{}'
-          ,_project.id::citext
+          ,_wf.id::citext
           ,null::citext
           ,null::timestamptz
-          ,_project_info.on_completed_workflow_handler_key::citext
-          ,(_project_info.on_completed_workflow_handler_key is not null)::boolean
+          ,_wf_info.on_completed_workflow_handler_key::citext
+          ,(_wf_info.on_completed_workflow_handler_key is not null)::boolean
         )
-        ,_project.id
+        ,_wf.id
         ,_tenant_id
       ));
 
-      update wf.project set uow_id = _project_uow.id where id = _project.id returning * into _project;
+      update wf.wf set uow_id = _wf_uow.id where id = _wf.id returning * into _wf;
     else
-      update wf.project set
+      update wf.wf set
         updated_at = current_timestamp
-        ,name = _project_info.name
-        ,is_template = _project_info.is_template
-        ,type = _project_info.type
-        ,workflow_input_definition = coalesce(_project_info.workflow_input_definition, '{}'::jsonb)
-      where id = _project.id
-      returning * into _project
+        ,name = _wf_info.name
+        ,is_template = _wf_info.is_template
+        ,type = _wf_info.type
+        ,workflow_input_definition = coalesce(_wf_info.workflow_input_definition, '{}'::jsonb)
+      where id = _wf.id
+      returning * into _wf
       ;
 
-      _project_uow := (select wf_fn.upsert_uow(
+      _wf_uow := (select wf_fn.upsert_uow(
         row(
-          _project_info.identifier::citext
-          ,_project_info.name::citext
-          ,(_project_info.name || ' root uow')::citext
-          ,'project'::wf.uow_type
+          _wf_info.identifier::citext
+          ,_wf_info.name::citext
+          ,(_wf_info.name || ' root uow')::citext
+          ,'wf'::wf.uow_type
           ,'{}'
-          ,_project.id::citext
+          ,_wf.id::citext
           ,null::citext
           ,null::timestamptz
-          ,_project_info.on_completed_workflow_handler_key::citext
-          ,(_project_info.on_completed_workflow_handler_key is not null)::boolean
+          ,_wf_info.on_completed_workflow_handler_key::citext
+          ,(_wf_info.on_completed_workflow_handler_key is not null)::boolean
         )
-        ,_project.id
+        ,_wf.id
         ,_tenant_id
       ));
     end if;
 
-    foreach _uow_info in array(_project_info.uows)
+    foreach _uow_info in array(_wf_info.uows)
     loop
-      _uow_info.project_id := _project.id;
-      perform wf_fn.upsert_uow(_uow_info, _project.id, _tenant_id);
+      _uow_info.wf_id := _wf.id;
+      perform wf_fn.upsert_uow(_uow_info, _wf.id, _tenant_id);
     end loop;
 
     update wf.uow set 
-      parent_uow_id = _project_uow.id
-    where project_id = _project.id
+      parent_uow_id = _wf_uow.id
+    where wf_id = _wf.id
     and parent_uow_id is null
-    and type != 'project'
+    and type != 'wf'
     ;
 
-    foreach _uow_dependency_info in array(_project_info.uow_dependencies)
+    foreach _uow_dependency_info in array(_wf_info.uow_dependencies)
     loop
       select *
       into _uow_dependee
       from wf.uow 
-      where project_id = _project.id
+      where wf_id = _wf.id
       and identifier = _uow_dependency_info.dependee_identifier
       ;
       if _uow_dependee.id is null then
@@ -412,7 +418,7 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info
       select *
       into _uow_depender
       from wf.uow 
-      where project_id = _project.id
+      where wf_id = _wf.id
       and identifier = _uow_dependency_info.depender_identifier
       ;
       if _uow_depender.id is null then
@@ -429,30 +435,32 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_project(_project_info wf_fn.project_info
       if _uow_dependency.id is null then
         insert into wf.uow_dependency(
           tenant_id
+          ,wf_id
           ,dependee_id
           ,depender_id
           ,is_template
         )
         select
           _tenant_id
+          ,_wf.id
           ,_uow_dependee.id
           ,_uow_depender.id
-          ,_project.is_template
+          ,_wf.is_template
         ;
       end if;
     end loop;
 
     perform wf_fn.compute_uow_status(id)
     from wf.uow
-    where project_id = _project.id
+    where wf_id = _wf.id
     and type in ('milestone')
     ;
 
-    return _project;
+    return _wf;
   end;
   $$;
 ------------------------------------------------------- upsert_uow
-CREATE OR REPLACE FUNCTION wf_api.upsert_uow(_uow_info wf_fn.uow_info, _project_id uuid) RETURNS wf.uow
+CREATE OR REPLACE FUNCTION wf_api.upsert_uow(_uow_info wf_fn.uow_info, _wf_id uuid) RETURNS wf.uow
   LANGUAGE plpgsql
   VOLATILE
   SECURITY INVOKER
@@ -465,7 +473,7 @@ CREATE OR REPLACE FUNCTION wf_api.upsert_uow(_uow_info wf_fn.uow_info, _project_
     _tenant_id := auth_ext.tenant_id();
     _uow := (select wf_fn.upsert_uow(
       _uow_info
-      ,_project_id
+      ,_wf_id
       ,_tenant_id
     ));
 
@@ -475,13 +483,14 @@ CREATE OR REPLACE FUNCTION wf_api.upsert_uow(_uow_info wf_fn.uow_info, _project_
 
 CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(
     _uow_info wf_fn.uow_info,
-    _project_id uuid,
+    _wf_id uuid,
     _tenant_id uuid
   ) RETURNS wf.uow
     LANGUAGE plpgsql
     AS $$
   DECLARE
     _uow wf.uow;
+    _parent_uow wf.uow;
     _err_context citext;
   BEGIN
     select *
@@ -489,8 +498,25 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(
     from wf.uow
     where tenant_id = _tenant_id
     and identifier = _uow_info.identifier
-    and project_id = _project_id
+    and wf_id = _wf_id
     ;
+
+    select * 
+    into _parent_uow
+    from wf.uow
+    where wf_id = _wf_id
+    and identifier = _uow_info.parent_uow_id
+    or id = _uow.parent_uow_id::uuid
+    ;
+
+    if _parent_uow.id is null then
+      select * 
+      into _parent_uow
+      from wf.uow
+      where wf_id = _wf_id
+      and (id = _wf_id or identifier = _wf_id::citext)
+      ;
+    end if;
 
     if _uow.id is null then
       insert into wf.uow(
@@ -501,7 +527,7 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(
         ,description
         ,type
         ,data
-        ,project_id
+        ,wf_id
         ,status
         ,due_at
         ,parent_uow_id
@@ -516,20 +542,10 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(
         ,_uow_info.description
         ,_uow_info.type
         ,_uow_info.data
-        ,_project_id
+        ,_wf_id
         ,'template'::wf.uow_status_type
-        -- ,case
-        --   when _uow_info.is_template then
-        --     'template'::wf.uow_status_type
-        --   else
-        --     'incomplete'::wf.uow_status_type
-        -- end 
         ,_uow_info.due_at
-        ,(
-          select id from wf.uow
-          where project_id = _project_id
-          and (id = _project_id or identifier = _project_id::citext)
-        )
+        ,_parent_uow.id
         ,_uow_info.workflow_handler_key
         ,coalesce(_uow_info.use_worker, false)
       returning *
@@ -612,7 +628,7 @@ CREATE OR REPLACE FUNCTION wf_fn.error_uow(_uow_id uuid, _message citext, _stack
     AS $$
   DECLARE
     _uow wf.uow;
-    _project_uow wf.uow;
+    _wf_uow wf.uow;
     _err_context citext;
   BEGIN
     select *
@@ -625,9 +641,9 @@ CREATE OR REPLACE FUNCTION wf_fn.error_uow(_uow_id uuid, _message citext, _stack
       raise exception 'no uow for id: %', _uow_id;
     end if;
 
-    select * into _project_uow from wf.uow where id = (select uow_id from wf.project where id = _uow.project_id);
-    if _project_uow.status in ('paused', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with project status: %', _project_uow.status;
+    select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
+    if _wf_uow.status in ('paused', 'canceled', 'deleted', 'template', 'complete') then
+      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     update wf.uow set
@@ -650,59 +666,59 @@ CREATE OR REPLACE FUNCTION wf_fn.error_uow(_uow_id uuid, _message citext, _stack
           ,'stack', _stack
         )
       )
-    where id = _project_uow.id
+    where id = _wf_uow.id
     ;
 
-    update wf.project set
+    update wf.wf set
       workflow_data = workflow_data || jsonb_build_object(
         'error', jsonb_build_object(
           'message', _message
           ,'stack', _stack
         )
       )
-    where id = _uow.project_id
+    where id = _uow.wf_id
     ;
 
     return _uow;
   end;
   $$;
-------------------------------------------------------- cancel_project
-CREATE OR REPLACE FUNCTION wf_api.cancel_project(_project_id uuid)
-  RETURNS wf.project
+------------------------------------------------------- cancel_wf
+CREATE OR REPLACE FUNCTION wf_api.cancel_wf(_wf_id uuid)
+  RETURNS wf.wf
   LANGUAGE plpgsql
   VOLATILE
   SECURITY INVOKER
   AS $$
   DECLARE
-    _project wf.project;
+    _wf wf.wf;
   BEGIN
-    _project := wf_fn.cancel_project(_project_id);
-    return _project;
+    _wf := wf_fn.cancel_wf(_wf_id);
+    return _wf;
   end;
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.cancel_project(_project_id uuid) RETURNS wf.project
+CREATE OR REPLACE FUNCTION wf_fn.cancel_wf(_wf_id uuid) RETURNS wf.wf
     LANGUAGE plpgsql
     AS $$
   DECLARE
-    _project wf.project;
+    _wf wf.wf;
     _err_context citext;
   BEGIN
-    select * into _project
-    from wf.project 
-    where id = _project_id;
+    select * into _wf
+    from wf.wf 
+    where id = _wf_id;
 
-    if _project.id is null then
-      raise exception 'no project for id: %', _project_id;
+    if _wf.id is null then
+      raise exception 'no wf for id: %', _wf_id;
     end if;
 
     update wf.uow set
       status = 'canceled'
-    where project_id = _project_id
+    where wf_id = _wf_id
     and status != 'complete'
     ;
 
-    return _project;
+    return _wf;
   end;
   $$;
 -------------------------------------------------------
@@ -725,7 +741,7 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
     AS $$
   DECLARE
     _uow wf.uow;
-    _project_uow wf.uow;
+    _wf_uow wf.uow;
     _data jsonb;
     _uows_to_schedule wf.uow[];
     _depender_uow wf.uow;
@@ -750,9 +766,9 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
       raise exception 'can only complete an incomplete or waiting uow: % - %', _uow.identifier, _uow.status;
     end if;
 
-    select * into _project_uow from wf.uow where id = (select uow_id from wf.project where id = _uow.project_id);
-    if _project_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with project status: %', _project_uow.status;
+    select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
+    if _wf_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
+      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     if _uow.status != 'complete' then
@@ -766,9 +782,9 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
       into _uow
       ;
 
-      update wf.project set
+      update wf.wf set
         workflow_data = workflow_data || coalesce(_options.workflow_data, '{}'::jsonb)
-      where id = _uow.project_id
+      where id = _uow.wf_id
       ;
 
     end if;
@@ -831,7 +847,7 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
     with uows as (
       select *
       from wf.uow
-      where project_id = _uow.project_id
+      where wf_id = _uow.wf_id
       -- and type = 'task'
       and status = 'incomplete'
       and use_worker = true
@@ -840,12 +856,12 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
     into _uows_to_schedule
     from uows u
     ;
-    -- select * into _project_uow from wf.uow where id = (select uow_id from wf.project where id = _uow.project_id);
-    -- if _project_uow.status not in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
+    -- select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
+    -- if _wf_uow.status not in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
     --   with uows as (
     --     select *
     --     from wf.uow
-    --     where project_id = _uow.project_id
+    --     where wf_id = _uow.wf_id
     --     -- and type = 'task'
     --     and status = 'incomplete'
     --     and use_worker = true
@@ -886,7 +902,7 @@ CREATE OR REPLACE FUNCTION wf_fn.incomplete_uow(_uow_id uuid) RETURNS wf.uow
     _uow wf.uow;
     _depender_uow wf.uow;
     _child_uow wf.uow;
-    _project_uow wf.uow;
+    _wf_uow wf.uow;
     _result wf_fn.complete_uow_result;
     _depender_status wf.uow_status_type;
     _child_status wf.uow_status_type;
@@ -899,7 +915,7 @@ CREATE OR REPLACE FUNCTION wf_fn.incomplete_uow(_uow_id uuid) RETURNS wf.uow
     where id = _uow_id
     ;
 
-    if _project_uow.status = 'error' then
+    if _wf_uow.status = 'error' then
       return _uow;
     end if;
 
@@ -907,9 +923,9 @@ CREATE OR REPLACE FUNCTION wf_fn.incomplete_uow(_uow_id uuid) RETURNS wf.uow
       raise exception 'no uow for id: %', _uow_id;
     end if;
 
-    select * into _project_uow from wf.uow where id = (select uow_id from wf.project where id = _uow.project_id);
-    if _project_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with project status: %', _project_uow.status;
+    select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
+    if _wf_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
+      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     update wf.uow
@@ -996,7 +1012,7 @@ CREATE OR REPLACE FUNCTION wf_fn.pause_uow(_uow_id uuid) RETURNS wf.uow
     AS $$
   DECLARE
     _uow wf.uow;
-    _project_uow wf.uow;
+    _wf_uow wf.uow;
     _result wf_fn.complete_uow_result;
     _err_context citext;
   BEGIN
@@ -1006,7 +1022,7 @@ CREATE OR REPLACE FUNCTION wf_fn.pause_uow(_uow_id uuid) RETURNS wf.uow
     where id = _uow_id
     ;
 
-    if _project_uow.status = 'error' then
+    if _wf_uow.status = 'error' then
       return _uow;
     end if;
 
@@ -1014,9 +1030,9 @@ CREATE OR REPLACE FUNCTION wf_fn.pause_uow(_uow_id uuid) RETURNS wf.uow
       raise exception 'no uow for id: %', _uow_id;
     end if;
 
-    select * into _project_uow from wf.uow where id = (select uow_id from wf.project where id = _uow.project_id);
-    if _project_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with project status: %', _project_uow.status;
+    select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
+    if _wf_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
+      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     update wf.uow
@@ -1027,7 +1043,7 @@ CREATE OR REPLACE FUNCTION wf_fn.pause_uow(_uow_id uuid) RETURNS wf.uow
 
     update wf.uow
     set status = 'paused'
-    where id = _project_uow.id
+    where id = _wf_uow.id
     ;
 
     return _uow;
@@ -1055,7 +1071,7 @@ CREATE OR REPLACE FUNCTION wf_fn.waiting_uow(_uow_id uuid) RETURNS wf.uow
   AS $$
   DECLARE
     _uow wf.uow;
-    _project_uow wf.uow;
+    _wf_uow wf.uow;
     _result wf_fn.complete_uow_result;
   BEGIN
     select *
@@ -1069,13 +1085,13 @@ CREATE OR REPLACE FUNCTION wf_fn.waiting_uow(_uow_id uuid) RETURNS wf.uow
     end if;
 
 
-    if _project_uow.status = 'error' then
+    if _wf_uow.status = 'error' then
       return _uow;
     end if;
 
-    select * into _project_uow from wf.uow where id = (select uow_id from wf.project where id = _uow.project_id);
-    if _project_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with project status: %', _project_uow.status;
+    select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
+    if _wf_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
+      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     update wf.uow
@@ -1120,10 +1136,10 @@ CREATE OR REPLACE FUNCTION wf_fn.compute_uow_status(_uow_id uuid)
     and dee.status in ('incomplete', 'waiting')
     ;
 
-    if _uow.type = 'project' then
+    if _uow.type = 'wf' then
       select count(*) into _error_count
       from wf.uow
-      where project_id = _uow.project_id
+      where wf_id = _uow.wf_id
       and status in ('error')
       ;
 
@@ -1176,7 +1192,7 @@ CREATE OR REPLACE FUNCTION wf_fn.compute_uow_status(_uow_id uuid)
   end;
   $$;
 ------------------------------------------------------- clone_uow_template
-CREATE OR REPLACE FUNCTION wf_fn.clone_uow_template(_uow_id uuid, _project wf.project, _options wf_fn.clone_uow_template_options DEFAULT ROW(('{}'::jsonb)::json)::wf_fn.clone_uow_template_options) RETURNS wf.uow
+CREATE OR REPLACE FUNCTION wf_fn.clone_uow_template(_uow_id uuid, _wf wf.wf, _options wf_fn.clone_uow_template_options DEFAULT ROW(('{}'::jsonb)::json)::wf_fn.clone_uow_template_options) RETURNS wf.uow
     LANGUAGE plpgsql
     AS $$
   DECLARE
@@ -1197,20 +1213,20 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_uow_template(_uow_id uuid, _project wf.pr
       ,description
       ,type
       ,data
-      ,project_id
+      ,wf_id
       ,status
       ,workflow_handler_key
       ,use_worker
     )
     values (
       _uow.identifier
-      ,_project.tenant_id
+      ,_wf.tenant_id
       ,false
       ,_uow.name
       ,_uow.description
       ,_uow.type
       ,_options.data
-      ,_project.id
+      ,_wf.id
       ,'incomplete'
       ,_uow.workflow_handler_key
       ,_uow.use_worker
@@ -1223,8 +1239,8 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_uow_template(_uow_id uuid, _project wf.pr
   $$;
 
 -- queries can live directly in api
-------------------------------------------------------- search_projects
-CREATE OR REPLACE FUNCTION wf_api.search_projects(_options wf_fn.search_projects_options) RETURNS SETOF wf.project
+------------------------------------------------------- search_wfs
+CREATE OR REPLACE FUNCTION wf_api.search_wfs(_options wf_fn.search_wfs_options) RETURNS SETOF wf.wf
     LANGUAGE plpgsql STABLE SECURITY INVOKER
     AS $$
   DECLARE
@@ -1233,23 +1249,23 @@ CREATE OR REPLACE FUNCTION wf_api.search_projects(_options wf_fn.search_projects
   BEGIN
     -- _search_terms :=
     if 
-      _options.project_type is null and
+      _options.wf_type is null and
       _options.is_template is null and
       _options.search_terms is null and
       _options.date_range_start is null and
       _options.date_range_end is null and
       _options.app_user_id is null and
       _options.tenant_id is null and
-      _options.project_uow_status is null
+      _options.wf_uow_status is null
     then
       raise exception 'must specify one or more options';
     end if;
     
     return query
     select *
-    from wf.project p
+    from wf.wf p
     where is_template = false
-    and (_options.project_type is null or p.type = _options.project_type)
+    and (_options.wf_type is null or p.type = _options.wf_type)
     and (_options.app_user_id is null or p.workflow_data #>> '{workflowInputData,appUserId}' = _options.app_user_id)
     -- and (_options.app_user_id is null or p.workflow_data #>> '{workflowInputData,appUserId}' = _options.app_user_id)
     -- and (_options.app_user_id is null or p.workflow_data #>> '{workflowInputData,appUserId}' = _options.app_user_id)
@@ -1261,8 +1277,8 @@ CREATE OR REPLACE FUNCTION wf_api.search_projects(_options wf_fn.search_projects
     ;
   END
   $$;
-------------------------------------------------------- uow_by_project_and_identifier
-CREATE OR REPLACE FUNCTION wf_api.uow_by_project_and_identifier(_project_id uuid, _identifier citext) RETURNS wf.uow
+------------------------------------------------------- uow_by_wf_and_identifier
+CREATE OR REPLACE FUNCTION wf_api.uow_by_wf_and_identifier(_wf_id uuid, _identifier citext) RETURNS wf.uow
     LANGUAGE plpgsql STABLE SECURITY INVOKER
     AS $$
   DECLARE
@@ -1272,7 +1288,7 @@ CREATE OR REPLACE FUNCTION wf_api.uow_by_project_and_identifier(_project_id uuid
     select *
     into _uow
     from wf.uow
-    where project_id = _project_id
+    where wf_id = _wf_id
     and identifier = _identifier
     ;
 

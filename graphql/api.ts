@@ -426,9 +426,9 @@ export type BlockResidentPayloadResidentEdgeArgs = {
   orderBy?: Array<ResidentsOrderBy>;
 };
 
-/** All input for the `cancelProject` mutation. */
-export type CancelProjectInput = {
-  _projectId?: InputMaybe<Scalars['UUID']['input']>;
+/** All input for the `cancelWf` mutation. */
+export type CancelWfInput = {
+  _wfId?: InputMaybe<Scalars['UUID']['input']>;
   /**
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
@@ -436,33 +436,33 @@ export type CancelProjectInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** The output of our `cancelProject` mutation. */
-export type CancelProjectPayload = {
-  __typename: 'CancelProjectPayload';
+/** The output of our `cancelWf` mutation. */
+export type CancelWfPayload = {
+  __typename: 'CancelWfPayload';
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  project?: Maybe<Project>;
-  /** An edge for our `Project`. May be used by Relay 1. */
-  projectEdge?: Maybe<ProjectsEdge>;
-  /** Reads a single `ProjectType` that is related to this `Project`. */
-  projectType?: Maybe<ProjectType>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
+  wf?: Maybe<Wf>;
+  /** An edge for our `Wf`. May be used by Relay 1. */
+  wfEdge?: Maybe<WfsEdge>;
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
 };
 
 
-/** The output of our `cancelProject` mutation. */
-export type CancelProjectPayloadProjectEdgeArgs = {
-  orderBy?: Array<ProjectsOrderBy>;
+/** The output of our `cancelWf` mutation. */
+export type CancelWfPayloadWfEdgeArgs = {
+  orderBy?: Array<WfsOrderBy>;
 };
 
-/** All input for the `cloneProjectTemplate` mutation. */
-export type CloneProjectTemplateInput = {
+/** All input for the `cloneWfTemplate` mutation. */
+export type CloneWfTemplateInput = {
   _identifier?: InputMaybe<Scalars['String']['input']>;
-  _options?: InputMaybe<CloneProjectTemplateOptionInput>;
+  _options?: InputMaybe<CloneWfTemplateOptionInput>;
   /**
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
@@ -470,32 +470,32 @@ export type CloneProjectTemplateInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** An input for mutations affecting `CloneProjectTemplateOption` */
-export type CloneProjectTemplateOptionInput = {
+/** An input for mutations affecting `CloneWfTemplateOption` */
+export type CloneWfTemplateOptionInput = {
   data?: InputMaybe<Scalars['JSON']['input']>;
 };
 
-/** The output of our `cloneProjectTemplate` mutation. */
-export type CloneProjectTemplatePayload = {
-  __typename: 'CloneProjectTemplatePayload';
+/** The output of our `cloneWfTemplate` mutation. */
+export type CloneWfTemplatePayload = {
+  __typename: 'CloneWfTemplatePayload';
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  project?: Maybe<Project>;
-  /** An edge for our `Project`. May be used by Relay 1. */
-  projectEdge?: Maybe<ProjectsEdge>;
-  /** Reads a single `ProjectType` that is related to this `Project`. */
-  projectType?: Maybe<ProjectType>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
+  wf?: Maybe<Wf>;
+  /** An edge for our `Wf`. May be used by Relay 1. */
+  wfEdge?: Maybe<WfsEdge>;
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
 };
 
 
-/** The output of our `cloneProjectTemplate` mutation. */
-export type CloneProjectTemplatePayloadProjectEdgeArgs = {
-  orderBy?: Array<ProjectsOrderBy>;
+/** The output of our `cloneWfTemplate` mutation. */
+export type CloneWfTemplatePayloadWfEdgeArgs = {
+  orderBy?: Array<WfsOrderBy>;
 };
 
 /** All input for the `completeUow` mutation. */
@@ -523,13 +523,13 @@ export type CompleteUowPayload = {
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Reads a single `Project` that is related to this `Uow`. */
-  project?: Maybe<Project>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   uow?: Maybe<Uow>;
   /** An edge for our `Uow`. May be used by Relay 1. */
   uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
 };
 
 
@@ -949,13 +949,13 @@ export type ErrorUowPayload = {
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Reads a single `Project` that is related to this `Uow`. */
-  project?: Maybe<Project>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   uow?: Maybe<Uow>;
   /** An edge for our `Uow`. May be used by Relay 1. */
   uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
 };
 
 
@@ -1070,13 +1070,13 @@ export type IncompleteUowPayload = {
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Reads a single `Project` that is related to this `Uow`. */
-  project?: Maybe<Project>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   uow?: Maybe<Uow>;
   /** An edge for our `Uow`. May be used by Relay 1. */
   uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
 };
 
 
@@ -2522,8 +2522,8 @@ export type Mutation = {
   assumeResidency?: Maybe<AssumeResidencyPayload>;
   becomeSupport?: Maybe<BecomeSupportPayload>;
   blockResident?: Maybe<BlockResidentPayload>;
-  cancelProject?: Maybe<CancelProjectPayload>;
-  cloneProjectTemplate?: Maybe<CloneProjectTemplatePayload>;
+  cancelWf?: Maybe<CancelWfPayload>;
+  cloneWfTemplate?: Maybe<CloneWfTemplatePayload>;
   completeUow?: Maybe<CompleteUowPayload>;
   createLocation?: Maybe<CreateLocationPayload>;
   createTenant?: Maybe<CreateTenantPayload>;
@@ -2558,10 +2558,10 @@ export type Mutation = {
   updateTodo?: Maybe<UpdateTodoPayload>;
   updateTodoStatus?: Maybe<UpdateTodoStatusPayload>;
   upsertMessage?: Maybe<UpsertMessagePayload>;
-  upsertProject?: Maybe<UpsertProjectPayload>;
   upsertSubscriber?: Maybe<UpsertSubscriberPayload>;
   upsertTopic?: Maybe<UpsertTopicPayload>;
   upsertUow?: Maybe<UpsertUowPayload>;
+  upsertWf?: Maybe<UpsertWfPayload>;
   waitingUow?: Maybe<WaitingUowPayload>;
 };
 
@@ -2597,14 +2597,14 @@ export type MutationBlockResidentArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export type MutationCancelProjectArgs = {
-  input: CancelProjectInput;
+export type MutationCancelWfArgs = {
+  input: CancelWfInput;
 };
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export type MutationCloneProjectTemplateArgs = {
-  input: CloneProjectTemplateInput;
+export type MutationCloneWfTemplateArgs = {
+  input: CloneWfTemplateInput;
 };
 
 
@@ -2813,12 +2813,6 @@ export type MutationUpsertMessageArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export type MutationUpsertProjectArgs = {
-  input: UpsertProjectInput;
-};
-
-
-/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpsertSubscriberArgs = {
   input: UpsertSubscriberInput;
 };
@@ -2833,6 +2827,12 @@ export type MutationUpsertTopicArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpsertUowArgs = {
   input: UpsertUowInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpsertWfArgs = {
+  input: UpsertWfInput;
 };
 
 
@@ -2885,13 +2885,13 @@ export type PauseUowPayload = {
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Reads a single `Project` that is related to this `Uow`. */
-  project?: Maybe<Project>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   uow?: Maybe<Uow>;
   /** An edge for our `Uow`. May be used by Relay 1. */
   uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
 };
 
 
@@ -3206,267 +3206,6 @@ export enum ProfilesOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
-export type Project = Node & {
-  __typename: 'Project';
-  createdAt: Scalars['Datetime']['output'];
-  id: Scalars['UUID']['output'];
-  identifier?: Maybe<Scalars['String']['output']>;
-  inputDefinitions: Array<Maybe<WorkflowInputDefinition>>;
-  isTemplate: Scalars['Boolean']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID']['output'];
-  /** Reads a single `ProjectType` that is related to this `Project`. */
-  projectType?: Maybe<ProjectType>;
-  template?: Maybe<Project>;
-  tenantId: Scalars['UUID']['output'];
-  type: Scalars['String']['output'];
-  uowId?: Maybe<Scalars['UUID']['output']>;
-  /** Reads and enables pagination through a set of `Uow`. */
-  uows: UowsConnection;
-  /** Reads and enables pagination through a set of `Uow`. */
-  uowsList: Array<Uow>;
-  updatedAt: Scalars['Datetime']['output'];
-  workflowData: Scalars['JSON']['output'];
-};
-
-
-export type ProjectUowsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<UowCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<UowsOrderBy>>;
-};
-
-
-export type ProjectUowsListArgs = {
-  condition?: InputMaybe<UowCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<UowsOrderBy>>;
-};
-
-/** A condition to be used against `Project` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export type ProjectCondition = {
-  /** Checks for equality with the object’s `createdAt` field. */
-  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  /** Checks for equality with the object’s `id` field. */
-  id?: InputMaybe<Scalars['UUID']['input']>;
-  /** Checks for equality with the object’s `identifier` field. */
-  identifier?: InputMaybe<Scalars['String']['input']>;
-  /** Checks for equality with the object’s `inputDefinitions` field. */
-  inputDefinitions?: InputMaybe<Array<InputMaybe<WorkflowInputDefinitionInput>>>;
-  /** Checks for equality with the object’s `isTemplate` field. */
-  isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Checks for equality with the object’s `name` field. */
-  name?: InputMaybe<Scalars['String']['input']>;
-  /** Checks for equality with the object’s `tenantId` field. */
-  tenantId?: InputMaybe<Scalars['UUID']['input']>;
-  /** Checks for equality with the object’s `type` field. */
-  type?: InputMaybe<Scalars['String']['input']>;
-  /** Checks for equality with the object’s `uowId` field. */
-  uowId?: InputMaybe<Scalars['UUID']['input']>;
-  /** Checks for equality with the object’s `updatedAt` field. */
-  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
-  /** Checks for equality with the object’s `workflowData` field. */
-  workflowData?: InputMaybe<Scalars['JSON']['input']>;
-};
-
-/** An input for mutations affecting `ProjectInfo` */
-export type ProjectInfoInput = {
-  identifier?: InputMaybe<Scalars['String']['input']>;
-  inputDefinitions?: InputMaybe<Array<InputMaybe<WorkflowInputDefinitionInput>>>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  onCompletedWorkflowHandlerKey?: InputMaybe<Scalars['String']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-  uowDependencies?: InputMaybe<Array<InputMaybe<UowDependencyInfoInput>>>;
-  uows?: InputMaybe<Array<InputMaybe<UowInfoInput>>>;
-};
-
-export type ProjectRole = Node & {
-  __typename: 'ProjectRole';
-  config: Scalars['JSON']['output'];
-  id: Scalars['UUID']['output'];
-  key?: Maybe<Scalars['String']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID']['output'];
-};
-
-/**
- * A condition to be used against `ProjectRole` object types. All fields are tested
- * for equality and combined with a logical ‘and.’
- */
-export type ProjectRoleCondition = {
-  /** Checks for equality with the object’s `config` field. */
-  config?: InputMaybe<Scalars['JSON']['input']>;
-  /** Checks for equality with the object’s `id` field. */
-  id?: InputMaybe<Scalars['UUID']['input']>;
-  /** Checks for equality with the object’s `key` field. */
-  key?: InputMaybe<Scalars['String']['input']>;
-  /** Checks for equality with the object’s `name` field. */
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** A connection to a list of `ProjectRole` values. */
-export type ProjectRolesConnection = {
-  __typename: 'ProjectRolesConnection';
-  /** A list of edges which contains the `ProjectRole` and cursor to aid in pagination. */
-  edges: Array<Maybe<ProjectRolesEdge>>;
-  /** A list of `ProjectRole` objects. */
-  nodes: Array<Maybe<ProjectRole>>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `ProjectRole` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `ProjectRole` edge in the connection. */
-export type ProjectRolesEdge = {
-  __typename: 'ProjectRolesEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `ProjectRole` at the end of the edge. */
-  node?: Maybe<ProjectRole>;
-};
-
-/** Methods to use when ordering `ProjectRole`. */
-export enum ProjectRolesOrderBy {
-  ConfigAsc = 'CONFIG_ASC',
-  ConfigDesc = 'CONFIG_DESC',
-  IdAsc = 'ID_ASC',
-  IdDesc = 'ID_DESC',
-  KeyAsc = 'KEY_ASC',
-  KeyDesc = 'KEY_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  Natural = 'NATURAL',
-  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
-}
-
-export type ProjectType = Node & {
-  __typename: 'ProjectType';
-  id: Scalars['String']['output'];
-  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID']['output'];
-  /** Reads and enables pagination through a set of `Project`. */
-  projectsByType: ProjectsConnection;
-  /** Reads and enables pagination through a set of `Project`. */
-  projectsByTypeList: Array<Project>;
-};
-
-
-export type ProjectTypeProjectsByTypeArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
-};
-
-
-export type ProjectTypeProjectsByTypeListArgs = {
-  condition?: InputMaybe<ProjectCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
-};
-
-/**
- * A condition to be used against `ProjectType` object types. All fields are tested
- * for equality and combined with a logical ‘and.’
- */
-export type ProjectTypeCondition = {
-  /** Checks for equality with the object’s `id` field. */
-  id?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** A connection to a list of `ProjectType` values. */
-export type ProjectTypesConnection = {
-  __typename: 'ProjectTypesConnection';
-  /** A list of edges which contains the `ProjectType` and cursor to aid in pagination. */
-  edges: Array<Maybe<ProjectTypesEdge>>;
-  /** A list of `ProjectType` objects. */
-  nodes: Array<Maybe<ProjectType>>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `ProjectType` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `ProjectType` edge in the connection. */
-export type ProjectTypesEdge = {
-  __typename: 'ProjectTypesEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `ProjectType` at the end of the edge. */
-  node?: Maybe<ProjectType>;
-};
-
-/** Methods to use when ordering `ProjectType`. */
-export enum ProjectTypesOrderBy {
-  IdAsc = 'ID_ASC',
-  IdDesc = 'ID_DESC',
-  Natural = 'NATURAL',
-  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
-}
-
-/** A connection to a list of `Project` values. */
-export type ProjectsConnection = {
-  __typename: 'ProjectsConnection';
-  /** A list of edges which contains the `Project` and cursor to aid in pagination. */
-  edges: Array<Maybe<ProjectsEdge>>;
-  /** A list of `Project` objects. */
-  nodes: Array<Maybe<Project>>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Project` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Project` edge in the connection. */
-export type ProjectsEdge = {
-  __typename: 'ProjectsEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Project` at the end of the edge. */
-  node?: Maybe<Project>;
-};
-
-/** Methods to use when ordering `Project`. */
-export enum ProjectsOrderBy {
-  CreatedAtAsc = 'CREATED_AT_ASC',
-  CreatedAtDesc = 'CREATED_AT_DESC',
-  IdentifierAsc = 'IDENTIFIER_ASC',
-  IdentifierDesc = 'IDENTIFIER_DESC',
-  IdAsc = 'ID_ASC',
-  IdDesc = 'ID_DESC',
-  IsTemplateAsc = 'IS_TEMPLATE_ASC',
-  IsTemplateDesc = 'IS_TEMPLATE_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  Natural = 'NATURAL',
-  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
-  TenantIdAsc = 'TENANT_ID_ASC',
-  TenantIdDesc = 'TENANT_ID_DESC',
-  TypeAsc = 'TYPE_ASC',
-  TypeDesc = 'TYPE_DESC',
-  UowIdAsc = 'UOW_ID_ASC',
-  UowIdDesc = 'UOW_ID_DESC',
-  UpdatedAtAsc = 'UPDATED_AT_ASC',
-  UpdatedAtDesc = 'UPDATED_AT_DESC',
-  WorkflowDataAsc = 'WORKFLOW_DATA_ASC',
-  WorkflowDataDesc = 'WORKFLOW_DATA_DESC'
-}
-
 /** The root query type which gives access points into the data universe. */
 export type Query = Node & {
   __typename: 'Query';
@@ -3622,30 +3361,6 @@ export type Query = Node & {
   profiles?: Maybe<ProfilesConnection>;
   /** Reads a set of `Profile`. */
   profilesList?: Maybe<Array<Profile>>;
-  /** Get a single `Project`. */
-  project?: Maybe<Project>;
-  /** Reads a single `Project` using its globally unique `ID`. */
-  projectByNodeId?: Maybe<Project>;
-  /** Get a single `ProjectRole`. */
-  projectRole?: Maybe<ProjectRole>;
-  /** Reads a single `ProjectRole` using its globally unique `ID`. */
-  projectRoleByNodeId?: Maybe<ProjectRole>;
-  /** Reads and enables pagination through a set of `ProjectRole`. */
-  projectRoles?: Maybe<ProjectRolesConnection>;
-  /** Reads a set of `ProjectRole`. */
-  projectRolesList?: Maybe<Array<ProjectRole>>;
-  /** Get a single `ProjectType`. */
-  projectType?: Maybe<ProjectType>;
-  /** Reads a single `ProjectType` using its globally unique `ID`. */
-  projectTypeByNodeId?: Maybe<ProjectType>;
-  /** Reads and enables pagination through a set of `ProjectType`. */
-  projectTypes?: Maybe<ProjectTypesConnection>;
-  /** Reads a set of `ProjectType`. */
-  projectTypesList?: Maybe<Array<ProjectType>>;
-  /** Reads and enables pagination through a set of `Project`. */
-  projects?: Maybe<ProjectsConnection>;
-  /** Reads a set of `Project`. */
-  projectsList?: Maybe<Array<Project>>;
   /**
    * Exposes the root query type nested one level down. This is helpful for Relay 1
    * which can only query top level fields if they are in a particular form.
@@ -3664,9 +3379,6 @@ export type Query = Node & {
   /** Reads and enables pagination through a set of `Profile`. */
   searchProfiles?: Maybe<ProfilesConnection>;
   searchProfilesList?: Maybe<Array<Maybe<Profile>>>;
-  /** Reads and enables pagination through a set of `Project`. */
-  searchProjects?: Maybe<ProjectsConnection>;
-  searchProjectsList?: Maybe<Array<Maybe<Project>>>;
   /** Reads and enables pagination through a set of `Resident`. */
   searchResidents?: Maybe<ResidentsConnection>;
   searchResidentsList?: Maybe<Array<Maybe<Resident>>>;
@@ -3676,6 +3388,9 @@ export type Query = Node & {
   /** Reads and enables pagination through a set of `Todo`. */
   searchTodos?: Maybe<TodosConnection>;
   searchTodosList?: Maybe<Array<Maybe<Todo>>>;
+  /** Reads and enables pagination through a set of `Wf`. */
+  searchWfs?: Maybe<WfsConnection>;
+  searchWfsList?: Maybe<Array<Maybe<Wf>>>;
   siteUserById?: Maybe<Scalars['JSON']['output']>;
   /** Get a single `Subscriber`. */
   subscriber?: Maybe<Subscriber>;
@@ -3766,7 +3481,7 @@ export type Query = Node & {
   uow?: Maybe<Uow>;
   /** Reads a single `Uow` using its globally unique `ID`. */
   uowByNodeId?: Maybe<Uow>;
-  uowByProjectAndIdentifier?: Maybe<Uow>;
+  uowByWfAndIdentifier?: Maybe<Uow>;
   /** Reads and enables pagination through a set of `UowDependency`. */
   uowDependencies?: Maybe<UowDependenciesConnection>;
   /** Reads a set of `UowDependency`. */
@@ -3779,6 +3494,30 @@ export type Query = Node & {
   uows?: Maybe<UowsConnection>;
   /** Reads a set of `Uow`. */
   uowsList?: Maybe<Array<Uow>>;
+  /** Get a single `Wf`. */
+  wf?: Maybe<Wf>;
+  /** Reads a single `Wf` using its globally unique `ID`. */
+  wfByNodeId?: Maybe<Wf>;
+  /** Get a single `WfRole`. */
+  wfRole?: Maybe<WfRole>;
+  /** Reads a single `WfRole` using its globally unique `ID`. */
+  wfRoleByNodeId?: Maybe<WfRole>;
+  /** Reads and enables pagination through a set of `WfRole`. */
+  wfRoles?: Maybe<WfRolesConnection>;
+  /** Reads a set of `WfRole`. */
+  wfRolesList?: Maybe<Array<WfRole>>;
+  /** Get a single `WfType`. */
+  wfType?: Maybe<WfType>;
+  /** Reads a single `WfType` using its globally unique `ID`. */
+  wfTypeByNodeId?: Maybe<WfType>;
+  /** Reads and enables pagination through a set of `WfType`. */
+  wfTypes?: Maybe<WfTypesConnection>;
+  /** Reads a set of `WfType`. */
+  wfTypesList?: Maybe<Array<WfType>>;
+  /** Reads and enables pagination through a set of `Wf`. */
+  wfs?: Maybe<WfsConnection>;
+  /** Reads a set of `Wf`. */
+  wfsList?: Maybe<Array<Wf>>;
 };
 
 
@@ -4397,105 +4136,6 @@ export type QueryProfilesListArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
-export type QueryProjectArgs = {
-  id: Scalars['UUID']['input'];
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectByNodeIdArgs = {
-  nodeId: Scalars['ID']['input'];
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectRoleArgs = {
-  id: Scalars['UUID']['input'];
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectRoleByNodeIdArgs = {
-  nodeId: Scalars['ID']['input'];
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectRolesArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectRoleCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectRolesOrderBy>>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectRolesListArgs = {
-  condition?: InputMaybe<ProjectRoleCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectRolesOrderBy>>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectTypeArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectTypeByNodeIdArgs = {
-  nodeId: Scalars['ID']['input'];
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectTypesArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectTypeCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectTypesOrderBy>>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectTypesListArgs = {
-  condition?: InputMaybe<ProjectTypeCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectTypesOrderBy>>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryProjectsListArgs = {
-  condition?: InputMaybe<ProjectCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
 export type QueryResidentArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -4556,25 +4196,6 @@ export type QuerySearchProfilesListArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
-export type QuerySearchProjectsArgs = {
-  _options?: InputMaybe<SearchProjectsOptionInput>;
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QuerySearchProjectsListArgs = {
-  _options?: InputMaybe<SearchProjectsOptionInput>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
 export type QuerySearchResidentsArgs = {
   _options?: InputMaybe<SearchResidentsOptionInput>;
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -4626,6 +4247,25 @@ export type QuerySearchTodosArgs = {
 /** The root query type which gives access points into the data universe. */
 export type QuerySearchTodosListArgs = {
   _options?: InputMaybe<SearchTodosOptionInput>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QuerySearchWfsArgs = {
+  _options?: InputMaybe<SearchWfsOptionInput>;
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QuerySearchWfsListArgs = {
+  _options?: InputMaybe<SearchWfsOptionInput>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -5006,9 +4646,9 @@ export type QueryUowByNodeIdArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
-export type QueryUowByProjectAndIdentifierArgs = {
+export type QueryUowByWfAndIdentifierArgs = {
   _identifier?: InputMaybe<Scalars['String']['input']>;
-  _projectId?: InputMaybe<Scalars['UUID']['input']>;
+  _wfId?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 
@@ -5063,6 +4703,105 @@ export type QueryUowsListArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<UowsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfRoleArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfRoleByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfRolesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WfRoleCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfRolesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfRolesListArgs = {
+  condition?: InputMaybe<WfRoleCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfRolesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfTypeArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfTypeByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfTypesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WfTypeCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfTypesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfTypesListArgs = {
+  condition?: InputMaybe<WfTypeCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfTypesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WfCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfsListArgs = {
+  condition?: InputMaybe<WfCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfsOrderBy>>;
 };
 
 /** All input for the `queueWorkflow` mutation. */
@@ -5307,18 +5046,6 @@ export type SearchProfilesOptionInput = {
   status?: InputMaybe<ProfileStatus>;
 };
 
-/** An input for mutations affecting `SearchProjectsOption` */
-export type SearchProjectsOptionInput = {
-  dateRangeEnd?: InputMaybe<Scalars['Date']['input']>;
-  dateRangeStart?: InputMaybe<Scalars['Date']['input']>;
-  isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
-  projectType?: InputMaybe<Scalars['String']['input']>;
-  projectUowStatus?: InputMaybe<UowStatusType>;
-  resultLimit?: InputMaybe<Scalars['Int']['input']>;
-  searchTerms?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  tenantId?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** An input for mutations affecting `SearchResidentsOption` */
 export type SearchResidentsOptionInput = {
   pagingOptions?: InputMaybe<PagingOptionInput>;
@@ -5342,6 +5069,18 @@ export type SearchTodosOptionInput = {
   searchTerm?: InputMaybe<Scalars['String']['input']>;
   todoStatus?: InputMaybe<TodoStatus>;
   todoType?: InputMaybe<TodoType>;
+};
+
+/** An input for mutations affecting `SearchWfsOption` */
+export type SearchWfsOptionInput = {
+  dateRangeEnd?: InputMaybe<Scalars['Date']['input']>;
+  dateRangeStart?: InputMaybe<Scalars['Date']['input']>;
+  isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
+  resultLimit?: InputMaybe<Scalars['Int']['input']>;
+  searchTerms?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  tenantId?: InputMaybe<Scalars['String']['input']>;
+  wfType?: InputMaybe<Scalars['String']['input']>;
+  wfUowStatus?: InputMaybe<UowStatusType>;
 };
 
 /** All input for the `subscribeTenantToLicensePack` mutation. */
@@ -6567,9 +6306,6 @@ export type Uow = Node & {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
   parentUowId?: Maybe<Scalars['UUID']['output']>;
-  /** Reads a single `Project` that is related to this `Uow`. */
-  project?: Maybe<Project>;
-  projectId: Scalars['UUID']['output'];
   status: UowStatusType;
   tenantId: Scalars['UUID']['output'];
   type?: Maybe<UowType>;
@@ -6583,6 +6319,9 @@ export type Uow = Node & {
   uowDependenciesByDependerIdList: Array<UowDependency>;
   updatedAt: Scalars['Datetime']['output'];
   useWorker: Scalars['Boolean']['output'];
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
+  wfId: Scalars['UUID']['output'];
   workflowError: Scalars['JSON']['output'];
   workflowHandlerKey?: Maybe<Scalars['String']['output']>;
 };
@@ -6677,8 +6416,6 @@ export type UowCondition = {
   name?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `parentUowId` field. */
   parentUowId?: InputMaybe<Scalars['UUID']['input']>;
-  /** Checks for equality with the object’s `projectId` field. */
-  projectId?: InputMaybe<Scalars['UUID']['input']>;
   /** Checks for equality with the object’s `status` field. */
   status?: InputMaybe<UowStatusType>;
   /** Checks for equality with the object’s `tenantId` field. */
@@ -6689,6 +6426,8 @@ export type UowCondition = {
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `useWorker` field. */
   useWorker?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `wfId` field. */
+  wfId?: InputMaybe<Scalars['UUID']['input']>;
   /** Checks for equality with the object’s `workflowError` field. */
   workflowError?: InputMaybe<Scalars['JSON']['input']>;
   /** Checks for equality with the object’s `workflowHandlerKey` field. */
@@ -6731,7 +6470,9 @@ export enum UowDependenciesOrderBy {
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
   TenantIdAsc = 'TENANT_ID_ASC',
-  TenantIdDesc = 'TENANT_ID_DESC'
+  TenantIdDesc = 'TENANT_ID_DESC',
+  WfIdAsc = 'WF_ID_ASC',
+  WfIdDesc = 'WF_ID_DESC'
 }
 
 export type UowDependency = Node & {
@@ -6747,6 +6488,9 @@ export type UowDependency = Node & {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
   tenantId: Scalars['UUID']['output'];
+  /** Reads a single `Wf` that is related to this `UowDependency`. */
+  wf?: Maybe<Wf>;
+  wfId: Scalars['UUID']['output'];
 };
 
 /**
@@ -6764,6 +6508,8 @@ export type UowDependencyCondition = {
   isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks for equality with the object’s `tenantId` field. */
   tenantId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `wfId` field. */
+  wfId?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 /** An input for mutations affecting `UowDependencyInfo` */
@@ -6780,9 +6526,9 @@ export type UowInfoInput = {
   identifier?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   parentUowId?: InputMaybe<Scalars['String']['input']>;
-  projectId?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<UowType>;
   useWorker?: InputMaybe<Scalars['Boolean']['input']>;
+  wfId?: InputMaybe<Scalars['String']['input']>;
   workflowHandlerKey?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -6800,8 +6546,8 @@ export enum UowStatusType {
 export enum UowType {
   Issue = 'ISSUE',
   Milestone = 'MILESTONE',
-  Project = 'PROJECT',
-  Task = 'TASK'
+  Task = 'TASK',
+  Wf = 'WF'
 }
 
 /** A connection to a list of `Uow` values. */
@@ -6851,8 +6597,6 @@ export enum UowsOrderBy {
   ParentUowIdDesc = 'PARENT_UOW_ID_DESC',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
-  ProjectIdAsc = 'PROJECT_ID_ASC',
-  ProjectIdDesc = 'PROJECT_ID_DESC',
   StatusAsc = 'STATUS_ASC',
   StatusDesc = 'STATUS_DESC',
   TenantIdAsc = 'TENANT_ID_ASC',
@@ -6863,6 +6607,8 @@ export enum UowsOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC',
   UseWorkerAsc = 'USE_WORKER_ASC',
   UseWorkerDesc = 'USE_WORKER_DESC',
+  WfIdAsc = 'WF_ID_ASC',
+  WfIdDesc = 'WF_ID_DESC',
   WorkflowErrorAsc = 'WORKFLOW_ERROR_ASC',
   WorkflowErrorDesc = 'WORKFLOW_ERROR_DESC',
   WorkflowHandlerKeyAsc = 'WORKFLOW_HANDLER_KEY_ASC',
@@ -7064,39 +6810,6 @@ export type UpsertMessagePayloadMessageEdgeArgs = {
   orderBy?: Array<MessagesOrderBy>;
 };
 
-/** All input for the `upsertProject` mutation. */
-export type UpsertProjectInput = {
-  _projectInfo?: InputMaybe<ProjectInfoInput>;
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** The output of our `upsertProject` mutation. */
-export type UpsertProjectPayload = {
-  __typename: 'UpsertProjectPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  project?: Maybe<Project>;
-  /** An edge for our `Project`. May be used by Relay 1. */
-  projectEdge?: Maybe<ProjectsEdge>;
-  /** Reads a single `ProjectType` that is related to this `Project`. */
-  projectType?: Maybe<ProjectType>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-};
-
-
-/** The output of our `upsertProject` mutation. */
-export type UpsertProjectPayloadProjectEdgeArgs = {
-  orderBy?: Array<ProjectsOrderBy>;
-};
-
 /** All input for the `upsertSubscriber` mutation. */
 export type UpsertSubscriberInput = {
   _subscriberInfo?: InputMaybe<SubscriberInfoInput>;
@@ -7169,8 +6882,8 @@ export type UpsertTopicPayloadTopicEdgeArgs = {
 
 /** All input for the `upsertUow` mutation. */
 export type UpsertUowInput = {
-  _projectId?: InputMaybe<Scalars['UUID']['input']>;
   _uowInfo?: InputMaybe<UowInfoInput>;
+  _wfId?: InputMaybe<Scalars['UUID']['input']>;
   /**
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
@@ -7186,19 +6899,52 @@ export type UpsertUowPayload = {
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Reads a single `Project` that is related to this `Uow`. */
-  project?: Maybe<Project>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   uow?: Maybe<Uow>;
   /** An edge for our `Uow`. May be used by Relay 1. */
   uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
 };
 
 
 /** The output of our `upsertUow` mutation. */
 export type UpsertUowPayloadUowEdgeArgs = {
   orderBy?: Array<UowsOrderBy>;
+};
+
+/** All input for the `upsertWf` mutation. */
+export type UpsertWfInput = {
+  _wfInfo?: InputMaybe<WfInfoInput>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `upsertWf` mutation. */
+export type UpsertWfPayload = {
+  __typename: 'UpsertWfPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  wf?: Maybe<Wf>;
+  /** An edge for our `Wf`. May be used by Relay 1. */
+  wfEdge?: Maybe<WfsEdge>;
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
+};
+
+
+/** The output of our `upsertWf` mutation. */
+export type UpsertWfPayloadWfEdgeArgs = {
+  orderBy?: Array<WfsOrderBy>;
 };
 
 /** All input for the `waitingUow` mutation. */
@@ -7219,13 +6965,13 @@ export type WaitingUowPayload = {
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Reads a single `Project` that is related to this `Uow`. */
-  project?: Maybe<Project>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   uow?: Maybe<Uow>;
   /** An edge for our `Uow`. May be used by Relay 1. */
   uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
 };
 
 
@@ -7233,6 +6979,290 @@ export type WaitingUowPayload = {
 export type WaitingUowPayloadUowEdgeArgs = {
   orderBy?: Array<UowsOrderBy>;
 };
+
+export type Wf = Node & {
+  __typename: 'Wf';
+  createdAt: Scalars['Datetime']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  identifier?: Maybe<Scalars['String']['output']>;
+  inputDefinitions: Array<Maybe<WorkflowInputDefinition>>;
+  isTemplate: Scalars['Boolean']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  template?: Maybe<Wf>;
+  tenantId: Scalars['UUID']['output'];
+  type: Scalars['String']['output'];
+  /** Reads and enables pagination through a set of `UowDependency`. */
+  uowDependencies: UowDependenciesConnection;
+  /** Reads and enables pagination through a set of `UowDependency`. */
+  uowDependenciesList: Array<UowDependency>;
+  uowId?: Maybe<Scalars['UUID']['output']>;
+  /** Reads and enables pagination through a set of `Uow`. */
+  uows: UowsConnection;
+  /** Reads and enables pagination through a set of `Uow`. */
+  uowsList: Array<Uow>;
+  updatedAt: Scalars['Datetime']['output'];
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
+  workflowData: Scalars['JSON']['output'];
+};
+
+
+export type WfUowDependenciesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+
+export type WfUowDependenciesListArgs = {
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+
+export type WfUowsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UowCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowsOrderBy>>;
+};
+
+
+export type WfUowsListArgs = {
+  condition?: InputMaybe<UowCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowsOrderBy>>;
+};
+
+/** A condition to be used against `Wf` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type WfCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `description` field. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `identifier` field. */
+  identifier?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `inputDefinitions` field. */
+  inputDefinitions?: InputMaybe<Array<InputMaybe<WorkflowInputDefinitionInput>>>;
+  /** Checks for equality with the object’s `isTemplate` field. */
+  isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `tenantId` field. */
+  tenantId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `type` field. */
+  type?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `uowId` field. */
+  uowId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `workflowData` field. */
+  workflowData?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+/** An input for mutations affecting `WfInfo` */
+export type WfInfoInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  identifier?: InputMaybe<Scalars['String']['input']>;
+  inputDefinitions?: InputMaybe<Array<InputMaybe<WorkflowInputDefinitionInput>>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  onCompletedWorkflowHandlerKey?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  uowDependencies?: InputMaybe<Array<InputMaybe<UowDependencyInfoInput>>>;
+  uows?: InputMaybe<Array<InputMaybe<UowInfoInput>>>;
+};
+
+export type WfRole = Node & {
+  __typename: 'WfRole';
+  config: Scalars['JSON']['output'];
+  id: Scalars['UUID']['output'];
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+};
+
+/** A condition to be used against `WfRole` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type WfRoleCondition = {
+  /** Checks for equality with the object’s `config` field. */
+  config?: InputMaybe<Scalars['JSON']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `key` field. */
+  key?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A connection to a list of `WfRole` values. */
+export type WfRolesConnection = {
+  __typename: 'WfRolesConnection';
+  /** A list of edges which contains the `WfRole` and cursor to aid in pagination. */
+  edges: Array<Maybe<WfRolesEdge>>;
+  /** A list of `WfRole` objects. */
+  nodes: Array<Maybe<WfRole>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `WfRole` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `WfRole` edge in the connection. */
+export type WfRolesEdge = {
+  __typename: 'WfRolesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `WfRole` at the end of the edge. */
+  node?: Maybe<WfRole>;
+};
+
+/** Methods to use when ordering `WfRole`. */
+export enum WfRolesOrderBy {
+  ConfigAsc = 'CONFIG_ASC',
+  ConfigDesc = 'CONFIG_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  KeyAsc = 'KEY_ASC',
+  KeyDesc = 'KEY_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+}
+
+export type WfType = Node & {
+  __typename: 'WfType';
+  id: Scalars['String']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `Wf`. */
+  wfsByType: WfsConnection;
+  /** Reads and enables pagination through a set of `Wf`. */
+  wfsByTypeList: Array<Wf>;
+};
+
+
+export type WfTypeWfsByTypeArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WfCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfsOrderBy>>;
+};
+
+
+export type WfTypeWfsByTypeListArgs = {
+  condition?: InputMaybe<WfCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfsOrderBy>>;
+};
+
+/** A condition to be used against `WfType` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type WfTypeCondition = {
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A connection to a list of `WfType` values. */
+export type WfTypesConnection = {
+  __typename: 'WfTypesConnection';
+  /** A list of edges which contains the `WfType` and cursor to aid in pagination. */
+  edges: Array<Maybe<WfTypesEdge>>;
+  /** A list of `WfType` objects. */
+  nodes: Array<Maybe<WfType>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `WfType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `WfType` edge in the connection. */
+export type WfTypesEdge = {
+  __typename: 'WfTypesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `WfType` at the end of the edge. */
+  node?: Maybe<WfType>;
+};
+
+/** Methods to use when ordering `WfType`. */
+export enum WfTypesOrderBy {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+}
+
+/** A connection to a list of `Wf` values. */
+export type WfsConnection = {
+  __typename: 'WfsConnection';
+  /** A list of edges which contains the `Wf` and cursor to aid in pagination. */
+  edges: Array<Maybe<WfsEdge>>;
+  /** A list of `Wf` objects. */
+  nodes: Array<Maybe<Wf>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Wf` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Wf` edge in the connection. */
+export type WfsEdge = {
+  __typename: 'WfsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Wf` at the end of the edge. */
+  node?: Maybe<Wf>;
+};
+
+/** Methods to use when ordering `Wf`. */
+export enum WfsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DescriptionAsc = 'DESCRIPTION_ASC',
+  DescriptionDesc = 'DESCRIPTION_DESC',
+  IdentifierAsc = 'IDENTIFIER_ASC',
+  IdentifierDesc = 'IDENTIFIER_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsTemplateAsc = 'IS_TEMPLATE_ASC',
+  IsTemplateDesc = 'IS_TEMPLATE_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TenantIdAsc = 'TENANT_ID_ASC',
+  TenantIdDesc = 'TENANT_ID_DESC',
+  TypeAsc = 'TYPE_ASC',
+  TypeDesc = 'TYPE_DESC',
+  UowIdAsc = 'UOW_ID_ASC',
+  UowIdDesc = 'UOW_ID_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  WorkflowDataAsc = 'WORKFLOW_DATA_ASC',
+  WorkflowDataDesc = 'WORKFLOW_DATA_DESC'
+}
 
 export enum WorkflowInputDataType {
   Boolean = 'BOOLEAN',
@@ -7657,12 +7687,23 @@ export type TodoByIdForRefreshQueryVariables = Exact<{
 
 export type TodoByIdForRefreshQuery = { __typename: 'Query', todo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus } | null } | null } | null } | null } | null } | null } | null } | null } | null } | null } | null } | null };
 
-export type ProjectFragment = { __typename: 'Project', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null } | null> };
+export type UowFragment = { __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null };
 
-export type AllProjectTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
+export type UowDependencyFragment = { __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any };
+
+export type WfFragment = { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null } | null> };
+
+export type AllWfTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllProjectTemplatesQuery = { __typename: 'Query', projectTemplates?: Array<{ __typename: 'Project', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null } | null> }> | null };
+export type AllWfTemplatesQuery = { __typename: 'Query', wfTemplates?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null } | null> }> | null };
+
+export type WfByIdQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type WfByIdQuery = { __typename: 'Query', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, workflowData: any, uowsList: Array<{ __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null }>, uowDependenciesList: Array<{ __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any }>, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null } | null> } | null };
 
 export const ApplicationFragmentDoc = gql`
     fragment Application on Application {
@@ -7832,8 +7873,39 @@ export const TodoFragmentDoc = gql`
   topicId
 }
     `;
-export const ProjectFragmentDoc = gql`
-    fragment Project on Project {
+export const UowFragmentDoc = gql`
+    fragment Uow on Uow {
+  id
+  completedAt
+  createdAt
+  data
+  description
+  dueAt
+  identifier
+  isTemplate
+  name
+  parentUowId
+  status
+  tenantId
+  type
+  updatedAt
+  useWorker
+  wfId
+  workflowError
+  workflowHandlerKey
+}
+    `;
+export const UowDependencyFragmentDoc = gql`
+    fragment UowDependency on UowDependency {
+  id
+  tenantId
+  wfId
+  dependerId
+  dependeeId
+}
+    `;
+export const WfFragmentDoc = gql`
+    fragment Wf on Wf {
   id
   createdAt
   updatedAt
@@ -7841,6 +7913,8 @@ export const ProjectFragmentDoc = gql`
   identifier
   isTemplate
   type
+  name
+  description
   inputDefinitions {
     name
     dataType
@@ -8887,14 +8961,33 @@ export const TodoByIdForRefreshDocument = gql`
 export function useTodoByIdForRefreshQuery(options: Omit<Urql.UseQueryArgs<never, TodoByIdForRefreshQueryVariables>, 'query'>) {
   return Urql.useQuery<TodoByIdForRefreshQuery, TodoByIdForRefreshQueryVariables>({ query: TodoByIdForRefreshDocument, ...options });
 };
-export const AllProjectTemplatesDocument = gql`
-    query AllProjectTemplates {
-  projectTemplates: projectsList(condition: {isTemplate: true}) {
-    ...Project
+export const AllWfTemplatesDocument = gql`
+    query AllWfTemplates {
+  wfTemplates: wfsList(condition: {isTemplate: true}) {
+    ...Wf
   }
 }
-    ${ProjectFragmentDoc}`;
+    ${WfFragmentDoc}`;
 
-export function useAllProjectTemplatesQuery(options: Omit<Urql.UseQueryArgs<never, AllProjectTemplatesQueryVariables>, 'query'>) {
-  return Urql.useQuery<AllProjectTemplatesQuery, AllProjectTemplatesQueryVariables>({ query: AllProjectTemplatesDocument, ...options });
+export function useAllWfTemplatesQuery(options: Omit<Urql.UseQueryArgs<never, AllWfTemplatesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllWfTemplatesQuery, AllWfTemplatesQueryVariables>({ query: AllWfTemplatesDocument, ...options });
+};
+export const WfByIdDocument = gql`
+    query WfById($id: UUID!) {
+  wf(id: $id) {
+    ...Wf
+    uowsList {
+      ...Uow
+    }
+    uowDependenciesList {
+      ...UowDependency
+    }
+  }
+}
+    ${WfFragmentDoc}
+${UowFragmentDoc}
+${UowDependencyFragmentDoc}`;
+
+export function useWfByIdQuery(options: Omit<Urql.UseQueryArgs<never, WfByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<WfByIdQuery, WfByIdQueryVariables>({ query: WfByIdDocument, ...options });
 };

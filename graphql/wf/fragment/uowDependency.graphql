@@ -1,0 +1,7 @@
+fragment UowDependency on UowDependency {
+  id
+  tenantId
+  wfId
+  dependerId
+  dependeeId
+}

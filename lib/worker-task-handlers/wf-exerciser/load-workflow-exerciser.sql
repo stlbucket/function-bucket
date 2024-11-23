@@ -55,8 +55,8 @@ select wf_fn.upsert_project(
       )::wf_fn.uow_info
       ,row(
         'maybe-raise-exception'::citext -- identifier
-        ,'Maybe raise and exception'::citext -- name
-        ,'Maybe raise and exception'::citext -- description,
+        ,'Maybe raise an exception'::citext -- name
+        ,'Maybe raise an exception'::citext -- description,
         ,'task'::wf.uow_type
         ,'{}'::jsonb
         ,null::citext -- project_id

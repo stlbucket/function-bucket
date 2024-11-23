@@ -28,7 +28,7 @@ alter default privileges for role postgres in schema wf grant all on sequences t
 
 
 ------------------------------------------------------------------------ wf
--- alter table wf.project enable row level security;
+-- alter table wf.wf enable row level security;
 --     CREATE POLICY manage_all_for_tenant ON wf.wf
 --       FOR ALL
 --       USING (auth_ext.tenant_id()::uuid = tenant_id)

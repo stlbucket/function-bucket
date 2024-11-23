@@ -1,0 +1,13 @@
+query WfById (
+  $id: UUID!
+) {
+  wf(id: $id) {
+    ...Wf
+    uowsList {
+      ...Uow
+    }
+  	uowDependenciesList {
+			...UowDependency      
+    }
+  }
+}

@@ -1,4 +1,5 @@
-fragment Project on Project {
+
+fragment Wf on Wf {
   id
   createdAt
   updatedAt
@@ -6,6 +7,8 @@ fragment Project on Project {
   identifier
   isTemplate
   type
+  name
+  description
   inputDefinitions {
     name
     dataType

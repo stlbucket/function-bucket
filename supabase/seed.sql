@@ -201,11 +201,12 @@ begin;
 
 commit;
 
-select wf_fn.upsert_project(
+select wf_fn.upsert_wf(
   row(
     'wf-exerciser'::citext -- identifier,
     ,'wf-exerciser'::citext -- type,
     ,'Workflow Exerciser'::citext -- name,
+    ,'Demonstrates workflow capabilities'::citext -- description
     ,array[
       row(
         'init-workflow-exerciser'::citext -- identifier
@@ -213,8 +214,8 @@ select wf_fn.upsert_project(
         ,'Initial housekeeping stuff'::citext -- description,
         ,'task'::wf.uow_type
         ,'{}'::jsonb
-        ,null::citext -- project_id
-        ,null::citext -- parent_uow_id
+        ,null::citext -- wf_id
+        ,'wf-exerciser'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
         ,'init-workflow-exerciser'::citext -- workflow_handler_key,
         ,true::boolean -- use_worker
@@ -225,8 +226,8 @@ select wf_fn.upsert_project(
         ,'This is about the milestone'::citext -- description,
         ,'milestone'::wf.uow_type
         ,'{}'::jsonb
-        ,null::citext -- project_id
-        ,null::citext -- parent_uow_id
+        ,null::citext -- wf_id
+        ,'wf-exerciser'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
         ,'do-the-things'::citext -- workflow_handler_key,
         ,true::boolean -- use_worker
@@ -237,7 +238,7 @@ select wf_fn.upsert_project(
         ,'Get a stock quote'::citext -- description,
         ,'task'::wf.uow_type
         ,'{}'::jsonb
-        ,null::citext -- project_id
+        ,null::citext -- wf_id
         ,'do-the-things'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
         ,'get-stock-quote'::citext -- workflow_handler_key,
@@ -249,7 +250,7 @@ select wf_fn.upsert_project(
         ,'Maybe throw an error'::citext -- description,
         ,'task'::wf.uow_type
         ,'{}'::jsonb
-        ,null::citext -- project_id
+        ,null::citext -- wf_id
         ,'do-the-things'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
         ,'maybe-throw-error'::citext -- workflow_handler_key,
@@ -257,11 +258,11 @@ select wf_fn.upsert_project(
       )::wf_fn.uow_info
       ,row(
         'maybe-raise-exception'::citext -- identifier
-        ,'Maybe raise and exception'::citext -- name
-        ,'Maybe raise and exception'::citext -- description,
+        ,'Maybe raise an exception'::citext -- name
+        ,'Maybe raise an exception'::citext -- description,
         ,'task'::wf.uow_type
         ,'{}'::jsonb
-        ,null::citext -- project_id
+        ,null::citext -- wf_id
         ,'do-the-things'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
         ,'maybe-raise-exception'::citext -- workflow_handler_key,
@@ -273,7 +274,7 @@ select wf_fn.upsert_project(
         ,'Final housekeeping stuff'::citext -- description,
         ,'task'::wf.uow_type
         ,'{}'::jsonb
-        ,null::citext -- project_id
+        ,null::citext -- wf_id
         ,null::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
         ,'finish-workflow-exerciser'::citext -- workflow_handler_key,
@@ -285,20 +286,20 @@ select wf_fn.upsert_project(
         'do-the-things'::citext --depender_identifier
         ,'init-workflow-exerciser'::citext -- dependee_identifier
       )::wf_fn.uow_dependency_info
-      ,row(
-        'maybe-throw-error'::citext --depender_identifier
-        ,'get-stock-quote'::citext -- dependee_identifier
-      )::wf_fn.uow_dependency_info
-      ,row(
-        'maybe-raise-exception'::citext --depender_identifier
-        ,'maybe-throw-error'::citext -- dependee_identifier
-      )::wf_fn.uow_dependency_info
+      -- ,row(
+      --   'maybe-throw-error'::citext --depender_identifier
+      --   ,'get-stock-quote'::citext -- dependee_identifier
+      -- )::wf_fn.uow_dependency_info
+      -- ,row(
+      --   'maybe-raise-exception'::citext --depender_identifier
+      --   ,'maybe-throw-error'::citext -- dependee_identifier
+      -- )::wf_fn.uow_dependency_info
       ,row(
         'finish-workflow-exerciser'::citext --depender_identifier
-        ,'maybe-raise-exception'::citext -- dependee_identifier
+        ,'do-the-things'::citext -- dependee_identifier
       )::wf_fn.uow_dependency_info
     ]::wf_fn.uow_dependency_info[]
-    ,'close-workflow-project'::citext -- on_completed_workflow_handler_key
+    ,'close-workflow-wf'::citext -- on_completed_workflow_handler_key
     ,array[
       row(
         'stockSymbol'::citext -- name
@@ -313,7 +314,7 @@ select wf_fn.upsert_project(
         ,'string'::wf.workflow_input_data_type -- data_type
       )::wf.workflow_input_definition
     ]::wf.workflow_input_definition[]
-  )::wf_fn.project_info
+  )::wf_fn.wf_info
   ,(select id from app.tenant where identifier = 'anchor')
 );
 

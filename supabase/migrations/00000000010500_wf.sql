@@ -12,7 +12,7 @@ CREATE TYPE wf.uow_status_type AS ENUM (
 );
 ----------------------------------------
 CREATE TYPE wf.uow_type AS ENUM (
-  'project',
+  'wf',
   'milestone',
   'task',
   'issue'
@@ -28,11 +28,11 @@ create type wf.workflow_input_definition as (
   ,data_type wf.workflow_input_data_type
 );
 ----------------------------------------
-CREATE TABLE wf.project_type (
+CREATE TABLE wf.wf_type (
   id citext not null primary key
 );
 ----------------------------------------
-CREATE TABLE wf.project (
+CREATE TABLE wf.wf (
   id uuid NOT NULL DEFAULT gen_random_uuid() primary key,
   uow_id uuid,
   created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -40,7 +40,8 @@ CREATE TABLE wf.project (
   identifier citext,
   tenant_id uuid NOT NULL,
   name citext,
-  type citext NOT NULL references wf.project_type(id),
+  description citext,
+  type citext NOT NULL references wf.wf_type(id),
   is_template boolean DEFAULT false NOT NULL,
   workflow_data jsonb DEFAULT '{}'::jsonb NOT NULL,
   input_definitions wf.workflow_input_definition[] NOT NULL default '{}'::wf.workflow_input_definition[]
@@ -48,7 +49,7 @@ CREATE TABLE wf.project (
 ----------------------------------------
 CREATE TABLE wf.uow (
   id uuid NOT NULL DEFAULT gen_random_uuid() primary key,
-  project_id uuid NOT NULL references wf.project(id),
+  wf_id uuid NOT NULL references wf.wf(id),
   created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
   updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
   tenant_id uuid NOT NULL,
@@ -67,24 +68,25 @@ CREATE TABLE wf.uow (
   workflow_error jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 ----------------------------------------
-CREATE TABLE wf.project_role (
+CREATE TABLE wf.wf_role (
   id uuid NOT NULL DEFAULT gen_random_uuid() primary key,
   name citext,
   key citext,
   config jsonb DEFAULT '{}'::jsonb NOT NULL,
-  CONSTRAINT project_role_key_check CHECK (((key IS NOT NULL) AND (key <> ''::citext))),
-  CONSTRAINT project_role_name_check CHECK (((name IS NOT NULL) AND (name <> ''::citext)))
+  CONSTRAINT wf_role_key_check CHECK (((key IS NOT NULL) AND (key <> ''::citext))),
+  CONSTRAINT wf_role_name_check CHECK (((name IS NOT NULL) AND (name <> ''::citext)))
 );
 ----------------------------------------
 CREATE TABLE wf.uow_dependency (
   id uuid NOT NULL DEFAULT gen_random_uuid() primary key,
   tenant_id uuid NOT NULL,
+  wf_id uuid NOT NULL references wf.wf(id),
   depender_id uuid NOT NULL references wf.uow(id),
   dependee_id uuid NOT NULL references wf.uow(id),
   is_template boolean DEFAULT false NOT NULL
 );
 ----------------------------------------
-CREATE FUNCTION wf.fn_before_update_project() RETURNS trigger
+CREATE FUNCTION wf.fn_before_update_wf() RETURNS trigger
   LANGUAGE plpgsql
   AS $$
 BEGIN
@@ -100,20 +102,20 @@ BEGIN
   RETURN NEW;
 END; $$;
 ----------------------------------------
-CREATE FUNCTION wf.project_template(_project wf.project) RETURNS wf.project
+CREATE FUNCTION wf.wf_template(_wf wf.wf) RETURNS wf.wf
   LANGUAGE plpgsql STABLE
   AS $$
 DECLARE
-  _project_template wf.project;
+  _wf_template wf.wf;
   _err_context citext;
 BEGIN
-  select * into _project_template from wf.project where type = _project.type and is_template = true;
-  return _project_template;
+  select * into _wf_template from wf.wf where type = _wf.type and is_template = true;
+  return _wf_template;
   exception
     when others then
       GET STACKED DIAGNOSTICS _err_context = PG_EXCEPTION_CONTEXT;
       if position('FB' in SQLSTATE::citext) = 0 then
-        _err_context := 'wf.project_template:::' || SQLSTATE::citext || ':::' || SQLERRM::citext || ':::' || _err_context;
+        _err_context := 'wf.wf_template:::' || SQLSTATE::citext || ':::' || SQLERRM::citext || ':::' || _err_context;
         raise exception '%', _err_context using errcode = 'FB500';
       end if;
       raise;
@@ -168,13 +170,13 @@ BEGIN
   END
 $$;
 ----------------------------------------
-CREATE INDEX idx_prj_project_type ON wf.project USING btree (type);
+CREATE INDEX idx_prj_wf_type ON wf.wf USING btree (type);
 ----------------------------------------
-CREATE INDEX idx_project_tenant ON wf.project USING btree (tenant_id);
+CREATE INDEX idx_wf_tenant ON wf.wf USING btree (tenant_id);
 ----------------------------------------
-CREATE INDEX idx_project_uow ON wf.project USING btree (uow_id);
+CREATE INDEX idx_wf_uow ON wf.wf USING btree (uow_id);
 ----------------------------------------
-CREATE UNIQUE INDEX idx_unique_project_template ON wf.project USING btree (tenant_id, identifier) WHERE (is_template = true);
+CREATE UNIQUE INDEX idx_unique_wf_template ON wf.wf USING btree (tenant_id, identifier) WHERE (is_template = true);
 ----------------------------------------
 CREATE INDEX idx_uow_tenant ON wf.uow USING btree (tenant_id);
 ----------------------------------------
@@ -186,14 +188,14 @@ CREATE INDEX idx_uow_dependency_depender ON wf.uow_dependency USING btree (depen
 ----------------------------------------
 CREATE INDEX idx_uow_parent_uow ON wf.uow USING btree (parent_uow_id);
 ----------------------------------------
-CREATE INDEX idx_uow_project ON wf.uow USING btree (project_id);
+CREATE INDEX idx_uow_wf ON wf.uow USING btree (wf_id);
 ----------------------------------------
-CREATE UNIQUE INDEX idx_uow_project_project ON wf.uow USING btree (project_id) WHERE (type = 'project'::wf.uow_type);
+CREATE UNIQUE INDEX idx_uow_wf_wf ON wf.uow USING btree (wf_id) WHERE (type = 'wf'::wf.uow_type);
 ----------------------------------------
-CREATE INDEX idx_wf_app_user_id ON wf.project USING gin (((workflow_data #> '{workflowInputData,appUserId}'::citext[])));
+CREATE INDEX idx_wf_app_user_id ON wf.wf USING gin (((workflow_data #> '{workflowInputData,appUserId}'::citext[])));
 ----------------------------------------
-CREATE INDEX idx_wf_input_data ON wf.project USING gin (((workflow_data #> '{workflowInputData}'::citext[])));
+CREATE INDEX idx_wf_input_data ON wf.wf USING gin (((workflow_data #> '{workflowInputData}'::citext[])));
 ----------------------------------------
-CREATE TRIGGER tg_before_update_project BEFORE UPDATE ON wf.project FOR EACH ROW EXECUTE FUNCTION wf.fn_before_update_project();
+CREATE TRIGGER tg_before_update_wf BEFORE UPDATE ON wf.wf FOR EACH ROW EXECUTE FUNCTION wf.fn_before_update_wf();
 ----------------------------------------
 CREATE TRIGGER tg_before_update_uow BEFORE UPDATE ON wf.uow FOR EACH ROW EXECUTE FUNCTION wf.fn_before_update_uow();

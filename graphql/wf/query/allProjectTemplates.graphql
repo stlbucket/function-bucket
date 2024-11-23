@@ -1,7 +1,0 @@
-query AllProjectTemplates {
-  projectTemplates: projectsList(condition: {
-  	isTemplate: true
-  }) {
-    ...Project
-  }
-}
