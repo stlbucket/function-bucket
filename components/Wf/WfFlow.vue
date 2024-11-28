@@ -1,12 +1,9 @@
 <template>
   <div>
-    <WfNewInstance :wf="wf" @new-workflow-instance="onNewWorkflowInstance" />
-  </div>
-  <div>
     <div 
       v-if="flowNodes[0]" 
       class="flex grow-1 bg-gray-800"
-      style="height: 700px; background-color: green" 
+      style="height: 700px; width: 1150px; background-color: green" 
     >
       <VueFlow 
         :nodes="flowNodes" 
@@ -42,9 +39,9 @@
       </VueFlow>
     </div>
   </div>
-  <div class="flex flex-col grow-1 gap-2">
+  <div class="flex flex-col gap-2">
     <div class="flex p-3"></div>
-    <div class="flex justify-between grow-1 rounded">
+    <div class="flex rounded">
       <pre class="flex text-xs bg-gray-600 w-2/5 border-2 rounded">{{ { debugOutput } }}</pre>
       <pre class="flex text-xs bg-gray-600 w-2/5 border-2 rounded">{{ { wf } }}</pre>
     </div>
@@ -61,7 +58,6 @@
   import { VueFlow, type NodeProps, type Node, type Edge, MarkerType } from '@vue-flow/core'
 
   import { useWfLayoutElk } from '~/composables/use-wf-layout';
-import { useQueueWorkflowMutation } from '~/graphql/api';
 
   const props = defineProps<{
     wf: Wf
@@ -100,18 +96,4 @@ import { useQueueWorkflowMutation } from '~/graphql/api';
   }
   computeLayout()
 
-  const queueWorkflowMutation = await useQueueWorkflowMutation();
-  const onNewWorkflowInstance = async (workflowInputData: any) => {
-    alert(JSON.stringify(workflowInputData,null,2))
-    const identifier = props.wf.identifier;
-    if (!identifier) throw new Error ('Unable to queue workflow')
-    const { data, error } = await queueWorkflowMutation.executeMutation({
-      identifier,
-      workflowInputData
-    })
-    if (error) alert(error.toString())
-    console.log(JSON.stringify(data, null, 2))
-
-    // navigateTo('/site-admin/tenant')
-  }
 </script>

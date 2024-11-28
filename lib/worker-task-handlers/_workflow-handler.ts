@@ -9,27 +9,28 @@ const connectionString = process.env.DB_OWNER_CONNECTION || process.env.DB_CONNE
 // https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81
 
 export default (handler: FnbWorkFlowHandlerFunction): Task => {
-  return async (payload: unknown) => {
+  return async (payload: any) => {
     const workerUtils = await makeWorkerUtils({
       connectionString: connectionString,
     });
     const client = useFnbPgClient()
 
-    const uow = camelcaseKeys((payload as FnbWorkflowStepPayload).uow)
+    const uow = camelcaseKeys(payload)
+    console.log('WF HANDLER', {payload})
     try {
-      const workflowDataQuery = (await doQuery('select workflow_data from wf.wf where id = $1;', [
+      const workflowDataQuery = (await client.doQuery('select workflow_data from wf.wf where id = $1;', [
         uow.wfId
       ])).rows[0]
 
       const workflowData = workflowDataQuery ? workflowDataQuery.workflow_data : {}
-      // console.log('workflowData', workflowData)
+      console.log('workflowData', workflowData)
       
       const result = await handler({
         uow: uow,
         workflowData: workflowData
       })
 
-      // console.log('result', uow.identifier, JSON.stringify(result, null, 2))
+      console.log('result', uow.identifier, JSON.stringify(result, null, 2))
 
       switch (result.status) {
         case 'complete':
@@ -38,17 +39,19 @@ export default (handler: FnbWorkFlowHandlerFunction): Task => {
               result.workflowData || {},
               result.stepData || {}
             ])).rows[0].to_jsonb
-            // console.log('completeUowResult.uows_to_schedule', JSON.stringify(completeUowResult.uows_to_schedule, null, 2))
+            console.log('completeUowResult.uows_to_schedule', JSON.stringify(completeUowResult.uows_to_schedule, null, 2))
             await Promise.all(
               completeUowResult.uows_to_schedule.map(
                 async (uow: any) => {
                   await workerUtils.addJob(
                     uow.workflow_handler_key,
                     // Payload
-                    {
-                      uow: uow
-                    },
+                    uow,
                     // Optionally, add further task spec details here
+                    {
+                      maxAttempts: 1,
+                      runAt: (new Date(Date.now() + 5000))
+                    },
                   )
                 }
               )

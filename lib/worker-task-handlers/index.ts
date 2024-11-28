@@ -1,4 +1,4 @@
-import closeWorkflowProject from "./_common/close-workflow-project.js"
+import closeWorkflowWf from "./_common/close-workflow-wf.js"
 
 import initWorkflowExerciser from "./wf-exerciser/init-workflow-exerciser.js";
 import finishWorkflowExerciser from "./wf-exerciser/finish-workflow-exerciser.js";
@@ -12,7 +12,7 @@ import type { TaskList } from "graphile-worker";
 const taskList: TaskList = {
   'init-workflow-exerciser': initWorkflowExerciser,  
   'finish-workflow-exerciser': finishWorkflowExerciser,
-  'close-workflow-project': closeWorkflowProject,
+  'close-workflow-wf': closeWorkflowWf,
   'get-stock-quote': getStockQuote,
   'maybe-throw-error': maybeThrowError,
   'do-the-things': doTheThings,

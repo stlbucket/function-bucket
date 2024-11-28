@@ -11,11 +11,10 @@
         ]"
     >
     <template #identifier-data="{ row }">
-      <NuxtLink :to="`/site-admin/wf/template/${row.id}`">{{ row.identifier }}</NuxtLink>
+      <NuxtLink :to="`/site-admin/wf/${row.identifier}/template`">{{ row.identifier }}</NuxtLink>
     </template>
-    <template #identifier-instanceCount="{ row }">
-      wtf
-      <!-- <NuxtLink :to="`/site-admin/wf/instance`">{{ row.instanceCount }} instances</NuxtLink> -->
+    <template #instanceCount-data="{ row }">
+      <NuxtLink :to="`/site-admin/wf/${row.identifier}/instance`">{{ row.instanceCount }} instances</NuxtLink>
     </template>
     </UTable> 
   </UCard>

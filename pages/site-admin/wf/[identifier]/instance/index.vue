@@ -7,7 +7,8 @@
         {key: 'identifier', label: 'Identifier'},
         {key: 'name', label: 'Name'},
         {key: 'description', label: 'Description'},
-        ]"
+        {key: 'status', label: 'Status'},
+      ]"
     >
     <template #identifier-data="{ row }">
       <NuxtLink :to="`/site-admin/wf/instance/${row.id}`">{{ row.identifier }}</NuxtLink>

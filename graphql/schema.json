@@ -26635,6 +26635,31 @@
             "deprecationReason": null
           },
           {
+            "name": "wfTemplateByIdentifier",
+            "description": null,
+            "args": [
+              {
+                "name": "_identifier",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Wf",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "wfType",
             "description": "Get a single `WfType`.",
             "args": [
@@ -40137,6 +40162,18 @@
                 "name": "ID",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "UowStatusType",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null

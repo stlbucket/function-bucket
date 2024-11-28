@@ -1,7 +1,7 @@
 <template>
   <div :style="containerStyle" :class="`flex flex-col mt-2 rounded ${bgColor} grow-1`" @click="report">
     <div class="flex text-xs" style="background-color: blue;">
-      {{ uow.data.type }} - {{ uow.data.name }}
+      {{ uow.data.type }} - {{ uow.data.name }} - {{ uow.data.status }}
     </div>
   </div>
 </template>

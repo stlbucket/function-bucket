@@ -6,18 +6,19 @@
 </template>
 
 <script lang="ts" setup>
-import { useWfByIdQuery } from '~/graphql/api';
+import { useWfTemplateByIdentifierQuery } from '~/graphql/api';
 
   const route = useRoute()
+  const identifier: string = route.params.identifier as string
   const {
     data,
     error,
     executeQuery
-  } = await useWfByIdQuery({
+  } = await useWfTemplateByIdentifierQuery({
     variables: {
-      id: route.params.id
+      identifier
     }
   })  
-  const wfTemplate = ref(data.value?.wf as Wf)
+  const wfTemplate = ref(data.value?.wfTemplateByIdentifier as Wf)
 
 </script>

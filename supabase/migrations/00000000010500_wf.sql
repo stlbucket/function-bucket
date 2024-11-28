@@ -134,6 +134,18 @@ BEGIN
 end;
 $$;
 ----------------------------------------
+CREATE FUNCTION wf.wf_status(_wf wf.wf) RETURNS wf.uow_status_type
+  LANGUAGE plpgsql STABLE
+  AS $$
+DECLARE
+  _status wf.uow_status_type;
+  _err_context citext;
+BEGIN
+  select status into _status from wf.uow where wf_id = _wf.id and type = 'wf';
+  return _status;
+end;
+$$;
+----------------------------------------
 CREATE FUNCTION wf.uow_dependees(_uow wf.uow) RETURNS SETOF wf.uow
   LANGUAGE plpgsql STABLE
   AS $$

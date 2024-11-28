@@ -1,7 +1,7 @@
 <template>
   <div :style="containerStyle" :class="`flex flex-col p-1 rounded grow-1`">
     <div class="flex text-xs" style="background-color: green;">
-      {{ uow.data.type }} - {{ uow.data.name }}
+      {{ uow.data.type }} - {{ uow.data.name }} - {{ uow.data.status }}
     </div>
   </div>
 </template>

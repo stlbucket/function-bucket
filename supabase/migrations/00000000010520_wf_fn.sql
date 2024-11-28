@@ -70,7 +70,6 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id u
       perform graphile_worker.add_job(
         _uow_to_schedule.workflow_handler_key,
         payload := to_json(_uow_to_schedule),
-        -- queue_name := $3,
         max_attempts := 1,
         run_at := NOW() + (3 * INTERVAL '1 second')
       );
@@ -1261,6 +1260,24 @@ CREATE OR REPLACE FUNCTION wf_api.uow_by_wf_and_identifier(_wf_id uuid, _identif
     ;
 
     return _uow;
+
+  END
+  $$;
+------------------------------------------------------- uow_by_wf_and_identifier
+CREATE OR REPLACE FUNCTION wf_api.wf_template_by_identifier(_identifier citext) RETURNS wf.wf
+    LANGUAGE plpgsql STABLE SECURITY INVOKER
+    AS $$
+  DECLARE
+    _wf wf.wf;
+  BEGIN
+
+    select *
+    into _wf
+    from wf.wf
+    where identifier = _identifier
+    ;
+
+    return _wf;
 
   END
   $$;

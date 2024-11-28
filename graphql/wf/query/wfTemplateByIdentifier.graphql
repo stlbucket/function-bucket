@@ -1,0 +1,13 @@
+query WfTemplateByIdentifier (
+  $identifier: String!
+) {
+  wfTemplateByIdentifier(_identifier: $identifier) {
+    ...Wf
+    uowsList {
+      ...Uow
+    }
+  	uowDependenciesList {
+  ...UowDependency      
+    }    
+  }
+}

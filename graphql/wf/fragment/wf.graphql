@@ -16,5 +16,6 @@ fragment Wf on Wf {
     isRequired
   }
   instanceCount
+  status
   workflowData
 }
