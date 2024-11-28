@@ -13,6 +13,12 @@ const props = defineProps<{
   uow: NodeProps<Uow>
 }>()
 
+watch(() => props.uow, () => {
+  alert('boom')
+}, {
+  deep: true
+})
+
 const containerStyle = computed(() => {
   return props.uow.data.style
 })

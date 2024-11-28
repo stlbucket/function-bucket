@@ -1,6 +1,15 @@
 <template>
   <UCard>
-    <template #header>WF Template</template>
+    <template #header>
+      <div class="flex justify-around">
+        <div class="flex">
+          <NuxtLink :to="`/site-admin/wf`">All Templates</NuxtLink>
+        </div>
+        <div class="flex">
+          <NuxtLink :to="`/site-admin/wf/${identifier}/instance`">Workflow Instances</NuxtLink>
+        </div>
+      </div>
+    </template>
     <WfTemplate :wf="wfTemplate"></WfTemplate>
   </UCard>
 </template>

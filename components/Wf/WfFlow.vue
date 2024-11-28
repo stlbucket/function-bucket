@@ -12,7 +12,7 @@
         fit-view-on-init
       >
         <template #node-WF="uow">
-            <WfNode
+          <WfNode
             :uow="uow"
             @click="onUowSelected(uow)"
           />
@@ -28,10 +28,7 @@
           />
         </template>
         <template #node-TASK="uow">
-          <!-- <div class="flex text-xs mt-1" style="background-color: blue;">
-            {{ uow.data.type }} - {{ uow.data.name }}
-          </div> -->
-            <TaskNode
+          <TaskNode
             :uow="uow"
             @click="onUowSelected(uow)"
           />
@@ -55,13 +52,34 @@
   /* this contains the default theme, these are optional styles */
   import '@vue-flow/core/dist/theme-default.css';
 
-  import { VueFlow, type NodeProps, type Node, type Edge, MarkerType } from '@vue-flow/core'
+  import { VueFlow, type NodeProps, type Node, type Edge, MarkerType, useVueFlow } from '@vue-flow/core'
 
   import { useWfLayoutElk } from '~/composables/use-wf-layout';
+
+  const { updateNode } = useVueFlow()
 
   const props = defineProps<{
     wf: Wf
   }>()
+
+  watch(() => props.wf, () => {
+    const updatedUows = flowNodes.value.map(existingNode => {
+      const newUow = props.wf.uowsList.find(uow => uow.id === existingNode.id)
+      if (!newUow) return null
+      if (newUow.status === existingNode.data.status) return null
+      return newUow
+    })
+    .filter(n => !!n)
+    // .map(n => n.id)
+
+    updatedUows.forEach(uow => {
+      updateNode(uow.id, {
+        data: uow
+      })
+    })
+
+    // alert(JSON.stringify(updatedUows,null,2))
+  })
 
   const onUowSelected = (uowNode: NodeProps) => {
     // alert('not implemented')

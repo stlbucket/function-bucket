@@ -11,7 +11,10 @@
       ]"
     >
     <template #identifier-data="{ row }">
-      <NuxtLink :to="`/site-admin/wf/instance/${row.id}`">{{ row.identifier }}</NuxtLink>
+      <NuxtLink :to="`/site-admin/wf/${row.identifier}/template`">{{ row.identifier }}</NuxtLink>
+    </template>
+    <template #status-data="{ row }">
+      <NuxtLink :to="`/site-admin/wf/${row.identifier}/instance/${row.id}`">{{ row.status }}</NuxtLink>
     </template>
     </UTable> 
   </UCard>
