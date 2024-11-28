@@ -1,21 +1,54 @@
 <template>
-  <div class="flex grow-1 bg-gray-900 h-screen">
-    <VueFlow :nodes="flowNodes" :edges="flowEdges" fit-view-on-init elevate-edges-on-select>
-        <template #node-TASK="uow">
-        <TaskNode
-          :uow="uow"
-          @click="onUowSelected(uow)"
-        />
-      </template>
-      <template #node-MILESTONE="uow">
-        <MilestoneNode
-          :uow="uow"
-          @click="onUowSelected(uow)"
-        />
-      </template>
-    </VueFlow>
+  <div>
+    <WfNewInstance :wf="wf" @new-workflow-instance="onNewWorkflowInstance" />
   </div>
-  <pre class="text-xs">{{ { layout: layout } }}</pre>
+  <div>
+    <div 
+      v-if="flowNodes[0]" 
+      class="flex grow-1 bg-gray-800"
+      style="height: 700px; background-color: green" 
+    >
+      <VueFlow 
+        :nodes="flowNodes" 
+        :edges="flowEdges" 
+        elevate-edges-on-select
+        fit-view-on-init
+      >
+        <template #node-WF="uow">
+            <WfNode
+            :uow="uow"
+            @click="onUowSelected(uow)"
+          />
+        </template>
+        <template #node-MILESTONE="uow">
+          <div class="flex text-xs" style="background-color: purple;">
+            {{ uow.data.type }} - {{ uow.data.name }}
+          </div>
+          <MilestoneNode
+            :uow="uow"
+            @click="onUowSelected(uow)"
+            @expand="onMilestoneExpand"
+          />
+        </template>
+        <template #node-TASK="uow">
+          <!-- <div class="flex text-xs mt-1" style="background-color: blue;">
+            {{ uow.data.type }} - {{ uow.data.name }}
+          </div> -->
+            <TaskNode
+            :uow="uow"
+            @click="onUowSelected(uow)"
+          />
+        </template>
+      </VueFlow>
+    </div>
+  </div>
+  <div class="flex flex-col grow-1 gap-2">
+    <div class="flex p-3"></div>
+    <div class="flex justify-between grow-1 rounded">
+      <pre class="flex text-xs bg-gray-600 w-2/5 border-2 rounded">{{ { debugOutput } }}</pre>
+      <pre class="flex text-xs bg-gray-600 w-2/5 border-2 rounded">{{ { wf } }}</pre>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -25,142 +58,60 @@
   /* this contains the default theme, these are optional styles */
   import '@vue-flow/core/dist/theme-default.css';
 
-  import { MarkerType, VueFlow, useVueFlow, type NodeProps } from '@vue-flow/core'
+  import { VueFlow, type NodeProps, type Node, type Edge, MarkerType } from '@vue-flow/core'
 
-  import dagre from "@dagrejs/dagre"
+  import { useWfLayoutElk } from '~/composables/use-wf-layout';
+import { useQueueWorkflowMutation } from '~/graphql/api';
 
   const props = defineProps<{
     wf: Wf
   }>()
 
   const onUowSelected = (uowNode: NodeProps) => {
-    alert('not implemented')
+    // alert('not implemented')
   }
 
-// const flowElements = ref([])
-const flowNodes = ref([] as unknown[])
-const flowEdges = ref([] as unknown[])
-const layout = ref({})
-
-const computeNodes = () => {
-  const projectUow = (props.wf.uowsList || []).find(uow => uow.type === 'WF')
-  const otherUows = (props.wf.uowsList || []).filter(uow => uow.type !== 'WF')
-
-  const projectNode = {
-    id: projectUow?.id,
-    type: projectUow?.type,
-    position: {
-      x: 10,
-      y: 10
-    },
-    style: { backgroundColor: '#111111', width: '1000px', height: '1000px' },
-    label: String(projectUow?.name),
-    data: projectUow
+  const onMilestoneExpand = (id: string) => {
+    alert(id)
   }
 
-  const otherNodes = otherUows
-    .filter(uow => uow.parentUowId === projectUow?.id)
-    .map((uow, i) => {
-      if (!uow) throw new Error("INVALID NODE")
-      return {
-        id: uow.id,
-        type: uow.type,
-        position: {
-          x: 10,
-          y: 90 * (i+1)
-        },
-        // { label: node.label,  width: 144, height: 100 },
-        label: String(uow.name),
-        data: uow,
-        parentNode: uow.parentUowId
-      }
-    }) || []
+  const debugOutput = ref([] as any)
+  const flowNodes = ref([] as Node[])
+  const flowEdges = ref([] as Edge[])
 
-    return [
-      projectNode,
-      ...otherNodes,
-    ]  
-  }
+  const computeLayout = async () => {
+    const {
+      reducedLayout, elkLayout
+    } = await useWfLayoutElk(props.wf)
+    debugOutput.value = reducedLayout
+    flowNodes.value = reducedLayout
 
-const computeEdges = () => {
-  const edges =  (props.wf.uowDependenciesList || [])
-  .map((dependency, i) => {
-      return {
-      id: dependency.id,
-      source: dependency.dependeeId,
-      target: dependency.dependerId,
-      markerEnd: MarkerType.ArrowClosed,
-      animated: true
-    }
-    }) || []
-
-    return [
-      ...edges
-    ]
-
-}
-
-const computeLayout = (nodes: any[], edges: any[]) => {
-    // Create a new directed graph 
-    let g = new dagre.graphlib.Graph();
-
-    // Set an object for the graph label
-    g.setGraph({});
-
-    // Default to assigning a new object as a label for each new edge.
-    g.setDefaultEdgeLabel(function() { return {}; });
-
-    // Add nodes to the graph. The first argument is the node id. The second is
-    // metadata about the node. In this case we're going to add labels to each of
-    // our nodes.
-    nodes.forEach(node => {
-      g.setNode(node.id,    { label: node.label,  width: 144, height: 100 });
-    })
-
-    // Add edges to the graph.
-    edges.forEach(edge => {
-      g.setEdge(edge.source, edge.target)
-    })
-
-    dagre.layout(g);
-
-    return g
-}
-
-const computeFlowElements = () => {
-  const nodes = computeNodes()
-  const edges = computeEdges()
-  const l = computeLayout(nodes, edges)
-
-  layout.value = l.nodes()
-    .map(id => {
-      return {
-        id,
-        ...l.node(id)
-      }
-    })
-  const layoutNodes = l.nodes()
-    .map(id => {
+    flowEdges.value = (props.wf.uowDependenciesList || [])
+    .map((dependency, i) => {
         return {
-          id,
-          ...l.node(id)
-        }
-      })
-
-  flowNodes.value = nodes
-  .map(n => {
-    const ln = layoutNodes.find(ln => ln.id === n.id)
-    return {
-      ...n,
-      position: {
-        x: ln?.x,
-        y: ln?.y
+        id: dependency.id,
+        source: dependency.dependeeId,
+        target: dependency.dependerId,
+        animated: true,
+        markerEnd: MarkerType.ArrowClosed
       }
-    }
-  })
-  flowEdges.value = edges
-}
+    }) || []
 
-computeFlowElements()
+  }
+  computeLayout()
 
+  const queueWorkflowMutation = await useQueueWorkflowMutation();
+  const onNewWorkflowInstance = async (workflowInputData: any) => {
+    alert(JSON.stringify(workflowInputData,null,2))
+    const identifier = props.wf.identifier;
+    if (!identifier) throw new Error ('Unable to queue workflow')
+    const { data, error } = await queueWorkflowMutation.executeMutation({
+      identifier,
+      workflowInputData
+    })
+    if (error) alert(error.toString())
+    console.log(JSON.stringify(data, null, 2))
+
+    // navigateTo('/site-admin/tenant')
+  }
 </script>

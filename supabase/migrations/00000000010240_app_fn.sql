@@ -435,7 +435,7 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
               )::app_fn.tool_info
               ,row(
                 'base-site-admin-wf-templates'::citext
-                ,'Workflow Templates'::citext
+                ,'Workflow'::citext
                 ,'{"p:app-admin-super"}'::citext[]
                 ,'solar:checklist-line-duotone'::citext
                 ,'/site-admin/wf/template'

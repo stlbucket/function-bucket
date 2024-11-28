@@ -12,6 +12,9 @@ fragment Wf on Wf {
   inputDefinitions {
     name
     dataType
+    defaultValue
+    isRequired
   }
+  instanceCount
   workflowData
 }

@@ -7,10 +7,15 @@
         {key: 'identifier', label: 'Identifier'},
         {key: 'name', label: 'Name'},
         {key: 'description', label: 'Description'},
+        {key: 'instanceCount', label: 'Instance Count'}
         ]"
     >
     <template #identifier-data="{ row }">
       <NuxtLink :to="`/site-admin/wf/template/${row.id}`">{{ row.identifier }}</NuxtLink>
+    </template>
+    <template #identifier-instanceCount="{ row }">
+      wtf
+      <!-- <NuxtLink :to="`/site-admin/wf/instance`">{{ row.instanceCount }} instances</NuxtLink> -->
     </template>
     </UTable> 
   </UCard>

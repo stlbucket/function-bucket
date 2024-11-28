@@ -1,12 +1,7 @@
 <template>
-  <div style="width: 200px;">
-    <div :class="`flex flex-col p-1 rounded ${bgColor} grow-1`">
-      <div class="text-xs">
-        {{ uow.data.type }}
-      </div>
-      <div class="text-sm">
-        {{ uow.data.name }}
-      </div>
+  <div :style="containerStyle" :class="`flex flex-col mt-2 rounded ${bgColor} grow-1`" @click="report">
+    <div class="flex text-xs" style="background-color: blue;">
+      {{ uow.data.type }} - {{ uow.data.name }}
     </div>
   </div>
 </template>
@@ -18,6 +13,10 @@ const props = defineProps<{
   uow: NodeProps<Uow>
 }>()
 
+const containerStyle = computed(() => {
+  return props.uow.data.style
+})
+
 const connections = useHandleConnections({
   type: 'target',
 })
@@ -27,5 +26,9 @@ const nodesData = useNodesData(() => connections.value[0]?.source)
 const bgColor = computed<string>(() => {
   return 'bg-blue-500'
 })
+
+const report = () => {
+  alert(JSON.stringify(props.uow,null,2))
+}
 </script>
 

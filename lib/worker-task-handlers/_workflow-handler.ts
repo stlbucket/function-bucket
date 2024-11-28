@@ -17,8 +17,8 @@ export default (handler: FnbWorkFlowHandlerFunction): Task => {
 
     const uow = camelcaseKeys((payload as FnbWorkflowStepPayload).uow)
     try {
-      const workflowDataQuery = (await doQuery('select workflow_data from prj.project where id = $1;', [
-        uow.projectId
+      const workflowDataQuery = (await doQuery('select workflow_data from wf.wf where id = $1;', [
+        uow.wfId
       ])).rows[0]
 
       const workflowData = workflowDataQuery ? workflowDataQuery.workflow_data : {}
@@ -33,7 +33,7 @@ export default (handler: FnbWorkFlowHandlerFunction): Task => {
 
       switch (result.status) {
         case 'complete':
-            const completeUowResult = (await client.doQuery('select to_jsonb(prj_fn.complete_uow($1, row($2, $3)::prj_fn.complete_uow_options));', [
+            const completeUowResult = (await client.doQuery('select to_jsonb(wf_fn.complete_uow($1, row($2, $3)::wf_fn.complete_uow_options));', [
               uow.id,
               result.workflowData || {},
               result.stepData || {}
@@ -57,7 +57,7 @@ export default (handler: FnbWorkFlowHandlerFunction): Task => {
         case 'error':
           if (!result.errorInfo) { throw new Error(`workflow error thrown with no info: ${uow.workflowHandlerKey}`)}
 
-          await client.doQuery('select to_jsonb(prj_fn.error_uow($1, $2, $3));', [
+          await client.doQuery('select to_jsonb(wf_fn.error_uow($1, $2, $3));', [
             uow.id,
             result.errorInfo.message,
             result.errorInfo.stack.split('\n')
@@ -69,7 +69,7 @@ export default (handler: FnbWorkFlowHandlerFunction): Task => {
   
     } catch (e: any) {
       console.log('stack', e.stack.split('\n'))
-      await client.doQuery('select to_jsonb(prj_fn.error_uow($1, $2, $3));', [
+      await client.doQuery('select to_jsonb(wf_fn.error_uow($1, $2, $3));', [
         uow.id,
         e.toString(),
         e.stack.split('\n')

@@ -83,14 +83,14 @@ select wf_fn.upsert_wf(
         'do-the-things'::citext --depender_identifier
         ,'init-workflow-exerciser'::citext -- dependee_identifier
       )::wf_fn.uow_dependency_info
-      -- ,row(
-      --   'maybe-throw-error'::citext --depender_identifier
-      --   ,'get-stock-quote'::citext -- dependee_identifier
-      -- )::wf_fn.uow_dependency_info
-      -- ,row(
-      --   'maybe-raise-exception'::citext --depender_identifier
-      --   ,'maybe-throw-error'::citext -- dependee_identifier
-      -- )::wf_fn.uow_dependency_info
+      ,row(
+        'maybe-throw-error'::citext --depender_identifier
+        ,'get-stock-quote'::citext -- dependee_identifier
+      )::wf_fn.uow_dependency_info
+      ,row(
+        'maybe-raise-exception'::citext --depender_identifier
+        ,'maybe-throw-error'::citext -- dependee_identifier
+      )::wf_fn.uow_dependency_info
       ,row(
         'finish-workflow-exerciser'::citext --depender_identifier
         ,'do-the-things'::citext -- dependee_identifier
@@ -101,14 +101,20 @@ select wf_fn.upsert_wf(
       row(
         'stockSymbol'::citext -- name
         ,'string'::wf.workflow_input_data_type -- data_type
+        ,'TSLA'::citext -- default_value
+        ,true -- isRequired
       )::wf.workflow_input_definition
       ,row(
         'throwError'::citext -- name
         ,'boolean'::wf.workflow_input_data_type -- data_type
+        ,null::citext -- default_value
+        ,false -- isRequired
       )::wf.workflow_input_definition
       ,row(
         'raiseExceptionMessage'::citext -- name
         ,'string'::wf.workflow_input_data_type -- data_type
+        ,null::citext -- default_value
+        ,false -- isRequired
       )::wf.workflow_input_definition
     ]::wf.workflow_input_definition[]
   )::wf_fn.wf_info

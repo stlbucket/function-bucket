@@ -1,0 +1,7 @@
+query AllWfInstances {
+  wfInstances: wfsList(condition: {
+  	isTemplate: false
+  }) {
+    ...Wf
+  }
+}

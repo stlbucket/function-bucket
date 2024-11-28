@@ -26,6 +26,8 @@ CREATE TYPE wf.workflow_input_data_type AS ENUM (
 create type wf.workflow_input_definition as (
   name citext
   ,data_type wf.workflow_input_data_type
+  ,default_value citext
+  ,is_required boolean
 );
 ----------------------------------------
 CREATE TABLE wf.wf_type (
@@ -111,14 +113,24 @@ DECLARE
 BEGIN
   select * into _wf_template from wf.wf where type = _wf.type and is_template = true;
   return _wf_template;
-  exception
-    when others then
-      GET STACKED DIAGNOSTICS _err_context = PG_EXCEPTION_CONTEXT;
-      if position('FB' in SQLSTATE::citext) = 0 then
-        _err_context := 'wf.wf_template:::' || SQLSTATE::citext || ':::' || SQLERRM::citext || ':::' || _err_context;
-        raise exception '%', _err_context using errcode = 'FB500';
-      end if;
-      raise;
+end;
+$$;
+----------------------------------------
+CREATE FUNCTION wf.wf_instance_count(_wf wf.wf) RETURNS integer
+  LANGUAGE plpgsql STABLE
+  AS $$
+DECLARE
+  _count integer;
+  _err_context citext;
+BEGIN
+  if _wf.is_template != true then return 1; end if;
+
+  select count(*) into _count
+  from wf.wf
+  where type = _wf.type
+  and is_template != true;
+
+  return _count;
 end;
 $$;
 ----------------------------------------

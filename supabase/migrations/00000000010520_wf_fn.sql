@@ -1,170 +1,6 @@
-------------------------------------------------------- clone_wf_template
-CREATE OR REPLACE FUNCTION wf_api.clone_wf_template(_identifier citext, _options wf_fn.clone_wf_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_wf_template_options) RETURNS wf.wf
-    LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    _wf wf.wf;
-    _wf_uow wf.uow;
-    _err_context citext;
-  BEGIN
-    _wf := (
-      select wf_fn.clone_wf_template(
-        _identifier
-        ,auth_ext.tenant_id()
-        ,_options
-      )
-    );
-
-    return _wf;
-  END
-  $$;
-
-CREATE OR REPLACE FUNCTION wf_fn.clone_wf_template(_identifier citext, _tenant_id uuid, _options wf_fn.clone_wf_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_wf_template_options) RETURNS wf.wf
-    LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    _wf_template wf.wf;
-    _wf wf.wf;
-    _wf_uow wf.uow;
-    _err_context citext;
-  BEGIN
-
-    select * 
-    into _wf_template 
-    from wf.wf 
-    where 1=1
-    -- tenant_id = _tenant_id
-    and identifier = _identifier
-    and is_template = true
-    ;
-
-    if _wf_template.id is null then
-      raise exception 'no wf template for _identifier: %', _identifier;
-    end if;
-
-    insert into wf.wf(
-      identifier,
-      tenant_id,
-      name,
-      description,
-      type,
-      is_template,
-      workflow_data,
-      input_definitions
-    )
-    values (
-      _wf_template.identifier
-      ,_tenant_id
-      ,_wf_template.name
-      ,_wf_template.description
-      ,_wf_template.type
-      ,false
-      ,_options.data
-      ,coalesce(_wf_info.input_definitions, '{}'::wf.workflow_input_definition[])
-    )
-    returning *
-    into _wf;
-
-    -- raise exception '_wf: %', _wf.id;
-
-    perform wf_fn.clone_uow_template(
-      id
-      ,_wf
-    ) 
-    from wf.uow 
-    where wf_id = _wf_template.id
-    ;
-
-
-    select * into _wf_uow from wf.uow where wf_id = _wf.id and type = 'wf';
-
-    update wf.wf set
-      uow_id = _wf_uow.id
-    where id = _wf.id
-    returning * into _wf;
-
-    -- calculate and apply task lineages
-    with uow_map as (
-      select
-        pnt.identifier parent_identifier
-        ,chd.identifier child_identifier
-      from wf.wf p
-      join wf.uow pnt on pnt.wf_id = p.id
-      join wf.uow chd on pnt.id = chd.parent_uow_id
-      where p.id = _wf_template.id
-    )
-    ,np_uows as (
-      select
-        chd.id child_uow_id
-        ,pnt.id parent_uow_id
-      from wf.uow chd
-      join uow_map um on chd.identifier = um.child_identifier
-      join wf.uow pnt on pnt.identifier = um.parent_identifier
-      where chd.wf_id = _wf.id
-      and pnt.wf_id = _wf.id
-    )
-    update wf.uow c_uow set
-      parent_uow_id = np_uows.parent_uow_id
-    from np_uows
-    where c_uow.id = np_uows.child_uow_id
-    ;
-    -- calculate and apply task dependencies
-    with uow_map as (
-      select
-        dee.identifier dee_identifier
-        ,der.identifier der_identifier
-      from wf.uow_dependency d
-      join wf.uow dee on dee.id = d.dependee_id
-      join wf.uow der on der.id = d.depender_id
-      where dee.wf_id = _wf_template.id
-    )
-    ,np_uows as (
-      select
-        dee.tenant_id
-        ,dee.id dependee_uow_id
-        ,der.id depender_uow_id
-        ,dee.is_template
-      from wf.uow dee
-      join uow_map um on dee.identifier = um.dee_identifier
-      join wf.uow der on der.identifier = um.der_identifier
-      where dee.wf_id = _wf.id
-      and der.wf_id = _wf.id
-    )
-    insert into wf.uow_dependency(
-      tenant_id
-      ,wf_id
-      ,dependee_id
-      ,depender_id
-    )
-    select
-      np_uows.tenant_id
-      ,_wf.id
-      ,np_uows.dependee_uow_id
-      ,np_uows.depender_uow_id
-    from np_uows
-    ;
-
-    -- WAITING: all uows that are dependers on other uows
-    update wf.uow set status = 'waiting' where id
-    in (select d.depender_id from wf.uow_dependency d join wf.uow u on d.depender_id = u.id where u.wf_id = _wf.id)
-    ;
-
-    -- WAITING: all uows that are parents of other uows
-    update wf.uow set status = 'waiting' where id
-    in (select parent_uow_id from wf.uow where wf_id = _wf.id)
-    ;
-
-    -- WAITNG: all uows that are children of dependers
-    update wf.uow set status = 'waiting' where parent_uow_id
-    in (select d.depender_id from wf.uow_dependency d join wf.uow u on d.depender_id = u.id where u.wf_id = _wf.id)
-    ;
-
-    return _wf;
-  end;
-  $$;
 ------------------------------------------------------- queue_workflow
 CREATE OR REPLACE FUNCTION wf_api.queue_workflow(_identifier citext, _workflow_input_data jsonb) RETURNS jsonb
-    LANGUAGE plpgsql
+    LANGUAGE plpgsql SECURITY DEFINER
     AS $$
   DECLARE
     _tenant_id uuid;
@@ -195,6 +31,7 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id u
   DECLARE
     _wf wf.wf;
     _uows_to_schedule wf.uow[];
+    _uow_to_schedule wf.uow;
     _result wf_fn.queue_workflow_result;
     _err_context citext;
   BEGIN
@@ -221,393 +58,28 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id u
     ;
 
     _result.wf := _wf;
+
+    -- current version determines which uows can currently be scheduled, then jobs
+    -- are added by a mutation wrapper at the postgraphile level
+    -- this mechanism may go away if we can schedule directly at this point
+    -- https://worker.graphile.org/docs/sql-add-job
     _result.uows_to_schedule := _uows_to_schedule;
+
+    foreach _uow_to_schedule in array(_uows_to_schedule)
+    loop
+      perform graphile_worker.add_job(
+        _uow_to_schedule.workflow_handler_key,
+        payload := to_json(_uow_to_schedule),
+        -- queue_name := $3,
+        max_attempts := 1,
+        run_at := NOW() + (3 * INTERVAL '1 second')
+      );
+    end loop;
 
     return to_jsonb(_result);
   end;
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier citext, _workflow_input_data jsonb, _tenant_id uuid DEFAULT NULL::uuid) RETURNS jsonb
-    LANGUAGE plpgsql SECURITY DEFINER
-    AS $$
-  DECLARE
-    _wf wf.wf;
-    _uows_to_schedule wf.uow[];
-    _result wf_fn.queue_workflow_result;
-    _err_context citext;
-  BEGIN
-
-    -- if _identifier not in (
-    --   'brochure-contact'
-    -- ) then
-    --   raise exception 'cannot perform this workflow anonymously';
-    -- end if;
-
-    if _tenant_id is null then
-      select id into _tenant_id
-      from app.tenant where type = 'anchor';
-    end if;
-
-    _wf := (
-      select wf_fn.clone_wf_template(
-        _identifier
-        ,_tenant_id
-        ,row(_workflow_input_data)
-      )
-    );
-
-    with uows as (
-      select *
-      from wf.uow
-      where wf_id = _wf.id
-      and type = 'task'
-      and status = 'incomplete'
-      and use_worker = true
-    )
-    select array_agg(u.*)
-    into _uows_to_schedule
-    from uows u
-    ;
-
-    _result.wf := _wf;
-    _result.uows_to_schedule := _uows_to_schedule;
-
-    return to_jsonb(_result);
-  end;
-  $$;
-------------------------------------------------------- upsert_wf
-CREATE OR REPLACE FUNCTION wf_api.upsert_wf(_wf_info wf_fn.wf_info) RETURNS wf.wf
-    LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    _tenant_id uuid;
-    _wf wf.wf;
-    _err_context citext;
-  BEGIN
-    _tenant_id := auth_ext.tenant_id();
-    _wf := (select wf_fn.upsert_wf(
-      _wf_info
-      ,_tenant_id
-    ));
-
-    return _wf;
-  end;
-  $$;
-
-CREATE OR REPLACE FUNCTION wf_fn.upsert_wf(_wf_info wf_fn.wf_info, _tenant_id uuid) RETURNS wf.wf
-    LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    _wf wf.wf;
-    _wf_uow wf.uow;
-    _uow_info wf_fn.uow_info;
-    _uow_dependency_info wf_fn.uow_dependency_info;
-    _uow_dependency wf.uow_dependency;
-    _uow_dependee wf.uow;
-    _uow_depender wf.uow;
-    _err_context citext;
-  BEGIN
-    select *
-    into _wf
-    from wf.wf
-    where tenant_id = _tenant_id
-    and identifier = _wf_info.identifier
-    and is_template = true
-    ;
-
-    if _wf.id is null then
-      insert into wf.wf_type(id)
-      values (_wf_info.type)
-      on conflict(id) do nothing
-      ;
-
-      insert into wf.wf(
-        tenant_id
-        ,name
-        ,description
-        ,identifier
-        ,type
-        ,is_template
-        ,input_definitions
-      )
-      select
-        _tenant_id
-        ,_wf_info.name
-        ,_wf_info.description
-        ,_wf_info.identifier
-        ,_wf_info.type
-        -- ,coalesce(_wf_info.is_template, false)
-        ,true
-        ,coalesce(_wf_info.input_definitions, '{}'::wf.workflow_input_definition[])
-      returning *
-      into _wf
-      ;
-
-      _wf_uow := (select wf_fn.upsert_uow(
-        row(
-          _wf_info.identifier::citext
-          ,_wf_info.name::citext
-          ,(_wf_info.name || ' root uow')::citext
-          ,'wf'::wf.uow_type
-          ,'{}'
-          ,_wf.id::citext
-          ,null::citext
-          ,null::timestamptz
-          ,_wf_info.on_completed_workflow_handler_key::citext
-          ,(_wf_info.on_completed_workflow_handler_key is not null)::boolean
-        )
-        ,_wf.id
-        ,_tenant_id
-      ));
-
-      update wf.wf set uow_id = _wf_uow.id where id = _wf.id returning * into _wf;
-    else
-      update wf.wf set
-        updated_at = current_timestamp
-        ,name = _wf_info.name
-        ,is_template = _wf_info.is_template
-        ,type = _wf_info.type
-        ,workflow_input_definition = coalesce(_wf_info.workflow_input_definition, '{}'::jsonb)
-      where id = _wf.id
-      returning * into _wf
-      ;
-
-      _wf_uow := (select wf_fn.upsert_uow(
-        row(
-          _wf_info.identifier::citext
-          ,_wf_info.name::citext
-          ,(_wf_info.name || ' root uow')::citext
-          ,'wf'::wf.uow_type
-          ,'{}'
-          ,_wf.id::citext
-          ,null::citext
-          ,null::timestamptz
-          ,_wf_info.on_completed_workflow_handler_key::citext
-          ,(_wf_info.on_completed_workflow_handler_key is not null)::boolean
-        )
-        ,_wf.id
-        ,_tenant_id
-      ));
-    end if;
-
-    foreach _uow_info in array(_wf_info.uows)
-    loop
-      _uow_info.wf_id := _wf.id;
-      perform wf_fn.upsert_uow(_uow_info, _wf.id, _tenant_id);
-    end loop;
-
-    update wf.uow set 
-      parent_uow_id = _wf_uow.id
-    where wf_id = _wf.id
-    and parent_uow_id is null
-    and type != 'wf'
-    ;
-
-    foreach _uow_dependency_info in array(_wf_info.uow_dependencies)
-    loop
-      select *
-      into _uow_dependee
-      from wf.uow 
-      where wf_id = _wf.id
-      and identifier = _uow_dependency_info.dependee_identifier
-      ;
-      if _uow_dependee.id is null then
-        raise exception 'no dependee for identifier: %', _uow_dependency_info.dependee_identifier;
-      end if;
-
-      select *
-      into _uow_depender
-      from wf.uow 
-      where wf_id = _wf.id
-      and identifier = _uow_dependency_info.depender_identifier
-      ;
-      if _uow_depender.id is null then
-        raise exception 'no depender for identifier: %', _uow_dependency_info.depender_identifier;
-      end if;
-
-
-      select * 
-      into _uow_dependency from wf.uow_dependency
-      where dependee_id = _uow_dependee.id
-      and depender_id = _uow_depender.id
-      ;
-
-      if _uow_dependency.id is null then
-        insert into wf.uow_dependency(
-          tenant_id
-          ,wf_id
-          ,dependee_id
-          ,depender_id
-          ,is_template
-        )
-        select
-          _tenant_id
-          ,_wf.id
-          ,_uow_dependee.id
-          ,_uow_depender.id
-          ,_wf.is_template
-        ;
-      end if;
-    end loop;
-
-    perform wf_fn.compute_uow_status(id)
-    from wf.uow
-    where wf_id = _wf.id
-    and type in ('milestone')
-    ;
-
-    return _wf;
-  end;
-  $$;
-------------------------------------------------------- upsert_uow
-CREATE OR REPLACE FUNCTION wf_api.upsert_uow(_uow_info wf_fn.uow_info, _wf_id uuid) RETURNS wf.uow
-  LANGUAGE plpgsql
-  VOLATILE
-  SECURITY INVOKER
-  AS $$
-  DECLARE
-    _uow wf.uow;
-    _tenant_id uuid;
-    _err_context citext;
-  BEGIN
-    _tenant_id := auth_ext.tenant_id();
-    _uow := (select wf_fn.upsert_uow(
-      _uow_info
-      ,_wf_id
-      ,_tenant_id
-    ));
-
-    return _uow;
-  end;
-  $$;
-
-CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(
-    _uow_info wf_fn.uow_info,
-    _wf_id uuid,
-    _tenant_id uuid
-  ) RETURNS wf.uow
-    LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    _uow wf.uow;
-    _parent_uow wf.uow;
-    _err_context citext;
-  BEGIN
-    select *
-    into _uow
-    from wf.uow
-    where tenant_id = _tenant_id
-    and identifier = _uow_info.identifier
-    and wf_id = _wf_id
-    ;
-
-    select * 
-    into _parent_uow
-    from wf.uow
-    where wf_id = _wf_id
-    and identifier = _uow_info.parent_uow_id
-    or id = _uow.parent_uow_id::uuid
-    ;
-
-    if _parent_uow.id is null then
-      select * 
-      into _parent_uow
-      from wf.uow
-      where wf_id = _wf_id
-      and (id = _wf_id or identifier = _wf_id::citext)
-      ;
-    end if;
-
-    if _uow.id is null then
-      insert into wf.uow(
-        tenant_id
-        ,identifier
-        ,is_template
-        ,name
-        ,description
-        ,type
-        ,data
-        ,wf_id
-        ,status
-        ,due_at
-        ,parent_uow_id
-        ,workflow_handler_key
-        ,use_worker
-      )
-      select
-        _tenant_id
-        ,_uow_info.identifier
-        ,true
-        ,_uow_info.name
-        ,_uow_info.description
-        ,_uow_info.type
-        ,_uow_info.data
-        ,_wf_id
-        ,'template'::wf.uow_status_type
-        ,_uow_info.due_at
-        ,_parent_uow.id
-        ,_uow_info.workflow_handler_key
-        ,coalesce(_uow_info.use_worker, false)
-      returning *
-      into _uow
-      ;
-
-      -- promote any parent task to a milestone
-      update wf.uow set type = 'milestone' where id = _uow.parent_uow_id and type = 'task';
-    else
-      update wf.uow set
-        updated_at = current_timestamp
-        ,name = _uow_info.name
-        ,is_template = _uow_info.is_template
-        ,type = _uow_info.type
-        ,workflow_handler_key = _uow_info.workflow_handler_key
-      where id = _uow.id
-      ;
-    end if;
-
-    return _uow;
-  end;
-  $$;
-------------------------------------------------------- delete_uow
-CREATE OR REPLACE FUNCTION wf_api.delete_uow(_uow_id uuid)
-  RETURNS boolean
-  LANGUAGE plpgsql
-  VOLATILE
-  SECURITY INVOKER
-  AS $$
-  DECLARE
-  BEGIN
-    perform wf_fn.delete_uow(_uow_id);
-    return true;
-  end;
-  $$;
-
-CREATE OR REPLACE FUNCTION wf_fn.delete_uow(_uow_id uuid) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    _uow wf.uow;
-    _sibling_count integer;
-    _err_context citext;
-  BEGIN
-
-    select * into _uow from wf.uow where id = _uow_id;
-
-    if _uow.id is null then
-      raise exception 'no uow for id: %', _uow_id;
-    end if;
-
-    -- update parent uow from milestone to task, where appropriate
-    select count(*) into _sibling_count from wf.uow where parent_uow_id = _uow.parent_uow_id and id != _uow.id;
-    if _sibling_count = 0 then
-      update wf.uow set type = 'task' where id = _uow.parent_uow_id and type = 'milestone';
-    end if;
-
-    delete from uow where id = _uow_id;
-
-    return true;
-  end;
-  $$;
 ------------------------------------------------------- error_uow
 CREATE OR REPLACE FUNCTION wf_api.error_uow(_uow_id uuid, _message citext, _stack citext[])
   RETURNS wf.uow
@@ -1105,6 +577,502 @@ CREATE OR REPLACE FUNCTION wf_fn.waiting_uow(_uow_id uuid) RETURNS wf.uow
   $$;
 
 -- helper functions not exposed thru api
+------------------------------------------------------- clone_wf_template
+-- CREATE OR REPLACE FUNCTION wf_api.clone_wf_template(_identifier citext, _options wf_fn.clone_wf_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_wf_template_options) RETURNS wf.wf
+--     LANGUAGE plpgsql
+--     AS $$
+--   DECLARE
+--     _wf wf.wf;
+--     _wf_uow wf.uow;
+--     _err_context citext;
+--   BEGIN
+--     _wf := (
+--       select wf_fn.clone_wf_template(
+--         _identifier
+--         ,auth_ext.tenant_id()
+--         ,_options
+--       )
+--     );
+
+--     return _wf;
+--   END
+--   $$;
+
+CREATE OR REPLACE FUNCTION wf_fn.clone_wf_template(_identifier citext, _tenant_id uuid, _options wf_fn.clone_wf_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_wf_template_options) RETURNS wf.wf
+    LANGUAGE plpgsql
+    AS $$
+  DECLARE
+    _wf_template wf.wf;
+    _wf wf.wf;
+    _wf_uow wf.uow;
+    _err_context citext;
+  BEGIN
+
+    select * 
+    into _wf_template 
+    from wf.wf 
+    where 1=1
+    -- tenant_id = _tenant_id
+    and identifier = _identifier
+    and is_template = true
+    ;
+
+    if _wf_template.id is null then
+      raise exception 'no wf template for _identifier: %', _identifier;
+    end if;
+
+    insert into wf.wf(
+      identifier,
+      tenant_id,
+      name,
+      description,
+      type,
+      is_template,
+      workflow_data,
+      input_definitions
+    )
+    values (
+      _wf_template.identifier
+      ,_tenant_id
+      ,_wf_template.name
+      ,_wf_template.description
+      ,_wf_template.type
+      ,false
+      ,_options.data
+      ,coalesce(_wf_template.input_definitions, '{}'::wf.workflow_input_definition[])
+    )
+    returning *
+    into _wf;
+
+    -- raise exception '_wf: %', _wf.id;
+
+    perform wf_fn.clone_uow_template(
+      id
+      ,_wf
+    ) 
+    from wf.uow 
+    where wf_id = _wf_template.id
+    ;
+
+
+    select * into _wf_uow from wf.uow where wf_id = _wf.id and type = 'wf';
+
+    update wf.wf set
+      uow_id = _wf_uow.id
+    where id = _wf.id
+    returning * into _wf;
+
+    -- calculate and apply task lineages
+    with uow_map as (
+      select
+        pnt.identifier parent_identifier
+        ,chd.identifier child_identifier
+      from wf.wf p
+      join wf.uow pnt on pnt.wf_id = p.id
+      join wf.uow chd on pnt.id = chd.parent_uow_id
+      where p.id = _wf_template.id
+    )
+    ,np_uows as (
+      select
+        chd.id child_uow_id
+        ,pnt.id parent_uow_id
+      from wf.uow chd
+      join uow_map um on chd.identifier = um.child_identifier
+      join wf.uow pnt on pnt.identifier = um.parent_identifier
+      where chd.wf_id = _wf.id
+      and pnt.wf_id = _wf.id
+    )
+    update wf.uow c_uow set
+      parent_uow_id = np_uows.parent_uow_id
+    from np_uows
+    where c_uow.id = np_uows.child_uow_id
+    ;
+    -- calculate and apply task dependencies
+    with uow_map as (
+      select
+        dee.identifier dee_identifier
+        ,der.identifier der_identifier
+      from wf.uow_dependency d
+      join wf.uow dee on dee.id = d.dependee_id
+      join wf.uow der on der.id = d.depender_id
+      where dee.wf_id = _wf_template.id
+    )
+    ,np_uows as (
+      select
+        dee.tenant_id
+        ,dee.id dependee_uow_id
+        ,der.id depender_uow_id
+        ,dee.is_template
+      from wf.uow dee
+      join uow_map um on dee.identifier = um.dee_identifier
+      join wf.uow der on der.identifier = um.der_identifier
+      where dee.wf_id = _wf.id
+      and der.wf_id = _wf.id
+    )
+    insert into wf.uow_dependency(
+      tenant_id
+      ,wf_id
+      ,dependee_id
+      ,depender_id
+    )
+    select
+      np_uows.tenant_id
+      ,_wf.id
+      ,np_uows.dependee_uow_id
+      ,np_uows.depender_uow_id
+    from np_uows
+    ;
+
+    -- WAITING: all uows that are dependers on other uows
+    update wf.uow set status = 'waiting' where id
+    in (select d.depender_id from wf.uow_dependency d join wf.uow u on d.depender_id = u.id where u.wf_id = _wf.id)
+    ;
+
+    -- WAITING: all uows that are parents of other uows
+    update wf.uow set status = 'waiting' where id
+    in (select parent_uow_id from wf.uow where wf_id = _wf.id)
+    ;
+
+    -- WAITNG: all uows that are children of dependers
+    update wf.uow set status = 'waiting' where parent_uow_id
+    in (select d.depender_id from wf.uow_dependency d join wf.uow u on d.depender_id = u.id where u.wf_id = _wf.id)
+    ;
+
+    return _wf;
+  end;
+  $$;
+------------------------------------------------------- upsert_wf
+-- CREATE OR REPLACE FUNCTION wf_api.upsert_wf(_wf_info wf_fn.wf_info) RETURNS wf.wf
+--     LANGUAGE plpgsql
+--     AS $$
+--   DECLARE
+--     _tenant_id uuid;
+--     _wf wf.wf;
+--     _err_context citext;
+--   BEGIN
+--     _tenant_id := auth_ext.tenant_id();
+--     _wf := (select wf_fn.upsert_wf(
+--       _wf_info
+--       ,_tenant_id
+--     ));
+
+--     return _wf;
+--   end;
+--   $$;
+
+CREATE OR REPLACE FUNCTION wf_fn.upsert_wf(_wf_info wf_fn.wf_info, _tenant_id uuid) RETURNS wf.wf
+    LANGUAGE plpgsql
+    AS $$
+  DECLARE
+    _wf wf.wf;
+    _wf_uow wf.uow;
+    _uow_info wf_fn.uow_info;
+    _uow_dependency_info wf_fn.uow_dependency_info;
+    _uow_dependency wf.uow_dependency;
+    _uow_dependee wf.uow;
+    _uow_depender wf.uow;
+    _err_context citext;
+  BEGIN
+    select *
+    into _wf
+    from wf.wf
+    where tenant_id = _tenant_id
+    and identifier = _wf_info.identifier
+    and is_template = true
+    ;
+
+    if _wf.id is null then
+      insert into wf.wf_type(id)
+      values (_wf_info.type)
+      on conflict(id) do nothing
+      ;
+
+      insert into wf.wf(
+        tenant_id
+        ,name
+        ,description
+        ,identifier
+        ,type
+        ,is_template
+        ,input_definitions
+      )
+      select
+        _tenant_id
+        ,_wf_info.name
+        ,_wf_info.description
+        ,_wf_info.identifier
+        ,_wf_info.type
+        ,true
+        ,coalesce(_wf_info.input_definitions, '{}'::wf.workflow_input_definition[])
+      returning *
+      into _wf
+      ;
+
+      _wf_uow := (select wf_fn.upsert_uow(
+        row(
+          _wf_info.identifier::citext
+          ,_wf_info.name::citext
+          ,(_wf_info.name || ' root uow')::citext
+          ,'wf'::wf.uow_type
+          ,'{}'
+          ,_wf.id::citext
+          ,null::citext
+          ,null::timestamptz
+          ,_wf_info.on_completed_workflow_handler_key::citext
+          ,(_wf_info.on_completed_workflow_handler_key is not null)::boolean
+        )
+        ,_wf.id
+        ,_tenant_id
+      ));
+
+      update wf.wf set uow_id = _wf_uow.id where id = _wf.id returning * into _wf;
+    else
+      update wf.wf set
+        updated_at = current_timestamp
+        ,name = _wf_info.name
+        ,is_template = _wf_info.is_template
+        ,type = _wf_info.type
+        ,workflow_input_definition = coalesce(_wf_info.workflow_input_definition, '{}'::jsonb)
+      where id = _wf.id
+      returning * into _wf
+      ;
+
+      _wf_uow := (select wf_fn.upsert_uow(
+        row(
+          _wf_info.identifier::citext
+          ,_wf_info.name::citext
+          ,(_wf_info.name || ' root uow')::citext
+          ,'wf'::wf.uow_type
+          ,'{}'
+          ,_wf.id::citext
+          ,null::citext
+          ,null::timestamptz
+          ,_wf_info.on_completed_workflow_handler_key::citext
+          ,(_wf_info.on_completed_workflow_handler_key is not null)::boolean
+        )
+        ,_wf.id
+        ,_tenant_id
+      ));
+    end if;
+
+    foreach _uow_info in array(_wf_info.uows)
+    loop
+      _uow_info.wf_id := _wf.id;
+      perform wf_fn.upsert_uow(_uow_info, _wf.id, _tenant_id);
+    end loop;
+
+    update wf.uow set 
+      parent_uow_id = _wf_uow.id
+    where wf_id = _wf.id
+    and parent_uow_id is null
+    and type != 'wf'
+    ;
+
+    foreach _uow_dependency_info in array(_wf_info.uow_dependencies)
+    loop
+      select *
+      into _uow_dependee
+      from wf.uow 
+      where wf_id = _wf.id
+      and identifier = _uow_dependency_info.dependee_identifier
+      ;
+      if _uow_dependee.id is null then
+        raise exception 'no dependee for identifier: %', _uow_dependency_info.dependee_identifier;
+      end if;
+
+      select *
+      into _uow_depender
+      from wf.uow 
+      where wf_id = _wf.id
+      and identifier = _uow_dependency_info.depender_identifier
+      ;
+      if _uow_depender.id is null then
+        raise exception 'no depender for identifier: %', _uow_dependency_info.depender_identifier;
+      end if;
+
+
+      select * 
+      into _uow_dependency from wf.uow_dependency
+      where dependee_id = _uow_dependee.id
+      and depender_id = _uow_depender.id
+      ;
+
+      if _uow_dependency.id is null then
+        insert into wf.uow_dependency(
+          tenant_id
+          ,wf_id
+          ,dependee_id
+          ,depender_id
+          ,is_template
+        )
+        select
+          _tenant_id
+          ,_wf.id
+          ,_uow_dependee.id
+          ,_uow_depender.id
+          ,_wf.is_template
+        ;
+      end if;
+    end loop;
+
+    perform wf_fn.compute_uow_status(id)
+    from wf.uow
+    where wf_id = _wf.id
+    and type in ('milestone')
+    ;
+
+    return _wf;
+  end;
+  $$;
+------------------------------------------------------- upsert_uow
+-- CREATE OR REPLACE FUNCTION wf_api.upsert_uow(_uow_info wf_fn.uow_info, _wf_id uuid) RETURNS wf.uow
+--   LANGUAGE plpgsql
+--   VOLATILE
+--   SECURITY INVOKER
+--   AS $$
+--   DECLARE
+--     _uow wf.uow;
+--     _tenant_id uuid;
+--     _err_context citext;
+--   BEGIN
+--     _tenant_id := auth_ext.tenant_id();
+--     _uow := (select wf_fn.upsert_uow(
+--       _uow_info
+--       ,_wf_id
+--       ,_tenant_id
+--     ));
+
+--     return _uow;
+--   end;
+--   $$;
+
+CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(
+    _uow_info wf_fn.uow_info,
+    _wf_id uuid,
+    _tenant_id uuid
+  ) RETURNS wf.uow
+    LANGUAGE plpgsql
+    AS $$
+  DECLARE
+    _uow wf.uow;
+    _parent_uow wf.uow;
+    _err_context citext;
+  BEGIN
+    select *
+    into _uow
+    from wf.uow
+    where tenant_id = _tenant_id
+    and identifier = _uow_info.identifier
+    and wf_id = _wf_id
+    ;
+
+    select * 
+    into _parent_uow
+    from wf.uow
+    where wf_id = _wf_id
+    and identifier = _uow_info.parent_uow_id
+    or id = _uow.parent_uow_id::uuid
+    ;
+
+    if _parent_uow.id is null then
+      select * 
+      into _parent_uow
+      from wf.uow
+      where wf_id = _wf_id
+      and (id = _wf_id or identifier = _wf_id::citext)
+      ;
+    end if;
+
+    if _uow.id is null then
+      insert into wf.uow(
+        tenant_id
+        ,identifier
+        ,is_template
+        ,name
+        ,description
+        ,type
+        ,data
+        ,wf_id
+        ,status
+        ,due_at
+        ,parent_uow_id
+        ,workflow_handler_key
+        ,use_worker
+      )
+      select
+        _tenant_id
+        ,_uow_info.identifier
+        ,true
+        ,_uow_info.name
+        ,_uow_info.description
+        ,_uow_info.type
+        ,_uow_info.data
+        ,_wf_id
+        ,'template'::wf.uow_status_type
+        ,_uow_info.due_at
+        ,_parent_uow.id
+        ,_uow_info.workflow_handler_key
+        ,coalesce(_uow_info.use_worker, false)
+      returning *
+      into _uow
+      ;
+
+      -- promote any parent task to a milestone
+      update wf.uow set type = 'milestone' where id = _uow.parent_uow_id and type = 'task';
+    else
+      update wf.uow set
+        updated_at = current_timestamp
+        ,name = _uow_info.name
+        ,is_template = _uow_info.is_template
+        ,type = _uow_info.type
+        ,workflow_handler_key = _uow_info.workflow_handler_key
+      where id = _uow.id
+      ;
+    end if;
+
+    return _uow;
+  end;
+  $$;
+------------------------------------------------------- delete_uow
+-- CREATE OR REPLACE FUNCTION wf_api.delete_uow(_uow_id uuid)
+--   RETURNS boolean
+--   LANGUAGE plpgsql
+--   VOLATILE
+--   SECURITY INVOKER
+--   AS $$
+--   DECLARE
+--   BEGIN
+--     perform wf_fn.delete_uow(_uow_id);
+--     return true;
+--   end;
+--   $$;
+
+CREATE OR REPLACE FUNCTION wf_fn.delete_uow(_uow_id uuid) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+  DECLARE
+    _uow wf.uow;
+    _sibling_count integer;
+    _err_context citext;
+  BEGIN
+
+    select * into _uow from wf.uow where id = _uow_id;
+
+    if _uow.id is null then
+      raise exception 'no uow for id: %', _uow_id;
+    end if;
+
+    -- update parent uow from milestone to task, where appropriate
+    select count(*) into _sibling_count from wf.uow where parent_uow_id = _uow.parent_uow_id and id != _uow.id;
+    if _sibling_count = 0 then
+      update wf.uow set type = 'task' where id = _uow.parent_uow_id and type = 'milestone';
+    end if;
+
+    delete from uow where id = _uow_id;
+
+    return true;
+  end;
+  $$;
 ------------------------------------------------------- compute_uow_status
 CREATE OR REPLACE FUNCTION wf_fn.compute_uow_status(_uow_id uuid) 
     RETURNS wf.uow_status_type
@@ -1296,3 +1264,56 @@ CREATE OR REPLACE FUNCTION wf_api.uow_by_wf_and_identifier(_wf_id uuid, _identif
 
   END
   $$;
+
+
+
+
+-- probably delete this one
+  -- CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier citext, _workflow_input_data jsonb, _tenant_id uuid DEFAULT NULL::uuid) RETURNS jsonb
+  --     LANGUAGE plpgsql SECURITY DEFINER
+  --     AS $$
+  --   DECLARE
+  --     _wf wf.wf;
+  --     _uows_to_schedule wf.uow[];
+  --     _result wf_fn.queue_workflow_result;
+  --     _err_context citext;
+  --   BEGIN
+
+  --     -- if _identifier not in (
+  --     --   'brochure-contact'
+  --     -- ) then
+  --     --   raise exception 'cannot perform this workflow anonymously';
+  --     -- end if;
+
+  --     if _tenant_id is null then
+  --       select id into _tenant_id
+  --       from app.tenant where type = 'anchor';
+  --     end if;
+
+  --     _wf := (
+  --       select wf_fn.clone_wf_template(
+  --         _identifier
+  --         ,_tenant_id
+  --         ,row(_workflow_input_data)
+  --       )
+  --     );
+
+  --     with uows as (
+  --       select *
+  --       from wf.uow
+  --       where wf_id = _wf.id
+  --       and type = 'task'
+  --       and status = 'incomplete'
+  --       and use_worker = true
+  --     )
+  --     select array_agg(u.*)
+  --     into _uows_to_schedule
+  --     from uows u
+  --     ;
+
+  --     _result.wf := _wf;
+  --     _result.uows_to_schedule := _uows_to_schedule;
+
+  --     return to_jsonb(_result);
+  --   end;
+  --   $$;

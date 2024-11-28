@@ -459,45 +459,6 @@ export type CancelWfPayloadWfEdgeArgs = {
   orderBy?: Array<WfsOrderBy>;
 };
 
-/** All input for the `cloneWfTemplate` mutation. */
-export type CloneWfTemplateInput = {
-  _identifier?: InputMaybe<Scalars['String']['input']>;
-  _options?: InputMaybe<CloneWfTemplateOptionInput>;
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** An input for mutations affecting `CloneWfTemplateOption` */
-export type CloneWfTemplateOptionInput = {
-  data?: InputMaybe<Scalars['JSON']['input']>;
-};
-
-/** The output of our `cloneWfTemplate` mutation. */
-export type CloneWfTemplatePayload = {
-  __typename: 'CloneWfTemplatePayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  wf?: Maybe<Wf>;
-  /** An edge for our `Wf`. May be used by Relay 1. */
-  wfEdge?: Maybe<WfsEdge>;
-  /** Reads a single `WfType` that is related to this `Wf`. */
-  wfType?: Maybe<WfType>;
-};
-
-
-/** The output of our `cloneWfTemplate` mutation. */
-export type CloneWfTemplatePayloadWfEdgeArgs = {
-  orderBy?: Array<WfsOrderBy>;
-};
-
 /** All input for the `completeUow` mutation. */
 export type CompleteUowInput = {
   _options?: InputMaybe<CompleteUowOptionInput>;
@@ -896,29 +857,6 @@ export type DeleteTopicInput = {
 /** The output of our `deleteTopic` mutation. */
 export type DeleteTopicPayload = {
   __typename: 'DeleteTopicPayload';
-  boolean?: Maybe<Scalars['Boolean']['output']>;
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-};
-
-/** All input for the `deleteUow` mutation. */
-export type DeleteUowInput = {
-  _uowId?: InputMaybe<Scalars['UUID']['input']>;
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** The output of our `deleteUow` mutation. */
-export type DeleteUowPayload = {
-  __typename: 'DeleteUowPayload';
   boolean?: Maybe<Scalars['Boolean']['output']>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
@@ -2523,7 +2461,6 @@ export type Mutation = {
   becomeSupport?: Maybe<BecomeSupportPayload>;
   blockResident?: Maybe<BlockResidentPayload>;
   cancelWf?: Maybe<CancelWfPayload>;
-  cloneWfTemplate?: Maybe<CloneWfTemplatePayload>;
   completeUow?: Maybe<CompleteUowPayload>;
   createLocation?: Maybe<CreateLocationPayload>;
   createTenant?: Maybe<CreateTenantPayload>;
@@ -2536,7 +2473,6 @@ export type Mutation = {
   deleteLocation?: Maybe<DeleteLocationPayload>;
   deleteTodo?: Maybe<DeleteTodoPayload>;
   deleteTopic?: Maybe<DeleteTopicPayload>;
-  deleteUow?: Maybe<DeleteUowPayload>;
   errorUow?: Maybe<ErrorUowPayload>;
   exitSupportMode?: Maybe<ExitSupportModePayload>;
   grantUserLicense?: Maybe<GrantUserLicensePayload>;
@@ -2560,8 +2496,6 @@ export type Mutation = {
   upsertMessage?: Maybe<UpsertMessagePayload>;
   upsertSubscriber?: Maybe<UpsertSubscriberPayload>;
   upsertTopic?: Maybe<UpsertTopicPayload>;
-  upsertUow?: Maybe<UpsertUowPayload>;
-  upsertWf?: Maybe<UpsertWfPayload>;
   waitingUow?: Maybe<WaitingUowPayload>;
 };
 
@@ -2599,12 +2533,6 @@ export type MutationBlockResidentArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCancelWfArgs = {
   input: CancelWfInput;
-};
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export type MutationCloneWfTemplateArgs = {
-  input: CloneWfTemplateInput;
 };
 
 
@@ -2677,12 +2605,6 @@ export type MutationDeleteTodoArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteTopicArgs = {
   input: DeleteTopicInput;
-};
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export type MutationDeleteUowArgs = {
-  input: DeleteUowInput;
 };
 
 
@@ -2821,18 +2743,6 @@ export type MutationUpsertSubscriberArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpsertTopicArgs = {
   input: UpsertTopicInput;
-};
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export type MutationUpsertUowArgs = {
-  input: UpsertUowInput;
-};
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export type MutationUpsertWfArgs = {
-  input: UpsertWfInput;
 };
 
 
@@ -6512,26 +6422,6 @@ export type UowDependencyCondition = {
   wfId?: InputMaybe<Scalars['UUID']['input']>;
 };
 
-/** An input for mutations affecting `UowDependencyInfo` */
-export type UowDependencyInfoInput = {
-  dependeeIdentifier?: InputMaybe<Scalars['String']['input']>;
-  dependerIdentifier?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** An input for mutations affecting `UowInfo` */
-export type UowInfoInput = {
-  data?: InputMaybe<Scalars['JSON']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  dueAt?: InputMaybe<Scalars['Datetime']['input']>;
-  identifier?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  parentUowId?: InputMaybe<Scalars['String']['input']>;
-  type?: InputMaybe<UowType>;
-  useWorker?: InputMaybe<Scalars['Boolean']['input']>;
-  wfId?: InputMaybe<Scalars['String']['input']>;
-  workflowHandlerKey?: InputMaybe<Scalars['String']['input']>;
-};
-
 export enum UowStatusType {
   Canceled = 'CANCELED',
   Complete = 'COMPLETE',
@@ -6880,73 +6770,6 @@ export type UpsertTopicPayloadTopicEdgeArgs = {
   orderBy?: Array<TopicsOrderBy>;
 };
 
-/** All input for the `upsertUow` mutation. */
-export type UpsertUowInput = {
-  _uowInfo?: InputMaybe<UowInfoInput>;
-  _wfId?: InputMaybe<Scalars['UUID']['input']>;
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** The output of our `upsertUow` mutation. */
-export type UpsertUowPayload = {
-  __typename: 'UpsertUowPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  uow?: Maybe<Uow>;
-  /** An edge for our `Uow`. May be used by Relay 1. */
-  uowEdge?: Maybe<UowsEdge>;
-  /** Reads a single `Wf` that is related to this `Uow`. */
-  wf?: Maybe<Wf>;
-};
-
-
-/** The output of our `upsertUow` mutation. */
-export type UpsertUowPayloadUowEdgeArgs = {
-  orderBy?: Array<UowsOrderBy>;
-};
-
-/** All input for the `upsertWf` mutation. */
-export type UpsertWfInput = {
-  _wfInfo?: InputMaybe<WfInfoInput>;
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** The output of our `upsertWf` mutation. */
-export type UpsertWfPayload = {
-  __typename: 'UpsertWfPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  wf?: Maybe<Wf>;
-  /** An edge for our `Wf`. May be used by Relay 1. */
-  wfEdge?: Maybe<WfsEdge>;
-  /** Reads a single `WfType` that is related to this `Wf`. */
-  wfType?: Maybe<WfType>;
-};
-
-
-/** The output of our `upsertWf` mutation. */
-export type UpsertWfPayloadWfEdgeArgs = {
-  orderBy?: Array<WfsOrderBy>;
-};
-
 /** All input for the `waitingUow` mutation. */
 export type WaitingUowInput = {
   _uowId?: InputMaybe<Scalars['UUID']['input']>;
@@ -6987,6 +6810,7 @@ export type Wf = Node & {
   id: Scalars['UUID']['output'];
   identifier?: Maybe<Scalars['String']['output']>;
   inputDefinitions: Array<Maybe<WorkflowInputDefinition>>;
+  instanceCount?: Maybe<Scalars['Int']['output']>;
   isTemplate: Scalars['Boolean']['output'];
   name?: Maybe<Scalars['String']['output']>;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
@@ -7073,18 +6897,6 @@ export type WfCondition = {
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `workflowData` field. */
   workflowData?: InputMaybe<Scalars['JSON']['input']>;
-};
-
-/** An input for mutations affecting `WfInfo` */
-export type WfInfoInput = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  identifier?: InputMaybe<Scalars['String']['input']>;
-  inputDefinitions?: InputMaybe<Array<InputMaybe<WorkflowInputDefinitionInput>>>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  onCompletedWorkflowHandlerKey?: InputMaybe<Scalars['String']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-  uowDependencies?: InputMaybe<Array<InputMaybe<UowDependencyInfoInput>>>;
-  uows?: InputMaybe<Array<InputMaybe<UowInfoInput>>>;
 };
 
 export type WfRole = Node & {
@@ -7273,12 +7085,16 @@ export enum WorkflowInputDataType {
 export type WorkflowInputDefinition = {
   __typename: 'WorkflowInputDefinition';
   dataType?: Maybe<WorkflowInputDataType>;
+  defaultValue?: Maybe<Scalars['String']['output']>;
+  isRequired?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
 };
 
 /** An input for mutations affecting `WorkflowInputDefinition` */
 export type WorkflowInputDefinitionInput = {
   dataType?: InputMaybe<WorkflowInputDataType>;
+  defaultValue?: InputMaybe<Scalars['String']['input']>;
+  isRequired?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -7691,19 +7507,32 @@ export type UowFragment = { __typename: 'Uow', id: any, completedAt?: any | null
 
 export type UowDependencyFragment = { __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any };
 
-export type WfFragment = { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null } | null> };
+export type WfFragment = { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> };
+
+export type QueueWorkflowMutationVariables = Exact<{
+  identifier: Scalars['String']['input'];
+  workflowInputData: Scalars['JSON']['input'];
+}>;
+
+
+export type QueueWorkflowMutation = { __typename: 'Mutation', queueWorkflow?: { __typename: 'QueueWorkflowPayload', json?: any | null } | null };
+
+export type AllWfInstancesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllWfInstancesQuery = { __typename: 'Query', wfInstances?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> }> | null };
 
 export type AllWfTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllWfTemplatesQuery = { __typename: 'Query', wfTemplates?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null } | null> }> | null };
+export type AllWfTemplatesQuery = { __typename: 'Query', wfTemplates?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> }> | null };
 
 export type WfByIdQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type WfByIdQuery = { __typename: 'Query', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, workflowData: any, uowsList: Array<{ __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null }>, uowDependenciesList: Array<{ __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any }>, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null } | null> } | null };
+export type WfByIdQuery = { __typename: 'Query', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, workflowData: any, uowsList: Array<{ __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null }>, uowDependenciesList: Array<{ __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any }>, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null };
 
 export const ApplicationFragmentDoc = gql`
     fragment Application on Application {
@@ -7918,7 +7747,10 @@ export const WfFragmentDoc = gql`
   inputDefinitions {
     name
     dataType
+    defaultValue
+    isRequired
   }
+  instanceCount
   workflowData
 }
     `;
@@ -8960,6 +8792,30 @@ export const TodoByIdForRefreshDocument = gql`
 
 export function useTodoByIdForRefreshQuery(options: Omit<Urql.UseQueryArgs<never, TodoByIdForRefreshQueryVariables>, 'query'>) {
   return Urql.useQuery<TodoByIdForRefreshQuery, TodoByIdForRefreshQueryVariables>({ query: TodoByIdForRefreshDocument, ...options });
+};
+export const QueueWorkflowDocument = gql`
+    mutation QueueWorkflow($identifier: String!, $workflowInputData: JSON!) {
+  queueWorkflow(
+    input: {_identifier: $identifier, _workflowInputData: $workflowInputData}
+  ) {
+    json
+  }
+}
+    `;
+
+export function useQueueWorkflowMutation() {
+  return Urql.useMutation<QueueWorkflowMutation, QueueWorkflowMutationVariables>(QueueWorkflowDocument);
+};
+export const AllWfInstancesDocument = gql`
+    query AllWfInstances {
+  wfInstances: wfsList(condition: {isTemplate: false}) {
+    ...Wf
+  }
+}
+    ${WfFragmentDoc}`;
+
+export function useAllWfInstancesQuery(options: Omit<Urql.UseQueryArgs<never, AllWfInstancesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllWfInstancesQuery, AllWfInstancesQueryVariables>({ query: AllWfInstancesDocument, ...options });
 };
 export const AllWfTemplatesDocument = gql`
     query AllWfTemplates {
