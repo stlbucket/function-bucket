@@ -1,4 +1,3 @@
-// import  { getGraphFromNodeElk} from './getGraphFromNodeElk'
 import { computeLayoutElk } from './computeLayoutElk'
 import { getWfEdges, getWfNodeTree } from './getWfNodeTree'
 
@@ -37,6 +36,8 @@ const adornLayout = (wf: Wf, elkLayout: any) => {
     },
     data: {
       style,
+      width,
+      height,
       ...thisWfNode
     },
     children: adornedChildren

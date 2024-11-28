@@ -248,6 +248,7 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
       set 
         status = 'complete'
         ,data = data || coalesce(_options.step_data, '{}'::jsonb)
+        ,completed_at = current_timestamp
       where id = _uow.id
       returning *
       into _uow

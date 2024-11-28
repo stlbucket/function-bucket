@@ -19,7 +19,7 @@
         </template>
         <template #node-MILESTONE="uow">
           <div class="flex text-xs" style="background-color: purple;">
-            {{ uow.data.type }} - {{ uow.data.name }}
+            {{ uow.data.type }} - {{ uow.data.name }} - {{ uow.data.status }}
           </div>
           <MilestoneNode
             :uow="uow"
