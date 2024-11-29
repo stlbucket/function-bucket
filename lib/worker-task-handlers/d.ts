@@ -12,7 +12,8 @@ export interface FnbWorkflowStepResult {
   status: FnbWorkflowStepResultStatus,
   stepData?: any,
   workflowData?: any,
-  errorInfo?: FnbWorkflowError
+  errorInfo?: FnbWorkflowError,
+  afterStepDelay?: number
 }
 
 export interface FnbWorkflowStepPayload {

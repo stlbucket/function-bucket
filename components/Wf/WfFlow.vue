@@ -1,9 +1,19 @@
 <template>
   <div>
+    <div class="flex gap-1 items-stretch">
+      <UCard>
+        <template #header>Input Data</template>
+        <pre>{{ wf.workflowData.workflowInputData }}</pre>
+      </UCard>
+      <UCard>
+        <template #header>Workflow Data</template>
+        <pre>{{ wf.workflowData }}</pre>
+      </UCard>
+    </div>    
     <div 
       v-if="flowNodes[0]" 
       class="flex grow-1 bg-gray-800"
-      style="height: 700px; width: 1150px; background-color: green" 
+      style="height: 700px; width: 1150px;" 
     >
       <VueFlow 
         :nodes="flowNodes" 

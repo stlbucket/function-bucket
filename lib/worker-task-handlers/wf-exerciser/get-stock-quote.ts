@@ -11,6 +11,10 @@ const handler = async (payload: FnbWorkflowStepPayload): Promise<FnbWorkflowStep
     workflowData: {
       // stockQuote: data['Global Quote']
       stockQuote: 420.69
+    },
+    stepData: {
+      // stockQuote: data['Global Quote']
+      stockQuote: 420.69
     }
   }
 };

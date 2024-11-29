@@ -114,7 +114,7 @@ CREATE OR REPLACE FUNCTION wf_fn.error_uow(_uow_id uuid, _message citext, _stack
 
     select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
     if _wf_uow.status in ('paused', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
+      raise exception '(error) cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     update wf.uow set
@@ -233,13 +233,22 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
       raise exception 'no uow for id: %', _uow_id;
     end if;
 
+    -- EAGER-SCHEDULING
+    -- this will ignore tasks that have already been completed
+    -- this is in addition to a similar clause in workflow-handler
+    if _uow.status = 'complete' then
+      _result.uow := _uow;
+      _result.uows_to_schedule := '{}';
+      return _result;
+    end if;
+
     if _uow.status not in ('incomplete', 'waiting') then
       raise exception 'can only complete an incomplete or waiting uow: % - %', _uow.identifier, _uow.status;
     end if;
 
     select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
     if _wf_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
+      raise exception '(complete) cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     if _uow.status != 'complete' then
@@ -316,6 +325,9 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
       end if;
     end if;
 
+    -- EAGER-SCHEDULING
+    -- this select statement should be rethought
+    -- currently it can cause uows to be scheduled multiple times
     with uows as (
       select *
       from wf.uow
@@ -397,7 +409,7 @@ CREATE OR REPLACE FUNCTION wf_fn.incomplete_uow(_uow_id uuid) RETURNS wf.uow
 
     select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
     if _wf_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
+      raise exception '(incomplete) cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     update wf.uow
@@ -504,7 +516,7 @@ CREATE OR REPLACE FUNCTION wf_fn.pause_uow(_uow_id uuid) RETURNS wf.uow
 
     select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
     if _wf_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
+      raise exception '(pause) cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     update wf.uow
@@ -563,7 +575,7 @@ CREATE OR REPLACE FUNCTION wf_fn.waiting_uow(_uow_id uuid) RETURNS wf.uow
 
     select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
     if _wf_uow.status in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
-      raise exception 'cannot update a uow with wf status: %', _wf_uow.status;
+      raise exception '(waiting) cannot update a uow with wf status: %', _wf_uow.status;
     end if;
 
     update wf.uow
@@ -1283,55 +1295,3 @@ CREATE OR REPLACE FUNCTION wf_api.wf_template_by_identifier(_identifier citext) 
   END
   $$;
 
-
-
-
--- probably delete this one
-  -- CREATE OR REPLACE FUNCTION wf_fn.queue_anon_workflow(_identifier citext, _workflow_input_data jsonb, _tenant_id uuid DEFAULT NULL::uuid) RETURNS jsonb
-  --     LANGUAGE plpgsql SECURITY DEFINER
-  --     AS $$
-  --   DECLARE
-  --     _wf wf.wf;
-  --     _uows_to_schedule wf.uow[];
-  --     _result wf_fn.queue_workflow_result;
-  --     _err_context citext;
-  --   BEGIN
-
-  --     -- if _identifier not in (
-  --     --   'brochure-contact'
-  --     -- ) then
-  --     --   raise exception 'cannot perform this workflow anonymously';
-  --     -- end if;
-
-  --     if _tenant_id is null then
-  --       select id into _tenant_id
-  --       from app.tenant where type = 'anchor';
-  --     end if;
-
-  --     _wf := (
-  --       select wf_fn.clone_wf_template(
-  --         _identifier
-  --         ,_tenant_id
-  --         ,row(_workflow_input_data)
-  --       )
-  --     );
-
-  --     with uows as (
-  --       select *
-  --       from wf.uow
-  --       where wf_id = _wf.id
-  --       and type = 'task'
-  --       and status = 'incomplete'
-  --       and use_worker = true
-  --     )
-  --     select array_agg(u.*)
-  --     into _uows_to_schedule
-  --     from uows u
-  --     ;
-
-  --     _result.wf := _wf;
-  --     _result.uows_to_schedule := _uows_to_schedule;
-
-  --     return to_jsonb(_result);
-  --   end;
-  --   $$;

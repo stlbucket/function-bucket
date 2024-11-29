@@ -1,15 +1,23 @@
 <template>
-  <div :style="containerStyle" :class="`flex flex-col mt-2 rounded ${bgColor} grow-1`" @click="report">
-    <div class="flex text-xs" style="background-color: blue;">
-      {{ uow.data.type }} - {{ uow.data.name }} - {{ uow.data.status }}
+  <div :style="containerStyle" :class="`flex flex-col mt-2 rounded grow-1`" @click="report">
+    <div class="flex bg-blue-600 p-1" style=" font-size: small;">
+      {{ uow.data.name }}
     </div>
-    <div class="flex text-xs" style="background-color: deepskyblue;">
-      <pre>{{ uow.data.data }}</pre>
+    <!-- these v-if switches are because updating the class/style doesn't work reactively.  this should be investigated -->
+    <div v-if="uow.data.status === 'COMPLETE'" :class="`${statusBarClass} bg-green-500`" :style="statusBarStyle">
+      <div class="flex">{{ formatDate(new Date(uow.data.updatedAt)) }}</div>
+      <div class="flex">{{ uow.data.status }}</div>
     </div>
-    <div class="flex text-xs flex-col" style="background-color: dodgerblue;">
-      <pre class="text-xs">c: {{ formatDate(new Date(uow.data.createdAt)) }}</pre>
-      <pre class="text-xs">u: {{ formatDate(new Date(uow.data.updatedAt)) }}</pre>
-      <pre class="text-xs" v-if="uow.data.completedAt">cc: {{ formatDate(new Date(uow.data.completedAt)) }}</pre>
+    <div v-if="uow.data.status === 'ERROR'" :class="`${statusBarClass} bg-red-500`" :style="statusBarStyle">
+      <div class="flex">{{ formatDate(new Date(uow.data.updatedAt)) }}</div>
+      <div class="flex">{{ uow.data.status }}</div>
+    </div>
+    <div v-if="['COMPLETE', 'ERROR'].indexOf(uow.data.status) === -1" :class="`${statusBarClass} bg-gray-500`" :style="statusBarStyle">
+      <div class="flex">{{ formatDate(new Date(uow.data.updatedAt)) }}</div>
+      <div class="flex">{{ uow.data.status }}</div>
+    </div>
+    <div class="flex text-xs flex-col p-1" style="background-color: dodgerblue;">
+      <pre>{{ stepData }}</pre>
     </div>
   </div>
 </template>
@@ -30,12 +38,35 @@ function formatDate(date) {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
+    fractionalSecondDigits: '3',
     hour12: false
   });
 }
 
 const containerStyle = computed(() => {
-  return `width: ${props.uow.data.width}px; height: ${props.uow.data.height}px; background-color: ${bgColor};`
+  return `width: ${props.uow.data.width}px; height: ${props.uow.data.height}px; background-color: ${statusColor};`
+})
+
+const statusBarClass = computed(() => {
+  return `flex p-1 justify-between`
+})
+
+const statusBarStyle = computed(() => {
+  return `font-size: xx-small;`
+})
+
+// const statusBarClass = computed(() => {
+//   return `flex p-1 justify-between ${statusColor.value}`
+// })
+
+// const statusBarStyle = computed(() => {
+//   return `font-size: xx-small; background-color: ${statusColor.value.split('-')[1]};`
+// })
+
+const stepData = computed(() => {
+  const { error, ...theRest } = props.uow.data.data
+  if (error) return error.message
+  return theRest
 })
 
 // const containerStyle = computed(() => {
@@ -48,8 +79,15 @@ const connections = useHandleConnections({
 
 const nodesData = useNodesData(() => connections.value[0]?.source)
 
-const bgColor = computed<string>(() => {
-  return 'bg-blue-500'
+const statusColor = computed<string>(() => {
+  switch (props.uow.data.status) {
+    case 'ERROR':
+      return 'bg-red-500'
+    case 'COMPLETE':
+      return 'bg-green-500'
+    default:
+      return 'bg-gray-500'
+  }
 })
 
 const report = () => {

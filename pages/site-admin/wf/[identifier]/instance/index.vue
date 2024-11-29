@@ -1,6 +1,10 @@
 <template>
   <UCard>
-    <template #header>WF Templates</template>
+    <template #header>
+      <div class="flex">
+        <NuxtLink :to="`/site-admin/wf`">Template</NuxtLink>
+      </div>
+    </template>
     <UTable
       :rows="wfInstances"
       :columns="[

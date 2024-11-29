@@ -72,7 +72,7 @@ select wf_fn.upsert_wf(
         ,'task'::wf.uow_type
         ,'{}'::jsonb
         ,null::citext -- wf_id
-        ,null::citext -- parent_uow_id
+        ,'wf-exerciser'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
         ,'finish-workflow-exerciser'::citext -- workflow_handler_key,
         ,true::boolean -- use_worker

@@ -6,6 +6,7 @@ import getStockQuote from "./wf-exerciser/get-stock-quote.js";
 import maybeThrowError from "./wf-exerciser/maybe-throw-error.js";
 import doTheThings from "./wf-exerciser/do-the-things.js";
 import maybeRaiseException from "./wf-exerciser/maybe-raise-exception.js";
+import wait from './_common/wait.js'
 import type { TaskList } from "graphile-worker";
 
 
@@ -17,6 +18,7 @@ const taskList: TaskList = {
   'maybe-throw-error': maybeThrowError,
   'do-the-things': doTheThings,
   'maybe-raise-exception': maybeRaiseException,
+  'wait': wait
 }
 
 export default taskList

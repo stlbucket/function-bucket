@@ -51,7 +51,7 @@ import { useWfByIdQuery } from '~/graphql/api';
       if (wfInstance.value.status === 'COMPLETE') {
         clearInterval(intervalId.value)
       }
-    }, 3000)
+    }, 500)
   }
   beginPolling()
   // watch(() => wfInstance.value, () => {
