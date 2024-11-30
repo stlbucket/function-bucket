@@ -1318,7 +1318,7 @@ CREATE OR REPLACE FUNCTION app_api.get_myself()
   end;
   $$;  
 
-CREATE OR REPLACE FUNCTION app_api.throw_error(_message citext default 'GENERICERROR')
+CREATE OR REPLACE FUNCTION app_api.raise_exception(_message citext default 'GENERICERROR')
   RETURNS boolean
   LANGUAGE plpgsql
   STABLE

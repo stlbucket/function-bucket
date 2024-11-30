@@ -10,7 +10,7 @@ select wf_fn.upsert_wf(
         ,'Init Workflow Exerciser'::citext -- name
         ,'Initial housekeeping stuff'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wf-exerciser'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -70,7 +70,7 @@ select wf_fn.upsert_wf(
         ,'Finish Workflow Exerciser'::citext -- name
         ,'Final housekeeping stuff'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wf-exerciser'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at

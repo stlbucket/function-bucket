@@ -213,7 +213,7 @@ select wf_fn.upsert_wf(
         ,'Init Workflow Exerciser'::citext -- name
         ,'Initial housekeeping stuff'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wf-exerciser'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -273,7 +273,7 @@ select wf_fn.upsert_wf(
         ,'Finish Workflow Exerciser'::citext -- name
         ,'Final housekeeping stuff'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wf-exerciser'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -337,7 +337,7 @@ select wf_fn.upsert_wf(
         ,'Wait first'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"waitDelay":2000}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'the-waiting-game'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -361,7 +361,7 @@ select wf_fn.upsert_wf(
         ,'Wait 1-1'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"waitDelay":2000}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wait-for-these-1'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -373,7 +373,7 @@ select wf_fn.upsert_wf(
         ,'Wait 1-2'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"waitDelay":2000}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wait-for-these-1'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -397,7 +397,7 @@ select wf_fn.upsert_wf(
         ,'Wait 2-1'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"waitDelay":2000}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wait-for-these-2'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -409,7 +409,7 @@ select wf_fn.upsert_wf(
         ,'Wait 2-2'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"waitDelay":2000}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wait-for-these-2'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -433,7 +433,7 @@ select wf_fn.upsert_wf(
         ,'Wait 3-1'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"waitDelay":2000}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wait-for-these-3'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -441,11 +441,11 @@ select wf_fn.upsert_wf(
         ,true::boolean -- use_worker
       )::wf_fn.uow_info
       ,row(
-        'wait-3-2'::citext -- identifier
+        'wait-2-2'::citext -- identifier
         ,'Wait 3-2'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"waitDelay":2000}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'wait-for-these-3'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -457,7 +457,7 @@ select wf_fn.upsert_wf(
         ,'Wait Last'::citext -- name
         ,'More waiting'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"waitDelay":2000}'::jsonb
+        ,'{"afterStepDelay":2000}'::jsonb
         ,null::citext -- wf_id
         ,'the-waiting-game'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at

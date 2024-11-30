@@ -34,7 +34,7 @@ export default (handler: FnbWorkFlowHandlerFunction): Task => {
           workflowData: workflowData
         })
   
-        console.log('result', uow.identifier, JSON.stringify(result, null, 2))
+        console.log('result', uow.identifier, {uow, result: JSON.stringify(result, null, 2)})
   
         switch (result.status) {
           case 'complete':
@@ -47,15 +47,15 @@ export default (handler: FnbWorkFlowHandlerFunction): Task => {
               console.log('completeUowResult.uows_to_schedule', result.afterStepDelay,  JSON.stringify(uts, null, 2))
               await Promise.all(
                 completeUowResult.uows_to_schedule.map(
-                  async (uow: any) => {
+                  async (uowToSchedule: any) => {
                     await workerUtils.addJob(
-                      uow.workflow_handler_key,
+                      uowToSchedule.workflow_handler_key,
                       // Payload
-                      uow,
+                      uowToSchedule,
                       // Optionally, add further task spec details here
                       {
                         maxAttempts: 1,
-                        runAt: (new Date(Date.now() + (result.afterStepDelay || 0)))
+                        runAt: (new Date(Date.now() + (uow.data.afterStepDelay || 0)))
                       },
                     )
                   }

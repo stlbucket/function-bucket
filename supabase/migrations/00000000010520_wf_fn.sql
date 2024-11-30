@@ -588,6 +588,50 @@ CREATE OR REPLACE FUNCTION wf_fn.waiting_uow(_uow_id uuid) RETURNS wf.uow
   end;
   $$;
 
+------------------------------------------------------- save_wf_layout
+CREATE OR REPLACE FUNCTION wf_api.save_wf_layout(_wf_id uuid, _layout jsonb)
+  RETURNS wf.wf
+  LANGUAGE plpgsql
+  VOLATILE
+  SECURITY INVOKER
+  AS $$
+  DECLARE
+    _wf wf.wf;
+  BEGIN
+    _wf := wf_fn.save_wf_layout(_wf_id, _layout);
+    return _wf;
+  end;
+  $$;
+
+CREATE OR REPLACE FUNCTION wf_fn.save_wf_layout(_wf_id uuid, _layout jsonb) RETURNS wf.wf
+  LANGUAGE plpgsql
+  VOLATILE
+  SECURITY INVOKER
+  AS $$
+  DECLARE
+    _wf wf.wf;
+  BEGIN
+    select *
+    into _wf
+    from wf.wf
+    where id = _wf_id
+    ;
+
+    if _wf.id is null then
+      raise exception 'no wf for id: %', _wf_id;
+    end if;
+
+
+    update wf.wf
+    set layout_override = _layout
+    where id = _wf.id
+    returning * into _wf
+    ;
+
+    return _wf;
+  end;
+  $$;
+
 -- helper functions not exposed thru api
 ------------------------------------------------------- clone_wf_template
 -- CREATE OR REPLACE FUNCTION wf_api.clone_wf_template(_identifier citext, _options wf_fn.clone_wf_template_options DEFAULT ROW('{}'::jsonb)::wf_fn.clone_wf_template_options) RETURNS wf.wf
@@ -1035,7 +1079,7 @@ CREATE OR REPLACE FUNCTION wf_fn.upsert_uow(
       update wf.uow set
         updated_at = current_timestamp
         ,name = _uow_info.name
-        ,is_template = _uow_info.is_template
+        -- ,is_template = _uow_info.is_template  --- should check for unique keys at beginning of upsert_workflow
         ,type = _uow_info.type
         ,workflow_handler_key = _uow_info.workflow_handler_key
       where id = _uow.id
@@ -1172,7 +1216,7 @@ CREATE OR REPLACE FUNCTION wf_fn.compute_uow_status(_uow_id uuid)
   end;
   $$;
 ------------------------------------------------------- clone_uow_template
-CREATE OR REPLACE FUNCTION wf_fn.clone_uow_template(_uow_id uuid, _wf wf.wf, _options wf_fn.clone_uow_template_options DEFAULT ROW(('{}'::jsonb)::json)::wf_fn.clone_uow_template_options) RETURNS wf.uow
+CREATE OR REPLACE FUNCTION wf_fn.clone_uow_template(_uow_id uuid, _wf wf.wf) RETURNS wf.uow
     LANGUAGE plpgsql
     AS $$
   DECLARE
@@ -1205,7 +1249,7 @@ CREATE OR REPLACE FUNCTION wf_fn.clone_uow_template(_uow_id uuid, _wf wf.wf, _op
       ,_uow.name
       ,_uow.description
       ,_uow.type
-      ,_options.data
+      ,_uow.data
       ,_wf.id
       ,'incomplete'
       ,_uow.workflow_handler_key

@@ -46,7 +46,8 @@ CREATE TABLE wf.wf (
   type citext NOT NULL references wf.wf_type(id),
   is_template boolean DEFAULT false NOT NULL,
   workflow_data jsonb DEFAULT '{}'::jsonb NOT NULL,
-  input_definitions wf.workflow_input_definition[] NOT NULL default '{}'::wf.workflow_input_definition[]
+  input_definitions wf.workflow_input_definition[] NOT NULL default '{}'::wf.workflow_input_definition[],
+  layout_override jsonb null
 );
 ----------------------------------------
 CREATE TABLE wf.uow (

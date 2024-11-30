@@ -1,20 +1,11 @@
 <template>
   <div>
-    <div class="flex gap-1 items-stretch">
-      <UCard>
-        <template #header>Input Data</template>
-        <pre>{{ wf.workflowData.workflowInputData }}</pre>
-      </UCard>
-      <UCard>
-        <template #header>Workflow Data</template>
-        <pre>{{ wf.workflowData }}</pre>
-      </UCard>
-    </div>    
     <div 
       v-if="flowNodes[0]" 
       class="flex grow-1 bg-gray-800"
       style="height: 700px; width: 1150px;" 
     >
+      <UButton @click="getNodesFromFlow">Get Nodes</UButton>
       <VueFlow 
         :nodes="flowNodes" 
         :edges="flowEdges" 
@@ -46,6 +37,16 @@
       </VueFlow>
     </div>
   </div>
+  <div class="flex gap-1 items-stretch">
+      <UCard>
+        <template #header>Input Data</template>
+        <pre>{{ wf.workflowData.workflowInputData }}</pre>
+      </UCard>
+      <UCard>
+        <template #header>Workflow Data</template>
+        <pre>{{ wf.workflowData }}</pre>
+      </UCard>
+    </div>    
   <div class="flex flex-col gap-2">
     <div class="flex p-3"></div>
     <div class="flex rounded">
@@ -66,7 +67,7 @@
 
   import { useWfLayoutElk } from '~/composables/use-wf-layout';
 
-  const { updateNode } = useVueFlow()
+  const { updateNode, getNodes } = useVueFlow()
 
   const props = defineProps<{
     wf: Wf
@@ -124,4 +125,13 @@
   }
   computeLayout()
 
+  const getNodesFromFlow = () => {
+    const currentLayout = getNodes.value
+      .map(wfn => {
+        const {id, position, width, height, data: { identifier }} = wfn;
+        return {id, position, width, height, identifier}
+      })
+
+    alert(JSON.stringify(currentLayout,null,2))
+  }
 </script>
