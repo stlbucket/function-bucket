@@ -589,7 +589,7 @@ CREATE OR REPLACE FUNCTION wf_fn.waiting_uow(_uow_id uuid) RETURNS wf.uow
   $$;
 
 ------------------------------------------------------- save_wf_layout
-CREATE OR REPLACE FUNCTION wf_api.save_wf_layout(_wf_id uuid, _layout jsonb)
+CREATE OR REPLACE FUNCTION wf_api.save_wf_layout(_wf_identifier citext, _layout jsonb)
   RETURNS wf.wf
   LANGUAGE plpgsql
   VOLATILE
@@ -598,12 +598,12 @@ CREATE OR REPLACE FUNCTION wf_api.save_wf_layout(_wf_id uuid, _layout jsonb)
   DECLARE
     _wf wf.wf;
   BEGIN
-    _wf := wf_fn.save_wf_layout(_wf_id, _layout);
+    _wf := wf_fn.save_wf_layout(_wf_identifier, _layout);
     return _wf;
   end;
   $$;
 
-CREATE OR REPLACE FUNCTION wf_fn.save_wf_layout(_wf_id uuid, _layout jsonb) RETURNS wf.wf
+CREATE OR REPLACE FUNCTION wf_fn.save_wf_layout(_wf_identifier citext, _layout jsonb) RETURNS wf.wf
   LANGUAGE plpgsql
   VOLATILE
   SECURITY INVOKER
@@ -614,16 +614,17 @@ CREATE OR REPLACE FUNCTION wf_fn.save_wf_layout(_wf_id uuid, _layout jsonb) RETU
     select *
     into _wf
     from wf.wf
-    where id = _wf_id
+    where identifier = _wf_identifier
+    and is_template = true
     ;
 
     if _wf.id is null then
-      raise exception 'no wf for id: %', _wf_id;
+      raise exception 'no template wf for id: %', _wf_identifier;
     end if;
 
 
     update wf.wf
-    set layout_override = _layout
+    set _layout_override = _layout
     where id = _wf.id
     returning * into _wf
     ;

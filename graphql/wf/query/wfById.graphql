@@ -9,5 +9,8 @@ query WfById (
   	uowDependenciesList {
 			...UowDependency      
     }
+    template {
+      ...Wf
+    }
   }
 }

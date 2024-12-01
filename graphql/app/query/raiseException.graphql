@@ -1,0 +1,5 @@
+query RaiseException(
+  $message: String
+) {
+  raiseException(_message: $message)
+}

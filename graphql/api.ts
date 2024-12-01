@@ -2486,6 +2486,7 @@ export type Mutation = {
   queueWorkflow?: Maybe<QueueWorkflowPayload>;
   reactivateTenantSubscription?: Maybe<ReactivateTenantSubscriptionPayload>;
   revokeUserLicense?: Maybe<RevokeUserLicensePayload>;
+  saveWfLayout?: Maybe<SaveWfLayoutPayload>;
   subscribeTenantToLicensePack?: Maybe<SubscribeTenantToLicensePackPayload>;
   unblockResident?: Maybe<UnblockResidentPayload>;
   unpinTodo?: Maybe<UnpinTodoPayload>;
@@ -2683,6 +2684,12 @@ export type MutationReactivateTenantSubscriptionArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationRevokeUserLicenseArgs = {
   input: RevokeUserLicenseInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationSaveWfLayoutArgs = {
+  input: SaveWfLayoutInput;
 };
 
 
@@ -3276,6 +3283,7 @@ export type Query = Node & {
    * which can only query top level fields if they are in a particular form.
    */
   query: Query;
+  raiseException?: Maybe<Scalars['Boolean']['output']>;
   /** Get a single `Resident`. */
   resident?: Maybe<Resident>;
   /** Reads a single `Resident` using its globally unique `ID`. */
@@ -3346,7 +3354,6 @@ export type Query = Node & {
   things?: Maybe<ThingsConnection>;
   /** Reads a set of `Thing`. */
   thingsList?: Maybe<Array<Thing>>;
-  throwError?: Maybe<Scalars['Boolean']['output']>;
   /** Get a single `Todo`. */
   todo?: Maybe<Todo>;
   /** Reads a single `Todo` using its globally unique `ID`. */
@@ -4047,6 +4054,12 @@ export type QueryProfilesListArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryRaiseExceptionArgs = {
+  _message?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryResidentArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -4370,12 +4383,6 @@ export type QueryThingsListArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ThingsOrderBy>>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
-export type QueryThrowErrorArgs = {
-  _message?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -4954,6 +4961,40 @@ export type RevokeUserLicensePayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
+};
+
+/** All input for the `saveWfLayout` mutation. */
+export type SaveWfLayoutInput = {
+  _layout?: InputMaybe<Scalars['JSON']['input']>;
+  _wfIdentifier?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `saveWfLayout` mutation. */
+export type SaveWfLayoutPayload = {
+  __typename: 'SaveWfLayoutPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  wf?: Maybe<Wf>;
+  /** An edge for our `Wf`. May be used by Relay 1. */
+  wfEdge?: Maybe<WfsEdge>;
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
+};
+
+
+/** The output of our `saveWfLayout` mutation. */
+export type SaveWfLayoutPayloadWfEdgeArgs = {
+  orderBy?: Array<WfsOrderBy>;
 };
 
 /** An input for mutations affecting `SearchProfilesOption` */
@@ -6819,6 +6860,7 @@ export type Wf = Node & {
   inputDefinitions: Array<Maybe<WorkflowInputDefinition>>;
   instanceCount?: Maybe<Scalars['Int']['output']>;
   isTemplate: Scalars['Boolean']['output'];
+  layoutOverride?: Maybe<Scalars['JSON']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
@@ -6893,6 +6935,8 @@ export type WfCondition = {
   inputDefinitions?: InputMaybe<Array<InputMaybe<WorkflowInputDefinitionInput>>>;
   /** Checks for equality with the object’s `isTemplate` field. */
   isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `layoutOverride` field. */
+  layoutOverride?: InputMaybe<Scalars['JSON']['input']>;
   /** Checks for equality with the object’s `name` field. */
   name?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `tenantId` field. */
@@ -7067,6 +7111,8 @@ export enum WfsOrderBy {
   IdDesc = 'ID_DESC',
   IsTemplateAsc = 'IS_TEMPLATE_ASC',
   IsTemplateDesc = 'IS_TEMPLATE_DESC',
+  LayoutOverrideAsc = 'LAYOUT_OVERRIDE_ASC',
+  LayoutOverrideDesc = 'LAYOUT_OVERRIDE_DESC',
   NameAsc = 'NAME_ASC',
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
@@ -7321,6 +7367,13 @@ export type MyProfileResidenciesQueryVariables = Exact<{ [key: string]: never; }
 
 export type MyProfileResidenciesQuery = { __typename: 'Query', myProfileResidenciesList?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope } | null }> } | null> | null };
 
+export type RaiseExceptionQueryVariables = Exact<{
+  message?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type RaiseExceptionQuery = { __typename: 'Query', raiseException?: boolean | null };
+
 export type ResidentByIdQueryVariables = Exact<{
   residentId: Scalars['UUID']['input'];
 }>;
@@ -7355,13 +7408,6 @@ export type SiteUserByIdQueryVariables = Exact<{
 
 
 export type SiteUserByIdQuery = { __typename: 'Query', siteUserById?: any | null };
-
-export type ThrowErrorQueryVariables = Exact<{
-  message?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type ThrowErrorQuery = { __typename: 'Query', throwError?: boolean | null };
 
 export type MessageFragment = { __typename: 'Message', id: any, createdAt: any, status: MessageStatus, content: string, postedBy?: { __typename: 'MsgResident', residentId: any, displayName: string } | null };
 
@@ -7515,7 +7561,7 @@ export type UowFragment = { __typename: 'Uow', id: any, completedAt?: any | null
 
 export type UowDependencyFragment = { __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any };
 
-export type WfFragment = { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> };
+export type WfFragment = { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> };
 
 export type QueueWorkflowMutationVariables = Exact<{
   identifier: Scalars['String']['input'];
@@ -7525,29 +7571,37 @@ export type QueueWorkflowMutationVariables = Exact<{
 
 export type QueueWorkflowMutation = { __typename: 'Mutation', queueWorkflow?: { __typename: 'QueueWorkflowPayload', json?: any | null } | null };
 
+export type SaveWfLayoutMutationVariables = Exact<{
+  wfIdentifier: Scalars['String']['input'];
+  layout: Scalars['JSON']['input'];
+}>;
+
+
+export type SaveWfLayoutMutation = { __typename: 'Mutation', saveWfLayout?: { __typename: 'SaveWfLayoutPayload', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null } | null };
+
 export type AllWfInstancesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllWfInstancesQuery = { __typename: 'Query', wfInstances?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> }> | null };
+export type AllWfInstancesQuery = { __typename: 'Query', wfInstances?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> }> | null };
 
 export type AllWfTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllWfTemplatesQuery = { __typename: 'Query', wfTemplates?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> }> | null };
+export type AllWfTemplatesQuery = { __typename: 'Query', wfTemplates?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> }> | null };
 
 export type WfByIdQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type WfByIdQuery = { __typename: 'Query', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, uowsList: Array<{ __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null }>, uowDependenciesList: Array<{ __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any }>, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null };
+export type WfByIdQuery = { __typename: 'Query', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, uowsList: Array<{ __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null }>, uowDependenciesList: Array<{ __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any }>, template?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null };
 
 export type WfTemplateByIdentifierQueryVariables = Exact<{
   identifier: Scalars['String']['input'];
 }>;
 
 
-export type WfTemplateByIdentifierQuery = { __typename: 'Query', wfTemplateByIdentifier?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, uowsList: Array<{ __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null }>, uowDependenciesList: Array<{ __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any }>, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null };
+export type WfTemplateByIdentifierQuery = { __typename: 'Query', wfTemplateByIdentifier?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, uowsList: Array<{ __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null }>, uowDependenciesList: Array<{ __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any }>, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null };
 
 export const ApplicationFragmentDoc = gql`
     fragment Application on Application {
@@ -7768,6 +7822,7 @@ export const WfFragmentDoc = gql`
   instanceCount
   status
   workflowData
+  layoutOverride
 }
     `;
 export const JoinAddressBookDocument = gql`
@@ -8298,6 +8353,15 @@ ${LicenseTypeFragmentDoc}`;
 export function useMyProfileResidenciesQuery(options: Omit<Urql.UseQueryArgs<never, MyProfileResidenciesQueryVariables>, 'query'>) {
   return Urql.useQuery<MyProfileResidenciesQuery, MyProfileResidenciesQueryVariables>({ query: MyProfileResidenciesDocument, ...options });
 };
+export const RaiseExceptionDocument = gql`
+    query RaiseException($message: String) {
+  raiseException(_message: $message)
+}
+    `;
+
+export function useRaiseExceptionQuery(options: Omit<Urql.UseQueryArgs<never, RaiseExceptionQueryVariables>, 'query'>) {
+  return Urql.useQuery<RaiseExceptionQuery, RaiseExceptionQueryVariables>({ query: RaiseExceptionDocument, ...options });
+};
 export const ResidentByIdDocument = gql`
     query ResidentById($residentId: UUID!) {
   resident(id: $residentId) {
@@ -8374,15 +8438,6 @@ export const SiteUserByIdDocument = gql`
 
 export function useSiteUserByIdQuery(options: Omit<Urql.UseQueryArgs<never, SiteUserByIdQueryVariables>, 'query'>) {
   return Urql.useQuery<SiteUserByIdQuery, SiteUserByIdQueryVariables>({ query: SiteUserByIdDocument, ...options });
-};
-export const ThrowErrorDocument = gql`
-    query ThrowError($message: String) {
-  throwError(_message: $message)
-}
-    `;
-
-export function useThrowErrorQuery(options: Omit<Urql.UseQueryArgs<never, ThrowErrorQueryVariables>, 'query'>) {
-  return Urql.useQuery<ThrowErrorQuery, ThrowErrorQueryVariables>({ query: ThrowErrorDocument, ...options });
 };
 export const UpsertMessageDocument = gql`
     mutation UpsertMessage($messageInfo: MessageInfoInput!) {
@@ -8822,6 +8877,19 @@ export const QueueWorkflowDocument = gql`
 export function useQueueWorkflowMutation() {
   return Urql.useMutation<QueueWorkflowMutation, QueueWorkflowMutationVariables>(QueueWorkflowDocument);
 };
+export const SaveWfLayoutDocument = gql`
+    mutation SaveWfLayout($wfIdentifier: String!, $layout: JSON!) {
+  saveWfLayout(input: {_wfIdentifier: $wfIdentifier, _layout: $layout}) {
+    wf {
+      ...Wf
+    }
+  }
+}
+    ${WfFragmentDoc}`;
+
+export function useSaveWfLayoutMutation() {
+  return Urql.useMutation<SaveWfLayoutMutation, SaveWfLayoutMutationVariables>(SaveWfLayoutDocument);
+};
 export const AllWfInstancesDocument = gql`
     query AllWfInstances {
   wfInstances: wfsList(condition: {isTemplate: false}) {
@@ -8853,6 +8921,9 @@ export const WfByIdDocument = gql`
     }
     uowDependenciesList {
       ...UowDependency
+    }
+    template {
+      ...Wf
     }
   }
 }

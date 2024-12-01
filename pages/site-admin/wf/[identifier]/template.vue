@@ -10,7 +10,7 @@
         </div>
       </div>
     </template>
-    <WfTemplate :wf="wfTemplate"></WfTemplate>
+    <WfFlow :wf="wfTemplate"></WfFlow>
   </UCard>
 </template>
 

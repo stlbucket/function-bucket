@@ -2,10 +2,13 @@
   <div>
     <div 
       v-if="flowNodes[0]" 
-      class="flex grow-1 bg-gray-800"
+      class="flex flex-col grow-1 bg-gray-800"
       style="height: 700px; width: 1150px;" 
     >
-      <UButton @click="getNodesFromFlow">Get Nodes</UButton>
+      <div v-if="wf.isTemplate" class="flex grow-1 justify-between p-1">
+        <UButton @click="saveLayout">Save Layout</UButton>
+        <WfNewInstance :wf="wf" @new-workflow-instance="onNewWorkflowInstance" />
+      </div>
       <VueFlow 
         :nodes="flowNodes" 
         :edges="flowEdges" 
@@ -51,7 +54,7 @@
     <div class="flex p-3"></div>
     <div class="flex rounded">
       <pre class="flex text-xs bg-gray-600 w-2/5 border-2 rounded">{{ { debugOutput } }}</pre>
-      <pre class="flex text-xs bg-gray-600 w-2/5 border-2 rounded">{{ { wf } }}</pre>
+      <pre class="flex text-xs bg-gray-600 w-2/5 border-2 rounded">{{ { flowNodes } }}</pre>
     </div>
   </div>
 </template>
@@ -66,6 +69,7 @@
   import { VueFlow, type NodeProps, type Node, type Edge, MarkerType, useVueFlow } from '@vue-flow/core'
 
   import { useWfLayoutElk } from '~/composables/use-wf-layout';
+import { useSaveWfLayoutMutation } from '~/graphql/api';
 
   const { updateNode, getNodes } = useVueFlow()
 
@@ -105,11 +109,17 @@
   const flowEdges = ref([] as Edge[])
 
   const computeLayout = async () => {
-    const {
-      reducedLayout, elkLayout
-    } = await useWfLayoutElk(props.wf)
-    debugOutput.value = reducedLayout
-    flowNodes.value = reducedLayout
+    // const { elkLayoutResult, overrideLayoutResult } = await useWfLayoutElk(props.wf)
+    // debugOutput.value = overrideLayoutResult.reducedLayout
+    // flowNodes.value = overrideLayoutResult.reducedLayout
+
+    // const {
+    //   reducedLayout
+    // } = await useWfLayoutElk(props.wf)
+
+    const layoutResult = await useWfLayoutElk(props.wf)
+    debugOutput.value = props.wf
+    flowNodes.value = layoutResult.reducedLayout
 
     flowEdges.value = (props.wf.uowDependenciesList || [])
     .map((dependency, i) => {
@@ -125,13 +135,32 @@
   }
   computeLayout()
 
-  const getNodesFromFlow = () => {
-    const currentLayout = getNodes.value
+  const saveWfLayoutMutation = await useSaveWfLayoutMutation()
+  const saveLayout = async () => {
+    const currentLayout = { nodes: getNodes.value
       .map(wfn => {
         const {id, position, width, height, data: { identifier }} = wfn;
         return {id, position, width, height, identifier}
       })
-
-    alert(JSON.stringify(currentLayout,null,2))
+    }
+    const { data, error } = await saveWfLayoutMutation.executeMutation({
+      wfIdentifier: props.wf.identifier || '',
+      layout: currentLayout
+    })
+    if (error) alert(error.toString())
   }
+
+  const queueWorkflowMutation = await useQueueWorkflowMutation();
+  const onNewWorkflowInstance = async (workflowInputData: any) => {
+    const identifier = props.wf.identifier;
+    if (!identifier) throw new Error ('Unable to queue workflow - no identifier')
+    const { data, error } = await queueWorkflowMutation.executeMutation({
+      identifier,
+      workflowInputData
+    })
+    if (error) alert(error.toString())
+
+    navigateTo(`/site-admin/wf/${props.wf.identifier}/instance/${data?.queueWorkflow?.json?.wf?.id}`)
+  }
+
 </script>
