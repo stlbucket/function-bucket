@@ -1,9 +1,8 @@
-<template>
+<!-- <template>
   <div :style="containerStyle" :class="`flex flex-col mt-2 rounded grow-1`" @click="report">
     <div class="flex bg-blue-600 p-1" style=" font-size: small;">
       {{ uow.data.name }}
     </div>
-    <!-- these v-if switches are because updating the class/style doesn't work reactively.  this should be investigated -->
     <div v-if="uow.data.status === 'COMPLETE'" :class="`${statusBarClass} bg-green-500`" :style="statusBarStyle">
       <div class="flex">{{ formatDate(new Date(uow.data.updatedAt)) }}</div>
       <div class="flex">{{ uow.data.status }}</div>
@@ -21,9 +20,40 @@
     </div>
   </div>
 </template>
+ -->
+ <template>
+  <NodeResizer :min-width="100" :min-height="30" />
+  <Handle type="target" :position="Position.Left" />
+  <div style="padding: 10px">Tacos</div>
+
+  <!-- <div :class="`flex flex-col mt-2 rounded grow-1`" @click="report">
+    <div class="flex bg-blue-600 p-1" style=" font-size: small;">
+      {{ uow.data.name }}
+    </div>
+    <div v-if="uow.data.status === 'COMPLETE'" :class="`${statusBarClass} bg-green-500`" :style="statusBarStyle">
+      <div class="flex">{{ formatDate(new Date(uow.data.updatedAt)) }}</div>
+      <div class="flex">{{ uow.data.status }}</div>
+    </div>
+    <div v-if="uow.data.status === 'ERROR'" :class="`${statusBarClass} bg-red-500`" :style="statusBarStyle">
+      <div class="flex">{{ formatDate(new Date(uow.data.updatedAt)) }}</div>
+      <div class="flex">{{ uow.data.status }}</div>
+    </div>
+    <div v-if="['COMPLETE', 'ERROR'].indexOf(uow.data.status) === -1" :class="`${statusBarClass} bg-gray-500`" :style="statusBarStyle">
+      <div class="flex">{{ formatDate(new Date(uow.data.updatedAt)) }}</div>
+      <div class="flex">{{ uow.data.status }}</div>
+    </div>
+    <div class="flex text-xs flex-col p-1" style="background-color: dodgerblue;">
+      <pre>{{ stepData }}</pre>
+    </div>
+  </div> -->
+  <Handle type="target" :position="Position.Right" />
+</template>
+
 
 <script lang="ts" setup>
 import { useHandleConnections, useNodesData, type NodeProps } from '@vue-flow/core'
+import { NodeResizer } from '@vue-flow/node-resizer'
+import { Handle, Position } from '@vue-flow/core'
 
 const props = defineProps<{
   uow: NodeProps<Uow>
@@ -43,9 +73,9 @@ function formatDate(date) {
   });
 }
 
-const containerStyle = computed(() => {
-  return `width: ${props.uow.data.width}px; height: ${props.uow.data.height}px; background-color: ${statusColor};`
-})
+// const containerStyle = computed(() => {
+//   return `width: ${props.uow.data.width}px; height: ${props.uow.data.height}px; background-color: ${statusColor};`
+// })
 
 const statusBarClass = computed(() => {
   return `flex p-1 justify-between`

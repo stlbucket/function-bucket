@@ -18,6 +18,8 @@ const adornLayout = (wf: Wf, elkLayout: any) => {
     label,
     width,
     height,
+    extent: 'parent',
+    expandParent: true,
     position: {
       x,
       y

@@ -17,6 +17,7 @@
         :edges="flowEdges" 
         elevate-edges-on-select
         fit-view-on-init
+        style="{background-color: red;}"
       >
         <template #node-WF="uow">
           <WfNode
@@ -35,10 +36,12 @@
           />
         </template>
         <template #node-TASK="uow">
-          <TaskNode
-            :uow="uow"
-            @click="onUowSelected(uow)"
-          />
+          <div class="bg-blue-400 h-full">
+            <TaskNode
+              :uow="uow"
+              @click="onUowSelected(uow)"
+            />
+          </div>
         </template>
         <template #node-TRIGGER="uow">
           <TriggerNode
@@ -75,9 +78,11 @@
   /* this contains the default theme, these are optional styles */
   import '@vue-flow/core/dist/theme-default.css';
 
+  import '@vue-flow/node-resizer/dist/style.css';
+
   import { VueFlow, type NodeProps, type Node, type Edge, MarkerType, useVueFlow } from '@vue-flow/core'
 
-  import { useWfLayoutElk } from '~/composables/use-wf-layout';
+  import { useWfLayout } from '~/composables/use-wf-layout';
   import { useSaveWfLayoutMutation, useResetWfLayoutMutation } from '~/graphql/api';
 
   const { updateNode, getNodes } = useVueFlow()
@@ -118,15 +123,7 @@
   const flowEdges = ref([] as Edge[])
 
   const computeLayout = async () => {
-    // const { elkLayoutResult, overrideLayoutResult } = await useWfLayoutElk(props.wf)
-    // debugOutput.value = overrideLayoutResult.reducedLayout
-    // flowNodes.value = overrideLayoutResult.reducedLayout
-
-    // const {
-    //   reducedLayout
-    // } = await useWfLayoutElk(props.wf)
-
-    const layoutResult = await useWfLayoutElk(props.wf)
+    const layoutResult = await useWfLayout(props.wf)
     debugOutput.value = props.wf
     flowNodes.value = layoutResult.reducedLayout
 
@@ -181,3 +178,16 @@
   }
 
 </script>
+
+<style>
+/* .vue-flow__node-WF {
+    background: cyan;
+    color: #888;
+    padding: 10px;
+}
+.vue-flow__node-TASK {
+    background: blue;
+    color: #888;
+    padding: 10px;
+} */
+</style>
