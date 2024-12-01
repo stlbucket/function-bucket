@@ -17,7 +17,6 @@
         :edges="flowEdges" 
         elevate-edges-on-select
         fit-view-on-init
-        style="{background-color: red;}"
       >
         <template #node-WF="uow">
           <WfNode
@@ -36,12 +35,10 @@
           />
         </template>
         <template #node-TASK="uow">
-          <div class="bg-blue-400 h-full">
-            <TaskNode
-              :uow="uow"
-              @click="onUowSelected(uow)"
-            />
-          </div>
+          <TaskNode
+            :uow="uow"
+            @click="onUowSelected(uow)"
+          />
         </template>
         <template #node-TRIGGER="uow">
           <TriggerNode
@@ -77,8 +74,6 @@
 
   /* this contains the default theme, these are optional styles */
   import '@vue-flow/core/dist/theme-default.css';
-
-  import '@vue-flow/node-resizer/dist/style.css';
 
   import { VueFlow, type NodeProps, type Node, type Edge, MarkerType, useVueFlow } from '@vue-flow/core'
 
@@ -179,14 +174,9 @@
 
 </script>
 
-<style>
+<style scoped>
 /* .vue-flow__node-WF {
     background: cyan;
-    color: #888;
-    padding: 10px;
-}
-.vue-flow__node-TASK {
-    background: blue;
     color: #888;
     padding: 10px;
 } */
