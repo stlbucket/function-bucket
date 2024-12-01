@@ -397,7 +397,7 @@ select wf_fn.upsert_wf(
         ,'Wait 2-1'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"afterStepDelay":2000}'::jsonb
+        ,'{"afterStepDelay":4000}'::jsonb
         ,null::citext -- wf_id
         ,'wait-for-these-2'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -409,7 +409,7 @@ select wf_fn.upsert_wf(
         ,'Wait 2-2'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"afterStepDelay":2000}'::jsonb
+        ,'{"afterStepDelay":500}'::jsonb
         ,null::citext -- wf_id
         ,'wait-for-these-2'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -433,7 +433,7 @@ select wf_fn.upsert_wf(
         ,'Wait 3-1'::citext -- name
         ,'Wait a specified number of milliseconds'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"afterStepDelay":2000}'::jsonb
+        ,'{"afterStepDelay":1000}'::jsonb
         ,null::citext -- wf_id
         ,'wait-for-these-3'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at
@@ -457,7 +457,7 @@ select wf_fn.upsert_wf(
         ,'Wait Last'::citext -- name
         ,'More waiting'::citext -- description,
         ,'task'::wf.uow_type
-        ,'{"afterStepDelay":2000}'::jsonb
+        ,'{"afterStepDelay":2500}'::jsonb
         ,null::citext -- wf_id
         ,'the-waiting-game'::citext -- parent_uow_id
         ,null::timestamp with time zone -- due_at

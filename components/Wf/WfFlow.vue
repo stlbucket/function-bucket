@@ -6,7 +6,10 @@
       style="height: 700px; width: 1150px;" 
     >
       <div v-if="wf.isTemplate" class="flex grow-1 justify-between p-1">
-        <UButton @click="saveLayout">Save Layout</UButton>
+        <div class="flex gap-1">
+          <UButton @click="onSaveLayout">Save Layout</UButton>
+          <UButton @click="onResetLayout">Reset Layout</UButton>
+        </div>
         <WfNewInstance :wf="wf" @new-workflow-instance="onNewWorkflowInstance" />
       </div>
       <VueFlow 
@@ -69,7 +72,7 @@
   import { VueFlow, type NodeProps, type Node, type Edge, MarkerType, useVueFlow } from '@vue-flow/core'
 
   import { useWfLayoutElk } from '~/composables/use-wf-layout';
-import { useSaveWfLayoutMutation } from '~/graphql/api';
+  import { useSaveWfLayoutMutation, useResetWfLayoutMutation } from '~/graphql/api';
 
   const { updateNode, getNodes } = useVueFlow()
 
@@ -136,7 +139,7 @@ import { useSaveWfLayoutMutation } from '~/graphql/api';
   computeLayout()
 
   const saveWfLayoutMutation = await useSaveWfLayoutMutation()
-  const saveLayout = async () => {
+  const onSaveLayout = async () => {
     const currentLayout = { nodes: getNodes.value
       .map(wfn => {
         const {id, position, width, height, data: { identifier }} = wfn;
@@ -146,6 +149,20 @@ import { useSaveWfLayoutMutation } from '~/graphql/api';
     const { data, error } = await saveWfLayoutMutation.executeMutation({
       wfIdentifier: props.wf.identifier || '',
       layout: currentLayout
+    })
+    if (error) alert(error.toString())
+  }
+
+  const resetWfLayoutMutation = await useResetWfLayoutMutation()
+  const onResetLayout = async () => {
+    const currentLayout = { nodes: getNodes.value
+      .map(wfn => {
+        const {id, position, width, height, data: { identifier }} = wfn;
+        return {id, position, width, height, identifier}
+      })
+    }
+    const { data, error } = await resetWfLayoutMutation.executeMutation({
+      wfIdentifier: props.wf.identifier || ''
     })
     if (error) alert(error.toString())
   }

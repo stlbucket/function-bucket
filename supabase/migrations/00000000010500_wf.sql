@@ -47,7 +47,7 @@ CREATE TABLE wf.wf (
   is_template boolean DEFAULT false NOT NULL,
   workflow_data jsonb DEFAULT '{}'::jsonb NOT NULL,
   input_definitions wf.workflow_input_definition[] NOT NULL default '{}'::wf.workflow_input_definition[],
-  _layout_override jsonb null
+  layout jsonb null
 );
 ----------------------------------------
 CREATE TABLE wf.uow (
@@ -151,10 +151,10 @@ CREATE FUNCTION wf.wf_layout_override(_wf wf.wf) RETURNS jsonb
   LANGUAGE plpgsql STABLE
   AS $$
 DECLARE
-  __layout_override jsonb;
+  _layout_override jsonb;
 BEGIN
-  select _layout_override into __layout_override from wf.wf where is_template = true and identifier = _wf.identifier;
-  return __layout_override;
+  select layout into _layout_override from wf.wf where is_template = true and identifier = _wf.identifier;
+  return _layout_override;
 end;
 $$;
 ----------------------------------------

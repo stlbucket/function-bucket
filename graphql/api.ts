@@ -2485,6 +2485,7 @@ export type Mutation = {
   pinTodo?: Maybe<PinTodoPayload>;
   queueWorkflow?: Maybe<QueueWorkflowPayload>;
   reactivateTenantSubscription?: Maybe<ReactivateTenantSubscriptionPayload>;
+  resetWfLayout?: Maybe<ResetWfLayoutPayload>;
   revokeUserLicense?: Maybe<RevokeUserLicensePayload>;
   saveWfLayout?: Maybe<SaveWfLayoutPayload>;
   subscribeTenantToLicensePack?: Maybe<SubscribeTenantToLicensePackPayload>;
@@ -2678,6 +2679,12 @@ export type MutationQueueWorkflowArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationReactivateTenantSubscriptionArgs = {
   input: ReactivateTenantSubscriptionInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationResetWfLayoutArgs = {
+  input: ResetWfLayoutInput;
 };
 
 
@@ -4787,6 +4794,39 @@ export type ReactivateTenantSubscriptionPayloadTenantSubscriptionEdgeArgs = {
   orderBy?: Array<TenantSubscriptionsOrderBy>;
 };
 
+/** All input for the `resetWfLayout` mutation. */
+export type ResetWfLayoutInput = {
+  _wfIdentifier?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `resetWfLayout` mutation. */
+export type ResetWfLayoutPayload = {
+  __typename: 'ResetWfLayoutPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  wf?: Maybe<Wf>;
+  /** An edge for our `Wf`. May be used by Relay 1. */
+  wfEdge?: Maybe<WfsEdge>;
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
+};
+
+
+/** The output of our `resetWfLayout` mutation. */
+export type ResetWfLayoutPayloadWfEdgeArgs = {
+  orderBy?: Array<WfsOrderBy>;
+};
+
 export type Resident = Node & {
   __typename: 'Resident';
   createdAt: Scalars['Datetime']['output'];
@@ -6860,6 +6900,7 @@ export type Wf = Node & {
   inputDefinitions: Array<Maybe<WorkflowInputDefinition>>;
   instanceCount?: Maybe<Scalars['Int']['output']>;
   isTemplate: Scalars['Boolean']['output'];
+  layout?: Maybe<Scalars['JSON']['output']>;
   layoutOverride?: Maybe<Scalars['JSON']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
@@ -6935,8 +6976,8 @@ export type WfCondition = {
   inputDefinitions?: InputMaybe<Array<InputMaybe<WorkflowInputDefinitionInput>>>;
   /** Checks for equality with the object’s `isTemplate` field. */
   isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Checks for equality with the object’s `layoutOverride` field. */
-  layoutOverride?: InputMaybe<Scalars['JSON']['input']>;
+  /** Checks for equality with the object’s `layout` field. */
+  layout?: InputMaybe<Scalars['JSON']['input']>;
   /** Checks for equality with the object’s `name` field. */
   name?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `tenantId` field. */
@@ -7111,8 +7152,8 @@ export enum WfsOrderBy {
   IdDesc = 'ID_DESC',
   IsTemplateAsc = 'IS_TEMPLATE_ASC',
   IsTemplateDesc = 'IS_TEMPLATE_DESC',
-  LayoutOverrideAsc = 'LAYOUT_OVERRIDE_ASC',
-  LayoutOverrideDesc = 'LAYOUT_OVERRIDE_DESC',
+  LayoutAsc = 'LAYOUT_ASC',
+  LayoutDesc = 'LAYOUT_DESC',
   NameAsc = 'NAME_ASC',
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
@@ -7570,6 +7611,13 @@ export type QueueWorkflowMutationVariables = Exact<{
 
 
 export type QueueWorkflowMutation = { __typename: 'Mutation', queueWorkflow?: { __typename: 'QueueWorkflowPayload', json?: any | null } | null };
+
+export type ResetWfLayoutMutationVariables = Exact<{
+  wfIdentifier: Scalars['String']['input'];
+}>;
+
+
+export type ResetWfLayoutMutation = { __typename: 'Mutation', resetWfLayout?: { __typename: 'ResetWfLayoutPayload', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null } | null };
 
 export type SaveWfLayoutMutationVariables = Exact<{
   wfIdentifier: Scalars['String']['input'];
@@ -8876,6 +8924,19 @@ export const QueueWorkflowDocument = gql`
 
 export function useQueueWorkflowMutation() {
   return Urql.useMutation<QueueWorkflowMutation, QueueWorkflowMutationVariables>(QueueWorkflowDocument);
+};
+export const ResetWfLayoutDocument = gql`
+    mutation ResetWfLayout($wfIdentifier: String!) {
+  resetWfLayout(input: {_wfIdentifier: $wfIdentifier}) {
+    wf {
+      ...Wf
+    }
+  }
+}
+    ${WfFragmentDoc}`;
+
+export function useResetWfLayoutMutation() {
+  return Urql.useMutation<ResetWfLayoutMutation, ResetWfLayoutMutationVariables>(ResetWfLayoutDocument);
 };
 export const SaveWfLayoutDocument = gql`
     mutation SaveWfLayout($wfIdentifier: String!, $layout: JSON!) {

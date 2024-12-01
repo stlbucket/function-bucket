@@ -1,0 +1,9 @@
+mutation ResetWfLayout( $wfIdentifier: String!) {
+  resetWfLayout(input: {
+    _wfIdentifier: $wfIdentifier
+  }) {
+    wf {
+      ...Wf
+    }
+  }
+}

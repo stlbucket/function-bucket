@@ -624,7 +624,51 @@ CREATE OR REPLACE FUNCTION wf_fn.save_wf_layout(_wf_identifier citext, _layout j
 
 
     update wf.wf
-    set _layout_override = _layout
+    set layout = _layout
+    where id = _wf.id
+    returning * into _wf
+    ;
+
+    return _wf;
+  end;
+  $$;
+------------------------------------------------------- reset_wf_layout
+CREATE OR REPLACE FUNCTION wf_api.reset_wf_layout(_wf_identifier citext)
+  RETURNS wf.wf
+  LANGUAGE plpgsql
+  VOLATILE
+  SECURITY INVOKER
+  AS $$
+  DECLARE
+    _wf wf.wf;
+  BEGIN
+    _wf := wf_fn.reset_wf_layout(_wf_identifier);
+    return _wf;
+  end;
+  $$;
+
+CREATE OR REPLACE FUNCTION wf_fn.reset_wf_layout(_wf_identifier citext) RETURNS wf.wf
+  LANGUAGE plpgsql
+  VOLATILE
+  SECURITY INVOKER
+  AS $$
+  DECLARE
+    _wf wf.wf;
+  BEGIN
+    select *
+    into _wf
+    from wf.wf
+    where identifier = _wf_identifier
+    and is_template = true
+    ;
+
+    if _wf.id is null then
+      raise exception 'no template wf for id: %', _wf_identifier;
+    end if;
+
+
+    update wf.wf
+    set layout = null
     where id = _wf.id
     returning * into _wf
     ;
@@ -1333,6 +1377,7 @@ CREATE OR REPLACE FUNCTION wf_api.wf_template_by_identifier(_identifier citext) 
     into _wf
     from wf.wf
     where identifier = _identifier
+    and is_template = true
     ;
 
     return _wf;
