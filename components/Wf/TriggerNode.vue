@@ -1,6 +1,6 @@
 <template>
   <div :style="containerStyle" :class="`flex flex-col mt-2 rounded grow-1`" @click="report">
-    <div class="flex bg-blue-600 p-1" style=" font-size: small;">
+    <div class="flex bg-indigo-600 p-1" style=" font-size: small;">
       {{ uow.data.name }}
     </div>
     <!-- these v-if switches are because updating the class/style doesn't work reactively.  this should be investigated -->
@@ -17,13 +17,15 @@
       <div class="flex">{{ uow.data.status }}</div>
     </div>
     <div class="flex text-xs flex-col p-1" style="background-color: dodgerblue;">
-      <pre>{{ stepData }}</pre>
+      <UButton :disabled="uow.data.status !== 'TRIGGER_SET'" @click="onPullTrigger">Acknowledge</UButton>
+      <!-- <pre>{{uow.data}}</pre> -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useHandleConnections, useNodesData, type NodeProps } from '@vue-flow/core'
+import { usePullTriggerMutation } from '~/graphql/api';
 
 const props = defineProps<{
   uow: NodeProps<Uow>
@@ -91,7 +93,15 @@ const statusColor = computed<string>(() => {
 })
 
 const report = () => {
-  alert(JSON.stringify(props.uow,null,2))
+  // alert(JSON.stringify(props.uow,null,2))
+}
+
+const pullTriggerMutation = await usePullTriggerMutation();
+const onPullTrigger = async () => {
+  const { data, error } = await pullTriggerMutation.executeMutation({
+      uowId: props.uow.id
+    })
+    if (error) alert(error.toString())  
 }
 </script>
 

@@ -6,7 +6,7 @@ CREATE TYPE wf_fn.clone_wf_template_options AS (
 );
 -------------------------------------------------------
 CREATE TYPE wf_fn.clone_uow_template_options AS (
-	data json
+	data jsonb
 );
 -------------------------------------------------------
 CREATE TYPE wf_fn.complete_uow_options AS (
@@ -16,7 +16,8 @@ CREATE TYPE wf_fn.complete_uow_options AS (
 -------------------------------------------------------
 CREATE TYPE wf_fn.complete_uow_result AS (
 	uow wf.uow,
-	uows_to_schedule wf.uow[]
+	uows_to_schedule wf.uow[],
+  uows_to_trigger wf.uow[]
 );
 -------------------------------------------------------
 CREATE TYPE wf_fn.uow_dependency_info AS (

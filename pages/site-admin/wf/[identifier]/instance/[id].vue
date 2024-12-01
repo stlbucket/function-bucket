@@ -48,7 +48,7 @@ import { useWfByIdQuery } from '~/graphql/api';
         requestPolicy: 'network-only'
       })
       wfInstance.value = data.value?.wf as Wf
-      if (wfInstance.value.status === 'COMPLETE') {
+      if (['COMPLETE', 'ERROR'].indexOf(String(wfInstance.value.status)) > -1) {
         clearInterval(intervalId.value)
       }
     }, 500)

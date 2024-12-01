@@ -43,8 +43,8 @@ export default (handler: FnbWorkFlowHandlerFunction): Task => {
                 result.workflowData || {},
                 result.stepData || {}
               ])).rows[0].to_jsonb
-              const uts = completeUowResult.uows_to_schedule.map(u => u.identifier)
-              console.log('completeUowResult.uows_to_schedule', result.afterStepDelay,  JSON.stringify(uts, null, 2))
+              // const uts = completeUowResult.uows_to_schedule.map(u => u.identifier)
+              // console.log('completeUowResult.uows_to_schedule', result.s,  JSON.stringify(uts, null, 2))
               await Promise.all(
                 completeUowResult.uows_to_schedule.map(
                   async (uowToSchedule: any) => {
@@ -55,7 +55,7 @@ export default (handler: FnbWorkFlowHandlerFunction): Task => {
                       // Optionally, add further task spec details here
                       {
                         maxAttempts: 1,
-                        runAt: (new Date(Date.now() + (uow.data.afterStepDelay || 0)))
+                        runAt: (new Date(Date.now() + (uow.data?.afterStepDelay || 0)))
                       },
                     )
                   }

@@ -269,6 +269,18 @@ select wf_fn.upsert_wf(
         ,true::boolean -- use_worker
       )::wf_fn.uow_info
       ,row(
+        'acknowledge-trigger'::citext -- identifier
+        ,'Acknowlege Trigger'::citext -- name
+        ,'Trigger workflow to move forward'::citext -- description,
+        ,'trigger'::wf.uow_type
+        ,null::jsonb
+        ,null::citext -- wf_id
+        ,'wf-exerciser'::citext -- parent_uow_id
+        ,null::timestamp with time zone -- due_at
+        ,'acknowledge-trigger'::citext -- workflow_handler_key,
+        ,false::boolean -- use_worker
+      )::wf_fn.uow_info
+      ,row(
         'finish-workflow-exerciser'::citext -- identifier
         ,'Finish Workflow Exerciser'::citext -- name
         ,'Final housekeeping stuff'::citext -- description,
@@ -296,6 +308,10 @@ select wf_fn.upsert_wf(
       )::wf_fn.uow_dependency_info
       ,row(
         'finish-workflow-exerciser'::citext --depender_identifier
+        ,'do-the-things'::citext -- dependee_identifier
+      )::wf_fn.uow_dependency_info
+      ,row(
+        'acknowledge-trigger'::citext --depender_identifier
         ,'do-the-things'::citext -- dependee_identifier
       )::wf_fn.uow_dependency_info
     ]::wf_fn.uow_dependency_info[]

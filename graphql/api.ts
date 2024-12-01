@@ -2483,6 +2483,7 @@ export type Mutation = {
   makeTodoFromTemplate?: Maybe<MakeTodoFromTemplatePayload>;
   pauseUow?: Maybe<PauseUowPayload>;
   pinTodo?: Maybe<PinTodoPayload>;
+  pullTrigger?: Maybe<PullTriggerPayload>;
   queueWorkflow?: Maybe<QueueWorkflowPayload>;
   reactivateTenantSubscription?: Maybe<ReactivateTenantSubscriptionPayload>;
   resetWfLayout?: Maybe<ResetWfLayoutPayload>;
@@ -2667,6 +2668,12 @@ export type MutationPauseUowArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationPinTodoArgs = {
   input: PinTodoInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationPullTriggerArgs = {
+  input: PullTriggerInput;
 };
 
 
@@ -3129,6 +3136,40 @@ export enum ProfilesOrderBy {
   UpdatedAtAsc = 'UPDATED_AT_ASC',
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
+
+/** All input for the `pullTrigger` mutation. */
+export type PullTriggerInput = {
+  _triggerData?: InputMaybe<Scalars['JSON']['input']>;
+  _uowId?: InputMaybe<Scalars['UUID']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `pullTrigger` mutation. */
+export type PullTriggerPayload = {
+  __typename: 'PullTriggerPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  uow?: Maybe<Uow>;
+  /** An edge for our `Uow`. May be used by Relay 1. */
+  uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
+};
+
+
+/** The output of our `pullTrigger` mutation. */
+export type PullTriggerPayloadUowEdgeArgs = {
+  orderBy?: Array<UowsOrderBy>;
+};
 
 /** The root query type which gives access points into the data universe. */
 export type Query = Node & {
@@ -6518,6 +6559,7 @@ export enum UowStatusType {
   Incomplete = 'INCOMPLETE',
   Paused = 'PAUSED',
   Template = 'TEMPLATE',
+  TriggerSet = 'TRIGGER_SET',
   Waiting = 'WAITING'
 }
 
@@ -6525,6 +6567,7 @@ export enum UowType {
   Issue = 'ISSUE',
   Milestone = 'MILESTONE',
   Task = 'TASK',
+  Trigger = 'TRIGGER',
   Wf = 'WF'
 }
 
@@ -7603,6 +7646,14 @@ export type UowFragment = { __typename: 'Uow', id: any, completedAt?: any | null
 export type UowDependencyFragment = { __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any };
 
 export type WfFragment = { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> };
+
+export type PullTriggerMutationVariables = Exact<{
+  uowId: Scalars['UUID']['input'];
+  triggerData?: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type PullTriggerMutation = { __typename: 'Mutation', pullTrigger?: { __typename: 'PullTriggerPayload', uow?: { __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null } | null } | null };
 
 export type QueueWorkflowMutationVariables = Exact<{
   identifier: Scalars['String']['input'];
@@ -8911,6 +8962,19 @@ export const TodoByIdForRefreshDocument = gql`
 
 export function useTodoByIdForRefreshQuery(options: Omit<Urql.UseQueryArgs<never, TodoByIdForRefreshQueryVariables>, 'query'>) {
   return Urql.useQuery<TodoByIdForRefreshQuery, TodoByIdForRefreshQueryVariables>({ query: TodoByIdForRefreshDocument, ...options });
+};
+export const PullTriggerDocument = gql`
+    mutation PullTrigger($uowId: UUID!, $triggerData: JSON) {
+  pullTrigger(input: {_uowId: $uowId, _triggerData: $triggerData}) {
+    uow {
+      ...Uow
+    }
+  }
+}
+    ${UowFragmentDoc}`;
+
+export function usePullTriggerMutation() {
+  return Urql.useMutation<PullTriggerMutation, PullTriggerMutationVariables>(PullTriggerDocument);
 };
 export const QueueWorkflowDocument = gql`
     mutation QueueWorkflow($identifier: String!, $workflowInputData: JSON!) {

@@ -31,7 +31,9 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id u
   DECLARE
     _wf wf.wf;
     _uows_to_schedule wf.uow[];
+    _uows_to_set_trigger wf.uow[];
     _uow_to_schedule wf.uow;
+    _uow_to_set_trigger wf.uow;
     _result wf_fn.queue_workflow_result;
     _err_context citext;
   BEGIN
@@ -50,9 +52,8 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id u
       where wf_id = _wf.id
       and type = 'task'
       and status = 'incomplete'
-      and use_worker = true
     )
-    select array_agg(u.*)
+    select coalesce(array_agg(u.*), '{}'::record[])
     into _uows_to_schedule
     from uows u
     ;
@@ -74,6 +75,24 @@ CREATE OR REPLACE FUNCTION wf_fn.queue_workflow(_identifier citext, _tenant_id u
         run_at := NOW() + (3 * INTERVAL '1 second')
       );
     end loop;
+
+    -- with uows as (
+    --   select *
+    --   from wf.uow
+    --   where wf_id = _wf.id
+    --   and type = 'trigger'
+    --   and status in ('incomplete', 'waiting')
+    -- )
+    -- select coalesce(array_agg(u.*), '{}'::record[])
+    -- into _uows_to_set_trigger
+    -- from uows u
+    -- ;
+
+    -- foreach _uow_to_set_trigger in array(_uows_to_set_trigger)
+    -- loop
+    --   update wf.uow set status = 'trigger_set' where id = _uow_to_set_trigger.id;
+    -- end loop;
+
 
     return to_jsonb(_result);
   end;
@@ -215,6 +234,7 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
     _wf_uow wf.uow;
     _data jsonb;
     _uows_to_schedule wf.uow[];
+    _uows_to_set_trigger wf.uow[];
     _depender_uow wf.uow;
     _child_uow wf.uow;
     _depender_status wf.uow_status_type;
@@ -242,7 +262,7 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
       return _result;
     end if;
 
-    if _uow.status not in ('incomplete', 'waiting') then
+    if _uow.status not in ('incomplete', 'waiting', 'trigger_set') then
       raise exception 'can only complete an incomplete or waiting uow: % - %', _uow.identifier, _uow.status;
     end if;
 
@@ -288,12 +308,20 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
         end if;
       end if;
 
+      if _depender_uow.type = 'trigger' then
+        if _depender_status = 'trigger_set' then
+          update wf.uow set status = 'trigger_set', data = to_jsonb(_depender_uow) where id = _depender_uow.id;
+        end if;
+        if _depender_status = 'waiting' then
+          perform wf_fn.waiting_uow(_depender_uow.id);
+        end if;
+      end if;
+
       if _depender_uow.type = 'milestone' and _depender_status = 'waiting' then
         for _child_uow in
           select * from wf.uow where parent_uow_id = _depender_uow.id
         loop
           _child_status := (select wf_fn.compute_uow_status(_child_uow.id));
-          raise notice 'CHILD: % -- %', _child_uow.identifier, _child_status;
           if _child_status = 'complete' then
             perform wf_fn.complete_uow(_child_uow.id);
           end if;
@@ -332,34 +360,29 @@ CREATE OR REPLACE FUNCTION wf_fn.complete_uow(_uow_id uuid, _options wf_fn.compl
       select *
       from wf.uow
       where wf_id = _uow.wf_id
-      -- and type = 'task'
+      and type in ('task', 'milestone', 'wf')
       and status = 'incomplete'
-      and use_worker = true
     )
     select array_agg(u.*)
     into _uows_to_schedule
     from uows u
     ;
-    -- select * into _wf_uow from wf.uow where id = (select uow_id from wf.wf where id = _uow.wf_id);
-    -- if _wf_uow.status not in ('paused', 'error', 'canceled', 'deleted', 'template', 'complete') then
-    --   with uows as (
-    --     select *
-    --     from wf.uow
-    --     where wf_id = _uow.wf_id
-    --     -- and type = 'task'
-    --     and status = 'incomplete'
-    --     and use_worker = true
-    --   )
-    --   select array_agg(u.*)
-    --   into _uows_to_schedule
-    --   from uows u
-    --   ;
-    -- else
-    --   _uows_to_schedule := '{}'::wf.uow[];
-    -- end if;
+
+    -- with uows as (
+    --   select *
+    --   from wf.uow
+    --   where wf_id = _uow.wf_id
+    --   and type in ('trigger')
+    --   and status in ('incomplete', 'waiting')
+    -- )
+    -- update wf.uow set 
+    --   status = 'trigger_set' 
+    -- where id in (select id from uows)
+    -- ;
 
     _result.uow := _uow;
     _result.uows_to_schedule := coalesce(_uows_to_schedule, '{}');
+    _result.uows_to_trigger := coalesce(_uows_to_set_trigger, '{}');
 
     return _result;
   end;
@@ -674,6 +697,58 @@ CREATE OR REPLACE FUNCTION wf_fn.reset_wf_layout(_wf_identifier citext) RETURNS 
     ;
 
     return _wf;
+  end;
+  $$;
+
+------------------------------------------------------- pull_trigger
+CREATE OR REPLACE FUNCTION wf_api.pull_trigger(_uow_id uuid, _trigger_data jsonb default null)
+  RETURNS wf.uow
+  LANGUAGE plpgsql
+  VOLATILE
+  SECURITY INVOKER
+  AS $$
+  DECLARE
+    _uow wf.uow;
+  BEGIN
+    _uow := wf_fn.pull_trigger(_uow_id, _trigger_data);
+    return _uow;
+  end;
+  $$;
+
+CREATE OR REPLACE FUNCTION wf_fn.pull_trigger(_uow_id uuid, _trigger_data jsonb default null)
+  RETURNS wf.uow
+  LANGUAGE plpgsql
+  VOLATILE
+  SECURITY DEFINER
+  AS $$
+  DECLARE
+    _uow wf.uow;
+  BEGIN
+    select *
+    into _uow
+    from wf.uow
+    where id = _uow_id
+    ;
+
+    if _uow.id is null then
+      raise exception 'no uow for id: %', _wf_identifier;
+    end if;
+
+    update wf.uow set 
+      status = 'incomplete'
+      ,data = _trigger_data
+    where id = _uow.id
+    returning * into _uow
+    ;
+
+    perform graphile_worker.add_job(
+      _uow.workflow_handler_key,
+      payload := to_json(_uow),
+      max_attempts := 1,
+      run_at := NOW()
+    );
+
+    return _uow;
   end;
   $$;
 
@@ -1196,13 +1271,13 @@ CREATE OR REPLACE FUNCTION wf_fn.compute_uow_status(_uow_id uuid)
     select count(*) into _children_count
     from wf.uow
     where parent_uow_id = _uow_id
-    and status in ('incomplete', 'waiting');
+    and status in ('incomplete', 'waiting', 'trigger_set');
 
     select count(*) into _dependency_count
     from wf.uow_dependency d
     join wf.uow dee on d.dependee_id = dee.id
     where d.depender_id = _uow_id
-    and dee.status in ('incomplete', 'waiting')
+    and dee.status in ('incomplete', 'waiting', 'trigger_set')
     ;
 
     if _uow.type = 'wf' then
@@ -1251,6 +1326,30 @@ CREATE OR REPLACE FUNCTION wf_fn.compute_uow_status(_uow_id uuid)
             when _uow.status = 'deleted' then 'deleted'
             when _uow.status = 'error' then 'error'
             else 'incomplete'
+          end
+        );
+      end if;
+    end if;
+
+    if _uow.type = 'trigger' then
+      select * into _parent_uow
+      from wf.uow where id = _uow.parent_uow_id
+      ;
+
+      if _children_count > 0 then
+        raise exception 'workflow trigger cannot have children';
+      end if;
+      if _dependency_count > 0 then
+        _status := 'waiting';
+      else
+        _status := (
+          select case
+            when _uow.status = 'complete' then 'complete'
+            when _uow.status = 'paused' then 'paused'
+            when _uow.status = 'canceled' then 'canceled'
+            when _uow.status = 'deleted' then 'deleted'
+            when _uow.status = 'error' then 'error'
+            else 'trigger_set'
           end
         );
       end if;

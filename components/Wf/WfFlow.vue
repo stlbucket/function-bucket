@@ -40,6 +40,12 @@
             @click="onUowSelected(uow)"
           />
         </template>
+        <template #node-TRIGGER="uow">
+          <TriggerNode
+            :uow="uow"
+            @click="onUowSelected(uow)"
+          />
+        </template>
       </VueFlow>
     </div>
   </div>
@@ -155,12 +161,6 @@
 
   const resetWfLayoutMutation = await useResetWfLayoutMutation()
   const onResetLayout = async () => {
-    const currentLayout = { nodes: getNodes.value
-      .map(wfn => {
-        const {id, position, width, height, data: { identifier }} = wfn;
-        return {id, position, width, height, identifier}
-      })
-    }
     const { data, error } = await resetWfLayoutMutation.executeMutation({
       wfIdentifier: props.wf.identifier || ''
     })

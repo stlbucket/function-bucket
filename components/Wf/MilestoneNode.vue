@@ -1,8 +1,8 @@
 <template>
     <div :style="containerStyle" :class="`flex flex-col rounded grow-1`">
-      <!-- <div class="flex text-xs">
+      <div class="flex text-xs">
         {{ uow.data.type }} - {{ containerStyle }}
-      </div> -->
+      </div>
     </div>
 </template>
 
@@ -14,7 +14,7 @@ const props = defineProps<{
 }>()
 
 const containerStyle = computed(() => {
-  return props.uow.data.style
+  return `width: ${props.uow.data.width}px; height: ${props.uow.data.height}px; background-color: purple;`
 })
 
 const emit = defineEmits<{

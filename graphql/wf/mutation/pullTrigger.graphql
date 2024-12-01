@@ -1,0 +1,13 @@
+mutation PullTrigger( 
+  $uowId: UUID!
+  $triggerData: JSON
+) {
+  pullTrigger(input: {
+    _uowId: $uowId
+    _triggerData: $triggerData
+  }) {
+    uow {
+      ...Uow
+    }
+  }
+}

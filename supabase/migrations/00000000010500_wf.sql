@@ -8,14 +8,16 @@ CREATE TYPE wf.uow_status_type AS ENUM (
   'canceled',
   'deleted',
   'error',
-  'template'
+  'template',
+  'trigger_set'
 );
 ----------------------------------------
 CREATE TYPE wf.uow_type AS ENUM (
   'wf',
   'milestone',
   'task',
-  'issue'
+  'issue',
+  'trigger'
 );
 ----------------------------------------
 CREATE TYPE wf.workflow_input_data_type AS ENUM (
