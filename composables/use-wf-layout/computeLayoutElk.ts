@@ -16,8 +16,8 @@ const adornLayout = (wf: Wf, elkLayout: any) => {
     id,
     type,
     label,
-    width,
-    height,
+    width: thisWfNode?.type === 'TASK' ? width : undefined,
+    height: thisWfNode?.type === 'TASK' ? height : undefined,
     extent: 'parent',
     expandParent: true,
     position: {
@@ -59,7 +59,8 @@ export const computeLayoutElk = async (wf: any) => {
   const elkInput = {
     layoutOptions: { 
       'elk.algorithm': 'mrtree',
-      'elk.spacing.nodeNode': 40
+      'elk.spacing.nodeNode': 40,
+      'elk.padding': '[top=50,left=25,bottom=25,right=25]'
     },
     ...nodeTree,
     edges

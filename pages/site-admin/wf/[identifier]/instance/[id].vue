@@ -9,6 +9,9 @@
           <NuxtLink :to="`/site-admin/wf/${wfIdentifier}/template`">Template</NuxtLink>
         </div>
         <div class="flex">
+          <NuxtLink :to="`/site-admin/wf`">All Templates</NuxtLink>
+        </div>
+        <div class="flex">
           <UButton @click="refresh">UPDATE</UButton>
         </div>
       </div>
