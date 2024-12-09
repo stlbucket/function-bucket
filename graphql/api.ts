@@ -16,6 +16,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   Cursor: { input: any; output: any; }
+  Date: { input: any; output: any; }
   Datetime: { input: any; output: any; }
   JSON: { input: any; output: any; }
   UUID: { input: any; output: any; }
@@ -425,6 +426,79 @@ export type BlockResidentPayloadResidentEdgeArgs = {
   orderBy?: Array<ResidentsOrderBy>;
 };
 
+/** All input for the `cancelWf` mutation. */
+export type CancelWfInput = {
+  _wfId?: InputMaybe<Scalars['UUID']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `cancelWf` mutation. */
+export type CancelWfPayload = {
+  __typename: 'CancelWfPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  wf?: Maybe<Wf>;
+  /** An edge for our `Wf`. May be used by Relay 1. */
+  wfEdge?: Maybe<WfsEdge>;
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
+};
+
+
+/** The output of our `cancelWf` mutation. */
+export type CancelWfPayloadWfEdgeArgs = {
+  orderBy?: Array<WfsOrderBy>;
+};
+
+/** All input for the `completeUow` mutation. */
+export type CompleteUowInput = {
+  _options?: InputMaybe<CompleteUowOptionInput>;
+  _uowId?: InputMaybe<Scalars['UUID']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** An input for mutations affecting `CompleteUowOption` */
+export type CompleteUowOptionInput = {
+  stepData?: InputMaybe<Scalars['JSON']['input']>;
+  workflowData?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+/** The output of our `completeUow` mutation. */
+export type CompleteUowPayload = {
+  __typename: 'CompleteUowPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  uow?: Maybe<Uow>;
+  /** An edge for our `Uow`. May be used by Relay 1. */
+  uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
+};
+
+
+/** The output of our `completeUow` mutation. */
+export type CompleteUowPayloadUowEdgeArgs = {
+  orderBy?: Array<UowsOrderBy>;
+};
+
 /** All input for the `createLocation` mutation. */
 export type CreateLocationInput = {
   _locationInfo?: InputMaybe<LocationInfoInput>;
@@ -793,6 +867,41 @@ export type DeleteTopicPayload = {
   query?: Maybe<Query>;
 };
 
+/** All input for the `errorUow` mutation. */
+export type ErrorUowInput = {
+  _message?: InputMaybe<Scalars['String']['input']>;
+  _stack?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  _uowId?: InputMaybe<Scalars['UUID']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `errorUow` mutation. */
+export type ErrorUowPayload = {
+  __typename: 'ErrorUowPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  uow?: Maybe<Uow>;
+  /** An edge for our `Uow`. May be used by Relay 1. */
+  uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
+};
+
+
+/** The output of our `errorUow` mutation. */
+export type ErrorUowPayloadUowEdgeArgs = {
+  orderBy?: Array<UowsOrderBy>;
+};
+
 /** All input for the `exitSupportMode` mutation. */
 export type ExitSupportModeInput = {
   /**
@@ -879,6 +988,39 @@ export type GrantUserLicensePayload = {
 /** The output of our `grantUserLicense` mutation. */
 export type GrantUserLicensePayloadLicenseEdgeArgs = {
   orderBy?: Array<LicensesOrderBy>;
+};
+
+/** All input for the `incompleteUow` mutation. */
+export type IncompleteUowInput = {
+  _uowId?: InputMaybe<Scalars['UUID']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `incompleteUow` mutation. */
+export type IncompleteUowPayload = {
+  __typename: 'IncompleteUowPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  uow?: Maybe<Uow>;
+  /** An edge for our `Uow`. May be used by Relay 1. */
+  uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
+};
+
+
+/** The output of our `incompleteUow` mutation. */
+export type IncompleteUowPayloadUowEdgeArgs = {
+  orderBy?: Array<UowsOrderBy>;
 };
 
 /** All input for the `joinAddressBook` mutation. */
@@ -2318,6 +2460,8 @@ export type Mutation = {
   assumeResidency?: Maybe<AssumeResidencyPayload>;
   becomeSupport?: Maybe<BecomeSupportPayload>;
   blockResident?: Maybe<BlockResidentPayload>;
+  cancelWf?: Maybe<CancelWfPayload>;
+  completeUow?: Maybe<CompleteUowPayload>;
   createLocation?: Maybe<CreateLocationPayload>;
   createTenant?: Maybe<CreateTenantPayload>;
   createTodo?: Maybe<CreateTodoPayload>;
@@ -2329,15 +2473,22 @@ export type Mutation = {
   deleteLocation?: Maybe<DeleteLocationPayload>;
   deleteTodo?: Maybe<DeleteTodoPayload>;
   deleteTopic?: Maybe<DeleteTopicPayload>;
+  errorUow?: Maybe<ErrorUowPayload>;
   exitSupportMode?: Maybe<ExitSupportModePayload>;
   grantUserLicense?: Maybe<GrantUserLicensePayload>;
+  incompleteUow?: Maybe<IncompleteUowPayload>;
   joinAddressBook?: Maybe<JoinAddressBookPayload>;
   leaveAddressBook?: Maybe<LeaveAddressBookPayload>;
   makeTemplateFromTodo?: Maybe<MakeTemplateFromTodoPayload>;
   makeTodoFromTemplate?: Maybe<MakeTodoFromTemplatePayload>;
+  pauseUow?: Maybe<PauseUowPayload>;
   pinTodo?: Maybe<PinTodoPayload>;
+  pullTrigger?: Maybe<PullTriggerPayload>;
+  queueWorkflow?: Maybe<QueueWorkflowPayload>;
   reactivateTenantSubscription?: Maybe<ReactivateTenantSubscriptionPayload>;
+  resetWfLayout?: Maybe<ResetWfLayoutPayload>;
   revokeUserLicense?: Maybe<RevokeUserLicensePayload>;
+  saveWfLayout?: Maybe<SaveWfLayoutPayload>;
   subscribeTenantToLicensePack?: Maybe<SubscribeTenantToLicensePackPayload>;
   unblockResident?: Maybe<UnblockResidentPayload>;
   unpinTodo?: Maybe<UnpinTodoPayload>;
@@ -2348,6 +2499,7 @@ export type Mutation = {
   upsertMessage?: Maybe<UpsertMessagePayload>;
   upsertSubscriber?: Maybe<UpsertSubscriberPayload>;
   upsertTopic?: Maybe<UpsertTopicPayload>;
+  waitingUow?: Maybe<WaitingUowPayload>;
 };
 
 
@@ -2378,6 +2530,18 @@ export type MutationBecomeSupportArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationBlockResidentArgs = {
   input: BlockResidentInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCancelWfArgs = {
+  input: CancelWfInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCompleteUowArgs = {
+  input: CompleteUowInput;
 };
 
 
@@ -2448,6 +2612,12 @@ export type MutationDeleteTopicArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationErrorUowArgs = {
+  input: ErrorUowInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationExitSupportModeArgs = {
   input: ExitSupportModeInput;
 };
@@ -2456,6 +2626,12 @@ export type MutationExitSupportModeArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationGrantUserLicenseArgs = {
   input: GrantUserLicenseInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationIncompleteUowArgs = {
+  input: IncompleteUowInput;
 };
 
 
@@ -2484,8 +2660,26 @@ export type MutationMakeTodoFromTemplateArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationPauseUowArgs = {
+  input: PauseUowInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationPinTodoArgs = {
   input: PinTodoInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationPullTriggerArgs = {
+  input: PullTriggerInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationQueueWorkflowArgs = {
+  input: QueueWorkflowInput;
 };
 
 
@@ -2496,8 +2690,20 @@ export type MutationReactivateTenantSubscriptionArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationResetWfLayoutArgs = {
+  input: ResetWfLayoutInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationRevokeUserLicenseArgs = {
   input: RevokeUserLicenseInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationSaveWfLayoutArgs = {
+  input: SaveWfLayoutInput;
 };
 
 
@@ -2560,6 +2766,12 @@ export type MutationUpsertTopicArgs = {
   input: UpsertTopicInput;
 };
 
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationWaitingUowArgs = {
+  input: WaitingUowInput;
+};
+
 /** An object with a globally unique `ID`. */
 export type Node = {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
@@ -2584,6 +2796,39 @@ export type PagingOptionInput = {
   itemLimit?: InputMaybe<Scalars['Int']['input']>;
   itemOffset?: InputMaybe<Scalars['Int']['input']>;
   pageOffset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** All input for the `pauseUow` mutation. */
+export type PauseUowInput = {
+  _uowId?: InputMaybe<Scalars['UUID']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `pauseUow` mutation. */
+export type PauseUowPayload = {
+  __typename: 'PauseUowPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  uow?: Maybe<Uow>;
+  /** An edge for our `Uow`. May be used by Relay 1. */
+  uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
+};
+
+
+/** The output of our `pauseUow` mutation. */
+export type PauseUowPayloadUowEdgeArgs = {
+  orderBy?: Array<UowsOrderBy>;
 };
 
 export type Permission = Node & {
@@ -2892,6 +3137,40 @@ export enum ProfilesOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+/** All input for the `pullTrigger` mutation. */
+export type PullTriggerInput = {
+  _triggerData?: InputMaybe<Scalars['JSON']['input']>;
+  _uowId?: InputMaybe<Scalars['UUID']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `pullTrigger` mutation. */
+export type PullTriggerPayload = {
+  __typename: 'PullTriggerPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  uow?: Maybe<Uow>;
+  /** An edge for our `Uow`. May be used by Relay 1. */
+  uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
+};
+
+
+/** The output of our `pullTrigger` mutation. */
+export type PullTriggerPayloadUowEdgeArgs = {
+  orderBy?: Array<UowsOrderBy>;
+};
+
 /** The root query type which gives access points into the data universe. */
 export type Query = Node & {
   __typename: 'Query';
@@ -3052,6 +3331,7 @@ export type Query = Node & {
    * which can only query top level fields if they are in a particular form.
    */
   query: Query;
+  raiseException?: Maybe<Scalars['Boolean']['output']>;
   /** Get a single `Resident`. */
   resident?: Maybe<Resident>;
   /** Reads a single `Resident` using its globally unique `ID`. */
@@ -3074,6 +3354,9 @@ export type Query = Node & {
   /** Reads and enables pagination through a set of `Todo`. */
   searchTodos?: Maybe<TodosConnection>;
   searchTodosList?: Maybe<Array<Maybe<Todo>>>;
+  /** Reads and enables pagination through a set of `Wf`. */
+  searchWfs?: Maybe<WfsConnection>;
+  searchWfsList?: Maybe<Array<Maybe<Wf>>>;
   siteUserById?: Maybe<Scalars['JSON']['output']>;
   /** Get a single `Subscriber`. */
   subscriber?: Maybe<Subscriber>;
@@ -3119,7 +3402,6 @@ export type Query = Node & {
   things?: Maybe<ThingsConnection>;
   /** Reads a set of `Thing`. */
   thingsList?: Maybe<Array<Thing>>;
-  throwError?: Maybe<Scalars['Boolean']['output']>;
   /** Get a single `Todo`. */
   todo?: Maybe<Todo>;
   /** Reads a single `Todo` using its globally unique `ID`. */
@@ -3160,6 +3442,48 @@ export type Query = Node & {
   topics?: Maybe<TopicsConnection>;
   /** Reads a set of `Topic`. */
   topicsList?: Maybe<Array<Topic>>;
+  /** Get a single `Uow`. */
+  uow?: Maybe<Uow>;
+  /** Reads a single `Uow` using its globally unique `ID`. */
+  uowByNodeId?: Maybe<Uow>;
+  uowByWfAndIdentifier?: Maybe<Uow>;
+  /** Reads and enables pagination through a set of `UowDependency`. */
+  uowDependencies?: Maybe<UowDependenciesConnection>;
+  /** Reads a set of `UowDependency`. */
+  uowDependenciesList?: Maybe<Array<UowDependency>>;
+  /** Get a single `UowDependency`. */
+  uowDependency?: Maybe<UowDependency>;
+  /** Reads a single `UowDependency` using its globally unique `ID`. */
+  uowDependencyByNodeId?: Maybe<UowDependency>;
+  /** Reads and enables pagination through a set of `Uow`. */
+  uows?: Maybe<UowsConnection>;
+  /** Reads a set of `Uow`. */
+  uowsList?: Maybe<Array<Uow>>;
+  /** Get a single `Wf`. */
+  wf?: Maybe<Wf>;
+  /** Reads a single `Wf` using its globally unique `ID`. */
+  wfByNodeId?: Maybe<Wf>;
+  /** Get a single `WfRole`. */
+  wfRole?: Maybe<WfRole>;
+  /** Reads a single `WfRole` using its globally unique `ID`. */
+  wfRoleByNodeId?: Maybe<WfRole>;
+  /** Reads and enables pagination through a set of `WfRole`. */
+  wfRoles?: Maybe<WfRolesConnection>;
+  /** Reads a set of `WfRole`. */
+  wfRolesList?: Maybe<Array<WfRole>>;
+  wfTemplateByIdentifier?: Maybe<Wf>;
+  /** Get a single `WfType`. */
+  wfType?: Maybe<WfType>;
+  /** Reads a single `WfType` using its globally unique `ID`. */
+  wfTypeByNodeId?: Maybe<WfType>;
+  /** Reads and enables pagination through a set of `WfType`. */
+  wfTypes?: Maybe<WfTypesConnection>;
+  /** Reads a set of `WfType`. */
+  wfTypesList?: Maybe<Array<WfType>>;
+  /** Reads and enables pagination through a set of `Wf`. */
+  wfs?: Maybe<WfsConnection>;
+  /** Reads a set of `Wf`. */
+  wfsList?: Maybe<Array<Wf>>;
 };
 
 
@@ -3778,6 +4102,12 @@ export type QueryProfilesListArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryRaiseExceptionArgs = {
+  _message?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryResidentArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -3889,6 +4219,25 @@ export type QuerySearchTodosArgs = {
 /** The root query type which gives access points into the data universe. */
 export type QuerySearchTodosListArgs = {
   _options?: InputMaybe<SearchTodosOptionInput>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QuerySearchWfsArgs = {
+  _options?: InputMaybe<SearchWfsOptionInput>;
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QuerySearchWfsListArgs = {
+  _options?: InputMaybe<SearchWfsOptionInput>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -4086,12 +4435,6 @@ export type QueryThingsListArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
-export type QueryThrowErrorArgs = {
-  _message?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-/** The root query type which gives access points into the data universe. */
 export type QueryTodoArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -4255,6 +4598,208 @@ export type QueryTopicsListArgs = {
   orderBy?: InputMaybe<Array<TopicsOrderBy>>;
 };
 
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUowArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUowByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUowByWfAndIdentifierArgs = {
+  _identifier?: InputMaybe<Scalars['String']['input']>;
+  _wfId?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUowDependenciesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUowDependenciesListArgs = {
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUowDependencyArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUowDependencyByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUowsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UowCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUowsListArgs = {
+  condition?: InputMaybe<UowCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfRoleArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfRoleByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfRolesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WfRoleCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfRolesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfRolesListArgs = {
+  condition?: InputMaybe<WfRoleCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfRolesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfTemplateByIdentifierArgs = {
+  _identifier?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfTypeArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfTypeByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfTypesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WfTypeCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfTypesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfTypesListArgs = {
+  condition?: InputMaybe<WfTypeCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfTypesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WfCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWfsListArgs = {
+  condition?: InputMaybe<WfCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfsOrderBy>>;
+};
+
+/** All input for the `queueWorkflow` mutation. */
+export type QueueWorkflowInput = {
+  _identifier?: InputMaybe<Scalars['String']['input']>;
+  _workflowInputData?: InputMaybe<Scalars['JSON']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `queueWorkflow` mutation. */
+export type QueueWorkflowPayload = {
+  __typename: 'QueueWorkflowPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  json?: Maybe<Scalars['JSON']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
 /** All input for the `reactivateTenantSubscription` mutation. */
 export type ReactivateTenantSubscriptionInput = {
   _tenantSubscriptionId?: InputMaybe<Scalars['UUID']['input']>;
@@ -4288,6 +4833,39 @@ export type ReactivateTenantSubscriptionPayload = {
 /** The output of our `reactivateTenantSubscription` mutation. */
 export type ReactivateTenantSubscriptionPayloadTenantSubscriptionEdgeArgs = {
   orderBy?: Array<TenantSubscriptionsOrderBy>;
+};
+
+/** All input for the `resetWfLayout` mutation. */
+export type ResetWfLayoutInput = {
+  _wfIdentifier?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `resetWfLayout` mutation. */
+export type ResetWfLayoutPayload = {
+  __typename: 'ResetWfLayoutPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  wf?: Maybe<Wf>;
+  /** An edge for our `Wf`. May be used by Relay 1. */
+  wfEdge?: Maybe<WfsEdge>;
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
+};
+
+
+/** The output of our `resetWfLayout` mutation. */
+export type ResetWfLayoutPayloadWfEdgeArgs = {
+  orderBy?: Array<WfsOrderBy>;
 };
 
 export type Resident = Node & {
@@ -4466,6 +5044,40 @@ export type RevokeUserLicensePayload = {
   query?: Maybe<Query>;
 };
 
+/** All input for the `saveWfLayout` mutation. */
+export type SaveWfLayoutInput = {
+  _layout?: InputMaybe<Scalars['JSON']['input']>;
+  _wfIdentifier?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `saveWfLayout` mutation. */
+export type SaveWfLayoutPayload = {
+  __typename: 'SaveWfLayoutPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  wf?: Maybe<Wf>;
+  /** An edge for our `Wf`. May be used by Relay 1. */
+  wfEdge?: Maybe<WfsEdge>;
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
+};
+
+
+/** The output of our `saveWfLayout` mutation. */
+export type SaveWfLayoutPayloadWfEdgeArgs = {
+  orderBy?: Array<WfsOrderBy>;
+};
+
 /** An input for mutations affecting `SearchProfilesOption` */
 export type SearchProfilesOptionInput = {
   pagingOptions?: InputMaybe<PagingOptionInput>;
@@ -4496,6 +5108,18 @@ export type SearchTodosOptionInput = {
   searchTerm?: InputMaybe<Scalars['String']['input']>;
   todoStatus?: InputMaybe<TodoStatus>;
   todoType?: InputMaybe<TodoType>;
+};
+
+/** An input for mutations affecting `SearchWfsOption` */
+export type SearchWfsOptionInput = {
+  dateRangeEnd?: InputMaybe<Scalars['Date']['input']>;
+  dateRangeStart?: InputMaybe<Scalars['Date']['input']>;
+  isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
+  resultLimit?: InputMaybe<Scalars['Int']['input']>;
+  searchTerms?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  tenantId?: InputMaybe<Scalars['String']['input']>;
+  wfType?: InputMaybe<Scalars['String']['input']>;
+  wfUowStatus?: InputMaybe<UowStatusType>;
 };
 
 /** All input for the `subscribeTenantToLicensePack` mutation. */
@@ -5701,6 +6325,317 @@ export type UnpinTodoPayloadTodoEdgeArgs = {
   orderBy?: Array<TodosOrderBy>;
 };
 
+export type Uow = Node & {
+  __typename: 'Uow';
+  completedAt?: Maybe<Scalars['Datetime']['output']>;
+  createdAt: Scalars['Datetime']['output'];
+  data?: Maybe<Scalars['JSON']['output']>;
+  /** Reads and enables pagination through a set of `Uow`. */
+  dependees: UowsConnection;
+  dependeesList?: Maybe<Array<Maybe<Uow>>>;
+  /** Reads and enables pagination through a set of `Uow`. */
+  dependers: UowsConnection;
+  dependersList?: Maybe<Array<Maybe<Uow>>>;
+  description?: Maybe<Scalars['String']['output']>;
+  dueAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['UUID']['output'];
+  identifier?: Maybe<Scalars['String']['output']>;
+  isTemplate: Scalars['Boolean']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  parentUowId?: Maybe<Scalars['UUID']['output']>;
+  status: UowStatusType;
+  tenantId: Scalars['UUID']['output'];
+  type?: Maybe<UowType>;
+  /** Reads and enables pagination through a set of `UowDependency`. */
+  uowDependenciesByDependeeId: UowDependenciesConnection;
+  /** Reads and enables pagination through a set of `UowDependency`. */
+  uowDependenciesByDependeeIdList: Array<UowDependency>;
+  /** Reads and enables pagination through a set of `UowDependency`. */
+  uowDependenciesByDependerId: UowDependenciesConnection;
+  /** Reads and enables pagination through a set of `UowDependency`. */
+  uowDependenciesByDependerIdList: Array<UowDependency>;
+  updatedAt: Scalars['Datetime']['output'];
+  useWorker: Scalars['Boolean']['output'];
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
+  wfId: Scalars['UUID']['output'];
+  workflowError: Scalars['JSON']['output'];
+  workflowHandlerKey?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type UowDependeesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type UowDependeesListArgs = {
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type UowDependersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type UowDependersListArgs = {
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type UowUowDependenciesByDependeeIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+
+export type UowUowDependenciesByDependeeIdListArgs = {
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+
+export type UowUowDependenciesByDependerIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+
+export type UowUowDependenciesByDependerIdListArgs = {
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+/** A condition to be used against `Uow` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type UowCondition = {
+  /** Checks for equality with the object’s `completedAt` field. */
+  completedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `data` field. */
+  data?: InputMaybe<Scalars['JSON']['input']>;
+  /** Checks for equality with the object’s `description` field. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `dueAt` field. */
+  dueAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `identifier` field. */
+  identifier?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `isTemplate` field. */
+  isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `parentUowId` field. */
+  parentUowId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `status` field. */
+  status?: InputMaybe<UowStatusType>;
+  /** Checks for equality with the object’s `tenantId` field. */
+  tenantId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `type` field. */
+  type?: InputMaybe<UowType>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `useWorker` field. */
+  useWorker?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `wfId` field. */
+  wfId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `workflowError` field. */
+  workflowError?: InputMaybe<Scalars['JSON']['input']>;
+  /** Checks for equality with the object’s `workflowHandlerKey` field. */
+  workflowHandlerKey?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A connection to a list of `UowDependency` values. */
+export type UowDependenciesConnection = {
+  __typename: 'UowDependenciesConnection';
+  /** A list of edges which contains the `UowDependency` and cursor to aid in pagination. */
+  edges: Array<Maybe<UowDependenciesEdge>>;
+  /** A list of `UowDependency` objects. */
+  nodes: Array<Maybe<UowDependency>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `UowDependency` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `UowDependency` edge in the connection. */
+export type UowDependenciesEdge = {
+  __typename: 'UowDependenciesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `UowDependency` at the end of the edge. */
+  node?: Maybe<UowDependency>;
+};
+
+/** Methods to use when ordering `UowDependency`. */
+export enum UowDependenciesOrderBy {
+  DependeeIdAsc = 'DEPENDEE_ID_ASC',
+  DependeeIdDesc = 'DEPENDEE_ID_DESC',
+  DependerIdAsc = 'DEPENDER_ID_ASC',
+  DependerIdDesc = 'DEPENDER_ID_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsTemplateAsc = 'IS_TEMPLATE_ASC',
+  IsTemplateDesc = 'IS_TEMPLATE_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TenantIdAsc = 'TENANT_ID_ASC',
+  TenantIdDesc = 'TENANT_ID_DESC',
+  WfIdAsc = 'WF_ID_ASC',
+  WfIdDesc = 'WF_ID_DESC'
+}
+
+export type UowDependency = Node & {
+  __typename: 'UowDependency';
+  /** Reads a single `Uow` that is related to this `UowDependency`. */
+  dependee?: Maybe<Uow>;
+  dependeeId: Scalars['UUID']['output'];
+  /** Reads a single `Uow` that is related to this `UowDependency`. */
+  depender?: Maybe<Uow>;
+  dependerId: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  isTemplate: Scalars['Boolean']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  tenantId: Scalars['UUID']['output'];
+  /** Reads a single `Wf` that is related to this `UowDependency`. */
+  wf?: Maybe<Wf>;
+  wfId: Scalars['UUID']['output'];
+};
+
+/**
+ * A condition to be used against `UowDependency` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type UowDependencyCondition = {
+  /** Checks for equality with the object’s `dependeeId` field. */
+  dependeeId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `dependerId` field. */
+  dependerId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `isTemplate` field. */
+  isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `tenantId` field. */
+  tenantId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `wfId` field. */
+  wfId?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+export enum UowStatusType {
+  Canceled = 'CANCELED',
+  Complete = 'COMPLETE',
+  Deleted = 'DELETED',
+  Error = 'ERROR',
+  Incomplete = 'INCOMPLETE',
+  Paused = 'PAUSED',
+  Template = 'TEMPLATE',
+  TriggerSet = 'TRIGGER_SET',
+  Waiting = 'WAITING'
+}
+
+export enum UowType {
+  Issue = 'ISSUE',
+  Milestone = 'MILESTONE',
+  Task = 'TASK',
+  Trigger = 'TRIGGER',
+  Wf = 'WF'
+}
+
+/** A connection to a list of `Uow` values. */
+export type UowsConnection = {
+  __typename: 'UowsConnection';
+  /** A list of edges which contains the `Uow` and cursor to aid in pagination. */
+  edges: Array<Maybe<UowsEdge>>;
+  /** A list of `Uow` objects. */
+  nodes: Array<Maybe<Uow>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Uow` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Uow` edge in the connection. */
+export type UowsEdge = {
+  __typename: 'UowsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Uow` at the end of the edge. */
+  node?: Maybe<Uow>;
+};
+
+/** Methods to use when ordering `Uow`. */
+export enum UowsOrderBy {
+  CompletedAtAsc = 'COMPLETED_AT_ASC',
+  CompletedAtDesc = 'COMPLETED_AT_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DataAsc = 'DATA_ASC',
+  DataDesc = 'DATA_DESC',
+  DescriptionAsc = 'DESCRIPTION_ASC',
+  DescriptionDesc = 'DESCRIPTION_DESC',
+  DueAtAsc = 'DUE_AT_ASC',
+  DueAtDesc = 'DUE_AT_DESC',
+  IdentifierAsc = 'IDENTIFIER_ASC',
+  IdentifierDesc = 'IDENTIFIER_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsTemplateAsc = 'IS_TEMPLATE_ASC',
+  IsTemplateDesc = 'IS_TEMPLATE_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
+  Natural = 'NATURAL',
+  ParentUowIdAsc = 'PARENT_UOW_ID_ASC',
+  ParentUowIdDesc = 'PARENT_UOW_ID_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  StatusAsc = 'STATUS_ASC',
+  StatusDesc = 'STATUS_DESC',
+  TenantIdAsc = 'TENANT_ID_ASC',
+  TenantIdDesc = 'TENANT_ID_DESC',
+  TypeAsc = 'TYPE_ASC',
+  TypeDesc = 'TYPE_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UseWorkerAsc = 'USE_WORKER_ASC',
+  UseWorkerDesc = 'USE_WORKER_DESC',
+  WfIdAsc = 'WF_ID_ASC',
+  WfIdDesc = 'WF_ID_DESC',
+  WorkflowErrorAsc = 'WORKFLOW_ERROR_ASC',
+  WorkflowErrorDesc = 'WORKFLOW_ERROR_DESC',
+  WorkflowHandlerKeyAsc = 'WORKFLOW_HANDLER_KEY_ASC',
+  WorkflowHandlerKeyDesc = 'WORKFLOW_HANDLER_KEY_DESC'
+}
+
 /** All input for the `updateLocation` mutation. */
 export type UpdateLocationInput = {
   _locationInfo?: InputMaybe<LocationInfoInput>;
@@ -5966,6 +6901,341 @@ export type UpsertTopicPayloadTopicEdgeArgs = {
   orderBy?: Array<TopicsOrderBy>;
 };
 
+/** All input for the `waitingUow` mutation. */
+export type WaitingUowInput = {
+  _uowId?: InputMaybe<Scalars['UUID']['input']>;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our `waitingUow` mutation. */
+export type WaitingUowPayload = {
+  __typename: 'WaitingUowPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  uow?: Maybe<Uow>;
+  /** An edge for our `Uow`. May be used by Relay 1. */
+  uowEdge?: Maybe<UowsEdge>;
+  /** Reads a single `Wf` that is related to this `Uow`. */
+  wf?: Maybe<Wf>;
+};
+
+
+/** The output of our `waitingUow` mutation. */
+export type WaitingUowPayloadUowEdgeArgs = {
+  orderBy?: Array<UowsOrderBy>;
+};
+
+export type Wf = Node & {
+  __typename: 'Wf';
+  createdAt: Scalars['Datetime']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  identifier?: Maybe<Scalars['String']['output']>;
+  inputDefinitions: Array<Maybe<WorkflowInputDefinition>>;
+  instanceCount?: Maybe<Scalars['Int']['output']>;
+  isTemplate: Scalars['Boolean']['output'];
+  layout?: Maybe<Scalars['JSON']['output']>;
+  layoutOverride?: Maybe<Scalars['JSON']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  status?: Maybe<UowStatusType>;
+  template?: Maybe<Wf>;
+  tenantId: Scalars['UUID']['output'];
+  type: Scalars['String']['output'];
+  /** Reads and enables pagination through a set of `UowDependency`. */
+  uowDependencies: UowDependenciesConnection;
+  /** Reads and enables pagination through a set of `UowDependency`. */
+  uowDependenciesList: Array<UowDependency>;
+  uowId?: Maybe<Scalars['UUID']['output']>;
+  /** Reads and enables pagination through a set of `Uow`. */
+  uows: UowsConnection;
+  /** Reads and enables pagination through a set of `Uow`. */
+  uowsList: Array<Uow>;
+  updatedAt: Scalars['Datetime']['output'];
+  /** Reads a single `WfType` that is related to this `Wf`. */
+  wfType?: Maybe<WfType>;
+  workflowData: Scalars['JSON']['output'];
+};
+
+
+export type WfUowDependenciesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+
+export type WfUowDependenciesListArgs = {
+  condition?: InputMaybe<UowDependencyCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowDependenciesOrderBy>>;
+};
+
+
+export type WfUowsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UowCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowsOrderBy>>;
+};
+
+
+export type WfUowsListArgs = {
+  condition?: InputMaybe<UowCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UowsOrderBy>>;
+};
+
+/** A condition to be used against `Wf` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type WfCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `description` field. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `identifier` field. */
+  identifier?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `inputDefinitions` field. */
+  inputDefinitions?: InputMaybe<Array<InputMaybe<WorkflowInputDefinitionInput>>>;
+  /** Checks for equality with the object’s `isTemplate` field. */
+  isTemplate?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `layout` field. */
+  layout?: InputMaybe<Scalars['JSON']['input']>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `tenantId` field. */
+  tenantId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `type` field. */
+  type?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `uowId` field. */
+  uowId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `workflowData` field. */
+  workflowData?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type WfRole = Node & {
+  __typename: 'WfRole';
+  config: Scalars['JSON']['output'];
+  id: Scalars['UUID']['output'];
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+};
+
+/** A condition to be used against `WfRole` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type WfRoleCondition = {
+  /** Checks for equality with the object’s `config` field. */
+  config?: InputMaybe<Scalars['JSON']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `key` field. */
+  key?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A connection to a list of `WfRole` values. */
+export type WfRolesConnection = {
+  __typename: 'WfRolesConnection';
+  /** A list of edges which contains the `WfRole` and cursor to aid in pagination. */
+  edges: Array<Maybe<WfRolesEdge>>;
+  /** A list of `WfRole` objects. */
+  nodes: Array<Maybe<WfRole>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `WfRole` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `WfRole` edge in the connection. */
+export type WfRolesEdge = {
+  __typename: 'WfRolesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `WfRole` at the end of the edge. */
+  node?: Maybe<WfRole>;
+};
+
+/** Methods to use when ordering `WfRole`. */
+export enum WfRolesOrderBy {
+  ConfigAsc = 'CONFIG_ASC',
+  ConfigDesc = 'CONFIG_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  KeyAsc = 'KEY_ASC',
+  KeyDesc = 'KEY_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+}
+
+export type WfType = Node & {
+  __typename: 'WfType';
+  id: Scalars['String']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `Wf`. */
+  wfsByType: WfsConnection;
+  /** Reads and enables pagination through a set of `Wf`. */
+  wfsByTypeList: Array<Wf>;
+};
+
+
+export type WfTypeWfsByTypeArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WfCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfsOrderBy>>;
+};
+
+
+export type WfTypeWfsByTypeListArgs = {
+  condition?: InputMaybe<WfCondition>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WfsOrderBy>>;
+};
+
+/** A condition to be used against `WfType` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type WfTypeCondition = {
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** A connection to a list of `WfType` values. */
+export type WfTypesConnection = {
+  __typename: 'WfTypesConnection';
+  /** A list of edges which contains the `WfType` and cursor to aid in pagination. */
+  edges: Array<Maybe<WfTypesEdge>>;
+  /** A list of `WfType` objects. */
+  nodes: Array<Maybe<WfType>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `WfType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `WfType` edge in the connection. */
+export type WfTypesEdge = {
+  __typename: 'WfTypesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `WfType` at the end of the edge. */
+  node?: Maybe<WfType>;
+};
+
+/** Methods to use when ordering `WfType`. */
+export enum WfTypesOrderBy {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+}
+
+/** A connection to a list of `Wf` values. */
+export type WfsConnection = {
+  __typename: 'WfsConnection';
+  /** A list of edges which contains the `Wf` and cursor to aid in pagination. */
+  edges: Array<Maybe<WfsEdge>>;
+  /** A list of `Wf` objects. */
+  nodes: Array<Maybe<Wf>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Wf` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Wf` edge in the connection. */
+export type WfsEdge = {
+  __typename: 'WfsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Wf` at the end of the edge. */
+  node?: Maybe<Wf>;
+};
+
+/** Methods to use when ordering `Wf`. */
+export enum WfsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DescriptionAsc = 'DESCRIPTION_ASC',
+  DescriptionDesc = 'DESCRIPTION_DESC',
+  IdentifierAsc = 'IDENTIFIER_ASC',
+  IdentifierDesc = 'IDENTIFIER_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsTemplateAsc = 'IS_TEMPLATE_ASC',
+  IsTemplateDesc = 'IS_TEMPLATE_DESC',
+  LayoutAsc = 'LAYOUT_ASC',
+  LayoutDesc = 'LAYOUT_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TenantIdAsc = 'TENANT_ID_ASC',
+  TenantIdDesc = 'TENANT_ID_DESC',
+  TypeAsc = 'TYPE_ASC',
+  TypeDesc = 'TYPE_DESC',
+  UowIdAsc = 'UOW_ID_ASC',
+  UowIdDesc = 'UOW_ID_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  WorkflowDataAsc = 'WORKFLOW_DATA_ASC',
+  WorkflowDataDesc = 'WORKFLOW_DATA_DESC'
+}
+
+export enum WorkflowInputDataType {
+  Boolean = 'BOOLEAN',
+  Number = 'NUMBER',
+  String = 'STRING'
+}
+
+export type WorkflowInputDefinition = {
+  __typename: 'WorkflowInputDefinition';
+  dataType?: Maybe<WorkflowInputDataType>;
+  defaultValue?: Maybe<Scalars['String']['output']>;
+  isRequired?: Maybe<Scalars['Boolean']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** An input for mutations affecting `WorkflowInputDefinition` */
+export type WorkflowInputDefinitionInput = {
+  dataType?: InputMaybe<WorkflowInputDataType>;
+  defaultValue?: InputMaybe<Scalars['String']['input']>;
+  isRequired?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type JoinAddressBookMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6181,6 +7451,13 @@ export type MyProfileResidenciesQueryVariables = Exact<{ [key: string]: never; }
 
 export type MyProfileResidenciesQuery = { __typename: 'Query', myProfileResidenciesList?: Array<{ __typename: 'Resident', id: any, profileId?: any | null, tenantId: any, tenantName: string, status: ResidentStatus, displayName?: string | null, email: string, type: ResidentType, licenses: Array<{ __typename: 'License', id: any, licenseTypeKey: string, createdAt: any, expiresAt?: any | null, licenseType?: { __typename: 'LicenseType', key: string, displayName: string, assignmentScope: LicenseTypeAssignmentScope } | null }> } | null> | null };
 
+export type RaiseExceptionQueryVariables = Exact<{
+  message?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type RaiseExceptionQuery = { __typename: 'Query', raiseException?: boolean | null };
+
 export type ResidentByIdQueryVariables = Exact<{
   residentId: Scalars['UUID']['input'];
 }>;
@@ -6215,13 +7492,6 @@ export type SiteUserByIdQueryVariables = Exact<{
 
 
 export type SiteUserByIdQuery = { __typename: 'Query', siteUserById?: any | null };
-
-export type ThrowErrorQueryVariables = Exact<{
-  message?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type ThrowErrorQuery = { __typename: 'Query', throwError?: boolean | null };
 
 export type MessageFragment = { __typename: 'Message', id: any, createdAt: any, status: MessageStatus, content: string, postedBy?: { __typename: 'MsgResident', residentId: any, displayName: string } | null };
 
@@ -6370,6 +7640,67 @@ export type TodoByIdForRefreshQueryVariables = Exact<{
 
 
 export type TodoByIdForRefreshQuery = { __typename: 'Query', todo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus, parentTodo?: { __typename: 'Todo', id: any, status: TodoStatus } | null } | null } | null } | null } | null } | null } | null } | null } | null } | null } | null } | null };
+
+export type UowFragment = { __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null };
+
+export type UowDependencyFragment = { __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any };
+
+export type WfFragment = { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> };
+
+export type PullTriggerMutationVariables = Exact<{
+  uowId: Scalars['UUID']['input'];
+  triggerData?: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type PullTriggerMutation = { __typename: 'Mutation', pullTrigger?: { __typename: 'PullTriggerPayload', uow?: { __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null } | null } | null };
+
+export type QueueWorkflowMutationVariables = Exact<{
+  identifier: Scalars['String']['input'];
+  workflowInputData: Scalars['JSON']['input'];
+}>;
+
+
+export type QueueWorkflowMutation = { __typename: 'Mutation', queueWorkflow?: { __typename: 'QueueWorkflowPayload', json?: any | null } | null };
+
+export type ResetWfLayoutMutationVariables = Exact<{
+  wfIdentifier: Scalars['String']['input'];
+}>;
+
+
+export type ResetWfLayoutMutation = { __typename: 'Mutation', resetWfLayout?: { __typename: 'ResetWfLayoutPayload', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null } | null };
+
+export type SaveWfLayoutMutationVariables = Exact<{
+  wfIdentifier: Scalars['String']['input'];
+  layout: Scalars['JSON']['input'];
+}>;
+
+
+export type SaveWfLayoutMutation = { __typename: 'Mutation', saveWfLayout?: { __typename: 'SaveWfLayoutPayload', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null } | null };
+
+export type AllWfInstancesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllWfInstancesQuery = { __typename: 'Query', wfInstances?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> }> | null };
+
+export type AllWfTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllWfTemplatesQuery = { __typename: 'Query', wfTemplates?: Array<{ __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> }> | null };
+
+export type WfByIdQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type WfByIdQuery = { __typename: 'Query', wf?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, uowsList: Array<{ __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null }>, uowDependenciesList: Array<{ __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any }>, template?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null };
+
+export type WfTemplateByIdentifierQueryVariables = Exact<{
+  identifier: Scalars['String']['input'];
+}>;
+
+
+export type WfTemplateByIdentifierQuery = { __typename: 'Query', wfTemplateByIdentifier?: { __typename: 'Wf', id: any, createdAt: any, updatedAt: any, tenantId: any, identifier?: string | null, isTemplate: boolean, type: string, name?: string | null, description?: string | null, instanceCount?: number | null, status?: UowStatusType | null, workflowData: any, layoutOverride?: any | null, uowsList: Array<{ __typename: 'Uow', id: any, completedAt?: any | null, createdAt: any, data?: any | null, description?: string | null, dueAt?: any | null, identifier?: string | null, isTemplate: boolean, name?: string | null, parentUowId?: any | null, status: UowStatusType, tenantId: any, type?: UowType | null, updatedAt: any, useWorker: boolean, wfId: any, workflowError: any, workflowHandlerKey?: string | null }>, uowDependenciesList: Array<{ __typename: 'UowDependency', id: any, tenantId: any, wfId: any, dependerId: any, dependeeId: any }>, inputDefinitions: Array<{ __typename: 'WorkflowInputDefinition', name?: string | null, dataType?: WorkflowInputDataType | null, defaultValue?: string | null, isRequired?: boolean | null } | null> } | null };
 
 export const ApplicationFragmentDoc = gql`
     fragment Application on Application {
@@ -6537,6 +7868,60 @@ export const TodoFragmentDoc = gql`
   rootTodoId
   isTemplate
   topicId
+}
+    `;
+export const UowFragmentDoc = gql`
+    fragment Uow on Uow {
+  id
+  completedAt
+  createdAt
+  data
+  description
+  dueAt
+  identifier
+  isTemplate
+  name
+  parentUowId
+  status
+  tenantId
+  type
+  updatedAt
+  useWorker
+  wfId
+  workflowError
+  workflowHandlerKey
+}
+    `;
+export const UowDependencyFragmentDoc = gql`
+    fragment UowDependency on UowDependency {
+  id
+  tenantId
+  wfId
+  dependerId
+  dependeeId
+}
+    `;
+export const WfFragmentDoc = gql`
+    fragment Wf on Wf {
+  id
+  createdAt
+  updatedAt
+  tenantId
+  identifier
+  isTemplate
+  type
+  name
+  description
+  inputDefinitions {
+    name
+    dataType
+    defaultValue
+    isRequired
+  }
+  instanceCount
+  status
+  workflowData
+  layoutOverride
 }
     `;
 export const JoinAddressBookDocument = gql`
@@ -7067,6 +8452,15 @@ ${LicenseTypeFragmentDoc}`;
 export function useMyProfileResidenciesQuery(options: Omit<Urql.UseQueryArgs<never, MyProfileResidenciesQueryVariables>, 'query'>) {
   return Urql.useQuery<MyProfileResidenciesQuery, MyProfileResidenciesQueryVariables>({ query: MyProfileResidenciesDocument, ...options });
 };
+export const RaiseExceptionDocument = gql`
+    query RaiseException($message: String) {
+  raiseException(_message: $message)
+}
+    `;
+
+export function useRaiseExceptionQuery(options: Omit<Urql.UseQueryArgs<never, RaiseExceptionQueryVariables>, 'query'>) {
+  return Urql.useQuery<RaiseExceptionQuery, RaiseExceptionQueryVariables>({ query: RaiseExceptionDocument, ...options });
+};
 export const ResidentByIdDocument = gql`
     query ResidentById($residentId: UUID!) {
   resident(id: $residentId) {
@@ -7143,15 +8537,6 @@ export const SiteUserByIdDocument = gql`
 
 export function useSiteUserByIdQuery(options: Omit<Urql.UseQueryArgs<never, SiteUserByIdQueryVariables>, 'query'>) {
   return Urql.useQuery<SiteUserByIdQuery, SiteUserByIdQueryVariables>({ query: SiteUserByIdDocument, ...options });
-};
-export const ThrowErrorDocument = gql`
-    query ThrowError($message: String) {
-  throwError(_message: $message)
-}
-    `;
-
-export function useThrowErrorQuery(options: Omit<Urql.UseQueryArgs<never, ThrowErrorQueryVariables>, 'query'>) {
-  return Urql.useQuery<ThrowErrorQuery, ThrowErrorQueryVariables>({ query: ThrowErrorDocument, ...options });
 };
 export const UpsertMessageDocument = gql`
     mutation UpsertMessage($messageInfo: MessageInfoInput!) {
@@ -7577,4 +8962,119 @@ export const TodoByIdForRefreshDocument = gql`
 
 export function useTodoByIdForRefreshQuery(options: Omit<Urql.UseQueryArgs<never, TodoByIdForRefreshQueryVariables>, 'query'>) {
   return Urql.useQuery<TodoByIdForRefreshQuery, TodoByIdForRefreshQueryVariables>({ query: TodoByIdForRefreshDocument, ...options });
+};
+export const PullTriggerDocument = gql`
+    mutation PullTrigger($uowId: UUID!, $triggerData: JSON) {
+  pullTrigger(input: {_uowId: $uowId, _triggerData: $triggerData}) {
+    uow {
+      ...Uow
+    }
+  }
+}
+    ${UowFragmentDoc}`;
+
+export function usePullTriggerMutation() {
+  return Urql.useMutation<PullTriggerMutation, PullTriggerMutationVariables>(PullTriggerDocument);
+};
+export const QueueWorkflowDocument = gql`
+    mutation QueueWorkflow($identifier: String!, $workflowInputData: JSON!) {
+  queueWorkflow(
+    input: {_identifier: $identifier, _workflowInputData: $workflowInputData}
+  ) {
+    json
+  }
+}
+    `;
+
+export function useQueueWorkflowMutation() {
+  return Urql.useMutation<QueueWorkflowMutation, QueueWorkflowMutationVariables>(QueueWorkflowDocument);
+};
+export const ResetWfLayoutDocument = gql`
+    mutation ResetWfLayout($wfIdentifier: String!) {
+  resetWfLayout(input: {_wfIdentifier: $wfIdentifier}) {
+    wf {
+      ...Wf
+    }
+  }
+}
+    ${WfFragmentDoc}`;
+
+export function useResetWfLayoutMutation() {
+  return Urql.useMutation<ResetWfLayoutMutation, ResetWfLayoutMutationVariables>(ResetWfLayoutDocument);
+};
+export const SaveWfLayoutDocument = gql`
+    mutation SaveWfLayout($wfIdentifier: String!, $layout: JSON!) {
+  saveWfLayout(input: {_wfIdentifier: $wfIdentifier, _layout: $layout}) {
+    wf {
+      ...Wf
+    }
+  }
+}
+    ${WfFragmentDoc}`;
+
+export function useSaveWfLayoutMutation() {
+  return Urql.useMutation<SaveWfLayoutMutation, SaveWfLayoutMutationVariables>(SaveWfLayoutDocument);
+};
+export const AllWfInstancesDocument = gql`
+    query AllWfInstances {
+  wfInstances: wfsList(condition: {isTemplate: false}) {
+    ...Wf
+  }
+}
+    ${WfFragmentDoc}`;
+
+export function useAllWfInstancesQuery(options: Omit<Urql.UseQueryArgs<never, AllWfInstancesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllWfInstancesQuery, AllWfInstancesQueryVariables>({ query: AllWfInstancesDocument, ...options });
+};
+export const AllWfTemplatesDocument = gql`
+    query AllWfTemplates {
+  wfTemplates: wfsList(condition: {isTemplate: true}) {
+    ...Wf
+  }
+}
+    ${WfFragmentDoc}`;
+
+export function useAllWfTemplatesQuery(options: Omit<Urql.UseQueryArgs<never, AllWfTemplatesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllWfTemplatesQuery, AllWfTemplatesQueryVariables>({ query: AllWfTemplatesDocument, ...options });
+};
+export const WfByIdDocument = gql`
+    query WfById($id: UUID!) {
+  wf(id: $id) {
+    ...Wf
+    uowsList {
+      ...Uow
+    }
+    uowDependenciesList {
+      ...UowDependency
+    }
+    template {
+      ...Wf
+    }
+  }
+}
+    ${WfFragmentDoc}
+${UowFragmentDoc}
+${UowDependencyFragmentDoc}`;
+
+export function useWfByIdQuery(options: Omit<Urql.UseQueryArgs<never, WfByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<WfByIdQuery, WfByIdQueryVariables>({ query: WfByIdDocument, ...options });
+};
+export const WfTemplateByIdentifierDocument = gql`
+    query WfTemplateByIdentifier($identifier: String!) {
+  wfTemplateByIdentifier(_identifier: $identifier) {
+    ...Wf
+    uowsList {
+      ...Uow
+    }
+    uowDependenciesList {
+      ...UowDependency
+    }
+  }
+}
+    ${WfFragmentDoc}
+${UowFragmentDoc}
+${UowDependencyFragmentDoc}`;
+
+export function useWfTemplateByIdentifierQuery(options: Omit<Urql.UseQueryArgs<never, WfTemplateByIdentifierQueryVariables>, 'query'>) {
+  return Urql.useQuery<WfTemplateByIdentifierQuery, WfTemplateByIdentifierQueryVariables>({ query: WfTemplateByIdentifierDocument, ...options });
 };

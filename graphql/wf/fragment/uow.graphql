@@ -1,0 +1,20 @@
+fragment Uow on Uow {
+  id
+  completedAt
+  createdAt
+  data
+  description
+  dueAt
+  identifier
+  isTemplate
+  name
+  parentUowId
+  status
+  tenantId
+  type
+  updatedAt
+  useWorker
+  wfId
+  workflowError
+  workflowHandlerKey
+}

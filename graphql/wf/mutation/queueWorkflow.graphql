@@ -1,0 +1,11 @@
+mutation QueueWorkflow (
+  $identifier: String!
+  $workflowInputData: JSON!
+) {
+  queueWorkflow(input: {
+    _identifier: $identifier
+    _workflowInputData: $workflowInputData
+  }) {
+    json
+  }
+}

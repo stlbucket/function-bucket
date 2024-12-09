@@ -1,0 +1,10 @@
+mutation SaveWfLayout( $wfIdentifier: String! $layout: JSON!) {
+  saveWfLayout(input: {
+    _wfIdentifier: $wfIdentifier
+    _layout: $layout
+  }) {
+    wf {
+      ...Wf
+    }
+  }
+}

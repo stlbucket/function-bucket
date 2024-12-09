@@ -13,9 +13,9 @@
         <HomePageMyApp />
         <HomePageNav />
       </div>
-      <div class="flex flex-col justify-start h-full bg-gray-700" v-if="['base', 'my-app'].indexOf(currentProfileClaims.applicationKey) === -1">
+      <!-- <div class="flex flex-col justify-start h-full bg-gray-700" v-if="['base', 'my-app'].indexOf(currentProfileClaims.applicationKey) === -1">
         <HomePageNav />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

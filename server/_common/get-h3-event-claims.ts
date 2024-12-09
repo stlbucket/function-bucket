@@ -7,7 +7,8 @@ async function getH3EventClaims(event: H3Event) {
     // Here is where we get user session info from anywhere:  redis, our current database, useSupabaseUser(), etc...
     // Since we are using supabase, we use the supabase client, but this could integrate with any auth provider
     const client = await serverSupabaseClient(event)
-    const user = (await client.auth.getUser()).data.user
+    // const session = (await client.auth.getSession()).data.session
+    const { data: { user } } = await client.auth.getUser()
 
     // this implementation is retrieving current user claims from the database
     // on every call.  there is currently no user metadata stored in the jwt
@@ -15,6 +16,7 @@ async function getH3EventClaims(event: H3Event) {
     // scalability concerns and/or auth provider implementations
 
     if (user) {
+      event.context.session = user
       const client = useFnbPgClient()
       const claims = (await client.doQuery(`
         with p as (select * from app.profile where email = $1) 

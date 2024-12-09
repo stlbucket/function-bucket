@@ -1,0 +1,22 @@
+
+fragment Wf on Wf {
+  id
+  createdAt
+  updatedAt
+  tenantId
+  identifier
+  isTemplate
+  type
+  name
+  description
+  inputDefinitions {
+    name
+    dataType
+    defaultValue
+    isRequired
+  }
+  instanceCount
+  status
+  workflowData
+  layoutOverride
+}

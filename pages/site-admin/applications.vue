@@ -18,7 +18,9 @@
 </template>
 
 <script lang="ts" setup>
-  const { data } = await useAllApplicationsQuery()
+  const { data } = await useAllApplicationsQuery({
+  variables: {}
+})
   const applications: Ref<Application[]> = ref((data.value?.applications || []) as unknown as Application[])
   const selectedApplication = ref(applications.value[0])
 

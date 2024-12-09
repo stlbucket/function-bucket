@@ -10,6 +10,8 @@ import { GraphQLError } from "postgraphile/graphql";
 import TopicMessageSubscriptionPlugin from "./plug-ins/topicMessageSubscription.js";
 import { getWsMessageClaims } from "../_common/get-ws-message-claims.js";
 import { getH3EventClaims } from "../_common/get-h3-event-claims.js";
+// import type {} from "graphile-config";
+// import type {} from "graphile-worker";
 // import { ForumMessageSubscriptionPlugin } from "./plug-ins/forumMessageSubscription.js";
 
 const preset: GraphileConfig.Preset = {
@@ -63,6 +65,7 @@ const preset: GraphileConfig.Preset = {
 
       let user;
       let claims;
+      // @ts-ignore
       if (requestContext.ws) {
         const wsAuth = await getWsMessageClaims(requestContext)
         user = wsAuth.user
@@ -159,7 +162,17 @@ const preset: GraphileConfig.Preset = {
         // );
       }
     }
-  }
+  },
+  worker: {
+    connectionString: process.env.SUPABASE_URI || 'postgresql://postgres:postgres@localhost:54322/postgres',
+    maxPoolSize: 10,
+    pollInterval: 2000,
+    preparedStatements: true,
+    schema: "graphile_worker",
+    crontabFile: "crontab",
+    concurrentJobs: 1,
+    fileExtensions: [".js", ".cjs", ".mjs"],
+  },
 };
 
 export default preset;

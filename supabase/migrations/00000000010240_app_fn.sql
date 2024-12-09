@@ -433,6 +433,14 @@ CREATE OR REPLACE FUNCTION app_fn.install_anchor_application()
                 ,'/site-admin/applications'
                 ,100
               )::app_fn.tool_info
+              ,row(
+                'base-site-admin-wf'::citext
+                ,'Workflow'::citext
+                ,'{"p:app-admin-super"}'::citext[]
+                ,'solar:checklist-line-duotone'::citext
+                ,'/site-admin/wf'
+                ,100
+              )::app_fn.tool_info
             ]::app_fn.tool_info[]
           )::app_fn.module_info
         ]::app_fn.module_info[]
@@ -1310,7 +1318,7 @@ CREATE OR REPLACE FUNCTION app_api.get_myself()
   end;
   $$;  
 
-CREATE OR REPLACE FUNCTION app_api.throw_error(_message citext default 'GENERICERROR')
+CREATE OR REPLACE FUNCTION app_api.raise_exception(_message citext default 'GENERICERROR')
   RETURNS boolean
   LANGUAGE plpgsql
   STABLE
