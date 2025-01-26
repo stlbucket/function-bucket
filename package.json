@@ -29,7 +29,6 @@
     "@nuxt/devtools": "^1.6.4",
     "@nuxt/icon": "^1.10.3",
     "@nuxtjs/pwa": "^3.3.5",
-    "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
     "@types/node": "^22.1.0",
     "graphile-export": "^0.0.2-beta.24",
     "kysely": "^0.27.4",
