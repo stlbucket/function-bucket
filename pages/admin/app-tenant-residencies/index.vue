@@ -33,7 +33,7 @@
 
   const onNewResident = async (email: string) => {
     const url = `/api/invite-user`
-    const { data, pending, error, refresh } = await useFetch(url, {
+    const { data, error, refresh } = await useFetch(url, {
       method: 'POST',
       body: {
         email: email,

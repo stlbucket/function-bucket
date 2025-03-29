@@ -45,7 +45,7 @@
       <template #map="{ item }">
         <div class="flex flex-col gap-2 grow">
           <div class="flex min-h-[300px]">
-            <MarkerMap :locations="selectedLocations" />
+            <!-- <MarkerMap :locations="selectedLocations" /> -->
           </div>
           <LocationList 
             :locations="todoTree.location ? [todoTree.location] : []"

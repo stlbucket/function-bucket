@@ -57,9 +57,9 @@
             </div>
           </template>
         </UCard>
-        <MarkerMap 
+        <!-- <MarkerMap 
           :locations="mappedLocations"
-        />
+        /> -->
       </div>
     </UModal>
 
